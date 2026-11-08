@@ -1,0 +1,1 @@
+- 2026-11-08: 8 Nov 2026: Boise/Idaho briefing episode (employees/atlas/episodes/boise-idaho) is a script only, 5,534 words, 32,204 chars (~14,170 credits). KID tag now voices an unnamed adult co-host; render waits for Kev's new voice pick. Atlas voice reads about 137 wpm, so size 30-40 minute episodes at about 5,000-5,500 words.
