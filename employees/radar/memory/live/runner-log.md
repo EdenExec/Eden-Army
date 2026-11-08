@@ -305,3 +305,4 @@
 - 2026-11-06 15:50 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Floor refreshed (40 writes: agents/alerts/meta). Skipped: benches/tools/jobs dumps, Notion ledger, crelate-tasks, 8a, CloudTalk dials (8c, no connector), cockpit doc, 9a taps.
 - 2026-11-06 16:55 PT: picked 1, closed 1 (Family bench from Home ledger), gated 0, blocked 0, FAILs 0. Floor refresh: agents + meta/sync pushed; alerts/benches/tools batch and Crelate/CloudTalk steps (8a-8c, 9) skipped (Sabbath at 4:51pm).
 - 2026-11-08 00:50 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Floor refreshed (21 writes: agents/meta). Skipped: alerts (no versions for some), benches/tools/jobs dumps, Notion ledger, crelate-tasks, 8a, CloudTalk dials (8c), cockpit doc, 9a taps.
+- 2026-11-08 01:44 PT: outside 6am-10pm window; queue empty (0 open/waiting/picked/working); picked 0, closed 0, gated 0, blocked 0, FAILs 0. Floor refresh skipped (off-hours, nothing changed).
