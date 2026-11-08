@@ -311,3 +311,4 @@
 - 2026-11-08 04:44 PT: outside 6am-10pm window; queue empty (0 open/waiting/picked/working); picked 0, closed 0, gated 0, blocked 0, FAILs 0. Floor refresh skipped (off-hours, nothing changed).
 - 2026-11-08 05:44 PT: outside 6am-10pm window; queue empty (0 open/waiting/picked/working); picked 0, closed 0, gated 0, blocked 0, FAILs 0. Floor refresh skipped (off-hours, nothing changed).
 - 2026-11-08 06:45 PT: picked 4 (Q sync-patrol: jethro, lookahead, pm, radar), closed 4, gated 0, blocked 0, FAILs 0. Floor refresh PARTIAL: dumps read, office-prep not run (no team_asks/jobs/benches/tools dump, Notion ledger only 300 rows); Family count 19 passed on ticket. 8a/8c/9 skipped this run.
+- 2026-11-08 07:45 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Step 8 floor refresh NOT run this pass (only agents dump read); desks may read stale until next run.
