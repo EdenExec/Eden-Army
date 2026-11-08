@@ -313,3 +313,4 @@
 - 2026-11-08 06:45 PT: picked 4 (Q sync-patrol: jethro, lookahead, pm, radar), closed 4, gated 0, blocked 0, FAILs 0. Floor refresh PARTIAL: dumps read, office-prep not run (no team_asks/jobs/benches/tools dump, Notion ledger only 300 rows); Family count 19 passed on ticket. 8a/8c/9 skipped this run.
 - 2026-11-08 07:45 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Step 8 floor refresh NOT run this pass (only agents dump read); desks may read stale until next run.
 - 2026-11-08 08:5x PT: picked 1, closed 1 (srdr Family bench: Notion read OK, 35 Family rows), gated 0, blocked 0, FAILs 0. Floor refresh done (80 writes). Skipped this run: crelate-tasks 3a, CloudTalk dials 8c, cockpit doc 9, daily taps 9a, benches 8a.
+- 2026-11-08 09:44 PT: queue empty (0 open/waiting/picked/working); picked 0, closed 0, gated 0, blocked 0, FAILs 0. Full floor refresh (step 8) NOT run this pass (agents dump only); 3a/8a/8c/9/9a skipped.
