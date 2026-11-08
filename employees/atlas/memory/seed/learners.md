@@ -12,4 +12,5 @@ ElevenLabs, chosen 8 October 2026 after 20-second tests on the House cold open (
 
 - **Atlas (Guide):** `PerZoH0r6nxBZXCoIPpv`, "Michael Moody - Grandfatherly warm and deep" (library voice, American, old, narrative). Slowest and most expressive of the elder candidates; the grandfather-professor Kev asked for.
 - **Finn (Kid):** `tJHJUEHzOkMoPmJJ5jo2`, "Ryan Quin" (library voice, American, young, narrative). A real boy's voice at about 180 Hz, calm and clear; the other candidates measured as grown men or as a cartoon.
+- **Finn is being replaced** (Kev, 8 Nov 2026: "a little cringy to listen to"). Kev picks the new second voice in the ElevenLabs library; no render with Finn's old voice, and no render or publish of the Boise episode until Kev has picked. Shortlist sent 8 Nov: Jesse (zD5RRa1ndly0YgnhdKgR), Jason (FmtiHEcHpocK7YiZwa46), Matt (PWJZIB053RxeJa0GQo0W), Mike Mercer (O4Sq7yQC1fd484Lr500R), Katie (m4hBEimiy2ffkQ0hHMVD).
 - Model `eleven_multilingual_v2`; render with `employees/atlas/tools/render_eleven.py`.
