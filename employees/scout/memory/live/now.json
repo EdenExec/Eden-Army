@@ -1,8 +1,8 @@
 {
-  "task": "t-202610280057-vtsc: PB South VT JO (EL-024 v2, Must Do's draft), PB South lists landed, Jenny's email to Todd",
-  "since": "2026-10-27T19:35:00Z",
-  "state": "done; Radar ticket t-202610280130-vtmd for Casey/owner/priority",
-  "blockedOn": "Kev: review Todd email draft in Superhuman; QC 2026-10-27-d656c4",
-  "next": "stage + upload + link; exact LinkedIn for Tier 1 VT and bench PM rows; Recruiter run of the Booleans in 2026-10-27-pb-south-notes.md",
-  "updated": "2026-10-28T01:50:00Z"
+  "task": "Idle: no active job order or market-map pull on the desk (sync patrol t-202611091221-ssc check-in)",
+  "since": "2026-11-09T20:44:25Z",
+  "state": "idle; last finished work was t-202610280057-vtsc (PB South VT JO and lists, 28 Oct)",
+  "blockedOn": "Kev: review Todd email draft in Superhuman; QC 2026-10-27-d656c4 (open since 28 Oct, not re-verified this session)",
+  "next": "Waiting for a new job order; the stage + upload + link and exact LinkedIn items from the 28 Oct entry are still open and unstarted",
+  "updated": "2026-11-09T20:44:25Z"
 }

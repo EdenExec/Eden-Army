@@ -1,7 +1,7 @@
 {
-  "task": "VMG Peter status/decisions draft and PB South Mateo draft ready for Kev to send",
-  "since": "2026-10-30T17:25:00Z",
-  "state": "done; both in Superhuman drafts, not sent",
-  "blockedOn": "Kev review and send",
-  "updated": "2026-10-30T17:27:00Z"
+  "task": "t-202611081827-scli: refresh Team Hub jobs and Lead Log index for the stale Client bench",
+  "since": "2026-11-09T02:44:00Z",
+  "state": "checked; no data newer than 5 Nov (Hub) and 2 Nov (Lead Log); nothing written to the Hub; draft in drafts/2026-11-09-client-bench-refresh.md",
+  "blockedOn": "Kev (JO updates since 5 Nov) and Scout/Noah (Lead Log rows after 2 Nov)",
+  "updated": "2026-11-09T02:50:00Z"
 }

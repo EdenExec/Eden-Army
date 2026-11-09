@@ -1,1 +1,12 @@
-{"task":"Recruiter pre-screen bench: 3x daily read of the form responses and the review page for Kev and Nick","since":"2026-11-03T22:50:00Z","state":"live; next pass at the 5pm PT trigger","files":["projects/workforce/hiring/prescreen-log.md","projects/workforce/hiring/prescreen-review.html"],"page":"https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT","waitingOn":"Kev: share the page with Nick from its Share menu","updated":"2026-11-03T23:20:00Z"}
+{
+  "task": "Recruiter pre-screen bench: 3x daily read of the form responses and the review page for Kev and Nick",
+  "since": "2026-11-03T22:50:00Z",
+  "state": "idle, no new work this session. Pre-screen bench was last logged 2026-11-03; not re-run today. Sync-patrol check-in only (t-202611091221-sdn).",
+  "files": [
+    "projects/workforce/hiring/prescreen-log.md",
+    "projects/workforce/hiring/prescreen-review.html"
+  ],
+  "page": "https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT",
+  "updated": "2026-11-09T20:45:00Z",
+  "blockedOn": "Kev: share the pre-screen review page with Nick from its Share menu (open since 2026-11-03)"
+}

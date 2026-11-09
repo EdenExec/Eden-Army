@@ -34,6 +34,9 @@ SETTINGS = {
     "GUIDE": {"stability": 0.55, "similarity_boost": 0.8, "style": 0.25, "use_speaker_boost": True},
     "KID": {"stability": 0.4, "similarity_boost": 0.75, "style": 0.45, "use_speaker_boost": True},
 }
+# An adult co-host (Kev, 8 Nov 2026: Finn replaced) reads steadier than the boy voice was tuned for.
+if os.environ.get("ELEVEN_KID_ADULT"):
+    SETTINGS["KID"] = {"stability": 0.5, "similarity_boost": 0.8, "style": 0.3, "use_speaker_boost": True}
 
 import ssl
 ctx = ssl.create_default_context(cafile=CA) if os.path.exists(CA) else ssl.create_default_context()

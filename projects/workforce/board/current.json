@@ -1,22 +1,22 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-05T15:28:51.499Z",
-  "as_of": "Thu 5 Nov 2026, 7:28 AM PT",
+  "generated_at": "2026-11-06T17:56:26.789Z",
+  "as_of": "Fri 6 Nov 2026, 9:56 AM PT",
   "source": "Crelate API v3, read-only (Crelate stays the system of record)",
   "week": {
     "start": "2026-11-01",
     "mon_start": "2026-11-02",
     "prior_mon_start": "2026-10-26",
     "four_start": "2026-10-05",
-    "through": "2026-11-05",
+    "through": "2026-11-06",
     "partial": true,
-    "label": "Sun 1 Nov to Thu 5 Nov",
+    "label": "Sun 1 Nov to Fri 6 Nov",
     "note": "Weeks run Sunday to Saturday, Pacific. A week in progress is compared with last week to the same point, not with last week's full total."
   },
   "last_week": {
     "start": "2026-10-25",
     "end": "2026-10-31",
-    "same_point_through": "2026-10-29T15:28:51.499Z",
+    "same_point_through": "2026-10-30T17:56:26.789Z",
     "label": "Sun 25 Oct to Sat 31 Oct"
   },
   "goals": {
@@ -44,21 +44,21 @@
   },
   "team": {
     "this": {
-      "rps": 276,
-      "mps": 11,
-      "resumes": 12,
+      "rps": 351,
+      "mps": 16,
+      "resumes": 14,
       "ptcs": 5,
       "subs": 3,
-      "ftis": 11,
+      "ftis": 12,
       "offers": 0
     },
     "last_same": {
-      "rps": 220,
+      "rps": 303,
       "mps": 2,
-      "resumes": 11,
-      "ptcs": 16,
+      "resumes": 15,
+      "ptcs": 20,
       "subs": 3,
-      "ftis": 6,
+      "ftis": 7,
       "offers": 0
     },
     "last_full": {
@@ -73,25 +73,25 @@
   },
   "desk": {
     "this": {
-      "rps": 336,
-      "mps": 31,
-      "resumes": 20,
+      "rps": 422,
+      "mps": 39,
+      "resumes": 23,
       "ptcs": 10,
       "subs": 4,
-      "ftis": 17,
+      "ftis": 19,
       "offers": 0
     },
     "last_same": {
-      "rps": 257,
+      "rps": 354,
       "mps": 14,
-      "resumes": 13,
-      "ptcs": 36,
+      "resumes": 21,
+      "ptcs": 43,
       "subs": 3,
-      "ftis": 10,
+      "ftis": 12,
       "offers": 0
     },
     "last_full": {
-      "rps": 361,
+      "rps": 360,
       "mps": 14,
       "resumes": 22,
       "ptcs": 43,
@@ -110,19 +110,19 @@
       "start": null,
       "in_goal": true,
       "this": {
-        "rps": 53,
+        "rps": 75,
         "mps": 0,
-        "resumes": 3,
+        "resumes": 4,
         "ptcs": 0,
         "subs": 0,
         "ftis": 5,
         "offers": 0
       },
       "last_same": {
-        "rps": 55,
+        "rps": 79,
         "mps": 1,
         "resumes": 2,
-        "ptcs": 4,
+        "ptcs": 5,
         "subs": 2,
         "ftis": 0,
         "offers": 0
@@ -137,30 +137,34 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 53,
+        "rps": 75,
         "mps": 0,
-        "resumes": 3,
+        "resumes": 4,
         "ptcs": 0,
         "subs": 0,
         "ftis": 5,
         "offers": 0
       },
       "today": {
-        "rps": 0,
+        "rps": 7,
         "mps": 0,
-        "resumes": 0,
+        "resumes": 1,
         "ptcs": 0,
         "subs": 0,
         "ftis": 0,
         "offers": 0
       },
-      "rp_days_at_15": 3,
+      "rp_days_at_15": 4,
       "rp_by_day": {
+        "2026-11-06": 7,
+        "2026-11-05": 15,
         "2026-11-04": 15,
         "2026-11-03": 16,
         "2026-11-02": 22
       },
       "rp_by_day_2w": {
+        "2026-11-06": 7,
+        "2026-11-05": 15,
         "2026-11-04": 15,
         "2026-11-03": 16,
         "2026-11-02": 22,
@@ -191,8 +195,8 @@
       "start": null,
       "in_goal": true,
       "this": {
-        "rps": 53,
-        "mps": 5,
+        "rps": 66,
+        "mps": 8,
         "resumes": 2,
         "ptcs": 3,
         "subs": 1,
@@ -200,9 +204,9 @@
         "offers": 0
       },
       "last_same": {
-        "rps": 23,
+        "rps": 41,
         "mps": 1,
-        "resumes": 4,
+        "resumes": 6,
         "ptcs": 3,
         "subs": 1,
         "ftis": 0,
@@ -218,8 +222,8 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 53,
-        "mps": 5,
+        "rps": 66,
+        "mps": 8,
         "resumes": 2,
         "ptcs": 3,
         "subs": 1,
@@ -227,23 +231,23 @@
         "offers": 0
       },
       "today": {
-        "rps": 2,
-        "mps": 0,
+        "rps": 0,
+        "mps": 1,
         "resumes": 0,
         "ptcs": 0,
         "subs": 0,
         "ftis": 0,
         "offers": 0
       },
-      "rp_days_at_15": 3,
+      "rp_days_at_15": 4,
       "rp_by_day": {
-        "2026-11-05": 2,
+        "2026-11-05": 15,
         "2026-11-04": 15,
         "2026-11-03": 17,
         "2026-11-02": 19
       },
       "rp_by_day_2w": {
-        "2026-11-05": 2,
+        "2026-11-05": 15,
         "2026-11-04": 15,
         "2026-11-03": 17,
         "2026-11-02": 19,
@@ -274,21 +278,21 @@
       "start": null,
       "in_goal": true,
       "this": {
-        "rps": 46,
-        "mps": 5,
-        "resumes": 2,
+        "rps": 65,
+        "mps": 6,
+        "resumes": 3,
         "ptcs": 0,
         "subs": 0,
         "ftis": 1,
         "offers": 0
       },
       "last_same": {
-        "rps": 55,
+        "rps": 72,
         "mps": 0,
-        "resumes": 3,
-        "ptcs": 5,
+        "resumes": 5,
+        "ptcs": 6,
         "subs": 0,
-        "ftis": 4,
+        "ftis": 5,
         "offers": 0
       },
       "last_full": {
@@ -301,16 +305,16 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 46,
-        "mps": 5,
-        "resumes": 2,
+        "rps": 65,
+        "mps": 6,
+        "resumes": 3,
         "ptcs": 0,
         "subs": 0,
         "ftis": 1,
         "offers": 0
       },
       "today": {
-        "rps": 1,
+        "rps": 3,
         "mps": 0,
         "resumes": 0,
         "ptcs": 0,
@@ -318,15 +322,17 @@
         "ftis": 0,
         "offers": 0
       },
-      "rp_days_at_15": 3,
+      "rp_days_at_15": 4,
       "rp_by_day": {
-        "2026-11-05": 1,
+        "2026-11-06": 3,
+        "2026-11-05": 17,
         "2026-11-04": 15,
         "2026-11-03": 15,
         "2026-11-02": 15
       },
       "rp_by_day_2w": {
-        "2026-11-05": 1,
+        "2026-11-06": 3,
+        "2026-11-05": 17,
         "2026-11-04": 15,
         "2026-11-03": 15,
         "2026-11-02": 15,
@@ -356,8 +362,8 @@
       "start": null,
       "in_goal": true,
       "this": {
-        "rps": 66,
-        "mps": 0,
+        "rps": 85,
+        "mps": 1,
         "resumes": 2,
         "ptcs": 0,
         "subs": 1,
@@ -365,7 +371,7 @@
         "offers": 0
       },
       "last_same": {
-        "rps": 65,
+        "rps": 81,
         "mps": 0,
         "resumes": 2,
         "ptcs": 2,
@@ -383,8 +389,8 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 66,
-        "mps": 0,
+        "rps": 85,
+        "mps": 1,
         "resumes": 2,
         "ptcs": 0,
         "subs": 1,
@@ -392,23 +398,25 @@
         "offers": 0
       },
       "today": {
-        "rps": 1,
-        "mps": 0,
+        "rps": 3,
+        "mps": 1,
         "resumes": 0,
         "ptcs": 0,
         "subs": 0,
         "ftis": 0,
         "offers": 0
       },
-      "rp_days_at_15": 3,
+      "rp_days_at_15": 4,
       "rp_by_day": {
-        "2026-11-05": 1,
+        "2026-11-06": 3,
+        "2026-11-05": 17,
         "2026-11-04": 18,
         "2026-11-03": 21,
         "2026-11-02": 26
       },
       "rp_by_day_2w": {
-        "2026-11-05": 1,
+        "2026-11-06": 3,
+        "2026-11-05": 17,
         "2026-11-04": 18,
         "2026-11-03": 21,
         "2026-11-02": 26,
@@ -439,19 +447,19 @@
       "start": null,
       "in_goal": true,
       "this": {
-        "rps": 58,
+        "rps": 60,
         "mps": 1,
         "resumes": 3,
         "ptcs": 2,
         "subs": 1,
-        "ftis": 1,
+        "ftis": 2,
         "offers": 0
       },
       "last_same": {
-        "rps": 22,
+        "rps": 30,
         "mps": 0,
         "resumes": 0,
-        "ptcs": 2,
+        "ptcs": 4,
         "subs": 0,
         "ftis": 1,
         "offers": 0
@@ -466,16 +474,16 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 58,
+        "rps": 60,
         "mps": 1,
         "resumes": 3,
         "ptcs": 2,
         "subs": 1,
-        "ftis": 1,
+        "ftis": 2,
         "offers": 0
       },
       "today": {
-        "rps": 4,
+        "rps": 0,
         "mps": 0,
         "resumes": 0,
         "ptcs": 0,
@@ -485,13 +493,13 @@
       },
       "rp_days_at_15": 3,
       "rp_by_day": {
-        "2026-11-05": 4,
+        "2026-11-05": 6,
         "2026-11-04": 17,
         "2026-11-03": 17,
         "2026-11-02": 20
       },
       "rp_by_day_2w": {
-        "2026-11-05": 4,
+        "2026-11-05": 6,
         "2026-11-04": 17,
         "2026-11-03": 17,
         "2026-11-02": 20,
@@ -590,25 +598,25 @@
       "start": null,
       "in_goal": false,
       "this": {
-        "rps": 45,
-        "mps": 18,
-        "resumes": 7,
+        "rps": 56,
+        "mps": 20,
+        "resumes": 8,
         "ptcs": 4,
         "subs": 1,
-        "ftis": 5,
+        "ftis": 6,
         "offers": 0
       },
       "last_same": {
-        "rps": 5,
+        "rps": 19,
         "mps": 6,
-        "resumes": 0,
-        "ptcs": 16,
+        "resumes": 4,
+        "ptcs": 19,
         "subs": 0,
-        "ftis": 4,
+        "ftis": 5,
         "offers": 0
       },
       "last_full": {
-        "rps": 20,
+        "rps": 19,
         "mps": 6,
         "resumes": 4,
         "ptcs": 19,
@@ -617,18 +625,18 @@
         "offers": 0
       },
       "mon_week": {
-        "rps": 45,
-        "mps": 18,
-        "resumes": 7,
+        "rps": 56,
+        "mps": 20,
+        "resumes": 8,
         "ptcs": 4,
         "subs": 1,
-        "ftis": 5,
+        "ftis": 6,
         "offers": 0
       },
       "today": {
-        "rps": 1,
+        "rps": 0,
         "mps": 0,
-        "resumes": 0,
+        "resumes": 1,
         "ptcs": 0,
         "subs": 0,
         "ftis": 0,
@@ -636,21 +644,21 @@
       },
       "rp_days_at_15": 2,
       "rp_by_day": {
-        "2026-11-05": 1,
+        "2026-11-05": 12,
         "2026-11-04": 16,
         "2026-11-03": 9,
         "2026-11-02": 19
       },
       "rp_by_day_2w": {
-        "2026-11-05": 1,
+        "2026-11-05": 12,
         "2026-11-04": 16,
         "2026-11-03": 9,
         "2026-11-02": 19,
         "2026-10-29": 15,
-        "2026-10-27": 5
+        "2026-10-27": 4
       },
       "four_weeks": {
-        "rps": 74,
+        "rps": 73,
         "mps": 12,
         "resumes": 6,
         "ptcs": 25,
@@ -671,7 +679,7 @@
       "in_goal": false,
       "this": {
         "rps": 15,
-        "mps": 2,
+        "mps": 3,
         "resumes": 1,
         "ptcs": 1,
         "subs": 0,
@@ -698,7 +706,7 @@
       },
       "mon_week": {
         "rps": 15,
-        "mps": 2,
+        "mps": 3,
         "resumes": 1,
         "ptcs": 1,
         "subs": 0,
@@ -747,7 +755,7 @@
       "name": "PB South- PM's - Project X or WPB",
       "column": "RETAINED",
       "this": {
-        "rps": 7,
+        "rps": 9,
         "resumes": 0,
         "ptcs": 0,
         "ftis": 0
@@ -962,6 +970,28 @@
       ]
     },
     {
+      "id": "c4be19d4-7fe9-4c9c-a6d3-b4f6008f7119",
+      "num": 8890,
+      "name": "VMG · Project Executive, Baltimore & DC",
+      "column": "TOP",
+      "this": {
+        "rps": 2,
+        "resumes": 0,
+        "ptcs": 0,
+        "ftis": 0
+      },
+      "last": {
+        "rps": 0,
+        "resumes": 0,
+        "ptcs": 0,
+        "ftis": 0
+      },
+      "people": [
+        "noah",
+        "kev"
+      ]
+    },
+    {
       "id": "f35251ab-c666-4ee4-b582-bcde0803c205",
       "num": 7890,
       "name": "VMG APMS",
@@ -1088,27 +1118,6 @@
       },
       "people": [
         "noah"
-      ]
-    },
-    {
-      "id": "c4be19d4-7fe9-4c9c-a6d3-b4f6008f7119",
-      "num": 8890,
-      "name": "VMG · Project Executive, Baltimore & DC",
-      "column": "TOP",
-      "this": {
-        "rps": 1,
-        "resumes": 0,
-        "ptcs": 0,
-        "ftis": 0
-      },
-      "last": {
-        "rps": 0,
-        "resumes": 0,
-        "ptcs": 0,
-        "ftis": 0
-      },
-      "people": [
-        "kev"
       ]
     },
     {
@@ -1712,13 +1721,13 @@
   "jos_other": {
     "label": "Not on an active JO (buckets, portals, filled, closed)",
     "this": {
-      "rps": 197,
-      "resumes": 13,
+      "rps": 260,
+      "resumes": 16,
       "ptcs": 6,
-      "ftis": 9
+      "ftis": 11
     },
     "last": {
-      "rps": 227,
+      "rps": 226,
       "resumes": 8,
       "ptcs": 31,
       "ftis": 4
@@ -1727,7 +1736,7 @@
   "jos_none": {
     "label": "No job attached",
     "this": {
-      "rps": 98,
+      "rps": 118,
       "resumes": 5,
       "ptcs": 4,
       "ftis": 2
@@ -1756,11 +1765,11 @@
     }
   },
   "counts_meta": {
-    "activities_read": 2078,
+    "activities_read": 2174,
     "stage_jobs_read": 73
   },
   "notes": [
     "1 activity row(s) dated in the future were ignored.",
-    "295 of 336 RPs this week (88%) are not on an active JO: 98 have no job attached, 197 sit on buckets, portals or closed jobs."
+    "378 of 422 RPs this week (90%) are not on an active JO: 118 have no job attached, 260 sit on buckets, portals or closed jobs."
   ]
 }
