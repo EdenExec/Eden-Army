@@ -2,7 +2,20 @@
 
 Status: SCOPE ONLY. Nothing built, sent or published. Kev's ask (5 Nov, via Radar): a weekly team newsletter with talking points, once or twice a week, that recruiters can send to candidates and clients and use in their own conversations. Scout and Dean produce the content; Jenny owns assembly, design and publishing, with little oversight from Kev once it runs.
 
-## The call
+## Kev's decisions (5 Nov 2026)
+
+- **Name:** Eden AEC Briefing (room for other industries later).
+- **Slot:** Monday 5:00am Boise time (MT), in recruiters' inboxes before the week's first dial.
+- **Sender:** radar@edenexec.com if Gmail "Send mail as" is set up for the alias; otherwise Kev.
+- **List:** to headhunters@edenexec.com, cc nick@edenexec.com and kev@edenexec.com.
+- **First issue:** Monday 9 Nov.
+
+Timeline for a Monday issue (the Sabbath ends Saturday at sundown):
+- Sunday 2:00pm PT: Scout's picks and Market Pulse, and Dean's tip, are due.
+- Sunday 6:00pm PT: Jenny's draft goes into Kev's Drafts as a QC send item.
+- Sunday night: Kev approves and hits Schedule send for Monday 5:00am MT.
+
+## The call (original scope; the decisions above win)
 
 Start with one issue a week: **The Eden Brief, Tuesday 7:00am PT**, emailed to the team and archived on the Team Hub. Each issue has an internal half and one ready-to-forward "market note" that has been cleared for clients and candidates. Add a Thursday "two talking points" mini once four Tuesdays have landed on time with no brand-guard miss.
 
