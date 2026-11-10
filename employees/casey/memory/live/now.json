@@ -1,7 +1,7 @@
 {
-  "task": "t-202611081827-scli: refresh Team Hub jobs and Lead Log index for the stale Client bench",
-  "since": "2026-11-09T02:44:00Z",
-  "state": "checked; no data newer than 5 Nov (Hub) and 2 Nov (Lead Log); nothing written to the Hub; draft in drafts/2026-11-09-client-bench-refresh.md",
-  "blockedOn": "Kev (JO updates since 5 Nov) and Scout/Noah (Lead Log rows after 2 Nov)",
-  "updated": "2026-11-09T02:50:00Z"
+  "task": "t-202611091617-scli: refresh Lead Log index (projects/leads/index.json) for the stale Client bench lead-sheet tiles",
+  "since": "2026-11-10T00:00:00Z",
+  "state": "checked; index NOT changed. npm run leads -- verify: OK, 39 sheets, 4897 rows, index matches folder. Newest landedAt 2026-11-02; phonesAt null on every sheet; no dated phone/Crelate event after 2 Nov in the repo. 7 Scout sheets NOT LANDED (no Drive link).",
+  "blockedOn": "Dated facts from Noah/Scout: which sheets got phones added and on what date (EL-035/EL-036 are called done in noah-xl-phone-pass-2026-11-03.txt but undated), and Drive links to land the 7 Scout sheets. Then npm run leads -- stage-set <file> phones <date>.",
+  "updated": "2026-11-10T00:00:00Z"
 }
