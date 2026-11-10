@@ -1,9 +1,9 @@
 {
-  "task": "Desk check-in (t-202611060630-shsa): desk live, nothing in flight",
-  "status": "6 Nov 2026 06:45 PT: desk live. 1 recommendation standing (hot tub), 3 questions waiting on Kev, 2 open projects, 0 items in QC.",
+  "task": "Desk check-in (t-202611101120-shsa): desk live, nothing in flight",
+  "status": "10 Nov 2026 10:45 PT: desk live. 2 open projects, 1 recommendation standing, 3 questions waiting on Kev, 0 in QC, 0 in flight.",
   "state": "idle",
-  "lastHeard": "2026-11-06T14:45:00Z",
-  "updated": "2026-11-06T14:45:00Z",
+  "lastHeard": "2026-11-10T18:45:00Z",
+  "updated": "2026-11-10T18:45:00Z",
   "counts": {
     "waitingOnKev": 3,
     "openProjects": 2,
@@ -11,7 +11,7 @@
     "inFlight": 0
   },
   "focus": "Portable 4-person hot tub for the rental backyard, moves to the forever house later",
-  "ticket": "t-202610281600-hrtb",
+  "ticket": "t-202611101120-shsa",
   "recommendation": "120V plug-and-play rotomolded tub first; wood-fired (Goodland) second if burning is allowed",
   "waitingOnKev": [
     "Where is the rental (Vancouver WA, Florida, other)?",
