@@ -56,7 +56,8 @@ Utilitarian. For web: dark, industrial, clean, almost secretive. Luxury without 
 - **White space:** prioritise significant white space for a high-impact, uncluttered layout.
 - **Headers:** bold. Data goes in tables or graphs whenever possible.
 - **Structure:** break information up with page breaks when sections are divisible. Give a cover page whenever necessary, and an executive summary or table of contents for larger documents.
-- **Identity:** the header reads EDEN PARTNER GROUP, with the document title in bold italic beneath. The footer carries edenpartnergroup.com and EDEN PARTNER GROUP.
+- **Identity:** the header reads EDEN PARTNER GROUP, with the document title in bold italic beneath. The footer carries edenpartnergroup.com and EDEN PARTNER GROUP. The Eden globe (`docs/brand/logos/eden-globe-black-600.png`) may sit small and quiet on a cover.
+- **Client first:** in anything for a client, the client's name always comes before Eden's ("Carmel Partners & Eden Partner Group", never the reverse). Kev, 10 Nov 2026: "that is Eden 101."
 - **Which name (Kev, 10 October 2026):** "All mentions of Eden Partner Group should move to KDTW Group for any home projects, family projects and projects not focused on recruiting." Recruiting, clients, candidates, invoices and the weekday Eden Daily carry Eden Partner Group. Atlas, Marlowe, the Atlas Desk, home and ranch plans, the Sunday Edition and the Eden Journal carry KDTW GROUP in the same place, with no website in the footer (KDTW Group has none). In code: `identity("kdtw")` in `workshop/brand/eden.ts`; documents take `org: kdtw` in the front matter; boards default to KDTW. The paper's own name, The Eden Daily, does not change.
 
 ## Writing rules (documents and chat replies alike)
