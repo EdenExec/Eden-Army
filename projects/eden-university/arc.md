@@ -129,6 +129,7 @@ Every Wednesday session is logged with the chapter codes it covered, and whether
 | Wed 21 Oct | 2.2 Crelate boards · 3.5 Precon vs estimating · 3.6 Be the consultant · 3.7 Name Game | New | Crelate part done; consultant and Name Game skimmed |
 | Wed 28 Oct | 3.6 News sweep · 2.5 Submittal packet · 3.7 Name Game | 3.6 deeper, 2.5 new, 3.7 refresher | Recap of 21 Oct |
 | Wed 4 Nov | 4.2 Hiring-authority ice breaker · 3.5 VDC Manager · 3.8 The quiet offer | New | Run of show built the day of; Tuesday draft was blank |
+| Wed 11 Nov (planned) | 3.5 Superintendents · 3.10 VP Field Ops vs GM vs PX · 1.2 10-5-3-1 November update | 3.5 and 3.10 new, 1.2 refresher | Built Tue 10 Nov; `projects/workforce/eden-university/2026-11-11-headhunter-training.md` |
 
 **Never covered yet as a group session:** 3.1 to 3.4, 3.10, every Level 4 chapter except a taste of 4.2, and all of Level 5. (Levels 0 and 1 were done last year and are refreshed this November.)
 
