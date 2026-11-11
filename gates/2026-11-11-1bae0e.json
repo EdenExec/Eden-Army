@@ -9,13 +9,13 @@
       "label": "Fee billable, #62046",
       "claimed": 55000,
       "unit": "usd",
-      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62046 (Baker, R. Bench): Salary x Rate, less Discount. For 62046 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees."
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62046 (Client · discreet, R. Bench): Salary x Rate, less Discount. For 62046 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees."
     },
     {
       "label": "Fee billable, #62059",
       "claimed": 35200,
       "unit": "usd",
-      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62059 (Baker, B. Mowlds; fee only, ignore the Sign-On column): Salary x Rate, less Discount. For 62059 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees."
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62059 (Client · discreet, B. Mowlds; fee only, ignore the Sign-On column): Salary x Rate, less Discount. For 62059 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees."
     },
     {
       "label": "Fee billable, #62060",
@@ -99,13 +99,13 @@
       "label": "Days past due at 2026-11-11, #62046",
       "claimed": 63,
       "unit": "days",
-      "source": "Drive invoice doc for #62046 (Baker) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). Use the face terms, not the Hub start date."
+      "source": "Drive invoice doc for #62046 (Client · discreet) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). Use the face terms, not the Hub start date."
     },
     {
       "label": "Days past due at 2026-11-11, #62059",
       "claimed": 26,
       "unit": "days",
-      "source": "Drive invoice doc for #62059 (Baker, Drive id 1zsbZGf1w7xdVVedP6vLCx0uCJf4D-q0B8ZH9eTx4dWY) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). "
+      "source": "Drive invoice doc for #62059 (Client · discreet, Drive id 1zsbZGf1w7xdVVedP6vLCx0uCJf4D-q0B8ZH9eTx4dWY) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). "
     },
     {
       "label": "Days past due at 2026-11-11, #62060",

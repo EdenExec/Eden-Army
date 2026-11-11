@@ -13,7 +13,7 @@ From Tally via Radar. Entity: Eden Partner Group (EPG). Nothing has been sent to
 
 | Client | Past due / issued | Never invoiced (started) | Not yet due / upcoming | Notes |
 |---|---|---|---|---|
-| Baker Construction | 90,200 | 0 | 0 | 63 and 26 days late. Nick calls first. |
+| Client · discreet | 90,200 | 0 | 0 | 63 and 26 days late. Nick calls first. |
 | VMG Mechanical | 37,000 | 42,500 | 0 | Past-due one is at risk: Kev or Nick calls, no email. |
 | Pence Kelly | 19,000 | 23,347.58 | 0 | 15 days late. Fee basis for the new one is Kev's call. |
 | PB South | 36,450 (terms conflict) + 7,500 retainer | 111,600 | 49,500 | Pays to Eden Partner Group, not EES. |
@@ -26,7 +26,7 @@ Held, not in totals: Swinerton (candidate withdrew; 33,000 draft to void), one P
 
 ## Order to work
 
-1. **Baker** (63 and 26 days). Nick calls the hiring authority, then one note on both invoices. Billing contact: the playbook says Wes Avritt, the invoice document says Martin Jordana. Confirm.
+1. **Client · discreet** (63 and 26 days). Nick calls the hiring authority, then one note on both invoices. Billing contact: the playbook and the invoice document name different people. Confirm.
 2. **Pence Kelly** (15 days). Kev says yes, then send to materials@pence.net with Ben Kizer cc'd.
 3. **Retainers 62063 PB South and 62064 Triton** (13 days on the draft's own date). The Hub notes both say "didn't send". Kev confirms; if unsent, send the invoice, do not chase it.
 4. **PB South 62056 and 62057** (5 days on the invoice face, which says Net 30; the Hub says 90). Do not chase until Kev settles the terms.
