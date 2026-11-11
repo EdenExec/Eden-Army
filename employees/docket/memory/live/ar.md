@@ -1,0 +1,2 @@
+- 2026-11-11: Hub 2026 Rev Report: the Sign-On/bonus column is paid by Eden out of its fee (subtracted from Eden Net, paid to the candidate after 91 days under Eden's sign-on letter), not a pass-through billed to the client. Invoices carry the fee only.
+- 2026-11-11: Invoice docs for 62046/62055/62056/62057 live in Kev's My Drive invoices folder (1P99h-LXhnWQN3z60sLULV7nnaToHW7zY), not shared-drive Finance > Invoices; the Hub row for 62055 has blank salary/fee, so Hub-driven AR lists drop it.
