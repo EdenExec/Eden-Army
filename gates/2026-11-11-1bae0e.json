@@ -1,0 +1,265 @@
+{
+  "id": "2026-11-11-1bae0e",
+  "subject": "AR chase list 11 Nov 2026: outstanding Eden invoices (EPG), amounts and days past due",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Fee billable, #62046",
+      "claimed": 55000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62046 (Client · discreet, R. Bench): Salary x Rate, less Discount. For 62046 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 55000,
+      "ok": true,
+      "note": "Hub row 62046: Salary x 22%, discount 0. Face Total Amount Due 55,000 agrees. Doc sits in Kev's My Drive invoices folder, not shared Finance > Invoices."
+    },
+    {
+      "label": "Fee billable, #62059",
+      "claimed": 35200,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62059 (Client · discreet, B. Mowlds; fee only, ignore the Sign-On column): Salary x Rate, less Discount. For 62059 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 35200,
+      "ok": true,
+      "note": "Hub row 62059: Salary x 22%, discount 0; sign-on column excluded. Face Total 35,200 agrees. Face spells candidate 'Bryan', Hub 'Bryon': fix before any resend."
+    },
+    {
+      "label": "Fee billable, #62060",
+      "claimed": 37000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62060 (VMG, B. Mitchell): Salary x Rate, less Discount. For 62060 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 37000,
+      "ok": true,
+      "note": "Hub row 62060: Salary x 20%, discount 0. Face Total 37,000 agrees."
+    },
+    {
+      "label": "Fee billable, #62061",
+      "claimed": 19000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62061 (Pence Kelly, A. Weston): Salary x Rate, less Discount. For 62061 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 19000,
+      "ok": true,
+      "note": "Hub row 62061: Salary x 20% = 34,000 less 15,000 discount. Face shows Headhunting 19,000 only (no salary/rate/discount line); agrees."
+    },
+    {
+      "label": "Fee billable, #62056",
+      "claimed": 29700,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62056 (PB South, R. DiStasio): Salary x Rate, less Discount. For 62056 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 29700,
+      "ok": true,
+      "note": "Hub row 62056: Salary x 18%, discount 0. Face Total 29,700 agrees."
+    },
+    {
+      "label": "Fee billable, #62057",
+      "claimed": 6750,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62057 (PB South, T. Comerford): Salary x Rate, less Discount. For 62057 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 6750,
+      "ok": true,
+      "note": "Hub row 62057: Salary x 5%, discount 0. Face Total 6,750 agrees. Ties, but 5% is far below PB South's 18% on every other row: confirm with Kev the rate is intended (an 18% fee would be 24,300)."
+    },
+    {
+      "label": "Fee billable, #62055 (Hub fee cell is blank)",
+      "claimed": 49500,
+      "unit": "usd",
+      "source": "Drive doc 'Invoice #62055-J.Trujillo-General Superintendent' (id 186GXj4lkoYbog1rT-zoysH0SYLW-yX90V30H8Zx2nO0): Salary x Rate on the document; compare with its Total Amount Due.",
+      "recomputed": 49500,
+      "ok": true,
+      "note": "Doc 186GXj...: Salary x 18% = 49,500 = Total Amount Due. Hub row 62055 has blank salary/fee, so the Hub understates 2026 billings by 49,500."
+    },
+    {
+      "label": "Fee billable, #62065",
+      "claimed": 33300,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62065 (PB South, R. Ouellette): Salary x Rate, less Discount. For 62065 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 33300,
+      "ok": true,
+      "note": "Hub row 62065 is the PB South placement: Salary x 18%, discount 0; Tally's 11 Nov draft 1RxD6V... shows 33,300, agrees. The Swinerton doc also numbered 62065 (33,000) is a different, unearned fee: Hub row 62062 shows that candidate never started. Not AR."
+    },
+    {
+      "label": "Fee billable, #62066",
+      "claimed": 33300,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62066 (PB South, C. Navarette): Salary x Rate, less Discount. For 62066 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 33300,
+      "ok": true,
+      "note": "Hub row 62066: Salary x 18%, discount 0. 11 Nov draft 1HkZRQ... Total 33,300 agrees."
+    },
+    {
+      "label": "Fee billable, #62068",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62068 (PB South, J. Willard): Salary x Rate, less Discount. For 62068 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 45000,
+      "ok": true,
+      "note": "Hub row 62068: Salary x 18%, discount 0. 11 Nov draft 1GcOlB... Total 45,000 agrees; start date still marked (confirm)."
+    },
+    {
+      "label": "Fee billable, #62067",
+      "claimed": 42500,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62067 (VMG, B. Davis): Salary x Rate, less Discount. For 62067 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 42500,
+      "ok": true,
+      "note": "Hub row 62067: Salary x 25%, discount 0. 11 Nov draft 1Ed2sP... Total 42,500 agrees."
+    },
+    {
+      "label": "Fee billable, #62069",
+      "claimed": 25000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62069 (Hoffman Structures, W. Allen; fee before the sign-on pass-through): Salary x Rate, less Discount. For 62069 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 25000,
+      "ok": true,
+      "note": "Hub row 62069: Salary x 20%, discount 0. 11 Nov draft 1IGtu8... Total 25,000 agrees. Hub sign-on column is deducted from Eden Net (Eden pays it), so it is not a pass-through billed to the client: relabel."
+    },
+    {
+      "label": "Fee billable, #62070",
+      "claimed": 40000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62070 (Megawatt): Salary x Rate, less Discount. For 62070 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 40000,
+      "ok": true,
+      "note": "Hub row 62070: Salary x 20%, discount 0. No Drive invoice or draft found."
+    },
+    {
+      "label": "Fee billable, #62071",
+      "claimed": 50000,
+      "unit": "usd",
+      "source": "Hub sheet '2026 - EPG Dashboard (Hub)' tab '2026 Rev Report' (1J1RSMPF5B5tFooRN_PEJdAzK6y74lXBqgxIxq6byP24), row with # 62071 (Prometheus): Salary x Rate, less Discount. For 62071 also confirm the Total Amount Due on the Drive invoice/draft (if one exists) agrees.",
+      "recomputed": 50000,
+      "ok": true,
+      "note": "Hub row 62071: Salary x 25%, discount 0. No Drive invoice or draft found. Hub notes a 6-month guarantee."
+    },
+    {
+      "label": "Fee billable, #62072 R. Morgan at 18% of first-year base",
+      "claimed": 23347.58,
+      "unit": "usd",
+      "source": "Drive doc 'DRAFT Invoice - 62072 - R. Morgan - General Foreman' (id 14BGTqXIb-K-kC73GA2C9esl95DJSyze8HrgakgQqJJc): hourly rate x 2,080 hours = first-year base; 18% of that base; round to cents.",
+      "recomputed": 23347.58,
+      "ok": true,
+      "note": "Doc 14BGTq...: hourly x 2,080 x 18% = 23,347.58 (cents rounded); doc's own total agrees. Same base at 20% = 25,941.76 (Kev's 8 Nov draft 1tSFMQ...). Start date TBD on both drafts; Hub row 62072 is empty."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62046",
+      "claimed": 63,
+      "unit": "days",
+      "source": "Drive invoice doc for #62046 (Client · discreet) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). Use the face terms, not the Hub start date.",
+      "recomputed": 63,
+      "ok": true,
+      "note": "Face Date 08/10/2026 + Net 30 = 2026-09-09; 63 days to 11 Nov. Doc in Kev's My Drive invoices folder (1P99h...), not shared Finance > Invoices."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62059",
+      "claimed": 26,
+      "unit": "days",
+      "source": "Drive invoice doc for #62059 (Client · discreet, Drive id 1zsbZGf1w7xdVVedP6vLCx0uCJf4D-q0B8ZH9eTx4dWY) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). ",
+      "recomputed": 26,
+      "ok": true,
+      "note": "Face Date 9/16/2026 + Net 30 = 2026-10-16; 26 days."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62060",
+      "claimed": 26,
+      "unit": "days",
+      "source": "Drive invoice doc for #62060 (VMG, Drive id 1O0HmEtmpdEgVK8t4yzSj1otyhkV8eZ90vxeyip77Y8U) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). ",
+      "recomputed": 26,
+      "ok": true,
+      "note": "Face Date 9/16/2026 + Net 30 = 2026-10-16; 26 days."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62061",
+      "claimed": 15,
+      "unit": "days",
+      "source": "Drive invoice doc for #62061 (Pence Kelly) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). ",
+      "recomputed": 15,
+      "ok": true,
+      "note": "Face Date 10/12/2026 + Net 15 = 2026-10-27; 15 days."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62056",
+      "claimed": 5,
+      "unit": "days",
+      "source": "Drive invoice doc for #62056 (PB South, face terms) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). Report on the face terms even though the Hub says 90.",
+      "recomputed": 5,
+      "ok": true,
+      "note": "Face Date 10/7/2026 + Net 30 = 2026-11-06; 5 days. On the Hub's 90 it would be due 2027-01-05 (-55). Face governs only if no signed fee agreement says otherwise."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62057",
+      "claimed": 5,
+      "unit": "days",
+      "source": "Drive invoice doc for #62057 (PB South, face terms) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). Same.",
+      "recomputed": 5,
+      "ok": true,
+      "note": "Face Date 10/07/2026 + Net 30 = 2026-11-06; 5 days. Same terms caveat as 62056."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62055",
+      "claimed": -25,
+      "unit": "days",
+      "source": "Drive invoice doc for #62055 (PB South, Net 90 on face) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). ",
+      "recomputed": -25,
+      "ok": true,
+      "note": "Face Date 09/07/2026 + Net 90 = 2026-12-06; -25 (not yet due). Face date precedes the Hub start 9/14."
+    },
+    {
+      "label": "Days past due at 2026-11-11, #62063",
+      "claimed": 13,
+      "unit": "days",
+      "source": "Drive invoice doc for #62063 (PB South October retainer) in shared-drive Finance > Invoices (folder 1fEMaQEa9j3Xc6fNQMqUNouvr3uADefeO): invoice Date plus the Net N on its face = due date; days = 2026-11-11 minus due date (negative if not yet due). ",
+      "recomputed": 13,
+      "ok": true,
+      "note": "Face Date 10/14/2026 + Net 15 = 2026-10-29 (face also says due 10/29); 13 days. Arithmetic only: Hub says 'didn't send', so nothing is past due; Kev on 3 Nov said a November retainer replaces this draft."
+    },
+    {
+      "label": "Issued invoices past due on their face, total usd",
+      "claimed": 182650,
+      "unit": "usd",
+      "source": "Sum of Total Amount Due for Drive invoices #62046, 62059, 62060, 62061, 62056, 62057 (the six whose face due date is before 2026-11-11).",
+      "recomputed": 182650,
+      "ok": true,
+      "note": "55,000 + 35,200 + 37,000 + 19,000 + 29,700 + 6,750. QBO A/R aging as of 11 Nov shows no receivables (invoices not booked in QBO), so the Drive faces are the only record."
+    },
+    {
+      "label": "Issued, not yet due (#62055), usd",
+      "claimed": 49500,
+      "unit": "usd",
+      "source": "Total Amount Due on Drive invoice #62055.",
+      "recomputed": 49500,
+      "ok": true,
+      "note": "Face Total Amount Due 49,500."
+    },
+    {
+      "label": "October retainers drafted, unsent, total usd",
+      "claimed": 12500,
+      "unit": "usd",
+      "source": "Total Amount Due on Drive docs 'Invoice - 62063 - PB South - October Retainer' and 'Invoice - 62064 - Triton - October Retainer'.",
+      "recomputed": 12500,
+      "ok": true,
+      "note": "62063 7,500 + 62064 5,000. Ties, but neither is a receivable: both unsent; Kev paused Triton and replaced the PB South October draft with a November one (3 Nov). Keep off the chase list."
+    },
+    {
+      "label": "Started and never invoiced, total usd",
+      "claimed": 177447.58,
+      "unit": "usd",
+      "source": "Sum of billable fees for Hub rows 62065, 62066, 62067, 62068 plus the 18% draft for 62072 (R. Morgan). All have a start date on or before 2026-11-11 or are confirmed started; none has a Drive invoice under that client/candidate.",
+      "recomputed": 177447.58,
+      "ok": true,
+      "note": "62065 33,300 + 62066 33,300 + 62067 42,500 + 62068 45,000 + 62072 23,347.58. 62072 start is TBD on every draft and 62068 start is marked (confirm), so 68,347.58 of this is not yet proven started. Tally's 11 Nov drafts now exist for 62065-62068 (unsent)."
+    },
+    {
+      "label": "Upcoming starts (not yet started), total usd",
+      "claimed": 115000,
+      "unit": "usd",
+      "source": "Sum of billable fees for Hub rows 62069, 62070, 62071 (start dates after 2026-11-11), before sign-on pass-throughs.",
+      "recomputed": 115000,
+      "ok": true,
+      "note": "62069 25,000 + 62070 40,000 + 62071 50,000."
+    }
+  ],
+  "createdAt": "2026-11-11T14:53:27.061Z",
+  "ask": "Kev: approve each send; confirm PB South terms (Net 30 vs 90) and the R. Morgan fee basis",
+  "checkedBy": "docket",
+  "closedAt": "2026-11-11T15:01:31.158Z"
+}

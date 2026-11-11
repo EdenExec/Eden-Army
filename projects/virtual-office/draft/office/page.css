@@ -848,3 +848,9 @@ textarea{min-height:84px;resize:vertical}
   .td-kb{columns:1}
   .td-hab{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* clipboard (phase 2 of Marlowe's flow) */
+.cb-why{margin:0 0 2px;font-size:12px;line-height:1.35;color:var(--mute);overflow-wrap:anywhere}
+.cb-note{margin:4px 0;font-size:12px;line-height:1.4;overflow-wrap:anywhere} .cb-note.pending{color:var(--mute);font-style:italic}
+.it.cb.kev .it-t{font-weight:700}
+.cb-log>summary,details.projects>summary{cursor:pointer;font:500 10.5px/1.3 var(--mono);letter-spacing:.06em;color:var(--mute);padding:6px 0}

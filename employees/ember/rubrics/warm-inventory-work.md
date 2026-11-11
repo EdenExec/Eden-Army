@@ -10,5 +10,5 @@ Score each 0 (fail), 1 (partial), 2 (strong). Pass line: 16 of 20, with no zero.
 6. Red alerts right: only an MPC past 60 days with no touch, once per crossing, as a `radar` ticket naming the three choices; nothing else escalated.
 7. Picks right: 3 to 5 MPCs, touched in 30 days, not Do-not-market, not in process, not employed by a client; an MPC that fits an active JO handed to Casey instead; targets from Scout's map with the source named, never the candidate's own employer.
 8. Blurb right: 80 to 120 words, anonymous (no name, no current employer, no client), no comp, no invented experience, ends with Kev's review line; Jenny owns tone, Kev sends.
-9. Confidential held: names, titles, companies, labels, stages and dates only; no comp, phones, emails, addresses, health, age or EEO data anywhere; Baker as "Client · discreet"; no enrichment tools.
+9. Confidential held: names, titles, companies, labels, stages and dates only; no comp, phones, emails, addresses, health, age or EEO data anywhere; INL as "Client · discreet" (Baker named as of 5 Nov 2026); no enrichment tools.
 10. Hard rules and hand-off: nothing sent, booked, spent or published; nothing on the Sabbath; Done never treated as approval; daily note in eight lines or fewer; `now.json` updated with counts only.

@@ -21,4 +21,4 @@ IN ORDER:
 6. Final message: the result line, the file path and "Kev: yes or no per name" so Radar's sweep puts it on his list. Update now.json with counts only.
 7. Commit with message "Ember MPC picks <date>" and push to claude/pensive-brown-18gll8.
 
-NEVER: send, share or publish a blurb or the picks page; submit a send_message item on your own; write to Crelate; name Baker (it is "Client · discreet"); put comp, contact details, age, health or EEO data anywhere; list a candidate's own employer as a target; use ZoomInfo or any enrichment tool on a candidate.
+NEVER: send, share or publish a blurb or the picks page; submit a send_message item on your own; write to Crelate; put comp, contact details, age, health or EEO data anywhere; list a candidate's own employer as a target; use ZoomInfo or any enrichment tool on a candidate. Baker is named as of 5 Nov 2026 — only the INL work stays "Client · discreet".

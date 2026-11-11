@@ -256,6 +256,10 @@ a.go{font-weight:700}
 .golf th[aria-sort] button.srt::after{content:" \25BE"}
 .golf td.dir{font-size:10.5px}
 .golf td.na{white-space:normal;min-width:54px;font-size:10.5px;line-height:1.25}
+.lbv{display:inline-flex;flex-wrap:wrap;border:1px solid var(--ink)}
+.lbv button{background:var(--paper);border:0;border-right:1px solid var(--ink);cursor:pointer;min-height:36px;padding:0 12px;font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.lbv button:last-child{border-right:0}
+.lbv button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .jo-wrap{display:flex;flex-direction:column;gap:8px}
 .jo td:first-child{white-space:normal;min-width:200px}
 .jo td.col{font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
@@ -337,7 +341,7 @@ a.go{font-weight:700}
   ];
   var LIGHTS = { green: 'On pace', amber: 'Watch', red: 'Act', grey: 'No data', none: 'No light yet' };
 
-  var S = { board: null, boardSrc: 'none', wip: [], det: { lb: true, jo: true, jorest: false, wip: true }, lbSort: 'rps', live: false, db: null, example: true, share: false, people: [], peopleLoaded: false, open: null, tab: 'score', data: {}, loaded: {}, unsubs: [], status: 'example data' };
+  var S = { phones: null, board: null, boardSrc: 'none', wip: [], det: { lb: true, jo: true, jorest: false, wip: true }, lbSort: 'rps', live: false, db: null, example: true, share: false, people: [], peopleLoaded: false, open: null, tab: 'score', data: {}, loaded: {}, unsubs: [], status: 'example data' };
   try { S.share = sessionStorage.getItem('rt-share') === '1'; } catch (e) {}
 
   /* ---------------- example data: invented, relative to today ---------------- */
@@ -429,6 +433,10 @@ a.go{font-weight:700}
       return cell(label, int(T[key]), goal ? '/ ' + int(goal) : '', lines, goal ? T[key] / goal * 100 : null);
     }
     grid.appendChild(act('rps', 'RPs · week to date', G.rps_team_week, G.rps_per_day + ' a day, ' + G.rps_week + ' a week, ' + G.recruiters_in_goal + ' recruiters'));
+    if (S.phones && Array.isArray(S.phones.people)) {
+      var td = teamDials('this'), tl = teamDials('last'), pa = Date.parse(S.phones.asOf || '');
+      grid.appendChild(cell('Dials · CloudTalk', int(td), '', ['Same weekdays last week ' + int(tl) + (td != null && tl != null ? ' · ' + delta(td, tl) : ''), 'Outbound calls, ' + (S.phones.weekLabel || 'Monday to the last read') + (isFinite(pa) ? ' (' + agoText(Math.max(0, Math.round((Date.now() - pa) / 60000))) + ')' : ''), 'No dials goal set'], null));
+    }
     grid.appendChild(act('mps', 'MPs · week to date', G.mps_team_week, G.mps_per_day + ' a day, ' + G.mps_week + ' a week each'));
     grid.appendChild(act('resumes', 'Resumes'));
     grid.appendChild(act('ptcs', 'PTCs'));
@@ -466,35 +474,72 @@ a.go{font-weight:700}
     box.appendChild(h('div', { class: 'board-note', text: 'Totals are the recruiters (Max, Evan, Noah, Andrew, Bridger, and Kunji’s activity); the goal counts ' + G.recruiters_in_goal + ' of them at ' + G.rps_week + ' RPs a week. Nick and Kev sit below the line on the leaderboard. This week is compared with last week to the same point in the week, and last week in full is shown beneath. Weeks run Sunday to Saturday, Pacific. MPs are Crelate’s MP activity; the 20-a-day meaningful connections are also kept on the call sheet, which Crelate does not see. Source: ' + B.source + '.' }));
     return box;
   }
+  /* leaderboard views (Kev, 26 Oct): this week live, last week in full, and the trend (this week against last week to the same point).
+     The page listens to board/current, so every new Crelate pull shows up without a reload; the "updated" stamp ticks every minute. */
+  S.lbView = 'this';
+  function per(p) { return (S.lbView === 'last' ? p.last_full : p.this) || {}; }
+  function sundayPT() { var d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })); d.setDate(d.getDate() - d.getDay()); return ymd(d); }
+  function ago(iso) { var t = Date.parse(iso || ''); return isFinite(t) ? Math.max(0, Math.round((Date.now() - t) / 60000)) : null; }
+  function agoText(m) { return m == null ? 'time unknown' : m < 1 ? 'just now' : m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' d ago'; }
+  function oldWeek(B) { return !!(B && B.week && B.week.start && B.week.start < sundayPT()); }
+  function lbViews(B) {
+    var old = oldWeek(B), w = B && B.week ? nice(B.week.start) : '', lw = B && B.last_week ? nice(B.last_week.start) : '';
+    return [['this', old ? 'Week of ' + w : 'This week · live', old ? 'week of ' + w : 'this week'], ['last', old ? 'Week of ' + lw : 'Last week', old ? 'week of ' + lw : 'last week'], ['trend', 'Trend', 'trend vs last week']];
+  }
+  function lbViewName(B) { return (lbViews(B).filter(function (v) { return v[0] === S.lbView; })[0] || ['', '', 'this week'])[2]; }
+  /* CloudTalk dials (Kev, 6 Nov 2026; Q): the phones/current document, written by Radar's stand-up from CloudTalk's read-only agent stats (counts only).
+     People are matched to recruiters by first name. 'this' is Monday to the pull; 'last' is the same Monday to Friday weekdays last week. */
+  function phoneOf(p) { var d = S.phones; if (!d || !Array.isArray(d.people)) return null; var f = String(p.name || '').split(' ')[0].toLowerCase(); return d.people.filter(function (x) { return String(x.name || '').split(' ')[0].toLowerCase() === f; })[0] || null; }
+  function dialsOf(p, which) { var x = phoneOf(p), w = x ? (which === 'last' ? x.prior : x.week) : null; return w && isNum(w.dials) ? w.dials : null; }
+  function teamDials(which) { var n = 0, any = false; (S.board ? S.board.recruiters : []).forEach(function (p) { if (p.status !== 'active') return; var v = dialsOf(p, which); if (v != null) { n += v; any = true; } }); return any ? n : null; }
+  function phonesCurrent() { var d = S.phones, B = S.board; if (!d || !d.weekOf || !B || !B.week || !B.week.start) return true; var t = new Date(B.week.start + 'T12:00:00'); t.setDate(t.getDate() + 1); return ymd(t) === d.weekOf; }
+  function lbCols() { var c = BKEYS.slice(); if (S.phones && Array.isArray(S.phones.people)) c.splice(1, 0, ['dials', 'Dials']); return c; }
   function lbValue(p, k) {
+    if (k === 'dials') { var dv = dialsOf(p, S.lbView === 'last' ? 'last' : 'this'); return dv == null ? -1 : dv; }
     if (k === 'revenue') return isNum(p.revenue_qtd) ? p.revenue_qtd : -1;
     if (k === 'pct') return isNum(p.pct_to_accelerator) ? p.pct_to_accelerator : -1;
-    return p.this ? p.this[k] || 0 : 0;
+    return per(p)[k] || 0;
   }
   function renderLeaderboard() {
     var B = S.board, det = h('details', { class: 'lb', id: 'lb', 'data-det': 'lb' }), k = S.lbSort;
     if (S.det.lb) det.setAttribute('open', '');
-    det.appendChild(h('summary', null, h('span', { class: 'eyebrow', text: 'Leaderboard · this week · ranked by ' + (BKEYS.concat([['revenue', 'revenue'], ['pct', '% to $25k']]).filter(function (x) { return x[0] === k; })[0] || ['', 'RPs'])[1] })));
+    det.appendChild(h('summary', null, h('span', { class: 'eyebrow', text: 'Leaderboard · ' + lbViewName(B) + ' · ranked by ' + (lbCols().concat([['revenue', 'revenue'], ['pct', '% to $25k']]).filter(function (x) { return x[0] === k; })[0] || ['', 'RPs'])[1] })));
     var body = h('div', { class: 'lb-body' });
     if (!B) { body.appendChild(h('div', { class: 'empty', text: 'No board data yet.' })); det.appendChild(body); return det; }
     var acc = (B.goals.accelerator_per_quarter || 25000), G = B.goals;
+    // view switch and freshness
+    var mins = ago(B.generated_at), old = oldWeek(B), stale = mins == null || mins > 120, sw = h('div', { class: 'lbv', role: 'group', 'aria-label': 'Leaderboard view' });
+    lbViews(B).forEach(function (v) { sw.appendChild(h('button', { type: 'button', 'data-lbv': v[0], 'aria-pressed': String(S.lbView === v[0]), text: v[1] })); });
+    body.appendChild(h('div', { class: 'row' }, sw,
+      S.phones && Array.isArray(S.phones.people) && !phonesCurrent() ? h('span', { class: 'chip warn', text: 'Dials: ' + (S.phones.weekLabel || 'another week') + ' · Crelate: ' + (B.week ? B.week.label : '') }) : null,
+      old ? h('span', { class: 'chip warn', text: 'No pull yet this week' }) : stale ? h('span', { class: 'chip warn', text: 'Not live · needs a fresh pull' }) : h('span', { class: 'chip ok', text: 'Live' }),
+      h('span', { class: 'stamp', id: 'lb-ago', text: 'Crelate pulled ' + (B.as_of || 'at an unknown time') + ' · ' + agoText(mins) })));
+    body.appendChild(h('p', { class: 'stamp', text: S.lbView === 'last' ? (B.last_week ? B.last_week.label : 'Last week') + ', in full.' : S.lbView === 'trend' ? 'Each number is ' + (B.week ? B.week.label : 'this week') + '; beneath it is ' + (B.last_week ? B.last_week.label : 'last week') + ' to the same point in the week, and the change.' : (B.week ? B.week.label : 'This week') + (B.week && B.week.partial ? ', so far.' : '.') }));
     var started = B.recruiters.filter(function (p) { return p.status === 'active'; }), notYet = B.recruiters.filter(function (p) { return p.status !== 'active'; });
-    started = started.slice().sort(function (a, b) { return (lbValue(b, k) - lbValue(a, k)) || (b.this.rps - a.this.rps); });
+    started = started.slice().sort(function (a, b) { return (lbValue(b, k) - lbValue(a, k)) || ((per(b).rps || 0) - (per(a).rps || 0)); });
     var showRev = !S.share;
-    var cols = BKEYS.map(function (x) { return [x[0], x[1]]; });
+    var cols = lbCols().map(function (x) { return [x[0], x[1]]; });
     var thead = h('tr', null, h('th', { class: 'nm', text: 'Recruiter' }));
     cols.forEach(function (c) { thead.appendChild(h('th', Object.assign({ class: 'n' }, k === c[0] ? { 'aria-sort': 'descending' } : {}), h('button', { class: 'srt', type: 'button', 'data-sort': c[0], title: 'Rank by ' + c[1], text: c[1] }))); });
     if (showRev) {
       thead.appendChild(h('th', Object.assign({ class: 'n' }, k === 'revenue' ? { 'aria-sort': 'descending' } : {}), h('button', { class: 'srt', type: 'button', 'data-sort': 'revenue', title: 'Rank by revenue this quarter', text: 'Billed QTD' })));
       thead.appendChild(h('th', Object.assign({ class: 'n' }, k === 'pct' ? { 'aria-sort': 'descending' } : {}), h('button', { class: 'srt', type: 'button', 'data-sort': 'pct', title: 'Percent of the ' + usd(acc) + ' a quarter accelerator', text: '% to $25k' })));
     }
-    thead.appendChild(h('th', { text: 'Trend' }));
+    if (S.lbView !== 'last') thead.appendChild(h('th', { text: 'Trend' }));
     var tb = h('tbody');
+    function trendCell(now, was) { return h('td', { class: 'n' }, int(now), h('small', { text: 'was ' + int(was) }), h('small', { text: delta(now, was) })); }
     function numCell(p, c) {
-      var v = p.this[c[0]];
+      if (c[0] === 'dials') {
+        var x = phoneOf(p); if (!x) return h('td', { class: 'n na', text: 'no line', title: 'No CloudTalk line in the last read' });
+        if (S.lbView === 'trend') return trendCell(dialsOf(p, 'this'), dialsOf(p, 'last'));
+        var wk = S.lbView === 'last' ? x.prior : x.week, pk = wk && wk.dials && isNum(wk.conn) ? Math.round(wk.conn / wk.dials * 100) + '% picked up' : '';
+        return h('td', { class: 'n', title: 'CloudTalk outbound dials' + (S.lbView === 'last' ? ', Monday to Friday last week' : ', Monday to the last read') }, int(dialsOf(p, S.lbView === 'last' ? 'last' : 'this')), pk ? h('small', { text: pk }) : null);
+      }
+      if (S.lbView === 'trend') return trendCell((p.this || {})[c[0]], (p.last_same || {})[c[0]]);
+      var v = per(p)[c[0]];
       if (c[0] === 'rps') {
         var inGoal = p.in_goal, pc = isNum(v) ? Math.min(100, v / G.rps_week * 100) : 0;
-        return h('td', { class: 'n' }, int(v), inGoal ? h('small', { text: Math.round(v / G.rps_week * 100) + '% · ' + p.rp_days_at_15 + ' d at ' + G.rps_per_day, title: Math.round(v / G.rps_week * 100) + '% of ' + G.rps_week + ' a week; ' + p.rp_days_at_15 + ' day(s) at ' + G.rps_per_day + ' or more' }) : null, inGoal ? h('div', { class: 'rpbar', role: 'img', 'aria-label': Math.round(pc) + ' percent of ' + G.rps_week + ' RPs' }, h('i', { style: 'width:' + pc + '%' })) : null);
+        return h('td', { class: 'n' }, int(v), inGoal ? h('small', { text: Math.round(v / G.rps_week * 100) + (S.lbView === 'last' ? '% of ' + G.rps_week : '% · ' + p.rp_days_at_15 + ' d at ' + G.rps_per_day), title: Math.round(v / G.rps_week * 100) + '% of ' + G.rps_week + ' a week; ' + p.rp_days_at_15 + ' day(s) at ' + G.rps_per_day + ' or more' }) : null, inGoal ? h('div', { class: 'rpbar', role: 'img', 'aria-label': Math.round(pc) + ' percent of ' + G.rps_week + ' RPs' }, h('i', { style: 'width:' + pc + '%' })) : null);
       }
       return h('td', { class: 'n', text: int(v) });
     }
@@ -506,7 +551,7 @@ a.go{font-weight:700}
         tr.appendChild(h('td', { class: 'n' + (isNum(p.revenue_qtd) ? '' : ' na'), text: isNum(p.revenue_qtd) ? usd(p.revenue_qtd) : 'not synced' }));
         tr.appendChild(h('td', { class: 'n' + (isNum(p.pct_to_accelerator) ? '' : ' na'), text: isNum(p.pct_to_accelerator) ? p.pct_to_accelerator + '%' : 'not synced' }));
       }
-      tr.appendChild(h('td', { class: 'dir', text: p.status !== 'active' ? '–' : dirWord(p.this.rps, p.last_same.rps) === 'n/a' ? '–' : delta(p.this.rps, p.last_same.rps), title: 'RPs this week against last week to the same point (' + int(p.last_same.rps) + ')' }));
+      if (S.lbView !== 'last') tr.appendChild(h('td', { class: 'dir', text: p.status !== 'active' ? '–' : dirWord(p.this.rps, p.last_same.rps) === 'n/a' ? '–' : delta(p.this.rps, p.last_same.rps), title: 'RPs this week against last week to the same point (' + int(p.last_same.rps) + ')' }));
       return tr;
     }
     started.forEach(function (p, i) {
@@ -517,13 +562,13 @@ a.go{font-weight:700}
     notYet.forEach(function (p) { var tr = row(p, '', 'lead', p.status === 'starts' ? 'Starts ' + nice(p.start) : 'No Crelate user yet'); tb.appendChild(tr); });
     // totals for the recruiters
     var us = h('tr', { class: 'us' }, h('td', { class: 'nm', text: 'Us' }));
-    cols.forEach(function (c) { us.appendChild(h('td', { class: 'n', text: int(B.team.this[c[0]]) })); });
+    cols.forEach(function (c) { if (c[0] === 'dials') { us.appendChild(S.lbView === 'trend' ? trendCell(teamDials('this'), teamDials('last')) : h('td', { class: 'n', text: int(teamDials(S.lbView === 'last' ? 'last' : 'this')) })); return; } us.appendChild(S.lbView === 'trend' ? trendCell(B.team.this[c[0]], (B.team.last_same || {})[c[0]]) : h('td', { class: 'n', text: int(((S.lbView === 'last' ? B.team.last_full : B.team.this) || {})[c[0]]) })); });
     if (showRev) { us.appendChild(h('td', { class: 'n na', text: 'not synced' })); us.appendChild(h('td', { class: 'n na', text: 'not synced' })); }
-    us.appendChild(h('td', { class: 'dir', text: delta(B.team.this.rps, B.team.last_same.rps) }));
+    if (S.lbView !== 'last') us.appendChild(h('td', { class: 'dir', text: delta(B.team.this.rps, B.team.last_same.rps) }));
     tb.appendChild(us);
     (B.leadership || []).forEach(function (p, i) { tb.appendChild(row(p, '', 'lead' + (i === 0 ? ' gap' : ''), i === 0 ? 'Leadership · not in the goal' : '')); });
     body.appendChild(h('div', { class: 'scroll' }, h('table', { class: 'golf' }, h('thead', null, thead), tb)));
-    body.appendChild(sectionNote('Ranked by ' + ((BKEYS.concat([['revenue', 'billed this quarter'], ['pct', 'percent to $25k']]).filter(function (x) { return x[0] === k; })[0] || ['', 'RPs'])[1]) + ' (tap a column to re-rank). Counted by Dean’s rules: RPs are calls logged; MPs, resumes, PTCs, submittals and FTIs are unique contacts per person. Trend is RPs against last week to the same point; within 5 percent reads Level. ' +
+    body.appendChild(sectionNote('Ranked by ' + ((lbCols().concat([['revenue', 'billed this quarter'], ['pct', 'percent to $25k']]).filter(function (x) { return x[0] === k; })[0] || ['', 'RPs'])[1]) + ' (tap a column to re-rank). Counted by Dean’s rules: RPs are calls logged; MPs, resumes, PTCs, submittals and FTIs are unique contacts per person. Trend is RPs against last week to the same point; within 5 percent reads Level. ' +
       (showRev ? 'Billed QTD and % to $25k come from the Hub Rev Report recruiter and split columns; not synced until the full Rev Report export is supplied. Never estimated here.' : 'Revenue columns are hidden while screen-share is on.')));
     det.appendChild(body); return det;
   }
@@ -731,7 +776,7 @@ a.go{font-weight:700}
       var hdr = h('tr', null, h('th', { class: 'lab', text: 'Crelate' })); DAYS.forEach(function (d) { hdr.appendChild(h('th', { text: d })); });
       el.appendChild(h('div', { class: 'scroll' }, h('table', { class: 'grid5' }, h('thead', null, hdr), tb)));
       var mt = h('tbody');
-      [['rps', 'RPs'], ['mps', 'MPs'], ['resumes', 'Resumes'], ['ptcs', 'PTCs'], ['subs', 'Submittals'], ['ftis', 'FTIs']].forEach(function (m) {
+      [['rps', 'RPs'], ['mps', 'MPs'], ['resumes', 'Resumes'], ['ptcs', 'PTCs'], ['ftis', 'FTIs']].forEach(function (m) {   /* Submittals row removed 23 Oct (Kev) */
         var v = t[m[0]], same = ls[m[0]], arrow = isNum(v) && isNum(same) ? (v > same ? '\u2191' : v < same ? '\u2193' : '=') : '';
         mt.appendChild(h('tr', null, h('td', { class: 'lab', text: m[1] }), h('td', { class: 'num', text: fmt(v) + (m[0] === 'rps' ? ' / 75' : '') }), h('td', { class: 'num', text: fmt(same) }), h('td', { class: 'num', text: fmt(l[m[0]]) }), h('td', { text: arrow })));
       });
@@ -1001,6 +1046,7 @@ a.go{font-weight:700}
   document.addEventListener('click', function (e) {
     var f = e.target.closest('.folder[data-slug]'); if (f) { openFolder(f.getAttribute('data-slug')); return; }
     var so = e.target.closest('.srt[data-sort]'); if (so) { S.lbSort = so.getAttribute('data-sort'); render(); return; }
+    var lv = e.target.closest('.lbv [data-lbv]'); if (lv) { S.lbView = lv.getAttribute('data-lbv'); render('.lbv [data-lbv="' + S.lbView + '"]'); return; }
     if (e.target.closest('#back')) { closeFolder(); render(); window.scrollTo(0, 0); return; }
     var t = e.target.closest('.tab[data-tab]'); if (t) { S.tab = t.getAttribute('data-tab'); render('#tab-' + S.tab); }
   });
@@ -1033,6 +1079,10 @@ a.go{font-weight:700}
       var cur = s.docs.map(own).filter(function (d) { return d.id === 'current'; })[0];
       pickBoard(cur || null); render();
     }, function () { status('could not read board'); });
+    db.collection('phones').onSnapshot(function (s) {
+      var cur = s.docs.map(own).filter(function (d) { return d.id === 'current'; })[0];
+      S.phones = cur || null; render();
+    }, function () {});
     db.collection('wip').onSnapshot(function (s) { S.wip = s.docs.map(own); render(); }, function () {});
     db.collection('people').onSnapshot(function (s) {
       S.people = s.docs.map(own); S.peopleLoaded = true; status('live');
@@ -1053,6 +1103,8 @@ a.go{font-weight:700}
     use('db').then(function (db) { if (db) goLive(db); }, function () {});
   }
   boot();
+  // keep the leaderboard's "pulled … ago" stamp honest through the day without rebuilding anything
+  setInterval(function () { var el = document.getElementById('lb-ago'); if (el && S.board) el.textContent = 'Crelate pulled ' + (S.board.as_of || 'at an unknown time') + ' · ' + agoText(ago(S.board.generated_at)); }, 60000);
 })();
 </script>
 

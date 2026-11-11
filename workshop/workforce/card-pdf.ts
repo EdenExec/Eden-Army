@@ -3,7 +3,7 @@
 // <dir> is an ArtifactData out_dir holding people/<slug>.json and people/<slug>/cards/<week>.json from the Round Table database.
 // Writes <out>/round-table-<week>.html and .pdf (one team page, then one page per person) and prints who is flagged for a PIP.
 // Work only: never a phone, comp or anything private beyond Kev's own coaching notes, which this PDF is for.
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
@@ -98,7 +98,11 @@ ${rows.map(({ p, c, w }) => `<tr><td class=l><b>${esc(p.name ?? p.id)}</b></td><
 function findChrome(): string | undefined {
   const root = process.env.PLAYWRIGHT_BROWSERS_PATH ?? "/opt/pw-browsers";
   if (!existsSync(root)) return undefined;
-  for (const d of readdirSync(root).filter((x) => /^chromium-\d+$/.test(x))) { const p = join(root, d, "chrome-linux", "chrome"); if (existsSync(p)) return p; }
+  const direct = join(root, "chromium");
+  if (existsSync(direct) && !statSync(direct).isDirectory()) return direct;
+  for (const d of readdirSync(root).filter((x) => /^chromium-\d+$/.test(x))) {
+    for (const sub of ["chrome-linux64", "chrome-linux"]) { const p = join(root, d, sub, "chrome"); if (existsSync(p)) return p; }
+  }
   return undefined;
 }
 

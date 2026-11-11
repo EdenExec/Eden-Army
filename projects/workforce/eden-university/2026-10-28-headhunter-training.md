@@ -92,7 +92,7 @@ My market:
 Rules:
 - Every item has a link and a date inside the window. If you can't find a date, leave it out.
 - If a firm on the client list appears, mark it "Client: don't recruit" and use it only as client intel. Never mention one client's news in a line meant for another client.
-- Moss is a client: referral asks only. Baker is a client: mark "Client · discreet".
+- Moss is a client: referral asks only. Baker is a client: mark it "Baker · client".
 - No personal details about anyone: no age, family, health, pay or home location.
 - Never send, post or email anything. Just give me the brief.
 - If nothing new is worth calling about, say "quiet night" in one line and stop.

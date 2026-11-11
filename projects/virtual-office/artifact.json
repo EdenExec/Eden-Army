@@ -6,6 +6,7 @@
   "files": {
     "office/page.css": "projects/virtual-office/draft/office/page.css",
     "office/core.js": "projects/virtual-office/draft/office/core.js",
+    "office/clipboard.js": "projects/virtual-office/draft/office/clipboard.js",
     "office/floor.js": "projects/virtual-office/draft/office/floor.js",
     "office/pulse.js": "projects/virtual-office/draft/office/pulse.js",
     "office/strip.js": "projects/virtual-office/draft/office/strip.js",

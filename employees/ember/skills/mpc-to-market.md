@@ -29,7 +29,7 @@ An MPC who fits an active JO is not a market pick: that is a submittal question.
 | Target companies | Three to six names from the map's "where they sit" and "who is moving" for that metro, with the reason in a few words | Scout's map; until a map exists, Scout's sheets in `employees/scout/sheets/` and the client list |
 | Blurb | The draft below | You |
 
-- **Never a target:** the candidate's own employer or its affiliates; a discreet client by name (Baker is "Client · discreet" in this file; Kev names it himself if he wants it); a company Kev has said not to market to.
+- **Never a target:** the candidate's own employer or its affiliates; a discreet client by name (the INL work is "Client · discreet"; Baker is named as of 5 Nov 2026); a company Kev has said not to market to.
 - **Existing clients are fair targets** (Kev markets to clients), marked "client" in the table.
 - **No map for that metro:** say so, use the sheets, and file a one-line request to Scout through Radar ("Market map for <metro>: an MPC to place there").
 - If you cannot source "why they place", ask the owner (one ask, within the cap): "Two lines on why <Name> places, for Kev's MPC picks Monday." Never invent experience, dates, titles or certifications: "confirm with candidate".

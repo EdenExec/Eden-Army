@@ -1,14 +1,16 @@
 {
-  "updated": "2026-11-02T19:00:00Z",
-  "on": "Live status for sync patrol t-202611021125-shst. Desk is up. Inbox sweep is pending the next live session (no Superhuman connector in this run). Nothing sent, booked, spent or published.",
-  "doc": "https://claude.ai/artifact/3n2h6vUU7UsMMYk13rw61L",
-  "ticket": "t-202611021125-shst",
+  "updated": "2026-11-09T20:44:29Z",
+  "on": "Sync patrol t-202611091221-sho: desk idle since 2026-11-05, no new work done. Last real work is ticket t-202611050500-nwsd (newsletter Workforce block design, projects/newsletter/design/workforce-block.md). Nothing sent, booked, spent or published. Still waiting on Kev items below. Not committed.",
+  "doc": "projects/newsletter/design/workforce-block.md",
+  "ticket": "t-202611050500-nwsd",
   "waitingOnKev": [
+    "Newsletter: OK to name people on Eden University sign-offs (Dean's pick: yes, name and module only)",
+    "Newsletter: team totals or direction only (Dean's pick: totals)",
     "Approve and send the Nick email (attach the .docx first)",
     "Pay ranges, hours, start date, links (Nick fills)",
     "Sales Intern commission terms (TBD)"
   ],
-  "next": "Next live session: run inbox sweep; move projects/comms/drafts/2026-10-31-una-post3.md into Superhuman Drafts; render una.png; Marlowe check",
+  "next": "Marlowe design check on the newsletter block once Dean's first real dean.md lands; then next live session: inbox sweep; move projects/comms/drafts/2026-10-31-una-post3.md into Superhuman Drafts; render una.png; Marlowe check",
   "docket": [
     "projects/workforce/boise-internships/docket-review-2026-10-23.md",
     "projects/workforce/boise-internships/docket-1099-and-offer-letters-2026-10-23.md",

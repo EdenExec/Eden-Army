@@ -122,3 +122,8 @@ Checked before publishing (version 13, 26 Oct 2026): Chromium at 390 and 1280 px
 ## Candidates in process (Kev, 27 October 2026)
 
 Internal folder on the Hub listing everyone in process across clients: pending start, started (30/60/90), interviewing, and submitted or PTC with no touch in 7 days. Rows come live from the depth charts; `care/{client slug}--{name slug}` docs hold `start`, `owner`, `touches [{at, by, note}]` and `checks` (offer_signed, resigned, background, day_one, counter, d30, d60, d90, referral). Contributors can write `care` (db rule `care` write interact), like `team_asks`. Hidden in screen-share mode. "Print Nick's sheet" prints the weekly one-sheet. Routine: `employees/casey/routines/candidate-care-list.md`.
+
+
+## Version 15: JO board as a ranked list (5 Nov 2026)
+
+Kev: "I don't love the post it note design, lets make it a little cleaner." The cork board is replaced with Marlowe's spec (`draft/jo-board-design-marlowe.md`): one ranked list with By rank / By client / By recruiter; filled, closed and killed JOs in a collapsed Closed out; a red edge and "Rotate?" at 14+ days, amber at 10 to 13. Two new booleans on `jobs/{id}`, `hot` (Hot next week) and `partner_share` (goes to the 1099 partner board), are toggled by editors, plus rank editing (number field and up/down). Ranks are per client and may repeat; nothing is renumbered. Each change writes the field plus `updated`. Checked before publishing: Chromium at 390 and 1280 px against a stub database, 46 checks, no script errors, no sideways scroll, writes and refused-write rollback, viewers get no controls, and screen-share mode hides the board. Open for Kev: Hot replaces the automatic Go chip, and whether to keep the amber warning.

@@ -1,0 +1,1 @@
+Hey Kelley, here's a quick guide to how I set up Claude, plus a folder of starter files you can steal from. Skim it after the concert, start with the role prompt and brand guide, then try one small Claude Code build. Holler when you hit a wall.

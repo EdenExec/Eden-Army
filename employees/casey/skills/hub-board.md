@@ -36,7 +36,7 @@ Status uses Crelate stage words: blank (to review), Pending PTC, PTC, Submitted,
 
 ## Discreet and referral-only clients
 
-- **Baker and INL.** Baker Concrete, including the INL work, may be named on the Team Hub (Kev, 23 Oct 2026: "put Baker INL stuff, no problem"): `client: "Baker Concrete"`, `client_slug: "baker"`, no `discreet` flag. Outside the Hub it stays "Client · discreet": never in anything a client sees, on a screen share, in client-facing paper or in a deck. `discreet: true` still exists for any client Kev asks to keep unnamed on the Hub.
+- **Baker is named (Kev, 5 Nov 2026).** "We can stop calling Baker discreet client, lets name them as Baker." Baker Concrete is written by name on every internal surface (Hub, tickets, briefs to Scout, drafts, team email): `client: "Baker Concrete"`, `client_slug: "baker"`. One client still never sees another client's name. `discreet: true` stays for any client Kev asks to keep unnamed later.
 - Moss is referral-only: a Moss JO can sit on the board, but Scout's brief says "referral asks only" and Moss people are never dial targets.
 - Prometheus (Bay Area real-estate investor, `prometheus`) and Promethean (NYC and Miami GC, sister to PB South, `promethean`) are different clients. Never merge them.
 

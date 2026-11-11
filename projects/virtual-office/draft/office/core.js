@@ -955,7 +955,7 @@ return { TITLE_WORDS: TITLE_WORDS, STATUS_WORDS: STATUS_WORDS, NEED_WORDS: NEED_
         { id: 'ex-ct2', title: 'Call back about the superintendent seat (example)', due: Game.addDays(Game.pacificDate(Date.now()), 2), overdueDays: null, record: { type: 'Contact', name: 'Example, Sam' }, assignedBy: 'self' }] };
     S.logs = { q: [{ at: iso(20 * MIN), text: 'Wired the status feed (example)' }, { at: iso(2 * HOUR), text: 'Ran the dry sync (example)' }] };
   }
-  function clearData() { S.agents = {}; S.alerts = {}; S.actions = {}; S.chats = {}; S.seen = {}; S.tickets = {}; S.benches = {}; S.benchRows = {}; S.crelate = null; S.phones = null; S.tools = {}; S.logs = {}; S.meta = null; S.records = null; S.today = null; S.look = null; S.ctasks = null; S.credits = null; }
+  function clearData() { S.agents = {}; S.alerts = {}; S.actions = {}; S.clip = {}; S.chats = {}; S.seen = {}; S.tickets = {}; S.benches = {}; S.benchRows = {}; S.crelate = null; S.phones = null; S.tools = {}; S.logs = {}; S.meta = null; S.records = null; S.today = null; S.look = null; S.ctasks = null; S.credits = null; }
 
   /* ---------- live data: render the example first, then light up when `db` resolves (null after about 10 s: stay on the example) ---------- */
   function listen(name, fn) {
@@ -986,6 +986,7 @@ return { TITLE_WORDS: TITLE_WORDS, STATUS_WORDS: STATUS_WORDS, NEED_WORDS: NEED_
     listen('alerts', function (m) { S.alerts = m; });
     listen('seen', function (m) { S.seen = m; });
     listen('actions', function (m) { S.actions = m; });
+    listen('clipboard', function (m) { S.clip = m; });   // phase 2 of Marlowe's flow: one running list per agent
     listen('tickets', function (m) { S.tickets = m; });
     listen('tools', function (m) { S.tools = m; });
     listen('sessions', function (m) { S.sessions = m; });

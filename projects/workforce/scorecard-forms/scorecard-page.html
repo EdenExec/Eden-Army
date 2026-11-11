@@ -1,0 +1,231 @@
+<title>Eden Friday Scorecard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one column form, page tabs 0-4 like the paper scorecard; leadership adds a Team view. */
+:root{--bg:#fff;--ink:#141414;--muted:#5f5d58;--line:#dcd9d2;--soft:#f5f3ee;--ok:#1f6b3a;--warn:#8a5a00;--bad:#9b2c2c;--focus:#141414;
+--sans:'Montserrat',Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--ink:#f1efe9;--muted:#a9a69d;--line:#36342f;--soft:#1e1d1b;--ok:#7fd19a;--warn:#f0c46a;--bad:#f08a8a;--focus:#f1efe9;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141413;--ink:#f1efe9;--muted:#a9a69d;--line:#36342f;--soft:#1e1d1b;--ok:#7fd19a;--warn:#f0c46a;--bad:#f08a8a;--focus:#f1efe9;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px;display:flex;flex-direction:column;gap:18px}
+header{border-bottom:2px solid var(--ink);padding-bottom:10px}
+.eye{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{margin:4px 0 2px;font-size:24px;font-weight:800;text-wrap:balance}
+.sub{color:var(--muted);font-size:13px}
+.status{font-family:var(--mono);font-size:12px;padding:8px 10px;border:1px solid var(--line);background:var(--soft)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 10px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+section.page{display:flex;flex-direction:column;gap:16px}
+h2{margin:6px 0 0;font-size:18px;font-weight:800}
+.note{font-size:13px;color:var(--muted);border-left:3px solid var(--ink);padding-left:10px}
+.q{display:flex;flex-direction:column;gap:6px}
+.q label,.q .lbl{font-weight:600;font-size:14px}
+.q .help{font-size:12px;color:var(--muted)}
+.req::after{content:" *";color:var(--bad)}
+input[type=text],input[type=number],textarea,select{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:8px 10px;width:100%;box-sizing:border-box}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.scale{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.scale label{display:flex;align-items:center;gap:4px;font-weight:400;font-family:var(--mono);font-size:13px;border:1px solid var(--line);padding:4px 8px}
+.gridq{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.c{text-align:center;width:70px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:sticky;bottom:0;background:var(--bg);padding-block:10px;border-top:1px solid var(--line)}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:9px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:var(--bg);color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.msg{font-size:13px;color:var(--muted)}
+.msg.err{color:var(--bad)}
+.team td{font-size:13px}
+.pill{font-family:var(--mono);font-size:11px;padding:1px 6px;border:1px solid currentColor}
+.ok{color:var(--ok)}.warn{color:var(--warn)}
+.empty{padding:20px 0;color:var(--muted)}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eye">Eden Partner Group · Friday Scorecard</div>
+    <h1 id="title">Eden Friday Scorecard</h1>
+    <div class="sub" id="sub">Loading your scorecard…</div>
+  </header>
+  <div class="status" id="status" role="status">Signing you in…</div>
+  <nav class="tabs" id="tabs" role="tablist" hidden></nav>
+  <form id="form" novalidate hidden>
+    <fieldset id="fs"></fieldset>
+    <div class="bar">
+      <button type="button" class="btn ghost" id="saveBtn">Save draft</button>
+      <button type="submit" class="btn" id="submitBtn">Submit</button>
+      <span class="msg" id="msg" aria-live="polite"></span>
+    </div>
+  </form>
+  <section id="team" hidden></section>
+</div>
+
+<script>
+(function(){
+var RECRUITERS={'max@edenexec.com':'Max','evan@edenexec.com':'Evan','noah@edenexec.com':'Noah','andrew@edenexec.com':'Andrew','bridger@edenexec.com':'Bridger'};
+var LEADERS={'kev@edenexec.com':'Kev','nick@edenexec.com':'Nick'};
+var PILLARS=['01 Righteousness','02 Winning','03 Accountability','04 Discipline','05 Transparency','06 Growth','07 Execution'];
+var MUSTDO=['2.1 Plan the week ahead (leads built, calendar set before Monday)','2.2 Don\'t chase the day (RPA daily, 15 RPs on track by noon)','2.3 Audit your inventory (chop tomorrow\'s wood today)','2.4 Build your own book (new revenue opportunities charted)','2.5 Autopsy your work (if you missed your numbers, 4.9 is filled in)','2.6 Activity, Inventory, Skill (JOs worked to required resumes, depth chart owned)'];
+// Each question: id, label, type, required, store ('r' = responses, 'c' = Kev-only candor), extra
+var REC=[
+ {page:'0 · Your numbers',note:'n0',qs:[
+  ['rps','RPs','num',1],['days15','Days at 15 RPs','num',1,{max:5,help:'How many days this week you hit 15 RPs.'}],['ftis','FTIs','num',1],['mps','MPs','num',1],['ptcs','PTCs','num',1],['resumes','Resumes','num',1],['subs','Submittals','num',1],['dialsOut','Dials out','num',1],['dialsAns','Dials answered','num',1],['placements','Placements','text',0,{help:'Names of anyone who started or accepted this week.'}]]},
+ {page:'1 · Big wins',qs:[
+  ['q11','1.1 Biggest win this week, big or small','para',1],['q12','1.2 How did you get better at your daily work this week?','para',1],['q13','1.3 Which revenue, FTI or notable prospect should we talk about, and why?','para',0],['q14','1.4 How aligned was this week with your 10-5-3-1?','scale',1,{min:1,max:5,lo:'Off track',hi:'Fully aligned'}],['q15','1.5 Which 1-year goal did this week move, and how?','text',1]]},
+ {page:'2 · MUST DOs and core values',qs:[
+  ['must','2.1 to 2.6 · This week\'s MUST DOs','grid',1,{rows:MUSTDO,cols:['Yes','Partly','No']}],['q27','2.7 Which pillar did you live best this week?','select',1,{opts:PILLARS}],['q27x','2.7 One example','text',1],['q28','2.8 Which pillar will you work on next week?','select',1,{opts:PILLARS}],['q29','2.9 Who on the team lived out a core value this week, and how?','text',0,{help:'Counts as a Good Guy of the Week nomination.'}]]},
+ {page:'3 · Radical candor',desc:'Only Kev reads this section. Skip anything you\'d rather say in person.',store:'c',qs:[
+  ['q31','3.1 Burnout score','scale',1,{min:1,max:10,lo:'Fried',hi:'Fresh'}],['q32','3.2 Anything about pay, commission or draw you want to talk through?','para',0],['q33','3.3 Anything outside work affecting your week Kev should know?','para',0],['q34','3.4 What do you need from leadership to win next week?','para',0],['q35','3.5 Anything you\'d like resolved, or something we should be talking about?','para',0]]},
+ {page:'4 · Autopsy and inventory',qs:[
+  ['q41','4.1 Do your numbers look right? If not, what\'s off?','text',0,{help:'Add any placement the Thursday check missed.'}],['q42','4.2 MPCs taking to market: name, role, location','para',1],['q43','4.3 Client prospects to develop, and the next step with each','para',1],['q44','4.4 FTIs and PTCs needing follow-up (your WIP)','para',1],['q45','4.5 Pending starts to touch base with before they start','para',0],['q46','4.6 JOs worked this week','para',1],['q47','4.7 JOs that are dead or need a client update','para',0],['q48','4.8 JOs you\'d like to work next week','para',1,{help:'Leadership confirms in the review.'}],['q49','4.9 Autopsy: one thing you\'d do differently','para',1,{help:'If you hit 15 RPs every day, write "hit my numbers".'}],['q410','4.10 Next week I will: three commitments','para',1]]}
+];
+var LEAD=[
+ {page:'0 · Team numbers',note:'n0',qs:[
+  ['rps','Team RPs','num',1],['ftis','Team FTIs','num',1],['mps','Team MPs','num',1],['ptcs','Team PTCs','num',1],['resumes','Team resumes','num',1],['subs','Team submittals','num',1],['dials','Team dials','num',1],['placements','Team placements','text',0]]},
+ {page:'The week',qs:[
+  ['l1','L1 Biggest team win, and who drove it','para',1],
+  ['l2','L2 Team numbers against the weekly plan','grid',1,{rows:['RPs','FTIs','PTCs','Dials','Placements'],cols:['On track','Close','Behind']}],
+  ['l3','L3 Each recruiter in one line','grid',1,{rows:['Max','Evan','Noah','Andrew','Bridger'],cols:['On track','Watch','Needs help'],store:'c'}],
+  ['l4','L4 Who needs coaching, and on what? Note any PIP conversation.','para',0,{store:'c'}],
+  ['l5','L5 Good Guy of the Week','select',1,{opts:['Max','Evan','Noah','Andrew','Bridger'],help:'Pick from this week\'s 2.9 nominations.'}],['l5x','L5 Why','text',1],
+  ['l6','L6 Client development: new clients, JOs opened, split partners worked','para',1],['l7','L7 JOs to kill, reassign or push next week','para',0],
+  ['l8','L8 Which system or agent helped or slowed the team, and the one fix for next week','para',0],
+  ['l9','L9 Your own burnout score','scale',1,{min:1,max:10,lo:'Fried',hi:'Fresh',store:'c'}],
+  ['l10','L10 Decisions waiting on you, and by when','para',0],['l11','L11 Top three leadership priorities for next week','para',1]]}
+];
+var $=function(id){return document.getElementById(id)};
+var db=null,user=null,uid=null,email='',role='',meta=null,prefill=null,spec=null,cur=0,locked=false,mainCol='',vals={},saved={};
+function el(tag,attrs,text){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==='class')e.className=attrs[k];else e.setAttribute(k,attrs[k]);}if(text!=null)e.textContent=text;return e}
+function storeOf(q,page){return (q[4]&&q[4].store)||page.store||'r'}
+function status(t,err){var s=$('status');s.textContent=t;s.style.color=err?'var(--bad)':''}
+function lockTime(){return meta&&meta.lockAt?Date.parse(meta.lockAt):NaN}
+function isLocked(){var t=lockTime();return isFinite(t)&&Date.now()>=t}
+
+function renderTabs(){var t=$('tabs');t.innerHTML='';spec.forEach(function(p,i){var b=el('button',{type:'button',role:'tab','aria-selected':String(i===cur)},p.page);b.onclick=function(){collect();cur=i;renderTabs();renderPage()};t.appendChild(b)});
+ if(role==='lead'){var b=el('button',{type:'button',role:'tab','aria-selected':String(cur===-1)},'Team');b.onclick=function(){collect();cur=-1;renderTabs();renderPage()};t.appendChild(b)} t.hidden=false}
+function renderPage(){
+ var fs=$('fs');fs.innerHTML='';$('team').hidden=cur!==-1;$('form').hidden=cur===-1;
+ if(cur===-1){renderTeam();return}
+ var p=spec[cur];var sec=el('section',{class:'page'});sec.appendChild(el('h2',null,p.page));
+ if(p.note)sec.appendChild(el('p',{class:'note'},'Scored week: '+(meta&&meta.window||'this week')+' (Friday through Thursday). Numbers are filled in from Crelate and CloudTalk; correct anything that looks off in 4.1. Revenue, commission and draw aren\'t shown yet.'));
+ if(p.desc)sec.appendChild(el('p',{class:'note'},p.desc));
+ var box=p.note?el('div',{class:'nums'}):sec;
+ p.qs.forEach(function(q){box.appendChild(field(q,p))});
+ if(p.note)sec.appendChild(box);
+ fs.appendChild(sec);fs.disabled=locked;
+}
+function field(q,p){
+ var id=q[0],lab=q[1],type=q[2],req=q[3],x=q[4]||{};var w=el('div',{class:'q'});var fid='f_'+id;var v=vals[id];
+ var L=el(type==='grid'||type==='scale'?'div':'label',{class:'lbl'+(req?' req':'')},lab);if(L.tagName==='LABEL')L.setAttribute('for',fid);w.appendChild(L);
+ if(x.help)w.appendChild(el('div',{class:'help'},x.help));
+ if(storeOf(q,p)==='c'&&role==='lead')w.appendChild(el('div',{class:'help'},'Kev only.'));
+ var inp;
+ if(type==='num'){inp=el('input',{type:'number',id:fid,min:'0',step:'1',inputmode:'numeric'});if(x.max)inp.max=x.max;if(v!=null&&v!=='')inp.value=v}
+ else if(type==='text'){inp=el('input',{type:'text',id:fid});if(v)inp.value=v}
+ else if(type==='para'){inp=el('textarea',{id:fid});if(v)inp.value=v}
+ else if(type==='select'){inp=el('select',{id:fid});inp.appendChild(el('option',{value:''},'Choose…'));x.opts.forEach(function(o){var op=el('option',{value:o},o);if(v===o)op.selected=true;inp.appendChild(op)})}
+ else if(type==='scale'){inp=el('div',{class:'scale',id:fid,role:'radiogroup','aria-label':lab});inp.appendChild(el('span',{class:'help'},x.lo));for(var n=x.min;n<=x.max;n++){var l=el('label');var r=el('input',{type:'radio',name:fid,value:String(n)});if(String(v)===String(n))r.checked=true;l.appendChild(r);l.appendChild(document.createTextNode(String(n)));inp.appendChild(l)}inp.appendChild(el('span',{class:'help'},x.hi))}
+ else if(type==='grid'){inp=el('div',{class:'gridq',id:fid});var t=el('table');var h=el('tr');h.appendChild(el('th'));x.cols.forEach(function(c){h.appendChild(el('th',{class:'c'},c))});t.appendChild(h);
+   x.rows.forEach(function(r,ri){var tr=el('tr');tr.appendChild(el('td',null,r));x.cols.forEach(function(c){var td=el('td',{class:'c'});var rb=el('input',{type:'radio',name:fid+'_'+ri,value:c,'aria-label':r+': '+c});if(v&&v[ri]===c)rb.checked=true;td.appendChild(rb);tr.appendChild(td)});t.appendChild(tr)});inp.appendChild(t)}
+ w.appendChild(inp);return w;
+}
+function collect(){ if(cur<0)return; spec[cur].qs.forEach(function(q){var id=q[0],type=q[2],fid='f_'+id,x=q[4]||{};
+ if(type==='scale'){var c=document.querySelector('input[name="'+fid+'"]:checked');vals[id]=c?Number(c.value):(vals[id]??null)}
+ else if(type==='grid'){vals[id]=x.rows.map(function(r,ri){var c=document.querySelector('input[name="'+fid+'_'+ri+'"]:checked');return c?c.value:((vals[id]||[])[ri]||'')})}
+ else {var e=$(fid);if(e)vals[id]=type==='num'?(e.value===''?'':Number(e.value)):e.value}
+});}
+function missing(){var m=[];spec.forEach(function(p){p.qs.forEach(function(q){if(!q[3])return;var v=vals[q[0]];
+ if(q[2]==='grid'){if(!v||v.some(function(s){return !s}))m.push(q[1])}else if(v==null||v===''){m.push(q[1])}})});return m}
+function split(){var r={},c={};spec.forEach(function(p){p.qs.forEach(function(q){var v=vals[q[0]];if(v===undefined)return;(storeOf(q,p)==='c'?c:r)[q[0]]=v})});return {r:r,c:c}}
+var busy=false;
+async function save(submit){
+ if(busy)return; collect(); if(isLocked()){locked=true;renderPage();msg('Editing closed at 10:30am Pacific. Tell Kev if something needs fixing.',true);return}
+ if(submit){var m=missing();if(m.length){msg('Still needed: '+m.slice(0,4).join('; ')+(m.length>4?' and '+(m.length-4)+' more':'')+'.',true);return}}
+ busy=true;$('saveBtn').disabled=$('submitBtn').disabled=true;msg('Saving…');
+ var s=split(),now=new Date().toISOString(),wk=meta&&meta.weekEnding||'';
+ try{
+  await db.doc(mainCol+'/'+uid).set(Object.assign({week:wk,email:email,name:(role==='rec'?RECRUITERS:LEADERS)[email],updatedAt:now,submitted:!!submit||!!(saved.r&&saved.r.submitted)},s.r));
+  await db.doc('candor/'+uid).set(Object.assign({week:wk,email:email,form:role,updatedAt:now},s.c));
+  saved={r:s.r,c:s.c};saved.r.submitted=!!submit||saved.r.submitted;
+  msg(submit?'Submitted. You can still edit until 10:30am Pacific.':'Draft saved.');
+ }catch(e){msg('Couldn\'t save ('+(e&&e.code||'error')+'). Your answers are still on this page; try again.',true)}
+ busy=false;$('saveBtn').disabled=$('submitBtn').disabled=locked;
+}
+function msg(t,err){var m=$('msg');m.textContent=t;m.className='msg'+(err?' err':'')}
+$('saveBtn').onclick=function(){save(false)};
+$('form').onsubmit=function(e){e.preventDefault();save(true)};
+
+var teamRows=[],teamCandor={};
+function renderTeam(){
+ var s=$('team');s.innerHTML='';s.appendChild(el('h2',null,'Team · week ending '+(meta&&meta.weekEndingLabel||'')));
+ var t=el('table',{class:'team'});var h=el('tr');['Recruiter','Status','RPs','FTIs','PTCs','Subs','Win (1.1)','Next week (4.10)'].forEach(function(c){h.appendChild(el('th',null,c))});
+ var showC=Object.keys(teamCandor).length>0; if(showC){h.appendChild(el('th',null,'Burnout (3.1)'))}
+ t.appendChild(h);
+ Object.keys(RECRUITERS).forEach(function(em){var r=teamRows.find(function(x){return x.email===em&&x.week===(meta&&meta.weekEnding)});var tr=el('tr');
+  tr.appendChild(el('td',null,RECRUITERS[em]));var st=el('td');st.appendChild(el('span',{class:'pill '+(r&&r.submitted?'ok':'warn')},r?(r.submitted?'Submitted':'Draft'):'Not started'));tr.appendChild(st);
+  ['rps','ftis','ptcs','subs'].forEach(function(k){tr.appendChild(el('td',null,r&&r[k]!=null?String(r[k]):'·'))});
+  tr.appendChild(el('td',null,r&&r.q11||''));tr.appendChild(el('td',null,r&&r.q410||''));
+  if(showC){var c=Object.values(teamCandor).find(function(x){return x.email===em&&x.week===(meta&&meta.weekEnding)});tr.appendChild(el('td',null,c&&c.q31!=null?String(c.q31):'·'))}
+  t.appendChild(tr)});
+ var wrap=el('div',{class:'gridq'});wrap.appendChild(t);s.appendChild(wrap);
+ s.appendChild(el('p',{class:'note'},showC?'You see section 3 because you are Kev. Nick does not.':'Section 3 answers are Kev\'s only.'));
+}
+
+var timer=setTimeout(function(){status('Could not load the scorecard. Reopen the page to try again.',true)},10000);
+(async function(){
+ var c=window.claude;db=c&&c.use?await c.use('db'):null;user=c&&c.use?await c.use('user'):null;clearTimeout(timer);
+ if(!db||!user){status('Sign in to claude.ai with your Eden account to open your scorecard.',true);return}
+ var me=await user.me();uid=me.id;
+ if(!uid){status('Sign in to claude.ai with your Eden account to open your scorecard.',true);return}
+ email=await whoAmI(me);
+ if(!email)return; // the name picker is showing
+ if(RECRUITERS[email]){role='rec';spec=REC;mainCol='responses'}else{role='lead';spec=LEAD;mainCol='leadership'}
+ await start();
+})();
+// Who is this? The owner is Kev. Otherwise: Eden email if the org shares it, then the account name, then a one-time pick (kept in claims/<id>).
+var FULL={'max@edenexec.com':'Max Betcher','evan@edenexec.com':'Evan MacArthur','noah@edenexec.com':'Noah Fields','andrew@edenexec.com':'Andrew Johnson','bridger@edenexec.com':'Bridger Stainbrook','kev@edenexec.com':'Kevin Williams','nick@edenexec.com':'Nick Leckwold'};
+async function whoAmI(me){
+ var all=Object.assign({},RECRUITERS,LEADERS);
+ if(me.isOwner)return 'kev@edenexec.com';
+ var em=(me.email||'').toLowerCase(); if(all[em])return em;
+ try{var c=await db.doc('claims/'+uid).get();if(c.exists&&all[c.data().email])return c.data().email}catch(e){}
+ var nm=(me.name||'').toLowerCase().trim();
+ if(nm){for(var k in FULL){if(k!=='kev@edenexec.com'&&FULL[k].toLowerCase()===nm){await claim(k);return k}}}
+ picker(all);return '';
+}
+async function claim(em){try{await db.doc('claims/'+uid).set({email:em,at:new Date().toISOString()})}catch(e){}}
+function picker(all){
+ status('Pick your name once so your scorecard saves to you. Kev sees which account picked which name.');
+ var t=$('tabs');t.innerHTML='';t.hidden=false;
+ Object.keys(all).filter(function(k){return k!=='kev@edenexec.com'}).forEach(function(k){var b=el('button',{type:'button'},all[k]);b.onclick=async function(){email=k;await claim(k);
+   if(RECRUITERS[k]){role='rec';spec=REC;mainCol='responses'}else{role='lead';spec=LEAD;mainCol='leadership'}await start()};t.appendChild(b)});
+}
+async function start(){
+ try{var m=await db.doc('meta/week').get();meta=m.exists?m.data():null}catch(e){meta=null}
+ if(!meta){status('This week\'s scorecard isn\'t open yet. Check back Thursday afternoon.',true);return}
+ $('title').textContent='Eden Friday Scorecard'+(role==='lead'?' · Leadership':'')+', week ending '+meta.weekEndingLabel;
+ $('sub').textContent=(role==='rec'?RECRUITERS:LEADERS)[email]+' · fill it in 10:00 to 10:30am Pacific; we review it together at 10:30.';
+ var key=role==='rec'?email.split('@')[0]:'team';
+ try{var p=await db.doc('prefill/'+key).get();prefill=p.exists?p.data():null}catch(e){prefill=null}
+ try{var a=await db.doc(mainCol+'/'+uid).get();var b=await db.doc('candor/'+uid).get();
+   var ad=a.exists?a.data():null,bd=b.exists?b.data():null;
+   if(ad&&ad.week===meta.weekEnding){saved.r=ad;Object.assign(vals,ad)} if(bd&&bd.week===meta.weekEnding){saved.c=bd;Object.assign(vals,bd)}}catch(e){}
+ if(prefill&&prefill.week===meta.weekEnding){spec[0].qs.forEach(function(q){if((vals[q[0]]==null||vals[q[0]]==='')&&prefill[q[0]]!=null)vals[q[0]]=prefill[q[0]]})}
+ locked=isLocked();
+ status(locked?'Editing closed at 10:30am Pacific. You can read your answers below.':(saved.r&&saved.r.submitted?'Submitted. You can edit until 10:30am Pacific.':'Not submitted yet. Save a draft anytime; submit by 10:30am Pacific.'));
+ $('form').hidden=false;renderTabs();renderPage();$('saveBtn').disabled=$('submitBtn').disabled=locked;
+ if(role==='lead'){
+  db.collection('responses').onSnapshot(function(snap){teamRows=snap.docs.map(function(d){return d.data()});if(cur===-1)renderTeam()},function(){});
+  db.collection('candor').onSnapshot(function(snap){teamCandor={};snap.docs.forEach(function(d){var x=d.data();if(x.form==='rec')teamCandor[d.id]=x});if(cur===-1)renderTeam()},function(){});
+ }
+ setInterval(function(){if(!locked&&isLocked()){collect();locked=true;renderPage();$('saveBtn').disabled=$('submitBtn').disabled=true;status('Editing closed at 10:30am Pacific.')}},30000);
+}
+})();
+</script>

@@ -292,7 +292,7 @@
   /* What Kev just answered stays one line with Undo until the next sync clears it; a snooze shows when it wakes. */
   function handledLines(a) {
     var out = [], now = Date.now();
-    Object.keys(S.actions).map(function (k) { return S.actions[k]; }).filter(function (x) { return x.agent === a.id && x.action !== 'snooze' && x.source !== 'daily' && !/^daily-/.test(x.key || '') && acted(x.key) && now - t(x.at) < DAY; })
+    Object.keys(S.actions).map(function (k) { return S.actions[k]; }).filter(function (x) { return x.agent === a.id && x.action !== 'snooze' && x.action !== 'clipnote' && x.source !== 'daily' && !/^daily-/.test(x.key || '') && acted(x.key) && now - t(x.at) < DAY; })
       .sort(function (x, y) { return t(y.at) - t(x.at); }).slice(0, 3).forEach(function (x) {
         var u = h('button', { class: 'mini txt', text: 'Undo', 'data-undo': x.key }); u.disabled = !S.canWrite;
         var tm = /^ticket-(.+)-(?:gated|blocked|done)$/.exec(x.key || ''), tt = tm && S.tickets[tm[1]] ? Proj.ticketTitle(S.tickets[tm[1]]) : Proj.cutWords(x.title, 6);
@@ -303,6 +303,58 @@
       out.push(h('div', { class: 'handled' }, h('span', { class: 't', text: 'Snoozed · ' + Proj.cutWords(x.title, 6) + ' · back ' + untilLabel(x.until) }), w));
     });
     return out;
+  }
+
+
+  /* ---- CLIPBOARD (phase 2 of Marlowe's flow): impact first, waiting-on-Kev pinned, projects above bullets, notes inline ---- */
+  var clipOpen = {}, clipNoteDraft = {}, clipLog = {};
+  function clipBullets() { return Object.keys(S.clip || {}).map(function (k) { return S.clip[k]; }); }
+  function saveClipNote(b) {
+    var key = Clip.noteKey(b.id), doc = Clip.noteDoc(b, clipNoteDraft[b.id], S.actions[key], new Date().toISOString()); if (!doc) return;
+    delete clipNoteDraft[b.id]; S.actions[key] = doc; rerender();
+    if (S.live && S.db && S.canWrite) S.db.doc('actions/' + key).set(doc).catch(function () { delete S.actions[key]; S.flash = 'That note did not save. Try again.'; rerender(); });
+  }
+  function clipLi(b) {
+    var open = !!clipOpen[b.id], li = h('li', { class: 'it cb ' + b.state }), row = h('div', { class: 'it-r' });
+    var tg = h('button', { class: 'it-t', type: 'button', 'aria-expanded': String(open), text: b.line });
+    tg.addEventListener('click', function () { clipOpen[b.id] = !clipOpen[b.id]; rerender(); });
+    row.appendChild(tg); if (b.state === 'kev') row.appendChild(h('span', { class: 'st', text: 'Waiting on you' }));
+    li.appendChild(row);
+    if (b.why) li.appendChild(h('p', { class: 'cb-why', text: b.why }));
+    if (open) {
+      var x = h('div', { class: 'it-x' });
+      if (b.detail) x.appendChild(h('p', { class: 'clip open', text: b.detail }));
+      (b.links || []).slice(0, 3).forEach(function (l) { var u = linkUrl(l.url || l); if (u) x.appendChild(h('a', { class: 'lk', href: u, target: '_blank', rel: 'noopener', text: (l.label || 'Open') + ' ↗' })); });
+      Clip.thread(b, S.actions[Clip.noteKey(b.id)]).forEach(function (n) { x.appendChild(h('p', { class: 'cb-note' + (n.pending ? ' pending' : ''), text: (n.by === 'kev' ? 'You' : nameOf(b.agent)) + ': ' + n.text + (n.pending ? ' · ' + nameOf(b.agent) + ' answers next pass' : '') })); });
+      var inp = h('input', { class: 'fu', type: 'text', maxlength: '400', placeholder: 'Leave a note, press Enter', 'aria-label': 'Note on ' + b.line, 'data-td-in': 'cb-' + b.id });
+      inp.value = clipNoteDraft[b.id] || ''; inp.disabled = !S.canWrite;
+      inp.addEventListener('input', function () { clipNoteDraft[b.id] = inp.value; });
+      inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); saveClipNote(b); } });
+      x.appendChild(inp); li.appendChild(x);
+    }
+    return li;
+  }
+  function clipSection(a) {
+    var all = clipBullets().filter(function (b) { return b.agent === a.id; }); if (!all.length) return null;
+    var v = Clip.clipboard(all, a.id), g = Clip.byProject(all, a.id, a.projects || []);
+    var sec = h('section', { class: 'clipboard' }, h('h3', { text: 'Clipboard · ' + (v.shown.length + v.more) + (v.kev ? ' · ' + v.kev + ' waiting on you' : '') }));
+    var pinned = v.shown.filter(function (b) { return b.state === 'kev'; });
+    if (pinned.length) { var pu = h('ul', { class: 'its' }); pinned.forEach(function (b) { pu.appendChild(clipLi(b)); }); sec.appendChild(pu); }
+    var shownIds = {}; v.shown.forEach(function (b) { shownIds[b.id] = true; });
+    g.projects.forEach(function (p) {
+      var bs = p.bullets.filter(function (b) { return b.state !== 'kev'; }); if (!bs.length && !p.stalled) return;
+      var wrap = h('div', { class: 'prj open' }, h('div', { class: 'prj-r' }, h('div', { class: 'prj-h' }, h('span', { class: 'car' }), h('span', { class: 'pt', text: p.title }), h('span', { class: 'chips' }, p.stalled ? h('span', { class: 'chip n', text: 'stalled · no next step' }) : ''), h('span', { class: 'ps', text: p.next ? 'Next: ' + p.next : p.status }))));
+      var ul = h('ul', { class: 'its' }); bs.forEach(function (b) { ul.appendChild(clipLi(b)); }); if (bs.length) wrap.appendChild(h('div', { class: 'prj-b' }, ul)); sec.appendChild(wrap);
+    });
+    var loose = g.loose.filter(function (b) { return b.state !== 'kev'; });
+    if (loose.length) { var lu = h('ul', { class: 'its' }); loose.forEach(function (b) { lu.appendChild(clipLi(b)); }); sec.appendChild(h('h4', { class: 'gh', text: 'Other · ' + (loose.length + g.looseMore) })); sec.appendChild(lu); }
+    var dl = Clip.doneLog(all, a.id, 10);
+    if (dl.length) {
+      var d = h('details', { class: 'cb-log' }, h('summary', { text: 'Done log · ' + dl.length })), du = h('ul', { class: 'its' });
+      dl.forEach(function (b) { du.appendChild(h('li', { class: 'it shipped' }, h('div', { class: 'it-r' }, h('span', { class: 'it-t', text: b.line }), h('span', { class: 'st', text: ago(b.doneAt) })))); });
+      d.appendChild(du); sec.appendChild(d);
+    }
+    return sec;
   }
 
   /* ---- PROJECTS ---- */
@@ -357,12 +409,13 @@
     // 2. NEEDS YOUR INPUT: open by default, gone when empty
     var needs = agentNeeds(a.id);
     if (needs.length) { var ns = h('section', { class: 'needs' }, h('h3', { text: 'Needs your input · ' + needs.length })); needs.forEach(function (i) { ns.appendChild(needRow(i, false)); }); body.appendChild(ns); }
+    var clip = clipSection(a); if (clip) body.appendChild(clip);
     var hl = handledLines(a); if (hl.length) { var hs = h('section', { class: 'handled-s' }); hl.forEach(function (x) { hs.appendChild(x); }); body.appendChild(hs); }
     // 3. PROJECTS: collapsed, except the first with something needing input
     var ap = agentProjects(a), firstNeeds = ap.projects.filter(function (x) { return x.counts.needs > 0; })[0];
     if (ap.projects.length) {
-      var ps = h('section', { class: 'projects' }, h('h3', { text: 'Projects · ' + ap.projects.length }));
-      ap.projects.forEach(function (x) { ps.appendChild(projectRow(a, x, x === firstNeeds)); });
+      var ps = h(clip ? 'details' : 'section', { class: 'projects' }, h(clip ? 'summary' : 'h3', { text: (clip ? 'Tickets and shipped work · ' : 'Projects · ') + ap.projects.length }));
+      ap.projects.forEach(function (x) { ps.appendChild(projectRow(a, x, !clip && x === firstNeeds)); });
       body.appendChild(ps);
     }
     // 4. other open work: open tickets that belong to no project

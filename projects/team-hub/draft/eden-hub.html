@@ -11,10 +11,8 @@
   --pos:#3D6B4F; --warn:#8A6A1F; --neg:#8A3A32; --pos-bg:#E4EEE7; --warn-bg:#F3EAD0; --neg-bg:#F1DDD9; --info-bg:#E9E6DD;
   --red-fade:#F5E3DF; --red-line:#EAD2CC; --g1:#D9ECDE; --g1-line:#8FBF9E; --g1-bar:#3D7A52; --g2:#E8F2EB; --g2-line:#BFD9C6; --g2-bar:#8DB89A;
   --sans:'Montserrat','Helvetica Neue',Arial,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
-  /* JO board: cork, frame, pins and paper */
-  --cork:#C39A6B; --cork-2:#AD8152; --cork-fleck:#8E6338; --cork-hi:#E8CFA6; --frame:#4A3524; --frame-hi:#6E5136;
-  --note:#FBE98F; --note-edge:#EDD36A; --note-ink:#2A2414; --note-hold:#EEE8D2; --note-dead:#D9D4C8;
-  --card:#FFFDF7; --card-rule:#C24E44; --pin:#B3372B; --pin-brass:#B48A3A; --pin-grey:#8E8A80; --shade:rgba(46,28,10,.42);
+  /* JO board: list rows; --shade is the dialog backdrop only */
+  --row-hover:#F4F0E8; --shade:rgba(46,28,10,.42);
 }
 :root{color-scheme:light}
 *{box-sizing:border-box}
@@ -161,8 +159,6 @@ select.st.pos{background:var(--pos-bg);color:var(--pos)}select.st.warn{backgroun
 .jo-sum>div{display:grid;gap:2px;min-width:0}
 .jo-sum b{font-size:26px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .jo-sum .hot b,.jo-sum .hot .meta{color:var(--neg)}
-.jo-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
-.jo-group{display:grid;gap:0;margin-bottom:20px;min-width:0}
 .jtop{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
 .jtop h4{min-width:0;overflow-wrap:anywhere}
 .jcard.rot{background:linear-gradient(180deg,var(--bg) 35%,var(--red-fade) 100%);border-color:var(--red-line)}
@@ -173,59 +169,60 @@ select.st.pos{background:var(--pos-bg);color:var(--pos)}select.st.warn{backgroun
 .jlist li{display:grid;gap:3px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;min-width:0;overflow-wrap:anywhere}
 .jlist li:first-child{border-top:0;padding-top:0}
 .chip.rot{background:var(--neg);color:#fff;font-weight:600}
-/* JO board: one cork board, one index card per client, one sticky note per job order */
-.jo-btools{display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:0 0 10px}
-.blegend{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;font-size:11.5px;color:var(--mute)}
-.blegend span{display:inline-flex;gap:5px;align-items:center}
-.lg-pin{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pin-brass);box-shadow:0 1px 1px var(--shade)}
-.lg-pin.go{background:var(--pin)}
-.blegend s{text-decoration-thickness:2px}
-.jo-board{background:var(--frame);border-radius:10px;padding:9px;box-shadow:inset 0 0 0 2px var(--frame-hi),0 3px 10px -2px var(--shade);min-width:0}
-.cork{border-radius:4px;padding:18px 14px 8px;min-width:0;
-  background-color:var(--cork);
-  background-image:radial-gradient(circle at 30% 40%,var(--cork-fleck) 0 .7px,transparent 1.3px),radial-gradient(circle at 70% 75%,var(--cork-hi) 0 .6px,transparent 1.2px),radial-gradient(circle at 55% 15%,var(--cork-fleck) 0 .5px,transparent 1px),linear-gradient(165deg,var(--cork) 0%,var(--cork-2) 100%);
-  background-size:7px 6px,9px 11px,5px 5px,100% 100%;
-  box-shadow:inset 0 2px 12px var(--shade);
-  column-width:205px;column-gap:20px}
-.bcol{break-inside:avoid;display:grid;gap:13px;align-content:start;padding:0 0 22px;min-width:0}
-.bhead{background:var(--card);color:var(--ink);border-radius:2px;padding:10px 12px 8px;box-shadow:0 1px 1px var(--shade),0 5px 9px -5px var(--shade);display:grid;gap:3px;min-width:0}
-.bhead h4{margin:0;font-size:13px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;line-height:1.2;padding-bottom:5px;border-bottom:1.5px solid var(--card-rule);overflow-wrap:anywhere}
-.bhead .meta{font-size:10px}
-.bempty{font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--card);opacity:.85;padding:2px 4px}
-.note{all:unset;box-sizing:border-box;position:relative;display:grid;gap:5px;align-content:start;min-width:0;padding:17px 11px 10px;cursor:pointer;color:var(--note-ink);
-  background:linear-gradient(180deg,var(--note) 0%,var(--note) 86%,var(--note-edge) 100%);
-  box-shadow:0 1px 1px var(--shade),0 7px 10px -6px var(--shade);transform:rotate(var(--r,0deg));transition:transform .15s,box-shadow .15s}
-.bcol .note:nth-of-type(4n+1){--r:-1.2deg}.bcol .note:nth-of-type(4n+2){--r:.8deg}.bcol .note:nth-of-type(4n+3){--r:-.4deg}.bcol .note:nth-of-type(4n){--r:1.3deg}
-.note:hover{transform:rotate(0deg) translateY(-2px);box-shadow:0 2px 2px var(--shade),0 12px 16px -8px var(--shade)}
-.note:focus-visible{outline:3px solid var(--frame);outline-offset:3px}
-.note::before{content:"";position:absolute;top:5px;left:50%;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--card) 0 1.4px,transparent 2.4px),var(--pin-c,var(--pin-brass));box-shadow:0 2px 2px var(--shade)}
-.note.go{--pin-c:var(--pin)}
-.note.rot{box-shadow:inset 3px 0 0 var(--neg),0 1px 1px var(--shade),0 7px 10px -6px var(--shade)}
-.nrole{font-weight:800;font-size:13px;line-height:1.22;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
-.nloc{font-family:var(--mono);font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;opacity:.78;overflow-wrap:anywhere}
-.nwho{font-size:11.5px;font-weight:600;overflow-wrap:anywhere}
-.nwho i{font-style:normal;font-weight:500;opacity:.7}
-.ncond{font-size:11px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-.nmk{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-.mk{font-family:var(--mono);font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;border-radius:3px;padding:2px 5px;background:var(--note-edge);color:var(--note-ink);white-space:nowrap}
-.mk.go{background:var(--pin);color:var(--card);font-weight:600}
-.mk.rot{background:var(--neg);color:var(--card)}
-.mk.none{background:transparent;color:var(--neg);border:1px dashed var(--neg);padding:1px 4px}
-.stamp{justify-self:end;margin:2px 2px 0 0;transform:rotate(-8deg);font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:2px solid currentColor;border-radius:3px;padding:0 5px;color:var(--warn)}
-.note.hold{background:var(--note-hold);--pin-c:var(--pin-grey)}
-.note.hold>:not(.stamp){opacity:.75}
-.note.filled .stamp{color:var(--pos)}
-.note.dead{background:var(--note-dead);--pin-c:var(--pin-grey);--r:0deg!important}
-.note.dead>:not(.stamp){opacity:.6}
-.note.dead .nrole{text-decoration:line-through;text-decoration-thickness:2px}
-.note.dead .stamp{color:var(--neg)}
+/* JO board: one ranked list (Marlowe spec, Nov 2026). By client regroups the same rows; filled, closed and killed sit in a collapsed Closed out */
+.jo-btools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 8px}
+.jo-btools .btn{min-height:44px;padding:8px 13px}
+.jo-seg{display:inline-flex;min-width:0}
+.jo-seg .btn{border-radius:0;margin-left:-1.5px}
+.jo-seg .btn:first-child{border-radius:8px 0 0 8px;margin-left:0}
+.jo-seg .btn:last-child{border-radius:0 8px 8px 0}
+.jo-btools .jo-addb{margin-left:auto}
+.jo-count{font-family:var(--mono);font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.jo-count b{color:var(--ink);font-weight:500}
+.jrows{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;min-width:0;overflow:hidden}
+.jr{--rk:56px;display:grid;grid-template-columns:var(--rk) minmax(0,1fr) 120px 56px 72px 200px;grid-template-areas:"rank body lead age leads flags";gap:12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);min-height:52px;cursor:pointer;transition:background-color 120ms}
+.jrows.jr-ed .jr{--rk:84px}
+.jr:last-child{border-bottom:0}
+.jr:hover,.jr:focus-within{background:var(--row-hover)}
+.jr.rot{box-shadow:inset 2px 0 0 var(--neg)}
+.jr-rank{grid-area:rank;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums;min-width:0}
+.jr.hot .jr-rank,.jr.hot .jr-rk input{color:var(--ink)}
+.jr-body{grid-area:body;min-width:0;display:grid;gap:3px}
+.jr-role{all:unset;cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:700;line-height:1.3;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
+.jr-role:focus-visible,.jt:focus-visible,.jr-mv button:focus-visible,.jr-rk input:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;border-radius:4px}
+.jr-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--mute);overflow-wrap:anywhere}
+.jr-cond{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.jr-lead{grid-area:lead;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.jr-age{grid-area:age}.jr-leads{grid-area:leads}
+.jr-num{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.jr .warm{color:var(--warn)}.jr .rotting{color:var(--neg);font-weight:700}
+.jr-flags{grid-area:flags;display:flex;gap:4px 6px;flex-wrap:wrap;align-items:center;justify-content:flex-end;min-width:0}
+.jr .m-only{display:none}
+.jr.hold .jr-role,.jr.hold .jr-lead{color:var(--mute)}
+.jr.dead .jr-role{text-decoration:line-through;text-decoration-thickness:1px;color:var(--mute)}
+.chip.hotc{background:var(--ink);color:var(--paper);font-weight:600}
+.chip.p1099{background:transparent;color:var(--gold);border:1px solid var(--gold);padding:2px 6px}
+.chip.off{background:transparent;color:var(--mute);border:1px dashed var(--line);padding:2px 6px}
+.jt{all:unset;box-sizing:border-box;cursor:pointer;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.jr-rk{display:flex;gap:4px;align-items:center}
+.jr-rk input{box-sizing:border-box;width:44px;height:44px;padding:0;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold);text-align:center;background:var(--paper);border:1.5px solid var(--line);border-radius:6px;min-width:0}
+.jr-mv{display:grid;gap:2px}
+.jr-mv button{all:unset;box-sizing:border-box;cursor:pointer;width:32px;height:21px;display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--mute);font-size:9px;line-height:1}
+.jr-mv button:hover{color:var(--ink)}
+.jr-mv button:disabled{opacity:.35;cursor:default}
+.jo-cfs{display:grid;gap:10px}
+.jo-ch{display:flex;align-items:center;gap:12px;padding:14px 16px;min-height:52px}
+.jo-cf .jrows{border:0;border-top:1px solid var(--line);border-radius:0 0 10px 10px}
+.jo-closed{margin-top:14px}
+.jo-closed summary{cursor:pointer;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mute);min-height:44px;display:flex;align-items:center}
+.jo-closed .jrows{margin-top:4px}
 .jo-add{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:10px;margin:0 0 12px}
 .jfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 10px}
 .jfields label{display:grid;gap:4px;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mute);min-width:0}
 .jfields .ed{font-family:var(--sans);font-size:14px;letter-spacing:0;text-transform:none;min-height:42px}
 .jo-add button[type=submit]{font:inherit;font-weight:700;font-size:12px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:6px;padding:9px 12px;cursor:pointer;min-height:40px}
 .jo-flash{font-size:12.5px;color:var(--pos);font-weight:600}
-dialog.jod{border:0;padding:0;border-radius:12px;width:min(640px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:auto;background:var(--paper);color:var(--ink);box-shadow:0 24px 60px -10px var(--shade)}
+dialog.jod{padding:0;border-radius:12px;width:min(640px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:auto;background:var(--paper);color:var(--ink);border:1px solid var(--line)}
 dialog.jod::backdrop{background:var(--shade)}
 .jod-in{display:grid;gap:16px;padding:18px 20px 22px;min-width:0}
 .jod-in>*{min-width:0}
@@ -235,7 +232,7 @@ dialog.jod::backdrop{background:var(--shade)}
 .jod-x{all:unset;cursor:pointer;flex:none;width:40px;height:40px;display:grid;place-items:center;border-radius:8px;font-size:22px;line-height:1;color:var(--mute);border:1.5px solid var(--line)}
 .jod-x:focus-visible{outline:2px solid var(--gold)}
 .jod-facts{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
-.bnote{background:var(--note);color:var(--note-ink);border-radius:2px;padding:10px 12px;box-shadow:0 1px 1px var(--shade),0 6px 10px -7px var(--shade)}
+.bnote{background:var(--gold-soft);color:var(--ink);border-radius:8px;padding:10px 12px}
 .bnote p{margin:0;font-size:13.5px;overflow-wrap:anywhere}
 .jod .k{margin-bottom:6px}
 .stbtns{display:flex;gap:6px;flex-wrap:wrap}
@@ -243,7 +240,7 @@ dialog.jod::backdrop{background:var(--shade)}
 .stbtns .btn.kill{color:var(--neg)}
 .killq{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--neg-bg);color:var(--neg);border-radius:8px;padding:10px 12px;font-size:13px;font-weight:600}
 .killq button{font:inherit;font-weight:700;font-size:12px;border-radius:6px;padding:8px 12px;cursor:pointer;min-height:38px;border:1.5px solid var(--neg)}
-.killq .yes{background:var(--neg);color:var(--card)}.killq .no{background:transparent;color:var(--neg)}
+.killq .yes{background:var(--neg);color:var(--paper)}.killq .no{background:transparent;color:var(--neg)}
 .dseats{display:grid;gap:8px}
 .dseat-h{display:grid;gap:1px}
 .dseat-h b{font-size:13px}
@@ -279,16 +276,18 @@ dialog.jod::backdrop{background:var(--shade)}
 .ctouch{display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-width:0}
 .ctouch .ed{flex:1 1 200px}
 .ctouch button{font:inherit;font-weight:700;font-size:11.5px;border:1.5px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:6px;padding:7px 10px;cursor:pointer;min-height:36px}
+@media (max-width:900px){
+  .jr{--rk:48px;grid-template-columns:var(--rk) minmax(0,1fr);grid-template-areas:"rank body" ". flags";gap:6px 12px;padding:12px}
+  .jrows.jr-ed .jr{--rk:80px}
+  .jr-lead,.jr-age,.jr-leads{display:none}
+  .jr .m-only{display:inline}
+  .jr-flags{justify-content:flex-start}
+  .jr-rank{align-self:start}
+}
 @media (max-width:600px){
-  .jo-board{margin-inline:-12px;padding:6px}
-  .cork{columns:auto;column-width:auto;column-count:1;padding:14px 9px 2px}
-  .bcol{grid-template-columns:1fr 1fr;gap:12px 10px}
-  .bhead{grid-column:1/-1}
-  .bempty{grid-column:1/-1}
-  .nrole{font-size:12.5px}
   .jod-in{padding:16px 14px 20px}
 }
-@media (prefers-reduced-motion:reduce){.note{transition:none}.note:hover{transform:rotate(var(--r,0deg))}}
+@media (prefers-reduced-motion:reduce){.jr{transition:none}}
 @media print{
   body{background:#fff;padding:0}
   .wrap>*:not(#report){display:none!important}
@@ -366,7 +365,7 @@ dialog.jod::backdrop{background:var(--shade)}
   const isFresh=(rec,l)=>rec?rec[l.id]!==sig(l):(age(l.built)!=null&&age(l.built)<=2);
   const leadsFor=(c,s)=>state.sections.leads.filter(l=>(l.seats||[]).includes(c.id+':'+s.seat));
 
-  const state={clients:[],open:null,sections:{depth:[],leads:[],notes:[],resources:[],meetings:[]},playbooks:[],present:false,unsubs:[],canEdit:false,by:'',editing:null,confirm:null,showRemoved:false,thread:null,expanded:new Set(),saving:0,live:false,pending:{},last:{},deferred:false,summ:{},watched:new Set(),freshIds:new Set(),seenFor:null,seenRec:null,jobs:[],jobsOpen:false,jobsLoaded:false,jobsUnsub:null,jview:'board',seatLive:{},detail:null,dsubs:[],depthDocs:{},killAsk:false,addOpen:false,addMsg:'',asks:[],asksLoaded:false,asksOpen:false,asksUnsub:null,askFor:'',askRO:false,askNeed:null,askDoneOpen:false,wantJo:null,careOpen:false,care:[],careLoaded:false,careDepth:{},careSubs:[],careRO:false,careFor:'',careBy:'',careTouch:null};
+  const state={clients:[],open:null,sections:{depth:[],leads:[],notes:[],resources:[],meetings:[]},playbooks:[],present:false,unsubs:[],canEdit:false,by:'',editing:null,confirm:null,showRemoved:false,thread:null,expanded:new Set(),saving:0,live:false,pending:{},last:{},deferred:false,summ:{},watched:new Set(),freshIds:new Set(),seenFor:null,seenRec:null,jobs:[],jobsOpen:false,jobsLoaded:false,jobsUnsub:null,jview:'rank',jf:{hot:false,partner:false},closedOpen:false,rankEditing:null,seatLive:{},detail:null,dsubs:[],depthDocs:{},killAsk:false,addOpen:false,addMsg:'',asks:[],asksLoaded:false,asksOpen:false,asksUnsub:null,askFor:'',askRO:false,askNeed:null,askDoneOpen:false,wantJo:null,careOpen:false,care:[],careLoaded:false,careDepth:{},careSubs:[],careRO:false,careFor:'',careBy:'',careTouch:null};
   try{state.present=sessionStorage.getItem('hub-present')==='1';state.expanded=new Set(JSON.parse(sessionStorage.getItem('hub-open')||'[]'))}catch(_){}
   const saveOpen=()=>{try{sessionStorage.setItem('hub-open',JSON.stringify([...state.expanded]))}catch(_){}};
 
@@ -483,10 +482,10 @@ dialog.jod::backdrop{background:var(--shade)}
 
   // ---- Job Orders: an internal Eden folder across every client ----
   // Rows load only while the folder is open and are dropped on close. Screen-share mode hides the folder and closes it.
-  const ROT_DAYS=14;
+  const ROT_DAYS=10; // Kev, 5 Nov 2026: 10 days is enough to move someone off a JO they are not moving on
   const dayNum=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(s||''));if(!m)return null;const t=today().split('-').map(Number);return Math.round((Date.UTC(t[0],t[1]-1,t[2])-Date.UTC(+m[1],+m[2]-1,+m[3]))/864e5)};
   const isStandby=p=>/standby/i.test(String(p.role_on_job||''));
-  const overdue=p=>!isStandby(p)&&(dayNum(p.since)||0)>ROT_DAYS;
+  const overdue=p=>!isStandby(p)&&(dayNum(p.since)||0)>=ROT_DAYS;
   // a discreet client never shows its name: every text field of that row is scrubbed too
   // Kev, 23 Oct: Baker and INL are fine to name on the Team Hub; only a row flagged discreet hides its client
   const discreet=j=>!!j.discreet;
@@ -496,7 +495,7 @@ dialog.jod::backdrop{background:var(--shade)}
   const jStatus=j=>String(j.status||'active').toLowerCase().trim().replace(/\s+/g,'-');
   const byRank=(a,b)=>(+a.rank||99)-(+b.rank||99)||jClient(a).localeCompare(jClient(b))||String(a.role||'').localeCompare(String(b.role||''));
   const daysTxt=n=>n==null?'start date to add':n<0?'starts '+(-n)+(n===-1?' day':' days')+' from now':n+(n===1?' day':' days')+' on job';
-  const rotChip='<span class="chip rot">14+ days, rotate?</span>';
+  const rotChip='<span class="chip rot">'+ROT_DAYS+'+ days, rotate?</span>';
   const roleChip=p=>p.role_on_job?'<span class="chip'+(isStandby(p)?' warn':' gold')+'">'+esc(p.role_on_job)+'</span>':'';
   function jTeam(j){
     const team=j.team||[];
@@ -505,20 +504,6 @@ dialog.jod::backdrop{background:var(--shade)}
   function jSheets(j){
     const leads=j.leads||[];
     return leads.length?'<ul class="slead">'+leads.map(l=>'<li>'+(l.url?'<a href="'+esc(safeUrl(l.url))+'" target="_blank" rel="noopener">'+esc(l.count!=null&&l.count!==''?l.count+' leads':'Open sheet')+'</a>':'<b>'+esc(l.count!=null?l.count+' leads':'Sheet to add')+'</b>')+'<span class="meta">'+esc(jt(j,l.title||''))+(l.built?' · '+esc(l.built):'')+'</span></li>').join('')+'</ul>':'<span class="meta">No lead sheet yet</span>';
-  }
-  function jCard(j){
-    const hot=(j.team||[]).some(overdue),who=jTeam(j),sheets=jSheets(j);
-    return '<article class="card jcard'+(hot?' rot':'')+'"><div class="jtop"><h4>'+esc(jt(j,j.role))+'</h4>'+(j.rank?'<span class="jo">#'+esc(j.rank)+'</span>':'')+'</div>'+
-      '<div class="loc">'+esc(jt(j,j.location||'Location to confirm'))+(j.opened?' · opened '+esc(j.opened):'')+'</div>'+
-      (j.condition?'<div><div class="k">Condition</div><p>'+esc(jt(j,j.condition))+'</p></div>':'')+
-      '<div><div class="k">Who is on it</div>'+who+'</div><div><div class="k">Lead sheets</div>'+sheets+'</div>'+
-      '<span class="meta'+(stale(j.updated)?' stale':'')+'">Updated '+esc(j.updated||'unknown')+(stale(j.updated)?' · check with owner':'')+(j.source?' · '+esc(jt(j,j.source)):'')+'</span></article>';
-  }
-  function jByClient(act){
-    const g=new Map();
-    act.forEach(j=>{const k=jKey(j);if(!g.has(k))g.set(k,{name:jClient(j),rows:[]});g.get(k).rows.push(j)});
-    return [...g.values()].map(x=>{const n=x.rows.reduce((a,j)=>a+(j.team||[]).filter(overdue).length,0);
-      return '<section class="jo-group"><div class="dc-head"><h4>'+esc(x.name)+'</h4><span class="meta">'+x.rows.length+' active'+(n?' · <span class="stale">'+n+' to rotate</span>':'')+'</span></div><div class="cards">'+x.rows.map(jCard).join('')+'</div></section>'}).join('');
   }
   function jByRecruiter(act){
     const m=new Map();
@@ -532,34 +517,33 @@ dialog.jod::backdrop{background:var(--shade)}
       (none.length?card('No owner yet',none.length+' job order'+(none.length===1?'':'s'),none.map(j=>'<li><div><b>'+esc(jClient(j))+'</b> · '+esc(jt(j,j.role))+'</div></li>').join(''),false):'')+'</div>';
   }
 
-  // ---- the board: a cork board with one column per client and one sticky note per job order ----
+  // ---- the board: one ranked list (By rank), the same rows regrouped by client (By client), filled/closed/killed in a collapsed Closed out ----
+  // rank is per client (Casey, Nov 2026): the same number repeats across clients and duplicates are allowed, so nothing is renumbered.
+  // hot (Hot next week) and partner_share (goes to the 1099 partner board) are plain booleans on the JO doc; a missing field reads as false.
   const ST_ORDER={active:0,'on-hold':1,filled:2,closed:3,killed:4};
   const ST_TONE={active:'pos','on-hold':'warn',filled:'pos',killed:'neg',closed:''};
   const ST_LABEL={active:'Active','on-hold':'On hold',filled:'Filled',closed:'Closed',killed:'Killed'};
+  const CLOSED=['filled','closed','killed'];
+  const JV_KEY='hub-jo-view';
   const shortRole=r=>{const t=String(r||'').replace(/\s*\(.*$/,'').trim();return t||String(r||'')};
-  const isGo=j=>jStatus(j)==='active'&&((+j.rank>0&&+j.rank<=6)||/^go\b/i.test(String(j.board_note||'').trim()));
+  const isGo=j=>jStatus(j)==='active'&&j.hot===true; // Hot replaces Go (Kev, 5 Nov 2026)
   const named=j=>(j.team||[]).filter(p=>String(p.recruiter||'').trim());
   const leadTotal=j=>(j.leads||[]).reduce((a,l)=>a+(+l.count||0),0);
   const linkPath=(j,l)=>'clients/'+slugOf(l.client_slug||j.client_slug)+'/depth/'+String(l.chart||'');
-  // live candidates in the seats this JO links to, counted from the depth charts the landing already watches (numbers only)
-  const depthCount=j=>{const L=j.depth||[];let n=0,known=false;L.forEach(l=>{const v=state.seatLive[slugOf(l.client_slug||j.client_slug)+'|'+l.chart+'|'+String(l.seat||'').trim()];if(v!=null){known=true;n+=v}});return known?n:null};
   const boardSort=(a,b)=>(ST_ORDER[jStatus(a)]??1)-(ST_ORDER[jStatus(b)]??1)||byRank(a,b);
-  function jNote(j){
-    const st=jStatus(j),act=st==='active',go=isGo(j),hot=act&&(j.team||[]).some(overdue),who=named(j),owned=who.some(p=>!isStandby(p));
-    const dead=st==='killed'||st==='closed',stamp=st==='on-hold'?'Hold':st==='filled'?'Filled':dead?ST_LABEL[st]:'';
-    const cls='note'+(go?' go':'')+(hot?' rot':'')+(st==='on-hold'?' hold':'')+(st==='filled'?' filled':'')+(dead?' dead':'');
-    const dc=depthCount(j),nl=(j.leads||[]).length,sc=j.scout&&j.scout.status;
-    const mk=(go?'<span class="mk go">Go</span>':'')+(hot?'<span class="mk rot">Rotate?</span>':'')+(act&&!owned?'<span class="mk none">No owner</span>':'')+
-      (nl?'<span class="mk">'+leadTotal(j)+' leads</span>':(act?'<span class="mk">0 leads</span>':''))+(dc!=null?'<span class="mk">'+dc+' in depth</span>':'')+(sc&&act?'<span class="mk">Scout '+esc(sc)+'</span>':'');
-    const label=shortRole(jt(j,j.role))+', '+jClient(j)+', '+(ST_LABEL[st]||st);
-    return '<button class="'+cls+'" type="button" data-jo="'+esc(j.id)+'" aria-label="'+esc(label)+'">'+
-      '<span class="nrole">'+esc(shortRole(jt(j,j.role))||'Role to name')+'</span>'+
-      (j.location?'<span class="nloc">'+esc(jt(j,j.location))+'</span>':'')+
-      (who.length?'<span class="nwho">'+who.map(p=>esc(jt(j,p.recruiter))+(isStandby(p)?'<i> (standby)</i>':'')).join(', ')+'</span>':'')+
-      (st==='on-hold'&&j.condition?'<span class="ncond">'+esc(jt(j,j.condition))+'</span>':'')+
-      (st==='killed'&&j.killed_on?'<span class="nloc">Killed '+esc(j.killed_on)+'</span>':'')+
-      (mk?'<span class="nmk">'+mk+'</span>':'')+(stamp?'<span class="stamp" aria-hidden="true">'+esc(stamp)+'</span>':'')+'</button>';
-  }
+  const isHot=j=>j.hot===true;
+  const isPartner=j=>j.partner_share===true;
+  const jOut=j=>CLOSED.includes(jStatus(j));
+  const passes=j=>(!state.jf.hot||isHot(j))&&(!state.jf.partner||isPartner(j));
+  const savedView=()=>{try{const v=localStorage.getItem(JV_KEY);return ['rank','client','recruiter'].includes(v)?v:'rank'}catch(_){return 'rank'}};
+  const rkOf=j=>+j.rank>0?+j.rank:1e9;
+  const clientSort=j=>{const c=!discreet(j)&&state.clients.find(x=>x.id===jKey(j));return c?(c.sort||99):999};
+  // By rank: rank, then the client's sort order (or name), then role
+  const listSort=(a,b)=>rkOf(a)-rkOf(b)||clientSort(a)-clientSort(b)||jClient(a).localeCompare(jClient(b))||String(a.role||'').localeCompare(String(b.role||''));
+  const leadOf=j=>named(j).find(p=>!isStandby(p));
+  const pad2=n=>String(n).padStart(2,'0');
+  // the rows up/down moves through: By rank, the active rows shown in the list; By client, the shown active rows of that client
+  const moveList=(j,kind)=>state.jobs.filter(x=>jStatus(x)==='active'&&passes(x)&&(kind!=='client'||jKey(x)===jKey(j))).sort(listSort);
   function boardColumns(all){
     const cols=new Map();
     state.clients.slice().sort((a,b)=>(a.sort||99)-(b.sort||99)||String(a.name).localeCompare(String(b.name)))
@@ -569,24 +553,97 @@ dialog.jod::backdrop{background:var(--shade)}
     const ex=[...extra.values()].sort((a,b)=>(a.key==='discreet')-(b.key==='discreet')||String(a.name).localeCompare(String(b.name)));
     return [...cols.values(),...ex];
   }
-  function jBoard(all){
-    const cols=boardColumns(all);
-    const legend='<div class="blegend" aria-label="Key"><span><i class="lg-pin go"></i>Go</span><span><i class="lg-pin"></i>Active</span><span><span class="mk rot">Rotate?</span>14+ days on it</span><span><span class="mk none">No owner</span></span><span>HOLD stamp: on hold</span><span><s>Crossed out</s>: killed</span></div>';
-    const addBtn=state.canEdit&&db?'<button class="btn" type="button" data-act="jo-add-toggle" aria-expanded="'+state.addOpen+'">'+(state.addOpen?'Close the form':'+ Add a JO')+'</button>':'';
+  function jRow(j,kind,list){
+    const st=jStatus(j),act=st==='active',hold=st==='on-hold',out=jOut(j),hot=isHot(j),ps=isPartner(j);
+    const lead=leadOf(j),a=lead?dayNum(lead.since):null,rot=act&&a!=null&&a>=ROT_DAYS,warm=false;
+    const ageCls=rot?' rotting':warm?' warm':'',ageTxt=a==null?'—':a<0?'in '+(-a)+'d':a+'d';
+    const nl=leadTotal(j),leadsTxt=nl+(nl===1?' lead':' leads'),who=lead?jt(j,lead.recruiter):'';
+    const role=jt(j,j.role)||'Role to name',id=esc(j.id);
+    const can=state.canEdit&&!!db&&!out;
+    const flag=(k,on,label,cls,aria)=>can?'<button class="jt" type="button" data-flag="'+k+'" data-id="'+id+'" aria-pressed="'+on+'" aria-label="'+aria+'" title="'+aria+'"><span class="chip '+(on?cls:'off')+'">'+label+'</span></button>':(on?'<span class="chip '+cls+'" title="'+aria+'">'+label+'</span>':'');
+    const stc=hold?'<span class="chip warn">On hold</span>':st==='filled'?'<span class="chip pos">Filled'+(j.filled_on?' '+esc(j.filled_on):'')+'</span>':st==='killed'?'<span class="chip neg">Killed'+(j.killed_on?' '+esc(j.killed_on):'')+'</span>':st==='closed'?'<span class="chip">Closed</span>':'';
+    const flags=flag('hot',hot,'Hot','hotc','Hot next week')+flag('partner_share',ps,'1099','p1099','Goes to 1099 partners')+stc+(act&&!lead?'<span class="chip nol">No owner</span>':'')+(rot?'<span class="chip rot">Rotate?</span>':'');
+    let rank;
+    if(can&&act&&list){
+      const i=list.indexOf(j),rv=+j.rank>0?pad2(+j.rank):'';
+      rank='<div class="jr-rank jr-rk jr-ctl"><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" data-rank="'+id+'"'+(state.rankEditing===j.id?' data-k="rk-'+id+'"':'')+' value="'+rv+'" placeholder="—" aria-label="Rank for '+esc(shortRole(role))+'">'+
+        '<span class="jr-mv"><button type="button" data-rk="up" data-kind="'+kind+'" data-id="'+id+'" aria-label="Move up"'+(i<=0?' disabled':'')+'>▲</button><button type="button" data-rk="down" data-kind="'+kind+'" data-id="'+id+'" aria-label="Move down"'+(i<0||i>=list.length-1?' disabled':'')+'>▼</button></span></div>';
+    }else rank='<span class="jr-rank">'+(!out&&+j.rank>0?pad2(+j.rank):'—')+'</span>';
+    const label=shortRole(role)+', '+jClient(j)+', '+(ST_LABEL[st]||st)+(hot?', hot next week':'')+(ps?', 1099 partners':'');
+    return '<li class="jr'+(hot?' hot':'')+(hold?' hold':'')+(st==='killed'?' dead':'')+(rot?' rot':'')+'" data-row="'+id+'">'+rank+
+      '<div class="jr-body"><button class="jr-role" type="button" data-jo="'+id+'" aria-label="'+esc(label)+'">'+esc(role)+'</button>'+
+      '<span class="jr-meta">'+[kind==='client'?'':esc(jClient(j)),j.location?esc(jt(j,j.location)):''].filter(Boolean).join(' · ')+
+        '<span class="m-only"> · '+(who?esc(who):'No owner')+' · <span class="'+ageCls.trim()+'">'+esc(ageTxt)+'</span> · '+esc(leadsTxt)+'</span></span>'+
+      (hold&&j.condition?'<span class="jr-cond">'+esc(jt(j,j.condition))+'</span>':'')+'</div>'+
+      '<span class="jr-lead">'+(who?esc(who):'<span class="meta">Open</span>')+'</span>'+
+      '<span class="jr-age jr-num'+ageCls+'"'+(a!=null&&a>=0?' title="'+a+' days on it"':'')+'>'+esc(ageTxt)+'</span>'+
+      '<span class="jr-leads jr-num">'+esc(leadsTxt)+'</span>'+
+      (flags?'<div class="jr-flags jr-ctl">'+flags+'</div>':'')+'</li>';
+  }
+  function jTools(all,withAdd){
+    const open=all.filter(j=>!jOut(j)),act=open.filter(j=>jStatus(j)==='active'),f=state.jf.hot||state.jf.partner;
+    const seg='<div class="jo-seg" role="group" aria-label="Show job orders">'+[['rank','By rank'],['client','By client'],['recruiter','By recruiter']].map(([k,l])=>'<button class="btn" type="button" data-jv="'+k+'" aria-pressed="'+(state.jview===k)+'">'+l+'</button>').join('')+'</div>';
+    const filt=[['hot','Hot'],['partner','Partners']].map(([k,l])=>'<button class="btn" type="button" data-jf="'+k+'" aria-pressed="'+!!state.jf[k]+'">'+l+'</button>').join('');
+    const addBtn=withAdd&&state.canEdit&&db?'<button class="btn jo-addb" type="button" data-act="jo-add-toggle" aria-expanded="'+state.addOpen+'">'+(state.addOpen?'Close the form':'+ Add a JO')+'</button>':'';
+    const shown=f?open.filter(passes).length:0;
+    const count='<p class="jo-count" role="status"><b>'+act.length+'</b> active · <b>'+open.filter(isHot).length+'</b> hot · <b>'+open.filter(isPartner).length+'</b> for partners'+(f?' · showing '+shown+' open':'')+'</p>';
+    return '<div class="jo-btools">'+seg+filt+addBtn+'</div>'+count;
+  }
+  function jAddForm(){
     const known=[...new Set(state.clients.filter(c=>!discreet({client:c.name,client_slug:c.id})).map(c=>c.name).concat(state.jobs.filter(j=>!discreet(j)).map(j=>j.client)).filter(Boolean))].sort();
     const form=state.canEdit&&db&&state.addOpen?'<form class="jo-add" data-act="jo-add"><div class="k">New job order · it is pinned to the board and Scout is asked for leads</div><div class="jfields">'+
       '<label for="ja-client">Client<input class="ed" id="ja-client" name="client" data-k="ja-client" list="ja-clients" placeholder="Pick or type a client" autocomplete="off" required></label><datalist id="ja-clients">'+known.map(n=>'<option value="'+esc(n)+'"></option>').join('')+'<option value="Client · discreet"></option></datalist>'+
       '<label for="ja-role">Role<input class="ed" id="ja-role" name="role" data-k="ja-role" placeholder="e.g. MEP Superintendent" required></label>'+
       '<label for="ja-loc">Location<input class="ed" id="ja-loc" name="location" data-k="ja-loc" placeholder="City, state"></label>'+
       '<label for="ja-owner">Owner<select class="ed" id="ja-owner" name="owner" data-k="ja-owner"><option value="">Open</option>'+ROSTER.map(r=>'<option value="'+esc(r)+'">'+esc(r)+'</option>').join('')+'</select></label>'+
-      '<label for="ja-prio">Priority<select class="ed" id="ja-prio" name="prio" data-k="ja-prio"><option value="normal">Normal</option><option value="go">Go</option></select></label></div>'+
+      '<label for="ja-prio">Priority<select class="ed" id="ja-prio" name="prio" data-k="ja-prio"><option value="normal">Normal</option><option value="go">Hot next week</option></select></label></div>'+
       '<div class="prow"><button type="submit">Pin it and alert Scout</button>'+A('jo-add-toggle','','Cancel')+'</div></form>':'';
     const flash=state.addMsg?'<div class="jo-flash" role="status">'+esc(state.addMsg)+'</div>':'';
-    const board='<div class="jo-board"><div class="cork">'+cols.map(c=>{
-      const rows=c.rows.slice().sort(boardSort),n=k=>rows.filter(j=>jStatus(j)===k).length;
-      const meta=[n('active')+' open',n('on-hold')?n('on-hold')+' on hold':'',n('filled')?n('filled')+' filled':'',n('killed')?n('killed')+' killed':''].filter(Boolean).join(' · ');
-      return '<section class="bcol" aria-label="'+esc(c.name)+'"><div class="bhead"><h4>'+esc(c.name)+'</h4><span class="meta">'+meta+'</span></div>'+(rows.map(jNote).join('')||'<div class="bempty">Nothing pinned</div>')+'</section>'}).join('')+'</div></div>';
-    return '<div class="jo-btools">'+legend+addBtn+'</div>'+flash+form+board;
+    return flash+form;
+  }
+  function jBoard(all){
+    const ed=state.canEdit&&!!db,f=state.jf.hot||state.jf.partner;
+    const open=all.filter(j=>!jOut(j)&&passes(j)).sort(listSort);
+    const out=all.filter(j=>jOut(j)&&passes(j)).sort((a,b)=>String(b.filled_on||b.killed_on||b.updated||'').localeCompare(String(a.filled_on||a.killed_on||a.updated||''))||listSort(a,b));
+    const none='<div class="empty">'+(f?'No open job order matches this filter.':'No open job orders.')+'</div>';
+    let body;
+    if(state.jview==='client'){
+      const groups=boardColumns(open).filter(c=>c.rows.length);
+      body=groups.length?'<div class="jo-cfs">'+groups.map(c=>{const rows=c.rows.slice().sort(listSort),list=rows.filter(j=>jStatus(j)==='active'),h=rows.filter(j=>jStatus(j)==='on-hold').length;
+        return '<section class="folder jo-cf" aria-label="'+esc(c.name)+'"><div class="jo-ch"><span class="fname">'+esc(c.name)+'</span><span class="fmeta">'+list.length+' open'+(h?' · '+h+' on hold':'')+'</span></div><ol class="jrows'+(ed?' jr-ed':'')+'">'+rows.map(j=>jRow(j,'client',list)).join('')+'</ol></section>'}).join('')+'</div>':none;
+    }else{
+      const list=open.filter(j=>jStatus(j)==='active');
+      body=open.length?'<ol class="jrows'+(ed?' jr-ed':'')+'" aria-label="Open job orders by rank">'+open.map(j=>jRow(j,'rank',list)).join('')+'</ol>':none;
+    }
+    const closed=out.length?'<details class="jo-closed" data-jo-closed'+(state.closedOpen?' open':'')+'><summary>Closed out ('+out.length+')</summary><ol class="jrows" aria-label="Filled, closed and killed">'+out.map(j=>jRow(j,'out',null)).join('')+'</ol></details>':'';
+    return body+closed;
+  }
+  // a board write: stamps updated, saves through writeDoc like the status buttons, and puts the old values back if the store refuses it
+  function jobWrite(j,ch){
+    if(!state.canEdit||!db)return;
+    ch=Object.assign({},ch,{updated:today()});
+    const before={};Object.keys(ch).forEach(k=>{before[k]=j[k]});
+    Object.assign(j,ch);
+    writeDoc('jobs/'+j.id,ch,undefined,()=>{const x=state.jobs.find(y=>y.id===j.id);if(x)Object.keys(before).forEach(k=>{if(before[k]===undefined)delete x[k];else x[k]=before[k]});render(true)});
+  }
+  function setFlag(j,k){
+    if(k!=='hot'&&k!=='partner_share')return;
+    jobWrite(j,{[k]:!(j[k]===true)});render(true);
+  }
+  function setRank(j,n){
+    if(jStatus(j)!=='active'||!(n>=1))return;
+    if(+j.rank!==n)jobWrite(j,{rank:n});render(true);
+  }
+  // up/down swaps rank with the neighbour; when the two share a number (or one has none) only this JO moves, one step past it
+  function stepRank(j,dir,kind){
+    const list=moveList(j,kind),i=list.indexOf(j),o=list[i+(dir==='up'?-1:1)];
+    if(i<0||!o)return;
+    const a=+j.rank>0?+j.rank:0,b=+o.rank>0?+o.rank:0;
+    if(a&&b&&a!==b){jobWrite(j,{rank:b});jobWrite(o,{rank:a})}
+    else if(dir==='up')jobWrite(j,{rank:Math.max(1,(b||a||1)-1)});
+    else if(b)jobWrite(j,{rank:b+1});
+    else{jobWrite(o,{rank:a||1});jobWrite(j,{rank:(a||1)+1})}
+    render(true);
   }
 
   // ---- one job order, opened from the board: its depth-chart seats load only while it is open ----
@@ -630,10 +687,10 @@ dialog.jod::backdrop{background:var(--shade)}
     const slug=slugOf(j.client_slug||j.client),folder=!discreet(j)&&state.clients.find(c=>c.id===slug);
     const btn=(k,l,on,cls)=>'<button class="btn'+(cls?' '+cls:'')+'" type="button" data-st="'+k+'" aria-pressed="'+on+'">'+l+'</button>';
     const edit=state.canEdit&&db?'<div><div class="k">Status</div>'+(state.killAsk?'<div class="killq">Kill this job order? It stays on the board, crossed out.<button class="yes" type="button" data-st="kill-yes">Yes, kill it</button><button class="no" type="button" data-st="kill-no">Keep it</button></div>':
-      '<div class="stbtns">'+btn('go','Go',go)+btn('active','Active',st==='active'&&!go)+btn('hold','Hold',st==='on-hold')+btn('kill','Kill',st==='killed','kill')+btn('filled','Filled',st==='filled')+'</div>')+'</div>':'';
+      '<div class="stbtns">'+btn('hot',go?'Hot ✓':'Hot',go)+btn('active','Active',st==='active')+btn('hold','Hold',st==='on-hold')+btn('kill','Kill',st==='killed','kill')+btn('filled','Filled',st==='filled')+'</div>')+'</div>':'';
     const sc=j.scout&&j.scout.status?'<span class="meta">Scout '+esc(j.scout.status)+(j.scout.at?' · asked '+esc(String(j.scout.at).slice(0,10)):'')+'</span>':'';
     d.innerHTML='<div class="jod-in"><div class="jod-top"><div><div class="brand">'+esc(jClient(j))+' · Job order</div><h2 id="jod-t">'+esc(jt(j,j.role)||'Role to name')+'</h2></div><button class="jod-x" type="button" data-act="jod-close" aria-label="Close">×</button></div>'+
-      '<div class="jod-facts"><span class="chip '+(ST_TONE[st]||'')+'">'+esc(ST_LABEL[st]||st)+'</span>'+(go?'<span class="chip go">Go</span>':'')+(j.rank?'<span class="jo">#'+esc(j.rank)+'</span>':'')+'<span class="meta">'+esc(jt(j,j.location||'Location to confirm'))+(j.opened?' · opened '+esc(j.opened):'')+(j.killed_on&&st==='killed'?' · killed '+esc(j.killed_on):'')+(j.filled_on&&st==='filled'?' · filled '+esc(j.filled_on):'')+'</span>'+sc+'</div>'+
+      '<div class="jod-facts"><span class="chip '+(ST_TONE[st]||'')+'">'+esc(ST_LABEL[st]||st)+'</span>'+(go?'<span class="chip hotc">Hot</span>':'')+(j.rank?'<span class="jo">#'+esc(j.rank)+'</span>':'')+'<span class="meta">'+esc(jt(j,j.location||'Location to confirm'))+(j.opened?' · opened '+esc(j.opened):'')+(j.killed_on&&st==='killed'?' · killed '+esc(j.killed_on):'')+(j.filled_on&&st==='filled'?' · filled '+esc(j.filled_on):'')+'</span>'+sc+'</div>'+
       (j.board_note?'<div class="bnote"><div class="k">Latest from Kev</div><p>'+esc(jt(j,j.board_note))+'</p></div>':'')+
       (j.condition?'<div><div class="k">Condition</div><p style="margin:0;font-size:13px">'+esc(jt(j,j.condition))+'</p></div>':'')+edit+
       '<div><div class="k">Who is on it</div>'+jTeam(j)+'</div>'+
@@ -645,8 +702,8 @@ dialog.jod::backdrop{background:var(--shade)}
   }
   function setJobStatus(j,k){
     const t=today(),ch={updated:t};
-    if(k==='go'){ch.status='active';ch.rank=5}
-    else if(k==='active'){ch.status='active';if(+j.rank>0&&+j.rank<=6)ch.rank=30}
+    if(k==='hot'){ch.hot=!(j.hot===true);if(jStatus(j)!=='active')ch.status='active'}
+    else if(k==='active')ch.status='active';
     else if(k==='hold')ch.status='on-hold';
     else if(k==='kill'){ch.status='killed';ch.killed_on=t}
     else if(k==='filled'){ch.status='filled';ch.filled_on=t}
@@ -672,7 +729,7 @@ dialog.jod::backdrop{background:var(--shade)}
     const base=(slugOf(slug+'-'+role).slice(0,80).replace(/-+$/,''))||('jo-'+uid());
     let id=base,n=2;while(state.jobs.some(x=>x.id===id))id=base+'-'+(n++);
     const at=new Date().toISOString(),t=today();
-    const doc={client,client_slug:slug,role,location,status:'active',opened:t,rank:go?5:30,leads:[],team:owner?[{recruiter:owner,since:t,role_on_job:'lead',note:''}]:[],condition:'',board_note:'',depth:[],updated:t,source:'Added on the board by Kev',scout:{requested:true,at,status:'queued'}};
+    const doc={client,client_slug:slug,role,location,status:'active',opened:t,rank:30,hot:go,partner_share:false,leads:[],team:owner?[{recruiter:owner,since:t,role_on_job:'lead',note:''}]:[],condition:'',board_note:'',depth:[],updated:t,source:'Added on the board by Kev',scout:{requested:true,at,status:'queued'}};
     if(disc)doc.discreet=true;
     state.jobs.push(Object.assign({id},JSON.parse(JSON.stringify(doc))));
     writeDoc('jobs/'+id,doc,'set');
@@ -688,12 +745,11 @@ dialog.jod::backdrop{background:var(--shade)}
     if(!all.length&&!(state.canEdit&&db))return '<div class="fbody"><div class="empty" style="margin-top:16px">No job orders filed yet. Radar adds them after each JO meeting.</div></div>';
     const late=act.reduce((a,j)=>a+(j.team||[]).filter(overdue).length,0),none=act.filter(j=>!(j.team||[]).length).length;
     const hold=all.filter(j=>jStatus(j)==='on-hold').length,killed=all.filter(j=>jStatus(j)==='killed').length;
-    const sum='<div class="jo-sum"><div><b>'+act.length+'</b><span class="meta">active job orders</span></div><div'+(late?' class="hot"':'')+'><b>'+late+'</b><span class="meta">assignments past '+ROT_DAYS+' days</span></div><div><b>'+none+'</b><span class="meta">with no owner</span></div><div><b>'+hold+'</b><span class="meta">on hold</span></div><div><b>'+killed+'</b><span class="meta">killed</span></div></div>';
-    const tabs='<div class="jo-tabs" role="group" aria-label="Show job orders">'+[['board','Board'],['client','By client'],['recruiter','By recruiter']].map(([k,l])=>'<button class="btn" type="button" data-jv="'+k+'" aria-pressed="'+(state.jview===k)+'">'+l+'</button>').join('')+'</div>';
-    const note='<p class="sub" style="margin-bottom:14px">Internal to Eden. This folder shows every client at once, so keep it closed while sharing your screen. Anyone on the same job order for more than '+ROT_DAYS+' days is flagged for Kev to rotate. Standby means on it only if a condition is met.'+(state.jview==='board'?' Tap a note to see who is on it, its lead sheets and its depth-chart seats.':'')+'</p>';
-    if(state.jview==='board')return '<div class="fbody">'+sum+'<div class="sec">'+tabs+note+jBoard(all)+'</div></div>';
+    const sum='<div class="jo-sum"><div><b>'+act.length+'</b><span class="meta">active job orders</span></div><div'+(late?' class="hot"':'')+'><b>'+late+'</b><span class="meta">assignments at '+ROT_DAYS+'+ days</span></div><div><b>'+none+'</b><span class="meta">with no owner</span></div><div><b>'+hold+'</b><span class="meta">on hold</span></div><div><b>'+killed+'</b><span class="meta">killed</span></div></div>';
+    const note='<p class="sub" style="margin-bottom:14px">Internal to Eden. This folder shows every client at once, so keep it closed while sharing your screen. Anyone on the same job order for '+ROT_DAYS+' days or more is flagged for Kev to rotate. Standby means on it only if a condition is met.'+(state.jview!=='recruiter'?' Tap a row to see who is on it, its lead sheets and its depth-chart seats.':'')+'</p>';
+    if(state.jview!=='recruiter')return '<div class="fbody">'+sum+'<div class="sec">'+note+jTools(all,true)+jAddForm()+jBoard(all)+'</div></div>';
     const others=rest.length?'<div class="past"><details><summary>On hold, filled, closed or killed ('+rest.length+')</summary><ul class="jlist" style="margin-top:10px">'+rest.map(j=>'<li><div><b>'+esc(jClient(j))+'</b> · '+esc(jt(j,j.role))+'</div><span class="meta">'+esc(ST_LABEL[jStatus(j)]||jStatus(j))+(jStatus(j)==='killed'&&j.killed_on?' '+esc(j.killed_on):'')+' · '+esc(jt(j,j.location||''))+(j.condition?' · '+esc(jt(j,j.condition)):'')+'</span></li>').join('')+'</ul></details></div>':'';
-    return '<div class="fbody">'+sum+'<div class="sec">'+tabs+note+(act.length?(state.jview==='recruiter'?jByRecruiter(act):jByClient(act)):'<div class="empty">No active job orders.</div>')+others+'</div></div>';
+    return '<div class="fbody">'+sum+'<div class="sec">'+note+jTools(all,false)+(act.length?jByRecruiter(act.filter(passes)):'<div class="empty">No active job orders.</div>')+others+'</div></div>';
   }
   function renderJobs(){
     const box=$('jobs');
@@ -708,7 +764,7 @@ dialog.jod::backdrop{background:var(--shade)}
     dropJobs();
     if(on&&!state.present){
       if(state.open)openClient(null);
-      dropCare();state.asksOpen=false;state.jobsOpen=true;state.jview='board';
+      dropCare();state.asksOpen=false;state.jobsOpen=true;state.jview=savedView();state.rankEditing=null;
       if(db)state.jobsUnsub=db.collection('jobs').onSnapshot(s=>{if(!state.jobsOpen||state.present)return;
         let rows=s.docs.map(own);
         rows=rows.map(r=>state.pending['jobs/'+r.id]>0?(state.jobs.find(x=>x.id===r.id)||r):r);
@@ -1008,14 +1064,14 @@ dialog.jod::backdrop{background:var(--shade)}
   // ---- writes: one at a time per document, editors only; live updates never overwrite an edit still saving ----
   const queues={};
   function setStatus(t){$('status').textContent=t;$('status').className=/^saving/.test(t)?'saving':''}
-  function writeDoc(path,data,mode){
+  function writeDoc(path,data,mode,onFail){
     if(!db||!state.canEdit)return Promise.resolve();
     state.saving++;state.pending[path]=(state.pending[path]||0)+1;setStatus('saving');
     const call=()=>mode==='set'?db.doc(path).set(data):db.doc(path).update(data);
     const run=()=>call().catch(e=>{if(e&&e.code==='unavailable')return new Promise(r=>setTimeout(r,600+Math.random()*600)).then(call);throw e});
     const p=(queues[path]||Promise.resolve()).then(run);
     queues[path]=p.catch(()=>{});
-    p.then(()=>{if(state.saving===1)setStatus('saved')},e=>{setStatus('not saved: '+((e&&e.code)||'error')+' · try again');if(e&&(e.code==='revoked'||(e.code==='invalid_argument'&&mode!=='set'))){state.canEdit=false;render(true)}})
+    p.then(()=>{if(state.saving===1)setStatus('saved')},e=>{setStatus('not saved: '+((e&&e.code)||'error')+' · try again');if(e&&(e.code==='revoked'||(e.code==='invalid_argument'&&mode!=='set'))){state.canEdit=false;render(true)}if(onFail)onFail(e)})
      .finally(()=>{state.saving--;setTimeout(()=>{state.pending[path]--;},1500)});
     return p.catch(()=>{});
   }
@@ -1138,12 +1194,37 @@ dialog.jod::backdrop{background:var(--shade)}
   $('jobs').addEventListener('click',e=>{
     if(e.target.closest('#jo-back')){openJobs(false);return}
     const v=e.target.closest('button[data-jv]');
-    if(v){state.jview=v.dataset.jv;render(true);return}
+    if(v){state.jview=v.dataset.jv;try{localStorage.setItem(JV_KEY,state.jview)}catch(_){}render(true);return}
+    const jf=e.target.closest('button[data-jf]');
+    if(jf){state.jf[jf.dataset.jf]=!state.jf[jf.dataset.jf];render(true);return}
+    const fl=e.target.closest('button[data-flag]');
+    if(fl){e.stopPropagation();const j=state.jobs.find(x=>x.id===fl.dataset.id);if(j){setFlag(j,fl.dataset.flag);const b=$('jobs').querySelector('button[data-flag="'+fl.dataset.flag+'"][data-id="'+CSS.escape(j.id)+'"]');if(b)b.focus()}return}
+    const mv=e.target.closest('button[data-rk]');
+    if(mv){e.stopPropagation();const j=state.jobs.find(x=>x.id===mv.dataset.id);if(j){stepRank(j,mv.dataset.rk,mv.dataset.kind);const b=$('jobs').querySelector('button[data-rk="'+mv.dataset.rk+'"][data-id="'+CSS.escape(j.id)+'"]');if(b&&!b.disabled)b.focus()}return}
+    if(e.target.closest('.jr-ctl'))return;
     const n=e.target.closest('button[data-jo]');
     if(n){openDetail(n.dataset.jo);return}
+    const row=e.target.closest('li[data-row]');
+    if(row){openDetail(row.dataset.row);return}
     if(e.target.closest('[data-act="jo-add-toggle"]')){state.addOpen=!state.addOpen;state.addMsg='';render(true);if(state.addOpen){const c=$('ja-client');if(c)c.focus()}return}
     if(e.target.closest('#jo-head'))openJobs(!state.jobsOpen);
   });
+  // rank field: the typed number is the JO's rank as is (duplicates allowed); Enter saves, Escape puts it back
+  $('jobs').addEventListener('change',e=>{
+    const el=e.target;if(!el.matches||!el.matches('input[data-rank]'))return;
+    const j=state.jobs.find(x=>x.id===el.dataset.rank);state.rankEditing=null;delete el.dataset.k;if(!j)return;
+    const n=parseInt(String(el.value).replace(/[^0-9]/g,''),10);
+    if(!(n>=1)){el.value=+j.rank>0?pad2(+j.rank):'';return}
+    el.value=pad2(n);setRank(j,n);
+  });
+  $('jobs').addEventListener('keydown',e=>{
+    const el=e.target;if(!el.matches||!el.matches('input[data-rank]'))return;
+    if(e.key==='Enter'){e.preventDefault();el.blur()}
+    else if(e.key==='Escape'){const j=state.jobs.find(x=>x.id===el.dataset.rank);el.value=j&&+j.rank>0?pad2(+j.rank):'';el.blur()}
+  });
+  $('jobs').addEventListener('focusin',e=>{const el=e.target;if(el.matches&&el.matches('input[data-rank]')){state.rankEditing=el.dataset.rank;el.dataset.k='rk-'+el.dataset.rank}});
+  $('jobs').addEventListener('focusout',e=>{const el=e.target;if(el.matches&&el.matches('input[data-rank]')&&state.rankEditing===el.dataset.rank){state.rankEditing=null;delete el.dataset.k}});
+  $('jobs').addEventListener('toggle',e=>{if(e.target.matches&&e.target.matches('details[data-jo-closed]'))state.closedOpen=e.target.open},true);
   $('jobs').addEventListener('submit',e=>{const f=e.target.closest('form[data-act="jo-add"]');if(!f)return;e.preventDefault();addJob(f)});
   $('asks').addEventListener('click',e=>{
     if(e.target.closest('#ask-back')){toggleAsks(false);return}

@@ -35,3 +35,7 @@ Add a `clipboard` collection, one document per bullet: agent, project, line, why
 1. This week: done tickets stop raising needs-Kev (Review goes to 0); the strip and Clear the stack merge into Today's Decisions, capped at 5; the Line and the board are collapsed by default.
 2. Next: the clipboard collection and the desk sheet rebuilt as Projects then bullets, with inline notes and the done log; runner steps for tidying and caps.
 3. Then: the Friday digest card per agent, the scoring change, and retiring the Line from Kev's view.
+
+## Phase 2 status (4 Nov 2026, built in the repo, not published, not committed)
+- Built: `draft/office/clipboard.js` (ordering, cap of 5, projects above bullets, loose cap 3, stalled flag, done log, 7-day park rule, note docs), the desk sheet's Clipboard section (waiting-on-Kev pinned, expandable bullets, inline note saved as action `clip-<id>-note`, old Projects folded under "Tickets and shipped work"), a `clipboard` collection listener, 6 tests.
+- Not yet: nothing writes bullets into the `clipboard` collection, so desks look unchanged until the runner steps do (agents tidy and write bullets; Radar checks caps with `Clip.capProblems`; answers to notes mark `applied`). Phase 3 (Friday digest, scoring) untouched.

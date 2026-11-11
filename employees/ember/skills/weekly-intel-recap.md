@@ -35,7 +35,7 @@ Result line: "<n> intel items from <n> recruiters across <n> prospects; top: <na
 | Shout-out | The leaderboard table below, top 3 named, a line on what made it good |
 | Gaps | Prospects with no intel in 30 days; reads that failed |
 
-Discreet clients: Baker Concrete and INL appear as "Client · discreet". A candidate's employer is never tied to a candidate's name in a way that could leak. Intel from a note about one client is never shown beside another client's name.
+Discreet clients: INL appears as "Client · discreet"; Baker Concrete is named as of 5 Nov 2026. A candidate's employer is never tied to a candidate's name in a way that could leak. Intel from a note about one client is never shown beside another client's name.
 
 ## Shout-out metric (quality over volume)
 

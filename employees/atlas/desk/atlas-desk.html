@@ -140,6 +140,11 @@ td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .book .bt{font-weight:600;font-size:14.5px}
 .book .ba{font-size:12.5px;color:var(--ink-3)}
 .series{border:1px solid var(--line);background:var(--panel);padding:12px 14px}
+.watch .wn{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:6px}
+.watch.seen .bt{color:var(--ink-3)}
+.watch .wnote{font-size:13px;margin-top:4px;white-space:pre-wrap}
+.watch form{grid-column:1/-1}
+.watch form[hidden]{display:none}
 .series .prize{margin-top:8px;font-size:13.5px}
 .series.unlocked{border-color:var(--gold);background:var(--gold-soft)}
 .settings label{display:grid;grid-template-columns:1fr 90px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
@@ -548,6 +553,8 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
       <input type="text" id="project-title" class="grow" placeholder="New project or idea" aria-label="New project">
       <button class="act" type="submit">Add</button>
     </form>
+
+    <details class="folder mt" id="watch-fold"><summary><span class="ico" aria-hidden="true"></span><span><span class="fn">Marvel movies, in story order</span><span class="fi">Watched together, in the order the story happens</span></span><span class="fc" id="watch-count"></span></summary><div class="body"><div class="bar" style="margin-top:0"><i id="watch-bar" style="width:0%"></i></div><div class="note" id="watch-next"></div><div class="card" id="watch-list"><div class="note">The list loads here.</div></div></div></details>
   </section>
 
   <!-- SCOUTS -->
@@ -651,7 +658,7 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
   const views=["home","ask","lessons","map","notes","listen","reading","scouts","bank","rules"];
   const DEF_RULES={lesson:30,teach:15,action:2,bonus:30,book:10,scout:0,interest:3,tithe:10,tithebasis:'new'};
   const DEF_TRACKS=[["bible","The Bible","The big story from Creation to Christ; the people God used; what it means to follow Jesus."],["history","History","Cause and effect; how we know; the long arc of empires, faith and tools."],["science","Science and survival","Energy, matter and life; the method; water, food, shelter, power, first aid."],["math","Math","Number sense and estimation; patterns and proof; math as the language of the real world."],["words","Reading and writing","Reading like a writer; the sentence; structure; reading aloud; writing every day."],["people","People: psychology and sociology","Why people do what they do; groups and status; habits; persuasion and its ethics."],["art","Art and music","Looking slowly; what makes a thing beautiful; the masters; taste as a learned skill."],["character","Character and leading like Jesus","Service, courage, manners; servant leadership from the Gospels; how to master anything."],["strength","Strength","Progressive overload; sleep, food, consistency; safety first; the big lifts."],["outdoors","Fly fishing, farming and the ranch","The fish, the water, the bug; reading a river; soil, water, animals, seasons."],["firearms","Firearms knowledge","How a firearm works; every part and its job; safety, law, history."],["chess","Chess","The board as a system; tactics before strategy; endgames first."],["money","Money, business and real estate","Income, expenses, assets, debt; compounding; a business as a machine; stewardship."],["ai","AI by building games","Prompts as instructions; feedback loops; build, break, improve."]].map((t,i)=>({id:t[0],name:t[1],idea:t[2],order:i}));
-  const state={questions:[],moves:{},moveDefs:null,parent:{},ideas:[],notes:{},showAllIdeas:false,lessons:[],tracks:DEF_TRACKS.slice(),ledger:[],rules:Object.assign({},DEF_RULES),media:[],progress:{},clips:[],tickets:[],books:[],series:[],projects:[],adventures:[],scouts:{},chat:[],db:null,canWrite:true};
+  const state={questions:[],moves:{},moveDefs:null,parent:{},ideas:[],notes:{},showAllIdeas:false,lessons:[],tracks:DEF_TRACKS.slice(),ledger:[],rules:Object.assign({},DEF_RULES),media:[],progress:{},clips:[],tickets:[],books:[],series:[],projects:[],watch:[],adventures:[],scouts:{},chat:[],db:null,canWrite:true};
   const fmt=n=>new Intl.NumberFormat("en-US").format(Math.round(n));
   const money=n=>{n=Math.round(n*100)/100;return (n<0?"-$":"$")+Math.abs(n).toFixed(Math.abs(n)%1?2:0)};
   const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -958,7 +965,27 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
     const lab={idea:'Idea',doing:'Doing',done:'Done'};
     $("#projects").innerHTML=pr.length?pr.map(p=>`<div class="book"><div style="min-width:0"><div class="bt">${esc(p.title)}</div>${p.detail?`<div class="ba">${esc(p.detail)}</div>`:''}</div><button class="pill ${p.status==='done'?'done':p.status==='doing'?'ready':''}" style="cursor:pointer;background:none" data-project="${esc(p.id)}"${state.canWrite?'':' disabled'}>${lab[p.status||'idea']}</button></div>`).join(''):'<div class="note">Bigger things G wants to take on: build a fly box, plan a camping trip, learn three knots.</div>';
   }
+  function renderWatch(){
+    const w=[...state.watch].sort((a,b)=>(a.order||0)-(b.order||0));
+    const out=w.filter(x=>!x.upcoming);const seen=out.filter(x=>x.watched).length;
+    $("#watch-count").textContent=w.length?seen+' / '+out.length:'';
+    $("#watch-bar").style.width=(out.length?Math.round(100*seen/out.length):0)+'%';
+    const nx=out.find(x=>!x.watched);
+    $("#watch-next").textContent=!w.length?'':nx?'Next up in story order: '+nx.title+(nx.year?' ('+nx.year+')':''):'Every one watched. Well done.';
+    $("#watch-list").innerHTML=w.length?w.map((m,i)=>{
+      const meta=[m.year?String(m.year):'',m.why||'',m.flag||'',m.watched&&m.watchedAt?'watched '+new Date(m.watchedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):''].filter(Boolean).map(esc).join(' · ');
+      const btn=m.upcoming?'<span class="pill">Coming</span>':state.canWrite?`<button class="act small${m.watched?' quiet':''}" data-watch="${esc(m.id)}">${m.watched?'Undo':'Watched'}</button>`:(m.watched?'<span class="pill done">Watched</span>':'');
+      const note=m.note?`<div class="wnote">${esc(m.note)}</div>`:'';
+      const form=state.canWrite&&!m.upcoming?`<form class="row mt" data-watchnote="${esc(m.id)}" hidden><input type="text" class="grow" id="wnote-${esc(m.id)}" maxlength="400" placeholder="Best part, favorite line, a question for Dad" aria-label="Notes on ${esc(m.title)}"><button class="act small quiet" type="submit">Save</button></form>`:'';
+      const write=state.canWrite&&!m.upcoming?` <button class="act small quiet" data-watchwrite="${esc(m.id)}">${m.note?'Edit note':'Write'}</button>`:'';
+      return `<div class="book watch${m.watched?' seen':''}"><div style="min-width:0"><div class="bt"><span class="wn">${i+1}</span>${esc(m.title)}</div><div class="ba">${meta}</div>${note}</div><div class="row" style="justify-content:flex-end">${btn}${write}</div>${form}</div>`}).join(''):'<div class="note">The list loads here.</div>';
+  }
   document.addEventListener('click',async ev=>{
+    const wb=ev.target.closest('[data-watch]');
+    if(wb){const m=state.watch.find(x=>x.id===wb.dataset.watch);if(!m)return;const to=!m.watched;const patch={watched:to,watchedAt:to?nowIso():null};
+      Object.assign(m,patch);renderWatch();if(await write('watch/'+m.id,patch,'update'))toast(to?'Watched. Write a line about it?':'Unmarked.');return}
+    const ww=ev.target.closest('[data-watchwrite]');
+    if(ww){const id=ww.dataset.watchwrite;const f=document.querySelector(`form[data-watchnote="${CSS.escape(id)}"]`);if(!f)return;f.hidden=!f.hidden;if(!f.hidden){const m=state.watch.find(x=>x.id===id);const i=$("#wnote-"+id);i.value=m&&m.note||'';i.focus()}return}
     const b=ev.target.closest('[data-book]');
     if(b){const bk=state.books.find(x=>x.id===b.dataset.book);if(!bk)return;const to=b.dataset.to;const patch={status:to};
       if(to==='reading'&&!bk.startedAt)patch.startedAt=nowIso();if(to==='done')patch.doneAt=nowIso();if(to!=='done')patch.doneAt=null;
@@ -969,6 +996,8 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
     if(p){const pj=state.projects.find(x=>x.id===p.dataset.project);if(!pj)return;const nx={idea:'doing',doing:'done',done:'idea'}[pj.status||'idea'];pj.status=nx;renderReading();await write('projects/'+pj.id,{status:nx},'update')}
   });
   document.addEventListener('submit',async ev=>{
+    const wf=ev.target.closest('[data-watchnote]');
+    if(wf){ev.preventDefault();const id=wf.dataset.watchnote;const v=$("#wnote-"+id).value.trim();const m=state.watch.find(x=>x.id===id);if(m)m.note=v;renderWatch();if(await write('watch/'+id,{note:v,noteAt:nowIso()},'update'))toast('Saved.');return}
     const f=ev.target.closest('[data-prizeform]');if(!f)return;ev.preventDefault();
     const id=f.dataset.prizeform;const v=$("#prize-"+id).value.trim();if(!v)return;
     if(await write('series/'+id,{prize:v},'update'))toast('Prize set.');
@@ -1446,7 +1475,7 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
   window.addEventListener('pagehide',()=>{if(noteDirty||sketchDirty)saveNote()});
 
   function renderBanner(){const b=$("#ro-banner");if(!b)return;let msg='';if(state.booted&&!state.db)msg="Not connected on this device, so taps here won't save. Open the Desk signed in to claude.ai.";else if(state.db&&!state.canWrite)msg="This device can view the Desk but not change it, so ticks and taps won't save. Kev: open Share on the Desk and give this account edit access.";b.textContent=msg;b.hidden=!msg}
-  function renderAll(){renderBanner();renderScore();renderLessons();renderTickets();renderLibrary();renderPlayer();renderClips();renderReading();renderScouts();renderRules();renderAsk();renderIdeas();renderMap();renderNotes();renderMoves();renderBubbles();renderMoney();
+  function renderAll(){renderBanner();renderScore();renderLessons();renderTickets();renderLibrary();renderPlayer();renderClips();renderReading();renderWatch();renderScouts();renderRules();renderAsk();renderIdeas();renderMap();renderNotes();renderMoves();renderBubbles();renderMoney();
     $$('#ticket-form input,#ticket-form button,#book-form input,#book-form select,#book-form button,#project-form input,#project-form button,#adv-form input,#adv-form select,#adv-form button,#sc-save,#view-scouts .card input').forEach(el=>el.disabled=!state.canWrite)}
   renderAll();
 
@@ -1458,7 +1487,7 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
     try{const user=await window.claude.use('user');if(user){const w=await user.can('data.write');if(w===false)state.canWrite=false}}catch(e){}
     const docs=s=>s.docs.map(d=>Object.assign({id:d.id},d.data()));
     const sub=(name,key,after)=>db.collection(name).onSnapshot(s=>{state[key]=docs(s);state.loaded=state.loaded||{};state.loaded[key]=true;if(after)after();renderAll()},()=>{});
-    sub('tracks','tracks',()=>{if(!state.tracks.length)state.tracks=DEF_TRACKS.slice()});sub('ideas','ideas');sub('questions','questions');db.collection('moves').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});state.moves=m;renderMoves();renderScore()},()=>{});db.doc('settings/parent').onSnapshot(s=>{state.parent=s.exists?s.data():{};renderMoves()},()=>{});db.doc('settings/moves').onSnapshot(s=>{state.moveDefs=s.exists&&Array.isArray(s.data().moves)?s.data().moves:null;renderMoves()},()=>{});db.collection('notes').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});state.notes=m;renderNotes()},()=>{});sub('lessons','lessons');sub('ledger','ledger',()=>{state.ledgerLoaded=true;clearTimeout(window.__pi);window.__pi=setTimeout(postInterest,2500)});sub('media','media');sub('clips','clips');sub('tickets','tickets');sub('books','books');sub('series','series');sub('projects','projects');sub('scouts','adventures');sub('atlas_chat','chat');
+    sub('tracks','tracks',()=>{if(!state.tracks.length)state.tracks=DEF_TRACKS.slice()});sub('ideas','ideas');sub('questions','questions');db.collection('moves').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});state.moves=m;renderMoves();renderScore()},()=>{});db.doc('settings/parent').onSnapshot(s=>{state.parent=s.exists?s.data():{};renderMoves()},()=>{});db.doc('settings/moves').onSnapshot(s=>{state.moveDefs=s.exists&&Array.isArray(s.data().moves)?s.data().moves:null;renderMoves()},()=>{});db.collection('notes').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});state.notes=m;renderNotes()},()=>{});sub('lessons','lessons');sub('ledger','ledger',()=>{state.ledgerLoaded=true;clearTimeout(window.__pi);window.__pi=setTimeout(postInterest,2500)});sub('media','media');sub('clips','clips');sub('tickets','tickets');sub('books','books');sub('series','series');sub('projects','projects');sub('watch','watch');sub('scouts','adventures');sub('atlas_chat','chat');
     db.collection('progress').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});state.progress=m;renderLibrary()},()=>{});
     db.doc('settings/rules').onSnapshot(s=>{state.loaded=state.loaded||{};state.loaded.rules=true;if(s.exists)state.rules=Object.assign({},DEF_RULES,s.data());renderAll()},()=>{});
     db.doc('settings/scouts').onSnapshot(s=>{if(s.exists)state.scouts=s.data();renderScouts()},()=>{});

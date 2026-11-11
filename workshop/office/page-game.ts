@@ -40,7 +40,7 @@ export function currentProjectsBlock(html: string): string | null {
 // scripts in OFFICE_FILES order (they share the page's global scope). The game and projects cores live in office/core.js.
 export const OFFICE_PAGE = "projects/virtual-office/draft/eden-office.html";
 export const OFFICE_DIR = "projects/virtual-office/draft/office";
-export const OFFICE_FILES = ["page.css", "core.js", "floor.js", "pulse.js", "strip.js", "family.js", "desks.js", "today.js", "boot.js"];
+export const OFFICE_FILES = ["page.css", "core.js", "clipboard.js", "floor.js", "pulse.js", "strip.js", "family.js", "desks.js", "today.js", "boot.js"];
 export const OFFICE_CORE = `${OFFICE_DIR}/core.js`;
 
 /** The whole page as one text (html, then each panel file), for tests that look for a string anywhere on the page. */
