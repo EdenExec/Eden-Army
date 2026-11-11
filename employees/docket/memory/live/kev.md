@@ -1,0 +1,1 @@
+- 2026-11-11: 2026-11-11 (Kev): the Williams family lives in Boise (moved early Nov 2026). They are NOT moving to Florida; that was an error. Boise office lease at 3320 N. Milwaukee St Suite 170 is for the long haul.

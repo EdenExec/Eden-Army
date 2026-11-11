@@ -44,6 +44,22 @@ Against the forecast: the Boise placeholder was about $3,000 a month *plus* util
     - The late fee has no cap. Ask for a 5-day grace period, then a 5% one-time fee.
     - Typo: "$$3,131.03".
 
+## Kev's calls (11 Nov 2026)
+
+- **Correction:** the family lives in Boise; there is no move to Florida. Item 1 (early exit) is dropped. This office is for the long haul.
+- **In the tenant markup** (`01-Lease-Suite170-Tenant-Markup.docx` / `.pdf`), each with a note to the landlord:
+  - repairs (new s.16)
+  - fire, flood and condemnation (new s.17)
+  - use clause (s.6)
+  - parking-lot release carve-out (s.15)
+  - break-in clause (s.13)
+  - insurance rewritten to standard form (s.10)
+  - default, notice and cure, and notice addresses (new s.18)
+  - governing law: Idaho and Ada County (new s.19)
+- **Not pursued:** snow removal, Exhibit A (it comes with the final lease), where rent is paid, early exit.
+- **Signer:** Eden Partner Group, LLC.
+- **Idaho registration, payroll and tax questions:** sent to Joel Fairchild and Chris Catalano to run down (draft email in Kev's Superhuman).
+
 ## Not mine to answer (for Chris and Joel)
 Signing an Idaho lease and staffing an office there probably means:
 - registering Eden Partner Group LLC as a foreign LLC with the Idaho Secretary of State, if it's organized somewhere else;
