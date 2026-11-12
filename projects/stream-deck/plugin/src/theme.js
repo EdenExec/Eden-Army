@@ -34,7 +34,7 @@ export const LABELS = {
 	sabbathSoonTitle: "Rest begins at",
 	noMeeting: "NEXT",
 	noMeetingTitle: "No more meetings today",
-	desktopHint: "TURN TO SWITCH",
+	desktopHint: "TURN",
 	focusIdle: "PRESS TO START",
 	focusRunning: "PRESS TO STOP",
 	focusDone: "DONE",
@@ -51,6 +51,8 @@ export const SIZES = {
 	unit: 14,
 	caption: 11,
 	margin: 18,
+	titleMaxChars: 22,
+	restTitle: 18,
 };
 
 // Timing rules, in minutes.

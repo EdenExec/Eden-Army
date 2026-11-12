@@ -1,16 +1,26 @@
 {
-  "name": "plugin",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "eden-deck",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Private Stream Deck + plugin: next meeting, Join key, focus timer, dials.",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c",
+    "watch": "rollup -c -w --watch.onEnd=\"streamdeck restart com.kdtw.edendeck\"",
+    "test": "node --test \"test/*.test.js\"",
+    "validate": "streamdeck validate com.kdtw.edendeck.sdPlugin",
+    "pack": "streamdeck pack com.kdtw.edendeck.sdPlugin",
+    "previews": "node scripts/render-previews.js",
+    "screenshots": "node scripts/screenshot.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@elgato/cli": "^1.10.4",
-    "@elgato/streamdeck": "^3.0.4"
+    "@elgato/streamdeck": "^3.0.4",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.2",
+    "playwright-core": "^1.65.0",
+    "rollup": "^4.68.2"
   }
 }
