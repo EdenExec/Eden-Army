@@ -59,6 +59,10 @@ Make a profile called **Google Calendar** and set it to switch automatically to 
 1. **Participants** (decided as a default, change if you disagree): it replaces Radar on the Zoom page. Radar is one tap away on the home page after the call, and a second Zoom page would cost a swipe mid-call.
 2. **Flow:** should the key open the Wispr Flow window (current setup, needs the Show window tick and a TEST), or a Wispr shortcut that starts Notetaker directly? Answer after the TEST.
 
+## Keeping the Eden skin in every app
+
+The deck shows the **default profile** whenever the app in front has no profile of its own. So: make Eden the default profile for the Stream Deck + (profile list, right-click Eden, or its settings; wording may be "Set as default"), and remove the automatic app assignment from any old profile (do not delete the profiles). Only Zoom and Google Calendar keep an app assignment. Smart Profiles only switch while the Stream Deck window is minimized, so if the layout does not change, minimize the window first. TEST: bring Claude, Music, Finder and Chrome to the front and check that Eden stays up.
+
 ## Sabbath page
 
 Switching by the clock (Friday sunset to Saturday sunset) comes with the plugin. Until then you can switch to a profile called **Rest** by hand: put only the Music key and `key-sabbath-rest-288.png` on it.

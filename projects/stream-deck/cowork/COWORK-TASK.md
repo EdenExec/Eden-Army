@@ -2,6 +2,17 @@
 
 Paste the block under "The task" into a new Cowork task, with this kit folder connected. Written by Q, 12 November 2026.
 
+## Fix run (12 November, second pass): keep the Eden skin up in every app
+
+Kev's complaint: when he opens an app like Claude or Music, the deck falls back to the old layout. He wants the Eden skin showing in every app, except in Zoom (the Zoom profile) and in Google Calendar (the Google Calendar profile). Stream Deck switches to the **default profile** whenever the app in front has no profile of its own, so the likely causes are (a) the old layout is the default profile for the Stream Deck +, or (b) an old profile is assigned to those apps. Do this first, before the update run below:
+
+1. Export a backup of every profile on this Stream Deck + into `exports/` with `-before-fix` in the name. Take a screenshot of the profile list.
+2. For every profile, open its settings and write down which app (if any) it switches to automatically, and whether it is the default. Put the list in `report.md` (names only).
+3. Make **Eden** the default profile for the Stream Deck + (in the profile list, right-click Eden or use the profile's settings; the wording may be "Set as default"). Confirm Eden is the only one marked default.
+4. For every other profile except Zoom and Google Calendar: remove its automatic app assignment (do NOT delete the profile and do not change its keys). Kev has said this is allowed for this fix only.
+5. Test: bring Claude, Music, Chrome, Finder, Messages, Duet and the Eden Day Board app to the front one at a time (the Stream Deck window must be minimized, because switching is off while it is open). The deck should show Eden each time. Zoom should show the Zoom profile and Google Calendar should show the Google Calendar profile. Report any app that still shows another layout and which profile it shows.
+6. If an app shows the Google Calendar profile when it should not (for example any Chrome window), say so: that profile may be assigned to Chrome instead of the Calendar web app, and Kev decides.
+
 ## Update run (12 November): read this first
 
 The Eden and Zoom profiles already exist from the 11 November run, and the Eden Deck plugin is installed. This is an update, not a rebuild. Before changing anything, export a backup of each existing profile into `exports/` with `-before-12nov` in the name. Then change the existing profiles to match the steps below, skip anything that is already right, and do not delete the old profiles. Replace the installed plugin with the newer file in `plugin/` (open it; if the app asks, replace). New things in this run: the bottom row opens apps, Zoom page Chat and Copy invite link and Participants, the Google Calendar profile, the Wispr Flow "bring up its window" option, and the new icons in `icons/`.
@@ -32,4 +43,4 @@ Read `setup.md` and `design/contact-sheet.png` first. Then work in the Stream De
 8. Export the Eden, Zoom and Google Calendar profiles (in the app, right-click a profile and choose Export) into the kit folder's `exports/` folder.
 9. Write `report.md` in the kit folder: what you set up, what you could not do, anything that behaved differently from `setup.md`, and the macOS and Stream Deck versions.
 
-Rules: change only the Eden, Zoom and Google Calendar profiles and the Eden Deck plugin. Do not delete or edit any other profile, app, file or setting. Do not open email, messages or documents. Do not enter or look up passwords. If a step does not match what you see, stop and ask Kev instead of improvising.
+Rules: change only the Eden, Zoom and Google Calendar profiles and the Eden Deck plugin, plus (for the fix run only) the default-profile choice and the automatic app assignments on Kev's other profiles, after backing them up. Do not delete or edit any other profile, app, file or setting. Do not open email, messages or documents. Do not enter or look up passwords. If a step does not match what you see, stop and ask Kev instead of improvising.
