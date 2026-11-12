@@ -44,3 +44,5 @@ Kev with Jeff Rosser (GM): PB South's onboarding is clunky and new hires aren't 
 | 03 Onboarding Game Plan.docx (2 pages) | Jeff, managers, HR and coaches: cohorts, the countdown, the week, reviews (30/60/90, mid-year June or July, year-end December), coach, scorecard |
 
 Built by `build_deck_v4.py` and `build_kit_docs.py`. Confirmed by Kev, 12 Nov: John Fedeli's title is VP of Executives; Carol Carabba is the HR contact; no ownership sentence is needed with Jeff. The kit is ready for Kev to hand over.
+
+Drive (Kev's My Drive, not shared): folder "PB South New Hire Kit" https://drive.google.com/drive/folders/1N3UvwkhGv-LXSDyQLMCJ_Wa5IOJmcUnV, holding 02 overview and 03 game plan as Google Docs. The 01 deck (2 MB) is too big for the Drive connector; Kev drags in `PB South New Hire Kit/01 Welcome to PB South - deck.pptx`.
