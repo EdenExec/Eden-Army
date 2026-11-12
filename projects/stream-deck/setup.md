@@ -39,11 +39,11 @@ Set the title of each key to blank (the PNG already carries the word). The old n
 | Share | Zoom plugin, share screen | `key-zoom-share` |
 | Chat | System, Hotkey, Shift+Cmd+H (was Breakout) | `key-zoom-chat` |
 | Flow | Same as home (Open app, Wispr Flow, show window) | `key-flow` |
-| Radar | Same as home | `key-radar` |
+| Participants | System, Hotkey, Cmd+U (replaces Radar on this page; Radar is on the home page) | `key-zoom-participants` |
 | Copy invite link | System, Hotkey, Shift+Cmd+I (was empty) | `key-zoom-copylink` |
 | Leave | Zoom's own leave action. A normal press; the icon no longer says HOLD | `key-zoom-leave` |
 
-Participants (Cmd+U, `key-zoom-participants-288.png`) is built but has no slot yet: see the open question below.
+Default chosen 12 Nov so the work can move: Participants takes the slot Radar had on the Zoom page. Kev can swap it back.
 
 ## Google Calendar page (profile "Google Calendar", new)
 
@@ -56,7 +56,7 @@ Make a profile called **Google Calendar** and set it to switch automatically to 
 
 ## Two questions for Kev
 
-1. **Participants:** replace Radar on the Zoom page, or add a second Zoom page reached by swiping the strip? (Recommendation: replace Radar on the Zoom page. Radar is one tap away on the home page after the call, and a second page costs a swipe mid-call.)
+1. **Participants** (decided as a default, change if you disagree): it replaces Radar on the Zoom page. Radar is one tap away on the home page after the call, and a second Zoom page would cost a swipe mid-call.
 2. **Flow:** should the key open the Wispr Flow window (current setup, needs the Show window tick and a TEST), or a Wispr shortcut that starts Notetaker directly? Answer after the TEST.
 
 ## Sabbath page
