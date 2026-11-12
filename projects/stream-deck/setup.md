@@ -19,11 +19,11 @@ Changed 12 Nov: the lower row opens apps instead of switching desktops (the Cont
 | Radar | System, Website | The Radar project link, claude.ai/project/ followed by its id. Open Radar in Claude and copy the address from the browser bar. | `key-radar-288.png` |
 | Command | System, Website | https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW | `key-command-288.png` |
 | Flow | Eden Deck, Open app | App `Wispr Flow`, tick **Also bring up its window**, and set **Menu item to click** to `Open Wispr Flow`. Wispr Flow lives in the menu bar and plain "open app" does nothing while it runs; the key clicks the Flow menu bar icon and chooses Open Wispr Flow, which is how Wispr's own help says to open the window. Needs the Accessibility permission (same as the dials). TEST. | `key-flow-288.png` |
-| Duet (top right, replaces Join, 12 Nov) | System, Open | The Duet Chrome app. The old Join key opened the Zoom, Meet or Teams link of your next meeting when it was within 30 minutes, and needed the calendar address pasted in; it is out of the layout for now (the action stays in the plugin). Note the bottom row also has Duet, so one of the two can become something else. | `key-duet-288.png` |
-| Agenda | System, Open | The **Eden Day Board** Chrome app (installed from Chrome as an app; its name has a dash, which System, Open handles; the Eden Deck Open app key now accepts it too) | `key-agenda-dayboard-288.png` |
-| Claude | System, Open | The Claude app | `key-claude-288.png` |
-| Duet | System, Open (or Eden Deck, Open app) | The Chrome web app named Duet | `key-duet-288.png` |
-| Music | System, Open | The Music app | `key-music-288.png` |
+| Duet (top right, replaces Join, 12 Nov) | System, Open | The Duet Chrome app. The old Join key opened the Zoom, Meet or Teams link of your next meeting when it was within 30 minutes, and needed the calendar address pasted in; it is out of the layout for now (the action stays in the plugin). Duet now appears once, top right. | `key-duet-288.png` |
+| Agenda | System, Open | The **Eden Day Board** Chrome app. It still errors on Kev's deck (12 Nov). Likely cause: the name typed in is the page title ("Eden Day Board – Claude artifact"), not the app's real name. Fix: in System, Open, click the file picker and choose the app itself (in Finder: your home folder, Applications, Chrome Apps) instead of typing a name. If it still fails, use System, Website with https://claude.ai/artifact/4QFTb8NFvWhbc2jg5zD4hc (opens in the browser, not as an app window). | `key-agenda-dayboard-288.png` |
+| Zoom (replaces Claude, 12 Nov) | System, Open | The Zoom app (zoom.us) | `key-zoom-app-288.png` |
+| Crelate (replaces LinkedIn and the second Duet, 12 Nov) | System, Open | The Crelate desktop app (blue cr icon in the Dock) | `key-crelate-288.png` |
+| Music | System, Open | The Music app. It opens the app wherever you are; it is not tied to a desktop (the old Control+4 version is gone) | `key-music-288.png` |
 
 Set the title of each key to blank (the PNG already carries the word). The old numbered desktop icons (`key-desktop-*`) stay in the folder; the Sabbath page uses `key-music-288.png`.
 
