@@ -14,9 +14,9 @@ What I have not been able to test: all of this was prepared without access to yo
 
 | Key | Action to drag in | Setting | Icon file |
 |---|---|---|---|
-| Radar | System, Website | Radar's project link (waiting on Kev: copy it from the browser bar) | `key-radar-288.png` |
+| Radar | System, Website | The Radar project link, claude.ai/project/ followed by its id. I do not have the id and have not guessed it: open Radar in Claude and copy the address from the browser bar. | `key-radar-288.png` |
 | Command | System, Website | https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW | `key-command-288.png` |
-| Flow | Hotkey | The shortcut that starts Wispr Flow. TEST: in Wispr Flow settings, pick a hands-free (tap to start, tap to stop) shortcut and use that one. A key press cannot hold the Fn key, so tap-to-toggle is the one that should work. | `key-flow-288.png` |
+| Flow | System, Open | The Wispr Flow desktop app (pick it from the Applications list). It opens the app; it does not start dictation. | `key-flow-288.png` |
 | Join | leave blank for now | The plugin fills this (opens the meeting link, turns cream 15 minutes out) | `key-join-idle-288.png` |
 | 1 Agenda | see "Desktop 1" below | | `key-desktop-1-agenda-288.png` |
 | 2 Claude | Hotkey Control+2 | | `key-desktop-2-claude-288.png` |
@@ -43,7 +43,7 @@ Apple gives full-screen and split-screen spaces no number, so Control+1 may not 
 | Camera | Zoom plugin, camera toggle | `key-zoom-camera-on`, `key-zoom-camera-off` |
 | Share | Zoom plugin, share screen | `key-zoom-share` |
 | Breakout | TEST: open Zoom, Settings, Keyboard Shortcuts, and look for a breakout rooms shortcut. I did not find one. If there is none, we use a small Shortcuts action that clicks the Breakout rooms button (needs Accessibility permission). | `key-zoom-breakout` |
-| Flow | Same as home | `key-flow` |
+| Flow | Same as home (System, Open, Wispr Flow) | `key-flow` |
 | Radar | Same as home | `key-radar` |
 | Leave | Zoom's own leave action if the plugin has one. TEST press-and-hold: if the software has no hold option, keep it a normal key but make it a two-step (a "Leave meeting" confirm). | `key-zoom-leave` |
 
