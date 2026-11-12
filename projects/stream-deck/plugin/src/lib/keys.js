@@ -51,10 +51,106 @@ export function safeAppName(input) {
 	return s && s.length <= 80 && /^[\w .&+'()\-\u2010-\u2015\u2212]+$/u.test(s) ? s : null;
 }
 
-// AppleScript that asks a running app to show its window again (the same as clicking its Dock icon).
-// This is what makes a menu-bar app such as Wispr Flow open its window. The name is checked by safeAppName first.
-export function reopenApp(name) {
+// ---- bring an app's real window up (menu-bar apps such as Wispr Flow) ----
+// Plan: `open -a <app>`; count the app's windows; if there is one, activate the app; if there is none,
+// click the menu item named in the "Menu item to click" setting from the app's menu bar status item.
+
+// Menu item titles follow the same plain-text rule as app names (no quotes, no backslashes).
+// An empty title means "skip the menu click" and is returned as "".
+export function safeMenuTitle(input) {
+	if (input === undefined || input === null || String(input).trim() === "") return "";
+	return safeAppName(String(input));
+}
+
+// The default title for the setting: "Open Wispr Flow" for Wispr Flow, empty for any other app.
+export function defaultMenuTitle(appName) {
+	return String(appName ?? "").trim().toLowerCase() === "wispr flow" ? "Open Wispr Flow" : "";
+}
+
+function checked(name, what) {
 	const safe = safeAppName(name);
-	if (!safe) throw new Error("Bad app name");
-	return `tell application "${safe}" to reopen\ntell application "${safe}" to activate`;
+	if (!safe) throw new Error(`Bad ${what}`);
+	return safe;
+}
+
+// Returns the number of windows of the app's process, or the word "noprocess".
+export function windowCountScript(app) {
+	const a = checked(app, "app name");
+	return [
+		'tell application "System Events"',
+		`\tif not (exists process "${a}") then return "noprocess"`,
+		`\treturn (count of windows of process "${a}") as string`,
+		"end tell",
+	].join("\n");
+}
+
+export function activateScript(app) {
+	return `tell application "${checked(app, "app name")}" to activate`;
+}
+
+// Opens the app's status item menus (menu bar 2 first, then menu bar 1) and clicks the item with this exact title.
+// Loops over items instead of assuming index 1. Returns "ok", "error:no-menu-item" or "error:<message>".
+export function menuClickScript(app, title) {
+	const a = checked(app, "app name");
+	const t = checked(title, "menu item title");
+	return [
+		'tell application "System Events"',
+		`\tif not (exists process "${a}") then return "error:no-process"`,
+		`\tset p to process "${a}"`,
+		"\ttry",
+		"\t\trepeat with barIdx in {2, 1}",
+		"\t\t\ttry",
+		"\t\t\t\tset theBar to menu bar (contents of barIdx) of p",
+		"\t\t\t\trepeat with theItem in (menu bar items of theBar)",
+		"\t\t\t\t\ttry",
+		"\t\t\t\t\t\tclick theItem",
+		"\t\t\t\t\t\tdelay 0.3",
+		"\t\t\t\t\t\tset theMenu to menu 1 of theItem",
+		"\t\t\t\t\t\trepeat with mi in (menu items of theMenu)",
+		"\t\t\t\t\t\t\ttry",
+		`\t\t\t\t\t\t\t\tif (name of mi) is "${t}" then`,
+		"\t\t\t\t\t\t\t\t\tclick mi",
+		'\t\t\t\t\t\t\t\t\treturn "ok"',
+		"\t\t\t\t\t\t\t\tend if",
+		"\t\t\t\t\t\t\tend try",
+		"\t\t\t\t\t\tend repeat",
+		"\t\t\t\t\t\tkey code 53",
+		"\t\t\t\t\t\tdelay 0.1",
+		"\t\t\t\t\tend try",
+		"\t\t\t\tend repeat",
+		"\t\t\tend try",
+		"\t\tend repeat",
+		'\t\treturn "error:no-menu-item"',
+		"\ton error errMsg",
+		'\t\treturn "error:" & errMsg',
+		"\tend try",
+		"end tell",
+	].join("\n");
+}
+
+// Decision after `open -a`: windowCount is a number, or "noprocess" / NaN when unknown.
+//  - a window exists: bring it to front and stop
+//  - none, and a menu title is set: click it from the menu bar
+//  - none and no title: nothing more to do
+export function decideOpen(windowCount, menuTitle) {
+	const n = Number(windowCount);
+	if (Number.isFinite(n) && n > 0) return { action: "activate" };
+	if (menuTitle) return { action: "menu" };
+	return { action: "none" };
+}
+
+// Turn an osascript failure into a short reason for the key's alert.
+export function explainOsaError(text) {
+	const t = String(text ?? "");
+	if (/-25211|-1719|assistive|not allowed|-1743|not authori/i.test(t)) return "Accessibility not allowed";
+	return "AppleScript failed";
+}
+
+// Turn the menu click script's answer into { ok, reason }.
+export function interpretMenuResult(out) {
+	const t = String(out ?? "").trim();
+	if (t === "ok") return { ok: true };
+	if (t === "error:no-process") return { ok: false, reason: "App is not running" };
+	if (t === "error:no-menu-item") return { ok: false, reason: "No window and no menu item found" };
+	return { ok: false, reason: explainOsaError(t) };
 }
