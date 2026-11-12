@@ -68,7 +68,9 @@ Not found: anything on why people stop using a Stream Deck, a Stream Deck key th
 2. If you could only press one key a day, which one would it be?
 3. OK to try a paid plugin (AgendaDeck is $4.99) for the live meeting key?
 4. Do you want the deck on the Mac only, or also a travel setup (Stream Deck Mobile)?
+5. Dark keys or cream keys? Marlowe recommends dark, so a key that turns cream is a strong signal.
+6. Words under the icons, or icons only? Marlowe recommends words for the first month.
 
 ## Marlowe's design input
 
-See `design/design-direction.md`, `design/contact-sheet.html` and the key faces in `design/`.
+Direction: a matte warm black panel where nearly every key looks the same nearly all day. Brightness carries meaning: a key that is on turns cream (as the Day Board does 15 minutes before a meeting), a key that is off fades, and the only color on the deck is a small brass dot and line on a key that needs you. Home page: top row to glance at (Next meeting, Today, Sabbath), middle row folders (Recruiting, Family, Tools), bottom row to press (Join, Talk to Radar, Note, Focus, Call). Rest starts only on press-and-hold. Files: `design/design-direction.md`, `design/layout-grid.md` (also covers the 32-key XL and the Stream Deck +), `design/contact-sheet.html` and `.png`, eight key faces as SVG, and `design/gen.py` to regenerate them. Marlowe assumed the deck sits just in front of the keyboard and used the KDTW Group name.
