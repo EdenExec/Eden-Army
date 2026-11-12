@@ -86,9 +86,11 @@ Prepared for Joey Walker by Eden Partner Group · 12 Nov 2026 · Built from publ
 
 ## Housekeeping
 
-- **Confirm who is on the panel.** Our notes name the interviewer from Related by a different first name than Emad's; check with Kev before you walk in.
-- Bring your updated project list with high-rise references. Bobby asked for it.
-- Keep compensation and terms for Kev. Do not negotiate in the room.
+- **Confirm who is on the panel.** Our notes name the interviewer from Related by a different first name than Emad's; check with the Eden team before you walk in.
+- **Show up sharp, 10 minutes early.** 10 minutes is perfect; 15 to 20 is too early.
+- Keep compensation and terms for the Eden team. Do not negotiate in the room.
 - Public sources only here. Anything not marked as confirmed should be checked before you repeat it.
+
+**If you have any questions, please call:** Nick Leckwold 360.784.4973 · Evan MacArthur 360.907.8159 · Kevin Williams 503.545.7075
 
 *Sources: Related Companies leadership page (related.com); Promethean Builders leadership page (prometheanbuilders.co); ENR, "$1B NYC Google Hub Project Takes Cues From Bridge Building"; Cimolai-HY (Lotfalla bio); Elevator World, "The Elevators of 50 Hudson Yards" (via search summary); Profile Miami, The Real Deal, Law360, Thornton Tomasetti, CoStar, Bloomberg (project facts).*
