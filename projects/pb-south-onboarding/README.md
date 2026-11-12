@@ -17,7 +17,7 @@ Kev with Jeff Rosser (GM): PB South's onboarding is clunky and new hires aren't 
 
 | Piece | Status | File |
 | --- | --- | --- |
-| Welcome to PB South deck (16 slides, role-agnostic) | v1 built; Marlowe design check next | `welcome-to-pb-south-v1.pptx` (`build_deck.py`) |
+| Welcome to PB South deck (12 slides, role-agnostic) | v2 with Marlowe's fixes: 16pt+ text, open layouts, timeline by year, tools folded into Day 1, email slide cut | `welcome-to-pb-south-v2.pptx` (`build_deck_v2.py`); v1 kept |
 | Onboarding ramp: cohorts, 30/60/90 by role family, coach model, scorecard | Dean's draft | `dean-ramp.md` |
 | Fact sheet (one page: who we are, leadership, projects, key contacts) | Next | |
 | Handbook at a glance (plain-English summary; the handbook stays the official policy) | Next | |
