@@ -12,44 +12,56 @@ What I have not been able to test: all of this was prepared without access to yo
 
 ## Home page (profile "Eden")
 
+Changed 12 Nov: the lower row opens apps instead of switching desktops (the Control+number keys failed silently). The Desktop dial still switches desktops with Control+arrow.
+
 | Key | Action to drag in | Setting | Icon file |
 |---|---|---|---|
-| Radar | System, Website | The Radar project link, claude.ai/project/ followed by its id. I do not have the id and have not guessed it: open Radar in Claude and copy the address from the browser bar. | `key-radar-288.png` |
+| Radar | System, Website | The Radar project link, claude.ai/project/ followed by its id. Open Radar in Claude and copy the address from the browser bar. | `key-radar-288.png` |
 | Command | System, Website | https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW | `key-command-288.png` |
-| Flow | System, Open | The Wispr Flow desktop app (pick it from the Applications list). It opens the app; it does not start dictation. | `key-flow-288.png` |
-| Join | leave blank for now | The plugin fills this (opens the meeting link, turns cream 15 minutes out) | `key-join-idle-288.png` |
-| 1 Agenda | see "Desktop 1" below | | `key-desktop-1-agenda-288.png` |
-| 2 Claude | Hotkey Control+2 | | `key-desktop-2-claude-288.png` |
-| 3 LinkedIn | Hotkey Control+3 | | `key-desktop-3-linkedin-288.png` |
-| 4 Music | Hotkey Control+4 | | `key-desktop-4-music-288.png` |
+| Flow | Eden Deck, Open app | App `Wispr Flow`, tick **Also bring up its window**. TEST: it must open the Wispr Flow window while the app sits in the menu bar. If not, see the open question below. | `key-flow-288.png` |
+| Join | Eden Deck, Join | Opens the meeting link, turns cream 15 minutes out | `key-join-idle-288.png` |
+| Agenda | System, Open | The **Eden Day Board** Chrome app (installed from Chrome as an app; its name has a dash, which System, Open handles; the Eden Deck Open app key now accepts it too) | `key-agenda-dayboard-288.png` |
+| Claude | System, Open | The Claude app | `key-claude-288.png` |
+| Duet | System, Open (or Eden Deck, Open app) | The Chrome web app named Duet | `key-duet-288.png` |
+| Music | System, Open | The Music app | `key-music-288.png` |
 
-Set the title of each key to blank (the PNG already carries the word).
-
-### Desktop 1 (Agenda) needs a trick
-
-Apple gives full-screen and split-screen spaces no number, so Control+1 may not reach your Agenda desktop. TEST: press Control+1 on the keyboard from another desktop. If it works, use a Hotkey Control+1. If not, either:
-
-- install Google Calendar as its own Chrome app (in Chrome, the three dots menu, Cast, save and share, install the page as an app), put it full screen with the Eden Daily beside it, and use **System, Open** with that app, or
-- use the plugin's Desktop key with "open app instead" (it does the same thing).
+Set the title of each key to blank (the PNG already carries the word). The old numbered desktop icons (`key-desktop-*`) stay in the folder; the Sabbath page uses `key-music-288.png`.
 
 ## Zoom page (profile "Zoom")
 
 1. Install Elgato's free Zoom plugin if it is not already there (you already use its mute, camera and share keys).
-2. Make a second profile called **Zoom** and give it the 8 keys below. In the profile's settings, set it to switch automatically to the Zoom app. The Stream Deck window must be minimized for automatic switching to work.
+2. Make a profile called **Zoom** with the 8 keys below. In the profile's settings, set it to switch automatically to the Zoom app. The Stream Deck window must be minimized for automatic switching to work.
 
 | Key | Action | Icon |
 |---|---|---|
-| Mic | Zoom plugin, mic toggle | `key-zoom-mic-live` and `key-zoom-mic-muted` (use the two as the key's two states) |
+| Mic | Zoom plugin, mic toggle | `key-zoom-mic-live` and `key-zoom-mic-muted` (the key's two states) |
 | Camera | Zoom plugin, camera toggle | `key-zoom-camera-on`, `key-zoom-camera-off` |
 | Share | Zoom plugin, share screen | `key-zoom-share` |
-| Breakout | TEST: open Zoom, Settings, Keyboard Shortcuts, and look for a breakout rooms shortcut. I did not find one. If there is none, we use a small Shortcuts action that clicks the Breakout rooms button (needs Accessibility permission). | `key-zoom-breakout` |
-| Flow | Same as home (System, Open, Wispr Flow) | `key-flow` |
+| Chat | System, Hotkey, Shift+Cmd+H (was Breakout) | `key-zoom-chat` |
+| Flow | Same as home (Open app, Wispr Flow, show window) | `key-flow` |
 | Radar | Same as home | `key-radar` |
-| Leave | Zoom's own leave action if the plugin has one. TEST press-and-hold: if the software has no hold option, keep it a normal key but make it a two-step (a "Leave meeting" confirm). | `key-zoom-leave` |
+| Copy invite link | System, Hotkey, Shift+Cmd+I (was empty) | `key-zoom-copylink` |
+| Leave | Zoom's own leave action. A normal press; the icon no longer says HOLD | `key-zoom-leave` |
+
+Participants (Cmd+U, `key-zoom-participants-288.png`) is built but has no slot yet: see the open question below.
+
+## Google Calendar page (profile "Google Calendar", new)
+
+Make a profile called **Google Calendar** and set it to switch automatically to the Google Calendar app. Two keys, the rest blank:
+
+| Key | Action | Icon |
+|---|---|---|
+| New event | System, Hotkey, the new-event shortcut for the Calendar app (try `c`, or open the Calendar app and press the button once to confirm) | `key-gcal-new-event` |
+| Paste Zoom link | System, Text | Kev types his standing Zoom invite text (link and passcode) into the key's own text box. It lives only in the key's setting: it is not in this folder, not in the repo, not in any ticket. | `key-gcal-zoom-link` |
+
+## Two questions for Kev
+
+1. **Participants:** replace Radar on the Zoom page, or add a second Zoom page reached by swiping the strip? (Recommendation: replace Radar on the Zoom page. Radar is one tap away on the home page after the call, and a second page costs a swipe mid-call.)
+2. **Flow:** should the key open the Wispr Flow window (current setup, needs the Show window tick and a TEST), or a Wispr shortcut that starts Notetaker directly? Answer after the TEST.
 
 ## Sabbath page
 
-Switching by the clock (Friday sunset to Saturday sunset) comes with the plugin. Until then you can switch to a profile called **Rest** by hand: put only the Music desktop key and `key-sabbath-rest-288.png` on it.
+Switching by the clock (Friday sunset to Saturday sunset) comes with the plugin. Until then you can switch to a profile called **Rest** by hand: put only the Music key and `key-sabbath-rest-288.png` on it.
 
 ## What the plugin adds
 

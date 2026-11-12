@@ -62,7 +62,11 @@ export class OpenAppKey extends FaceKey {
 	async onKeyDown(ev) {
 		const name = safeAppName(ev.payload.settings.app ?? "");
 		if (!name) return ev.action.showAlert();
-		await quiet(sys.openApp(name));
+		try {
+			await (ev.payload.settings.showWindow ? sys.openAppWindow(name) : sys.openApp(name));
+		} catch {
+			await ev.action.showAlert();
+		}
 	}
 }
 
@@ -78,10 +82,12 @@ export class DesktopKey extends FaceKey {
 		if (s.mode === "app") {
 			const name = safeAppName(s.app ?? "");
 			if (!name) return ev.action.showAlert();
-			return quiet(sys.openApp(name));
+			return sys.openApp(name).catch(() => ev.action.showAlert());
 		}
 		const n = Math.round(Number(s.number));
 		if (!(n >= 1 && n <= 9)) return ev.action.showAlert();
-		await quiet(sys.controlNumber(n));
+		// Was silent before: Control+number through System Events needs Accessibility permission and fails without a word.
+		// Now the key shows the alert triangle. For a reliable desktop key use Stream Deck's own System > Hotkey instead.
+		await sys.controlNumber(n).catch(() => ev.action.showAlert());
 	}
 }

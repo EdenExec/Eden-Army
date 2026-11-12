@@ -5,7 +5,7 @@ import { stripSvg, sliceSvg } from "../src/lib/strip.js";
 import { joinKeyFace } from "../src/lib/keyface.js";
 import { FocusTimer } from "../src/lib/timer.js";
 import { parseIcs, expandEvents } from "../src/lib/ical.js";
-import { safeWebUrl, safeAppName, controlNumber, pressKeyCode, parseVolume, KEY_CODES } from "../src/lib/keys.js";
+import { safeWebUrl, safeAppName, controlNumber, pressKeyCode, parseVolume, KEY_CODES, reopenApp } from "../src/lib/keys.js";
 import { COLORS } from "../src/theme.js";
 import { GOOGLE_FEED, BOISE } from "./fixtures.js";
 
@@ -114,6 +114,9 @@ test("keys: app names are plain words only", () => {
 	assert.equal(safeAppName("x; rm -rf /"), null);
 	assert.equal(safeAppName("$(whoami)"), null);
 	assert.equal(safeAppName(""), null);
+	assert.equal(safeAppName("Eden Day Board \u2013 Claude artifact"), "Eden Day Board \u2013 Claude artifact");
+	assert.equal(safeAppName("Wispr-Flow"), "Wispr-Flow");
+	assert.equal(safeAppName('a"b'), null);
 });
 
 test("keys: AppleScript for arrows, Control+number and volume", () => {
@@ -134,4 +137,9 @@ test("manifest: every action is registered in code, nothing else, and there is n
 	assert.deepEqual(manifest.Actions.map((a) => a.UUID).sort(), registered);
 	assert.ok(!/dictate/i.test(JSON.stringify(manifest) + code));
 	assert.ok(manifest.Actions.some((a) => a.UUID.endsWith(".openapp")));
+});
+
+test("reopenApp builds a checked script", () => {
+	assert.match(reopenApp("Wispr Flow"), /tell application "Wispr Flow" to reopen/);
+	assert.throws(() => reopenApp('x" & (do shell script "id")'));
 });

@@ -1,7 +1,7 @@
 {
-  "task": "Command Center phase 2 (agent clipboards) built in repo, uncommitted and unpublished: clipboard.js, desk Clipboard section, notes, 6 tests, npm test 488 pass",
-  "since": "2026-11-04T10:00:00Z",
-  "state": "waiting",
-  "blockedOn": "Radar: runner steps that write bullets to the clipboard collection, then publish. Older: QC 2026-10-30-8e3c43, Crelate clean-out t-202610300305-crcl.",
-  "updated": "2026-11-04T10:00:00Z"
+  "task": "Stream Deck +: 10 new v3 keys, setup.md and COWORK-TASK updated, plugin fixes (dash names, show-window, alerts); 48 plugin tests pass. Two questions with Kev.",
+  "since": "2026-11-12T07:46:00Z",
+  "state": "done",
+  "blockedOn": "Kev: Participants slot, Flow window vs shortcut; Marlowe look review",
+  "updated": "2026-11-12T08:05:00Z"
 }

@@ -43,8 +43,18 @@ export function safeWebUrl(input) {
 }
 
 // App names go straight to `open -a <name>` as one argument; reject anything odd.
+// Hyphens and the typographic dashes (en dash, em dash, minus) are fine: Chrome web apps are often
+// named like "Eden Day Board – Claude artifact".
 export function safeAppName(input) {
 	if (typeof input !== "string") return null;
 	const s = input.trim();
-	return s && s.length <= 80 && /^[\w .&+'()-]+$/.test(s) ? s : null;
+	return s && s.length <= 80 && /^[\w .&+'()\-\u2010-\u2015\u2212]+$/u.test(s) ? s : null;
+}
+
+// AppleScript that asks a running app to show its window again (the same as clicking its Dock icon).
+// This is what makes a menu-bar app such as Wispr Flow open its window. The name is checked by safeAppName first.
+export function reopenApp(name) {
+	const safe = safeAppName(name);
+	if (!safe) throw new Error("Bad app name");
+	return `tell application "${safe}" to reopen\ntell application "${safe}" to activate`;
 }

@@ -16,8 +16,8 @@ Built for Kev's Stream Deck + (Mac). It draws the touch strip from live state, g
 | FOCUS dial | Turn: minutes in steps of 5 (5 to 120). Press: start or stop. When it ends the slice flashes and the Mac plays the "Glass" sound once. |
 | VOLUME dial | Turn: system volume in steps of 4. Press: mute or unmute. |
 | Open link key | Setting: web address and label (Radar chat, Command Center page). Opens in the default browser. |
-| Open app key | Setting: app name and label. Runs `open -a`. Use it for the Wispr Flow key (app name `Wispr Flow`). |
-| Desktop key | Setting: number 1 to 9 and label. Presses Control+number. Or choose "Open an app instead" with an app name, because full-screen and split-screen desktops get no Control+number shortcut. |
+| Open app key | Setting: app name and label. Runs `open -a`. Names may contain dashes, including en dashes ("Eden Day Board – Claude artifact"). Tick "Also bring up its window" for menu-bar apps such as Wispr Flow: after `open -a` it asks the app to reopen (like a Dock click). The key shows the alert triangle if the app cannot be opened. |
+| Desktop key | Setting: number 1 to 9 and label. Presses Control+number. Control+number goes through System Events and needs Accessibility permission; without it the key now shows the alert triangle instead of failing silently (for a reliable key use Stream Deck's own System > Hotkey). Or choose "Open an app instead" with an app name, because full-screen and split-screen desktops get no Control+number shortcut. |
 | Sabbath | Friday sunset to Saturday sunset (small solar calculation, default Boise 43.615, -116.202, America/Boise). The strip shows REST and the time to Saturday sunset. DAY, DESKTOP and FOCUS do nothing, VOLUME works, Join stays dim. After the last meeting on Friday the left half counts down to the Sabbath. |
 
 There is no Dictate action: the Flow key just opens the Wispr Flow app (Open app key). The Zoom mute, camera, share and breakout keys come from Elgato's own Zoom plugin and are not built here.

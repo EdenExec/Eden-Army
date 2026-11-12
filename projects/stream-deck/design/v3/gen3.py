@@ -40,6 +40,15 @@ GL = {
  "breakout":'<rect x="52" y="36" width="17" height="17" rx="3"/><rect x="75" y="36" width="17" height="17" rx="3"/><rect x="52" y="59" width="17" height="17" rx="3"/><rect x="75" y="59" width="17" height="17" rx="3"/>',
  "leave":   '<path d="M52 56h40"/>',
  "rest":    '<path d="M48 68h48M56 68a16 16 0 0 1 32 0"/>',
+ "chat":    '<path d="M52 40h40a4 4 0 0 1 4 4v22a4 4 0 0 1-4 4H70l-12 10V70h-6a4 4 0 0 1-4-4V44a4 4 0 0 1 4-4z"/>',
+ "copy":    '<rect x="50" y="36" width="28" height="28" rx="4"/><rect x="66" y="48" width="28" height="28" rx="4"/>',
+ "people":  '<circle cx="72" cy="44" r="10"/><path d="M52 78a20 20 0 0 1 40 0"/>',
+ "duet":    '<circle cx="63" cy="56" r="16"/><circle cx="81" cy="56" r="16"/>',
+ "dayboard":'<path d="M50 42h44M50 56h44M50 70h28"/>',
+ "spark":   '<path d="M72 34v44M53.5 45l37 22M53.5 67l37-22"/>',
+ "music":   '<circle cx="64" cy="70" r="8"/><path d="M72 70V36l16 8"/>',
+ "plus":    '<rect x="50" y="34" width="44" height="44" rx="6"/><path d="M72 46v20M62 56h20"/>',
+ "chain":   '<rect x="46" y="46" width="30" height="20" rx="10"/><rect x="68" y="46" width="30" height="20" rx="10"/>',
 }
 
 def key(glyph, label, state="idle", badge=None, sub=None):
@@ -125,6 +134,15 @@ home = {
  "key-desktop-2-claude": desk(2, "CLAUDE"),
  "key-desktop-3-linkedin": desk(3, "LINKEDIN"),
  "key-desktop-4-music": desk(4, "MUSIC"),
+ # App keys (Kev, 12 Nov): open an app, so no desktop numeral.
+ "key-agenda-dayboard": key("dayboard", "AGENDA"),
+ "key-claude": key("spark", "CLAUDE"),
+ "key-duet": key("duet", "DUET"),
+ "key-music": key("music", "MUSIC"),
+}
+gcal = {
+ "key-gcal-new-event": key("plus", "NEW EVENT"),
+ "key-gcal-zoom-link": key("chain", "ZOOM LINK"),
 }
 zoom = {
  "key-zoom-mic-live": key("mute", "MIC ON", "on"),
@@ -133,31 +151,38 @@ zoom = {
  "key-zoom-camera-off": key("camoff", "CAM OFF"),
  "key-zoom-share": key("share", "SHARE"),
  "key-zoom-breakout": key("breakout", "BREAKOUT"),
- "key-zoom-leave": key("leave", "LEAVE", sub="HOLD"),
+ "key-zoom-leave": key("leave", "LEAVE"),
+ "key-zoom-chat": key("chat", "CHAT"),
+ "key-zoom-copylink": key("copy", "COPY LINK"),
+ "key-zoom-participants": key("people", "PEOPLE"),
 }
 sab = {"key-sabbath-rest": key("rest", "REST", "rest", sub="UNTIL SUNDOWN")}
 strips = {f"strip-{m}": strip(m) for m in ("work", "soon", "zoom", "sabbath")}
-for d in (home, zoom, sab, strips):
+for d in (home, zoom, gcal, sab, strips):
     for n, s in d.items():
         open(os.path.join(OUT, n + ".svg"), "w").write(s)
 
 pages = [
  ("Workday, 9:00 AM", "Calm. Agenda desktop is showing; Radar has one reply waiting.",
   [radar_attn, home["key-command"], home["key-flow"], home["key-join-idle"],
-   home["key-desktop-1-agenda"], home["key-desktop-2-claude"], home["key-desktop-3-linkedin"], home["key-desktop-4-music"]],
+   home["key-agenda-dayboard"], home["key-claude"], home["key-duet"], home["key-music"]],
   strips["strip-work"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
  ("Meeting in 12 minutes", "Join and the meeting half of the strip turn cream, like the Day Board.",
   [home["key-radar"], home["key-command"], home["key-flow"], home["key-join-soon"],
-   home["key-desktop-1-agenda"], home["key-desktop-2-claude"], home["key-desktop-3-linkedin"], home["key-desktop-4-music"]],
+   home["key-agenda-dayboard"], home["key-claude"], home["key-duet"], home["key-music"]],
   strips["strip-soon"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
  ("Zoom page", "Swaps in when Zoom is in front. Cream means the room can hear and see you.",
-  [zoom["key-zoom-mic-live"], zoom["key-zoom-camera-on"], zoom["key-zoom-share"], zoom["key-zoom-breakout"],
-   home["key-flow"], home["key-radar"], blank(), zoom["key-zoom-leave"]],
+  [zoom["key-zoom-mic-live"], zoom["key-zoom-camera-on"], zoom["key-zoom-share"], zoom["key-zoom-chat"],
+   home["key-flow"], home["key-radar"], zoom["key-zoom-copylink"], zoom["key-zoom-leave"]],
   strips["strip-zoom"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
  ("Sabbath", "Friday sunset to Saturday sunset. Work rests; music and volume stay awake.",
   [sab["key-sabbath-rest"], blank(), blank(), blank(),
-   blank(), blank(), blank(), desk(4, "MUSIC", "rest")],
+   blank(), blank(), blank(), key("music", "MUSIC", "rest")],
   strips["strip-sabbath"], ["", "", "", ""]),
+ ("Google Calendar page", "Swaps in when Google Calendar is in front. Two keys; the rest stay blank.",
+  [gcal["key-gcal-new-event"], gcal["key-gcal-zoom-link"], blank(), blank(),
+   blank(), blank(), blank(), blank()],
+  strips["strip-work"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
 ]
 
 def device(title, cap, keys, st, rest=False):
