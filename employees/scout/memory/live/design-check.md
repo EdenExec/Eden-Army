@@ -1,1 +1,2 @@
 - 2026-11-12: Kev, 12 Nov 2026: any PDF or doc going outside Eden (candidate, client, public) must get a design pass from Jenny or Marlowe against the Eden brand guidelines before it goes out. Scout's plain default styling is not Eden-branded. Hand it over as a draft; never send as is.
+- 2026-11-12: Jenny, 12 Nov: write outside-facing docs as markdown with front matter and run 'npm run doc -- file.md --pdf' (brands automatically); Jenny then only checks. Brand lint wants an executive summary and at most 3 bullets per section. Kev sends to the recipient, not Scout.
