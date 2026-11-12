@@ -28,4 +28,4 @@ Riley Hilgart: taken 11 Nov; results in Kev's inbox. Rex Hickman and Sadie Kienz
 
 When 2 or fewer are left, Dean flags it so Kev can order more. A 10-pack was the $16-a-code tier.
 
-Results stay in Kev's account. Only the type, wing and Working Genius pair go on the team map, and only once the person joins Eden.
+Results stay in Kev's account. Only the type, wing and Working Genius pair go on the team map (`team-map.md`), and only once the person joins Eden.
