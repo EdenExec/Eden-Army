@@ -130,7 +130,7 @@ for i, (big, small) in enumerate([("Bi-weekly", "Paydays, every other week"), ("
     tb(s, x, Inches(2.0), Inches(2.9), Inches(0.7), big, 32, True, NAVY); tb(s, x, Inches(2.85), Inches(2.8), Inches(1), small, 16)
 hair(s, Inches(0.7), Inches(4.15), Inches(12.6), Inches(4.15))
 rows(s, Inches(0.7), Inches(4.45), Inches(5.9), ["Insperity Premier|portal.insperity.com for pay, benefits and PTO", "Questions|866-715-3552, weekdays 8am to 8pm Eastern"], 16, 8)
-rows(s, Inches(6.9), Inches(4.45), Inches(5.8), ["Sick leave|Up to 40 hours a year, from day one", "PTO|Request 2 weeks ahead; doesn't roll over", "Fine print|The benefits book and handbook govern"], 16, 8)
+rows(s, Inches(6.9), Inches(4.45), Inches(5.8), ["PTO|Request 2 weeks ahead; doesn't roll over", "Sick leave|See the handbook, or ask HR", "Fine print|The benefits book and handbook govern"], 16, 8)
 
 # 9 Holidays
 s = page("2026 holidays.", "Time off", 9)
@@ -140,7 +140,7 @@ for i, (n, d) in enumerate(hol):
     x = Inches(0.7) + (i // 5) * Inches(6.1); yy = Inches(2.0) + (i % 5) * Inches(0.78)
     tb(s, x, yy, Inches(3.9), Inches(0.4), n, 18); tb(s, x + Inches(3.9), yy, Inches(1.9), Inches(0.4), d, 18, True, NAVY, PP_ALIGN.RIGHT)
     hair(s, x, yy + Inches(0.55), x + Inches(5.8), yy + Inches(0.55))
-tb(s, Inches(0.7), Inches(6.05), Inches(12), Inches(0.4), "Holiday pay starts 30 days after hire. Work the scheduled day before and after to be paid for it.", 14, False, MUTE)
+tb(s, Inches(0.7), Inches(6.05), Inches(12), Inches(0.4), "PB South's published 2026 schedule; HR confirms each year. Holiday pay starts 30 days after hire.", 14, False, MUTE)
 
 # 10 How we work + policies
 s = page("How we work.", "Hours, dress and policies", 10)
