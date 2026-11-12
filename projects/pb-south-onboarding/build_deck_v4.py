@@ -15,7 +15,7 @@ LINE = RGBColor(0xC9, 0xCF, 0xD8); PALE = RGBColor(0xDD, 0xE3, 0xEC); WHITE = RG
 FONT = "Arial"
 prs = Presentation(); prs.slide_width = Inches(13.333); prs.slide_height = Inches(7.5)
 BL = prs.slide_layouts[6]; W, H = prs.slide_width, prs.slide_height
-LOGO = os.path.join(HERE, "assets/pbs-mark.png"); LOGO_W = os.path.join(HERE, "assets/pbs-mark-white.png"); BLDG = os.path.join(HERE, "assets/building-bw.png")
+LOGO = os.path.join(HERE, "assets/pbs-mark.png"); LOGO_W = os.path.join(HERE, "assets/pbs-mark-white.png"); BLDG = os.path.join(HERE, "assets/cover-tower.jpg")
 
 def tb(s, x, y, w, h, text, size=16, bold=False, color=INK, align=PP_ALIGN.LEFT, spacing=1.2):
     t = s.shapes.add_textbox(x, y, w, h); f = t.text_frame; f.word_wrap = True
@@ -66,11 +66,11 @@ def col(s, x, y, w, head, body, sub=None, size=16):
 
 # 1 Cover
 s = prs.slides.add_slide(BL); rect(s, 0, 0, W, H, NAVY)
-s.shapes.add_picture(BLDG, W - Inches(4.6), 0, height=H); rect(s, W - Inches(4.6), 0, Inches(0.06), H, WHITE)
+s.shapes.add_picture(BLDG, W - Inches(6.0), 0, width=Inches(6.0), height=H)
 s.shapes.add_picture(LOGO_W, Inches(0.8), Inches(0.6), height=Inches(0.9))
-tb(s, Inches(1.85), Inches(0.92), Inches(6), Inches(0.3), "PB SOUTH CONSTRUCTION  ·  WEST PALM BEACH", 12, True, PALE)
-tb(s, Inches(0.8), Inches(2.3), Inches(7.6), Inches(2.4), ["Welcome to", "PB South."], 64, True, WHITE, spacing=1.0)
-tb(s, Inches(0.8), Inches(4.8), Inches(7.2), Inches(1), "Your new-hire guide: who we are, how we work, and everything you need for day one.", 20, False, PALE)
+tb(s, Inches(1.85), Inches(0.92), Inches(5.2), Inches(0.3), "PB SOUTH CONSTRUCTION  ·  WEST PALM BEACH", 12, True, PALE)
+tb(s, Inches(0.8), Inches(2.3), Inches(6.2), Inches(2.4), ["Welcome to", "PB South."], 60, True, WHITE, spacing=1.0)
+tb(s, Inches(0.8), Inches(4.8), Inches(5.9), Inches(1.2), "Your new-hire guide: who we are, how we work, and everything you need for day one.", 20, False, PALE)
 tb(s, Inches(0.8), H - Inches(0.9), Inches(7), Inches(0.3), "New Hire Guide  ·  [Edition date]", 12, False, PALE)
 
 # 2 Welcome
