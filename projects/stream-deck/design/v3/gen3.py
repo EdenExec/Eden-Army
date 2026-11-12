@@ -48,6 +48,8 @@ GL = {
  "spark":   '<path d="M72 34v44M53.5 45l37 22M53.5 67l37-22"/>',
  "music":   '<circle cx="64" cy="70" r="8"/><path d="M72 70V36l16 8"/>',
  "plus":    '<rect x="50" y="34" width="44" height="44" rx="6"/><path d="M72 46v20M62 56h20"/>',
+ "crelate": '<path d="M92 44a22 22 0 1 0 0 24"/>',
+ "zoomapp": '<rect x="48" y="42" width="30" height="28" rx="6"/><path d="M84 52l12-8v24l-12-8z"/>',
  "chain":   '<rect x="46" y="46" width="30" height="20" rx="10"/><rect x="68" y="46" width="30" height="20" rx="10"/>',
 }
 
@@ -139,6 +141,9 @@ home = {
  "key-claude": key("spark", "CLAUDE"),
  "key-duet": key("duet", "DUET"),
  "key-music": key("music", "MUSIC"),
+ # 12 Nov (Kev): bottom row opens apps: Agenda, Zoom, Crelate, Music. Top right is Duet (Join retired).
+ "key-crelate": key("crelate", "CRELATE"),
+ "key-zoom-app": key("zoomapp", "ZOOM"),
 }
 gcal = {
  "key-gcal-new-event": key("plus", "NEW EVENT"),
@@ -164,12 +169,12 @@ for d in (home, zoom, gcal, sab, strips):
 
 pages = [
  ("Workday, 9:00 AM", "Calm. Agenda desktop is showing; Radar has one reply waiting.",
-  [radar_attn, home["key-command"], home["key-flow"], home["key-join-idle"],
-   home["key-agenda-dayboard"], home["key-claude"], home["key-duet"], home["key-music"]],
+  [radar_attn, home["key-command"], home["key-flow"], home["key-duet"],
+   home["key-agenda-dayboard"], home["key-zoom-app"], home["key-crelate"], home["key-music"]],
   strips["strip-work"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
  ("Meeting in 12 minutes", "Join and the meeting half of the strip turn cream, like the Day Board.",
-  [home["key-radar"], home["key-command"], home["key-flow"], home["key-join-soon"],
-   home["key-agenda-dayboard"], home["key-claude"], home["key-duet"], home["key-music"]],
+  [home["key-radar"], home["key-command"], home["key-flow"], home["key-duet"],
+   home["key-agenda-dayboard"], home["key-zoom-app"], home["key-crelate"], home["key-music"]],
   strips["strip-soon"], ["DAY", "DESKTOP", "FOCUS", "VOLUME"]),
  ("Zoom page", "Swaps in when Zoom is in front. Cream means the room can hear and see you.",
   [zoom["key-zoom-mic-live"], zoom["key-zoom-camera-on"], zoom["key-zoom-share"], zoom["key-zoom-chat"],
