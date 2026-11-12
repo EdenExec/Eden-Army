@@ -1,0 +1,95 @@
+{
+  "id": "2026-11-11-04e500",
+  "subject": "Boise lease Suite 170 (Wang-Zhang LLC): rent schedule",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Year 2 monthly rent = Year 1 x 1.03 (cents)",
+      "claimed": 3131.03,
+      "unit": "usd",
+      "source": "Lease s.3: $3,039.83 Year 1, 3% annual increases from Year 2; stated $3,131.03",
+      "recomputed": 3131.02,
+      "ok": true,
+      "note": "3039.83*1.03=3131.0249; lease states 3131.03 (1 cent high)"
+    },
+    {
+      "label": "Year 3 monthly rent = Year 2 x 1.03 (cents)",
+      "claimed": 3224.96,
+      "unit": "usd",
+      "source": "Lease s.3: stated $3,224.96",
+      "recomputed": 3224.96,
+      "ok": true,
+      "note": "3039.83*1.03^2=3224.9556; stated 3224.96 matches (3131.03*1.03 also 3224.96)"
+    },
+    {
+      "label": "Paying months in the initial term",
+      "claimed": 36,
+      "unit": "count",
+      "source": "Lease s.1: 38-month term from 1 Jan 2027, rent from 1 Mar 2027",
+      "recomputed": 36,
+      "ok": true,
+      "note": "38 months less 2 abated; Mar 2027 to Feb 2030"
+    },
+    {
+      "label": "Total base rent over initial term (lease years from rent commencement)",
+      "claimed": 112749.84,
+      "unit": "usd",
+      "source": "Lease s.1 and s.3: 12 months at each of the three rates",
+      "recomputed": 112749.84,
+      "ok": true,
+      "note": "12*(3039.83+3131.03+3224.96) using lease stated rates; with 3131.02 would be 112749.72"
+    },
+    {
+      "label": "Rent abated (2 months at Year 1 rate)",
+      "claimed": 6079.66,
+      "unit": "usd",
+      "source": "Lease s.1: two months abated",
+      "recomputed": 6079.66,
+      "ok": true,
+      "note": "2*3039.83"
+    },
+    {
+      "label": "Cash due at signing (first month + deposit)",
+      "claimed": 6079.66,
+      "unit": "usd",
+      "source": "Lease s.2 and s.4: first month's rent $3,039.83 + deposit $3,039.83",
+      "recomputed": 6079.66,
+      "ok": true,
+      "note": "3039.83+3039.83; s.2 says first month rent delivered at possession (Jan), though rent commences Mar and 2 months abated - ambiguous"
+    },
+    {
+      "label": "2027 calendar-year rent (Mar to Dec)",
+      "claimed": 30398.3,
+      "unit": "usd",
+      "source": "Lease s.1 and s.3: 10 months at $3,039.83",
+      "recomputed": 30398.3,
+      "ok": true,
+      "note": "10*3039.83; assumes lease years run from rent commencement (Y2 starts Mar 2028)"
+    },
+    {
+      "label": "Year 1 rent per rentable sq ft per year",
+      "claimed": 26,
+      "unit": "usd",
+      "source": "Lease recital 1,403 RSF; s.3 $3,039.83 x 12",
+      "recomputed": 26,
+      "ok": true,
+      "note": "3039.83*12=36477.96/1403=25.9999"
+    },
+    {
+      "label": "Option rent, first month of extension (Year 3 x 1.03)",
+      "claimed": 3321.71,
+      "unit": "usd",
+      "source": "Lease s.3 option at 3% over final year",
+      "recomputed": 3321.71,
+      "ok": true,
+      "note": "3224.96*1.03=3321.7088"
+    }
+  ],
+  "createdAt": "2026-11-11T16:22:08.247Z",
+  "doc": "projects/legal/boise-lease-suite170/00-lease-review.md",
+  "ask": "Kev: sign as-is or send the redline asks to the landlord",
+  "checkedBy": "tally",
+  "closedAt": "2026-11-11T16:22:42.317Z"
+}
