@@ -62,14 +62,33 @@ Not found: anything on why people stop using a Stream Deck, a Stream Deck key th
 - The deck sits on Kev's desk, where visitors see it. No client names, no pay and no phone numbers on a key.
 - Sabbath: nothing on the deck should offer work from Friday sunset to Saturday sunset.
 
-## Questions for Kev
+## Kev's answers, 12 Nov 2026 (photo of the Boise desk)
 
-1. Which Stream Deck is it (the back or the box says MK.2, XL, Neo, + or Mini)? That sets the key count and whether we use dials.
-2. If you could only press one key a day, which one would it be?
-3. OK to try a paid plugin (AgendaDeck is $4.99) for the live meeting key?
-4. Do you want the deck on the Mac only, or also a travel setup (Stream Deck Mobile)?
-5. Dark keys or cream keys? Marlowe recommends dark, so a key that turns cream is a strong signal.
-6. Words under the icons, or icons only? Marlowe recommends words for the first month.
+- Deck: **Stream Deck +** (8 LCD keys in 2 rows of 4, a touch strip under them, 4 dials). Mac only.
+- One key a day: **Radar's chat or the Command Center page.** Radar is a chat, not voice dictation. No "new Claude chat" key, only Radar.
+- Do not pay for AgendaDeck. Build free first.
+- Words under the icons: yes. Simpler icons, more on brand.
+- Loves the Zoom mute, camera and share keys. Wants a breakout rooms key.
+- Wants desktop jumping by hot key, especially the split-screen desktop with the Eden Daily and Google Calendar.
+- Wants the strip and dials used.
+
+## Revised function plan (free)
+
+| Need | Free way | What I could and could not confirm |
+|---|---|---|
+| Radar | Open Website action to Radar's chat link | Needs the link from Kev (I could not find it in the repo). |
+| Command Center | Open Website action to https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW | Straightforward. |
+| Zoom mute, camera, share | Elgato's Zoom plugin, which Kev already uses; make it a Smart Profile that swaps in when Zoom is in front | Smart Profiles only run while the Stream Deck window is minimized ([Elgato](https://www.elgato.com/ca/en/explorer/products/stream-deck/smart-profiles-stream-deck/)). |
+| Zoom breakout rooms | Check Zoom Settings, Keyboard Shortcuts at the desk. If there is no shortcut, a Shortcuts action that clicks the toolbar button, which needs Accessibility permission and is fragile | I searched and found no breakout shortcut. Unconfirmed. |
+| Jump to a desktop | macOS Mission Control shortcuts (Control plus a number), sent by a Hotkey key | Full-screen spaces get no number, so Control plus a number will not reach a full-screen or split-screen space ([note](https://benji011.github.io/til/2024-06-30-on-osx-you-can-create-keyboard-shortcuts-to-switch-between-a-specific-desktop)). Kev's Calendar desktop looks like one. Workarounds to test: install Google Calendar as its own Chrome app and use an Open App key, or step with Control plus the arrow keys. |
+| Next meeting on a key and the strip, with Join | A free build: Google Calendar can give each calendar a private read-only address; a small Stream Deck plugin (Elgato's SDK is free) reads it and draws the key and strip | From my own knowledge of Google Calendar, not from this research. The private address is a secret, so it lives only in the plugin settings on Kev's Mac, never in the repo. Needs a short desk test. |
+| Dials | See Marlowe's v2 for the final choice. Candidates: switch desktop, volume, focus length, step the Day Board a day (the Day Board already answers the arrow keys) | Volume is built in. I could not confirm the strip's exact pixel size or Elgato's full built-in dial list from search, so treat 800 x 100 as approximate. |
+
+## Still open
+
+1. The link to Radar's chat (paste it, or tell me which project it lives in).
+2. Which calendar the next-meeting key should read (Kev - Eden, or also the personal one).
+3. OK for me to build the free plugin? I can write and test the logic here; the install and the first run happen on your Mac.
 
 ## Marlowe's design input
 
