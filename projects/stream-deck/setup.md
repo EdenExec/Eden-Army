@@ -18,8 +18,8 @@ Changed 12 Nov: the lower row opens apps instead of switching desktops (the Cont
 |---|---|---|---|
 | Radar | System, Website | The Radar project link, claude.ai/project/ followed by its id. Open Radar in Claude and copy the address from the browser bar. | `key-radar-288.png` |
 | Command | System, Website | https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW | `key-command-288.png` |
-| Flow | Eden Deck, Open app | App `Wispr Flow`, tick **Also bring up its window**. TEST: it must open the Wispr Flow window while the app sits in the menu bar. If not, see the open question below. | `key-flow-288.png` |
-| Join | Eden Deck, Join | Opens the meeting link, turns cream 15 minutes out | `key-join-idle-288.png` |
+| Flow | Eden Deck, Open app | App `Wispr Flow`, tick **Also bring up its window**, and set **Menu item to click** to `Open Wispr Flow`. Wispr Flow lives in the menu bar and plain "open app" does nothing while it runs; the key clicks the Flow menu bar icon and chooses Open Wispr Flow, which is how Wispr's own help says to open the window. Needs the Accessibility permission (same as the dials). TEST. | `key-flow-288.png` |
+| Duet (top right, replaces Join, 12 Nov) | System, Open | The Duet Chrome app. The old Join key opened the Zoom, Meet or Teams link of your next meeting when it was within 30 minutes, and needed the calendar address pasted in; it is out of the layout for now (the action stays in the plugin). Note the bottom row also has Duet, so one of the two can become something else. | `key-duet-288.png` |
 | Agenda | System, Open | The **Eden Day Board** Chrome app (installed from Chrome as an app; its name has a dash, which System, Open handles; the Eden Deck Open app key now accepts it too) | `key-agenda-dayboard-288.png` |
 | Claude | System, Open | The Claude app | `key-claude-288.png` |
 | Duet | System, Open (or Eden Deck, Open app) | The Chrome web app named Duet | `key-duet-288.png` |
