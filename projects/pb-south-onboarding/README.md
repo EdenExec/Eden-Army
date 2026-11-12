@@ -34,3 +34,13 @@ Kev with Jeff Rosser (GM): PB South's onboarding is clunky and new hires aren't 
 ## Selling it later (Eden program)
 
 "Cohort-in-a-box": the deck template, ramp, coach guide, readiness checklist and scorecard, rebranded per client and set up in a week. PB South is the pilot case study, with Jeff's yes. Pricing goes through Tally and terms through Docket when Kev wants to package it.
+
+## The kit folder (Kev, 12 Nov): `PB South New Hire Kit/` (and the .zip)
+
+| File | Who uses it |
+| --- | --- |
+| 01 Welcome to PB South - deck.pptx (13 slides, speaker notes) | The presenter, on Day 1 with the cohort |
+| 02 New Hire Overview - one per hire.docx | The manager fills it in and goes through it with each hire: role, coach, who to ask, check-in dates, reviews |
+| 03 Onboarding Game Plan.docx (2 pages) | Jeff, managers, HR and coaches: cohorts, the countdown, the week, reviews (30/60/90, mid-year June or July, year-end December), coach, scorecard |
+
+Built by `build_deck_v4.py` and `build_kit_docs.py`. To confirm with Jeff before it ships: John Fedeli's title; that Carol Carabba is the HR contact; and the Docket ownership sentence.
