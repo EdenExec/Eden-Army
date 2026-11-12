@@ -1,3 +1,5 @@
 - 2026-11-03 (run 15:58-16:15 PT) · EL-033 · 110 rows looked up (free search on all; 14 enriched free, under management) · paid credits 0 (first paid batch of 10 refused: ZoomInfo credits exhausted on kev1 seat, nothing charged) · free records 14 · partial, 90 rows waiting for credits
 - 2026-11-04 · XL Construction remake · web recipes only (no list built, no export) · seat unconfirmed (seats.md missing) · est. credits not computed
 - 2026-11-04 · XL narrowed counts · Sr PM 86, PM 338 (pool cos, SF metro, has-mobile) · upper bound ~424 credits · seat still unconfirmed
+- 2026-11-12 · EL-037 Juicy Healthcare PM + Super WPB · free search only (company and contact search, no redeem, no enrich) · paid credits 0 · seat not named (seats.md still missing)
+- 2026-11-12 (Kev's ask, via Radar): EL-037 new leads put in two ZoomInfo audiences on the Kev 1 seat (28 + 27 = 55) for a bulk web-app export of mobiles. Free search showed 48 with a mobile (21 of them DNC) and 7 with none; 1 already under management. Estimated cost if all 55 are exported: about 54 bulk credits. Building the audiences cost nothing; confirm actual credits after the export.

@@ -773,6 +773,12 @@
       "stage": "landed"
     },
     {
+      "title": "EL-033 · 2026-11-03 · XL Construction · Senior Project Manager (Science/Tech/Commercial), SF Bay Area · 155 leads",
+      "landedAt": "2026-11-02",
+      "phonesAt": null,
+      "crelateAt": null,
+      "movedAt": null,
+      "note": "",
       "file": "2026-11-03-xl-sf-senior-pm.csv",
       "rows": 213,
       "tiers": {
@@ -785,12 +791,26 @@
       "driveUrl": "https://docs.google.com/spreadsheets/d/10uJLBVfzh0NZboESrXXWeWGJk150ycO3IIGhqxHQ8qw/edit",
       "status": "ok",
       "errors": 0,
-      "title": "EL-033 · 2026-11-03 · XL Construction · Senior Project Manager (Science/Tech/Commercial), SF Bay Area · 155 leads",
-      "landedAt": "2026-11-02",
+      "stage": "landed"
+    },
+    {
+      "title": "EL-037 · 2026-11-12 · Juicy - Healthcare PM + Super WPB 11_12_26 · Healthcare PMs + Supers (clinics and small projects), West Palm Beach · 145 leads",
+      "landedAt": "2026-11-11",
       "phonesAt": null,
       "crelateAt": null,
       "movedAt": null,
       "note": "",
+      "file": "2026-11-12-juicy-healthcare-pm-super-wpb.csv",
+      "rows": 145,
+      "tiers": {
+        "1": 90,
+        "2": 55
+      },
+      "built": "2026-11-12",
+      "discreet": false,
+      "driveUrl": "https://docs.google.com/spreadsheets/d/1PdqCvgrxuZFP_FPSq49VTQasMORX869haHfyxRmGdg0/edit",
+      "status": "ok",
+      "errors": 0,
       "stage": "landed"
     },
     {
