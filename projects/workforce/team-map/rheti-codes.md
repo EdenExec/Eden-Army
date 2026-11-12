@@ -8,11 +8,11 @@ How to hand one out: give the person one unused code plus the one-sheet (`Eden's
 
 | Code | Given to | Date | Taken |
 |---|---|---|---|
-| renwy7u68b | Rex, Riley or Sadie (one code each; Kev didn't say which) | 11 Nov | |
-| reng6mrudb | Rex, Riley or Sadie | 11 Nov | |
-| renc6soq7b | Rex, Riley or Sadie | 11 Nov | |
+| renwy7u68b | Riley Hilgart | 11 Nov | 11 Nov |
+| reng6mrudb | Rex Hickman | 11 Nov | 11 Nov |
+| renc6soq7b | Sadie Kienzle | 11 Nov | 11 Nov |
 
-Riley Hilgart: taken 11 Nov; results in Kev's inbox. Rex Hickman and Sadie Kienzle: not yet.
+All three results are in Kev's inbox (Superhuman label AI/Enneagram).
 
 ## Available (7)
 
