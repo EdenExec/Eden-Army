@@ -15,7 +15,7 @@ def base():
     st = d.styles["Normal"]; st.font.name = "Arial"; st.font.size = Pt(10.5)
     st.element.rPr.rFonts.set(qn("w:eastAsia"), "Arial")
     hdr = d.sections[0].header.paragraphs[0]
-    hdr.add_run().add_picture(os.path.join(HERE, "assets/pbs-mark.png"), height=Inches(0.35))
+    hdr.add_run().add_picture(os.path.join(HERE, "assets/pbs-mark-small.png"), height=Inches(0.35))
     r = hdr.add_run("   PB SOUTH CONSTRUCTION"); r.bold = True; r.font.size = Pt(10); r.font.color.rgb = NAVY
     return d
 
