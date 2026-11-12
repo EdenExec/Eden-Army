@@ -1,7 +1,7 @@
-import { SingletonAction } from "@elgato/streamdeck";
+import streamDeck, { SingletonAction } from "@elgato/streamdeck";
 import { hub } from "../hub.js";
 import { keyFace, svgDataUri } from "../lib/keyface.js";
-import { safeWebUrl, safeAppName } from "../lib/keys.js";
+import { safeWebUrl, safeAppName, safeMenuTitle, defaultMenuTitle } from "../lib/keys.js";
 import { sys } from "../lib/system.js";
 
 const UUID = "com.kdtw.edendeck";
@@ -62,8 +62,16 @@ export class OpenAppKey extends FaceKey {
 	async onKeyDown(ev) {
 		const name = safeAppName(ev.payload.settings.app ?? "");
 		if (!name) return ev.action.showAlert();
+		const settings = ev.payload.settings;
 		try {
-			await (ev.payload.settings.showWindow ? sys.openAppWindow(name) : sys.openApp(name));
+			if (!settings.showWindow) return await sys.openApp(name);
+			const menuTitle = safeMenuTitle(settings.menuItem ?? defaultMenuTitle(name));
+			if (menuTitle === null) return ev.action.showAlert(); // unsafe title
+			const result = await sys.openAppWindow(name, menuTitle);
+			if (!result.ok) {
+				streamDeck.logger.warn(`open app: ${result.reason}`); // reason only, no names
+				await ev.action.showAlert();
+			}
 		} catch {
 			await ev.action.showAlert();
 		}
