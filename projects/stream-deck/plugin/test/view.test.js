@@ -5,7 +5,7 @@ import { stripSvg, sliceSvg } from "../src/lib/strip.js";
 import { joinKeyFace } from "../src/lib/keyface.js";
 import { FocusTimer } from "../src/lib/timer.js";
 import { parseIcs, expandEvents } from "../src/lib/ical.js";
-import { safeWebUrl, safeAppName, controlNumber, pressKeyCode, parseVolume, KEY_CODES, reopenApp } from "../src/lib/keys.js";
+import { safeWebUrl, safeAppName, controlNumber, pressKeyCode, parseVolume, KEY_CODES } from "../src/lib/keys.js";
 import { COLORS } from "../src/theme.js";
 import { GOOGLE_FEED, BOISE } from "./fixtures.js";
 
@@ -139,7 +139,3 @@ test("manifest: every action is registered in code, nothing else, and there is n
 	assert.ok(manifest.Actions.some((a) => a.UUID.endsWith(".openapp")));
 });
 
-test("reopenApp builds a checked script", () => {
-	assert.match(reopenApp("Wispr Flow"), /tell application "Wispr Flow" to reopen/);
-	assert.throws(() => reopenApp('x" & (do shell script "id")'));
-});

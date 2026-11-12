@@ -16,7 +16,7 @@ Built for Kev's Stream Deck + (Mac). It draws the touch strip from live state, g
 | FOCUS dial | Turn: minutes in steps of 5 (5 to 120). Press: start or stop. When it ends the slice flashes and the Mac plays the "Glass" sound once. |
 | VOLUME dial | Turn: system volume in steps of 4. Press: mute or unmute. |
 | Open link key | Setting: web address and label (Radar chat, Command Center page). Opens in the default browser. |
-| Open app key | Setting: app name and label. Runs `open -a`. Names may contain dashes, including en dashes ("Eden Day Board – Claude artifact"). Tick "Also bring up its window" for menu-bar apps such as Wispr Flow: after `open -a` it asks the app to reopen (like a Dock click). The key shows the alert triangle if the app cannot be opened. |
+| Open app key | Setting: app name, label, "Also bring up its window", and "Menu item to click". Runs `open -a`. Names may contain dashes, including en dashes ("Eden Day Board – Claude artifact"). With "Also bring up its window" ticked (for menu-bar apps such as Wispr Flow) the plugin then asks System Events whether the app has a window. If it has one, the app is brought to the front. If it has none, the plugin clicks the app's menu bar icon and then the menu item named in "Menu item to click" (default "Open Wispr Flow" when the app is Wispr Flow, blank for other apps; blank means skip the click). If neither works the key shows the alert triangle and the reason goes to the Stream Deck log (no names). Needs the Accessibility permission for Stream Deck, same as the dials; the first press may show a permission prompt. |
 | Desktop key | Setting: number 1 to 9 and label. Presses Control+number. Control+number goes through System Events and needs Accessibility permission; without it the key now shows the alert triangle instead of failing silently (for a reliable key use Stream Deck's own System > Hotkey). Or choose "Open an app instead" with an app name, because full-screen and split-screen desktops get no Control+number shortcut. |
 | Sabbath | Friday sunset to Saturday sunset (small solar calculation, default Boise 43.615, -116.202, America/Boise). The strip shows REST and the time to Saturday sunset. DAY, DESKTOP and FOCUS do nothing, VOLUME works, Join stays dim. After the last meeting on Friday the left half counts down to the Sabbath. |
 
@@ -44,6 +44,14 @@ Then in Stream Deck:
 
 If a meeting does not show, press "Check now" and read the status line. Times follow the time zone in settings, not the Mac's.
 
+### Checking the Wispr Flow menu bar route by hand
+
+1. Quit nothing: leave Wispr Flow running in the menu bar and close its main window (closing only hides it).
+2. Click the Flow icon in the Mac menu bar (top right).
+3. Look for "Open Wispr Flow" in the menu and click it. The main window (Dictation, Notetaker, Insights) should appear. The exact title is what goes in "Menu item to click"; if yours reads differently, type that.
+4. Close the window again, then press the key on the deck. Allow the Accessibility prompt if macOS shows one (System Settings, Privacy and Security, Accessibility, Stream Deck on).
+5. If the key flashes the alert triangle, open the Stream Deck log and read the short reason ("Accessibility not allowed" or "No window and no menu item found").
+
 ## Changing the look
 
 Everything a designer would touch is in `src/theme.js`: colours, font, text sizes, every word on the strip, and the timing rules (15 minutes, 5 minutes, 30 minutes, 6 hours, step sizes). The drawing is `src/lib/strip.js` (the strip) and `src/lib/keyface.js` (key faces). After a change: `npm run previews && npm run screenshots` and look in `preview/`.
@@ -67,6 +75,7 @@ npm run screenshots # Chromium screenshots of those (needs Playwright's Chromium
 
 ### NOT verified until Kev installs it
 
+- The Open app key's window route for Wispr Flow: whether System Events can see Wispr Flow's menu bar icon (it is an Electron app, which may expose its status item differently) and click "Open Wispr Flow". Check by hand first, below.
 - That the touch strip actually draws the SVG slices, and how the font looks there (Montserrat is probably not installed on the Mac, so it falls back to Helvetica Neue; the sandbox shows a different fallback).
 - The strip's real size and whether four slices line up edge to edge.
 - Anything on the device: dial turns, presses, the Join key image, the flash.
