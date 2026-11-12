@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head lang="en">
+	<meta charset="utf-8" />
+	<title>Eden Deck settings</title>
+	<script src="sdpi-components.js"></script>
+</head>
+<body>
+	<sdpi-item label="Calendar address">
+		<sdpi-password setting="calendarUrl" global placeholder="Paste the secret iCal address"></sdpi-password>
+	</sdpi-item>
+	<sdpi-item>
+		<details open>
+			<summary>Treat this address like a password</summary>
+			<p>Anyone with it can read your whole calendar. Google Calendar: Settings, the calendar, Integrate calendar, "Secret address in iCal format". It stays on this Mac, in Stream Deck's settings.</p>
+		</details>
+	</sdpi-item>
+	<sdpi-item label="Your email">
+		<sdpi-textfield setting="myEmail" global placeholder="optional, hides meetings you declined"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Latitude">
+		<sdpi-textfield setting="lat" global placeholder="43.615 (Boise)"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Longitude">
+		<sdpi-textfield setting="lon" global placeholder="-116.202 (Boise)"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Time zone">
+		<sdpi-textfield setting="tz" global placeholder="America/Boise"></sdpi-textfield>
+	</sdpi-item>
+	<sdpi-item label="Calendar">
+		<sdpi-button id="check">Check now</sdpi-button>
+	</sdpi-item>
+	<sdpi-item label="Status">
+		<span id="status">Not checked yet</span>
+	</sdpi-item>
+	<script>
+		const { streamDeckClient } = SDPIComponents;
+		const show = (p) => {
+			if (!p || p.event !== "status") return;
+			const time = p.at ? new Date(p.at).toLocaleTimeString() : "";
+			document.getElementById("status").textContent = p.ok ? `OK, ${p.count} upcoming meetings (${time})` : `${p.message} (${time})`;
+		};
+		try {
+			streamDeckClient.sendToPropertyInspector.subscribe((ev) => show(ev.payload));
+		} catch (e) {}
+		document.getElementById("check").addEventListener("click", () => {
+			streamDeckClient.send("sendToPlugin", { event: "refresh" });
+		});
+		streamDeckClient.send("sendToPlugin", { event: "status" });
+	</script>
+</body>
+</html>
