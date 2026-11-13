@@ -95,7 +95,7 @@ function fld(store,key,label,help,req,type){
   var id='f-'+store+key;inp.id=id;
   return h('label',{class:'f','for':id},h('span',null,label,req?h('b',{class:'req',text:' *'}):null,help?h('small',{text:help}):null),inp);
 }
-function bx(arrName,i,label,short){var on=!!A[arrName][i];var b=h('button',{class:'bx'+(short?' short':''),type:'button','aria-pressed':String(on),'aria-label':label,text:on?'✓':''});if(locked)b.disabled=true;b.onclick=function(){A[arrName][i]=!A[arrName][i];b.setAttribute('aria-pressed',String(A[arrName][i]));b.textContent=A[arrName][i]?'✓':'';save('a');if(arrName!=='cv')updScore();renderNav()};return b}
+function bx(arrName,i,label,short){var on=!!A[arrName][i];var b=h('button',{class:'bx'+(short?' short':''),type:'button','aria-pressed':String(on),'aria-label':label,text:on?'✓':''});if(locked)b.disabled=true;b.onclick=function(){var one=arrName==='cv'&&i%3===2&&!A.cv[i];if(one){for(var k=2;k<21;k+=3)A.cv[k]=false}A[arrName][i]=!A[arrName][i];if(one){save('a');renderNav();go(cur);return}b.setAttribute('aria-pressed',String(A[arrName][i]));b.textContent=A[arrName][i]?'✓':'';save('a');if(arrName!=='cv')updScore();renderNav()};return b}
 
 function pageNumbers(){
   var s=h('section',null,h('h2',{text:'Your numbers'}),h('p',{class:'note',text:pre&&pre.window?'Crelate and CloudTalk, '+pre.window+'. Read them, don’t retype them.':'Numbers load from Crelate before the Power Hour.'}));
@@ -113,7 +113,7 @@ function pageWins(){return h('section',null,h('h2',{text:'Start with wins'}),h('
 function pageValues(){
   var tb=h('tbody');PILLARS.forEach(function(p,i){tb.appendChild(h('tr',null,h('td',{class:'l',text:(i+1)+'. '+p}),h('td',null,bx('cv',i*3,p+', lived it')),h('td',null,bx('cv',i*3+1,p+', fell short',true)),h('td',null,bx('cv',i*3+2,p+', next week'))))});
   return h('section',null,h('h2',{text:'The seven core values'}),
-    h('p',{class:'seq',text:'The seven are a sequence: each one is built on the one before it. Righteousness comes first and Execution comes last, so work down the list in order.'}),
+    h('p',{class:'seq',text:'The seven are a sequence: each one is built on the one before it. Righteousness comes first and Execution comes last, so work down the list in order. For each one, tick Lived it or Fell short. Then tick one value under Next week: the single one you\u2019ll work on.'}),
     h('div',{class:'scroll'},h('table',null,h('thead',null,h('tr',null,h('th',{class:'l',text:'Core value'}),h('th',{text:'Lived it'}),h('th',{text:'Fell short'}),h('th',{text:'Next week'}))),tb)),
     h('div',{style:'height:12px'}),
     fld('a','lived_out','Where you lived one out this week (one real example)','',true),
