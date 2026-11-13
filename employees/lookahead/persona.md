@@ -24,7 +24,8 @@ Kev, 30 October 2026: "would love a 12-week look ahead calendar for me to track 
 
 1. **Nightly refresh** (Sunday to Thursday before Radar's stand-up, and Saturday after sundown for the Sunday Edition). Read Kev's calendars, mirror the dates that matter, check the next 14 days for conflicts and hard edges, send Radar one line. Playbook: `skills/calendar-refresh.md`.
 2. **Keep the page true.** Every trip, milestone and decision has a date and one owner. An open item without a date is a decision row ("decide by"). Nothing Kev or Ally typed is overwritten or deleted. Playbook: `skills/lookahead-keeping.md`.
-3. **Sunday stand-up of the week** (Sunday evening, about 15 minutes, Kev and Ally together). Prep it, run it if they open your session, and write their answers back to the page. Last Sunday of the month: roll the strip and draft the next month's big picture. Playbook: `skills/sunday-standup.md`.
+3. **Mid-range scheduling** (Kev, 13 Nov 2026). Radar pushes future dates from Kev's call transcripts to you as tickets; you track them as the one-to-eight-week picture and every Sunday push Jenny (`host`) the 2, 4 and 6 week look ahead plus the major upcoming events, in Marlowe's monthly runway block. Playbook: `skills/mid-range-schedule.md`.
+4. **Sunday stand-up of the week** (Sunday evening, about 15 minutes, Kev and Ally together). Prep it, run it if they open your session, and write their answers back to the page. Last Sunday of the month: roll the strip and draft the next month's big picture. Playbook: `skills/sunday-standup.md`.
 
 ## Hard rules
 

@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>Friday Pipeline Review</title>
+<title>WIP &amp; PIPE Display</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap");
@@ -157,7 +157,7 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:500}
 .arrow svg{width:70%;height:auto;max-height:30%}
 .arrow:hover:not(:disabled),.arrow:active:not(:disabled){background:var(--fg);color:var(--bg)}
 .arrow:disabled{opacity:.3}
-.si{position:absolute;inset:0;padding:4.2cqw 5.5cqw 4cqw;display:flex;flex-direction:column;z-index:1}
+.si{position:absolute;inset:0;padding:5cqw 7cqw 5cqw;display:flex;flex-direction:column;z-index:1}
 .k{font-size:1.7cqw;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--muted)}
 .hd{font-size:6.4cqw;line-height:1;font-weight:900;text-transform:uppercase;letter-spacing:-.015em;margin:1.2cqw 0 0}
 .hd.xl{font-size:8.6cqw}.hd.md{font-size:4.8cqw;line-height:1.05}
@@ -345,7 +345,7 @@ a.mis:hover .mio,a.mis:focus-visible .mio{color:var(--fg)}
   <div class="tools"><span id="tclock"></span><button class="blk" id="bids" type="button">IDS<span id="idsn"></span></button><button class="blk ghost" id="bnext" type="button">Next topic</button><button class="blk ghost" id="mreset" type="button">Reset meeting</button><button class="blk ghost" id="treset" type="button" aria-label="Reset timer">Reset</button><button class="tblock" id="tblock" type="button"><span id="ttime">5:00</span></button></div>
 </header>
 <div id="stage">
-  <main id="homeview" hidden><div class="kk" id="homedate"></div><h1 class="ht">Friday Pipeline Review</h1><div class="mtg" id="apps"></div></main>
+  <main id="homeview" hidden><div class="kk" id="homedate"></div><h1 class="ht">WIP &amp; PIPE Display</h1><div class="mtg" id="apps"></div></main>
   <section id="gridview" hidden aria-label="Topics"></section>
   <section id="deckview" hidden>
     <div class="deck" id="deck" tabindex="0" aria-label="Slides. Swipe, or use the arrow keys."></div>
@@ -399,7 +399,7 @@ secStart("cover","Cover");
   var f=D.flow||{}, wk=(f.weeks||[]), p=wk.filter(function(w){return w.partial;})[0]||{v:{}}, J=D.jos||{}, I=D.intv||{};
   var tm=D.team||{};
   var b='<div class="cover"><div class="kick">'+esc(M.round_table||"")+'</div>'+
-    '<h1>Friday Pipeline Review<br><span style="font-weight:500">'+esc(M.date)+'</span></h1>'+
+    '<h1>WIP &amp; PIPE Display<br><span style="font-weight:500">'+esc(M.date)+'</span></h1>'+
     '<div class="muted" style="margin-bottom:6px">Data pulled '+esc(M.pulled)+'. JO board as of '+esc(M.board_asof)+'.</div>'+
     '<div><span class="chip warn">'+esc(M.partial_label)+'</span></div>'+
     '<div class="stats" style="margin-top:22px">'+
@@ -816,7 +816,7 @@ function recTok(){return (D.recs||[]).filter(function(r){return !r.below;});}
 
 /* ---- slides per card ---- */
 var S={};
-S["cover"]=function(){return ['<div class="k">'+esc(M.round_table||"")+'</div><div class="sp"></div><h1 class="hd xl">Friday Pipeline Review</h1><p class="ln">'+esc(M.date)+' · '+esc(M.partial_label)+'</p><div class="sp"></div><div class="bk four">'+
+S["cover"]=function(){return ['<div class="k">'+esc(M.round_table||"")+'</div><div class="sp"></div><h1 class="hd xl">WIP &amp; PIPE</h1><p class="ln">'+esc(M.date)+' · '+esc(M.partial_label)+'</p><div class="sp"></div><div class="bk four">'+
   [[num(T_.total)+" / "+num(T_.goal),"RPs this week"],[fmt(T_.dials),"Dials"],[nv(J_.total),"Active JOs"],[nv(I_.people),"Interviewing"]].map(function(x,i){return '<div class="bl'+(i===0?' ink':'')+'"><b class="num">'+esc(x[0])+'</b><span class="l">'+esc(x[1])+'</span></div>';}).join("")+'</div>'];};
 S["rpa-flow"]=function(){var v=FW_.v||{}, lk=(D.flow.leak||{}), t=Object.assign({},v,{dials:T_.dials});
   return [hero("Week so far",String(num(T_.total)),"RPs this week","Goal "+num(T_.goal)+". Monday to Thursday."),
@@ -1250,6 +1250,16 @@ route(false);
       var rg=document.createRange(); rg.selectNodeContents(el);
       var w=rg.getBoundingClientRect().width, fs=parseFloat(getComputedStyle(el).fontSize), n=0;
       while(w>avail*0.96 && fs>10 && n<30){ fs*=0.9; el.style.fontSize=fs+'px'; w=rg.getBoundingClientRect().width; n++; }
+    }
+    /* TV bleed room (Kev, 13 Nov: "getting cut off, think of bleed room"): a slide whose content runs past its
+       safe area is scaled down as a whole, so nothing reaches the edge a TV crops. */
+    var sis=document.querySelectorAll('.st > .si');
+    for(var k=0;k<sis.length;k++){
+      var si=sis[k]; si.style.transform=''; si.style.width=''; si.style.height=''; si.style.right=''; si.style.bottom='';
+      var hh=si.clientHeight, sh=si.scrollHeight;
+      if(hh>0 && sh>hh+2){ var s=Math.max(.6,hh/sh); si.style.right='auto'; si.style.bottom='auto';
+        si.style.width=(100/s)+'%'; si.style.height=(100/s)+'%'; si.style.transformOrigin='0 0'; si.style.transform='scale('+s+')';
+        if(si.scrollHeight>si.clientHeight+2){ s=Math.max(.55,s*si.clientHeight/si.scrollHeight); si.style.width=(100/s)+'%'; si.style.height=(100/s)+'%'; si.style.transform='scale('+s+')'; } }
     }
   }
   var t; function later(){ clearTimeout(t); t=setTimeout(fitAll,120); }
