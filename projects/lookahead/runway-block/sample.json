@@ -2,8 +2,8 @@
   "asOf": "2026-11-13",
   "owner": "Hawk, for Jenny",
   "weeks": 8,
-  "startMonday": "2026-11-09",
-  "horizons": { "w2": "2026-11-22", "w4": "2026-12-06", "w6": "2026-12-20" },
+  "startSunday": "2026-11-08",
+  "horizons": { "w2": "2026-11-21", "w4": "2026-12-05", "w6": "2026-12-19" },
   "events": [
     { "id": "pipeline-review", "title": "Pipeline review", "start": "2026-11-16", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Quarter numbers, 90 minutes", "source": "calendar" },
     { "id": "client-visit", "title": "Client visit", "start": "2026-11-17", "end": "2026-11-18", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Eden client, on site, two days", "source": "calendar" },

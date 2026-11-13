@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Renders the runway block to a PNG (and optionally a one-page PDF) from a JSON file.
+// Renders the runway block (weeks run Sunday to Saturday) to a PNG (and optionally a one-page PDF) from a JSON file.
 // Usage: node render-runway.mjs <data.json> <out.png> [--width 1600] [--dark] [--pdf out.pdf] [--html out.html]
 // The JSON replaces the contents of <script type="application/json" id="runway-data"> in runway.html.
 // No network: Montserrat is embedded from the repo's own font files when present, otherwise the system fallback is used.
@@ -27,7 +27,14 @@ const data = JSON.parse(readFileSync(resolve(jsonPath), "utf8"));
 const problems = [];
 const isDate = (s) => /^\d{4}-\d{2}-\d{2}$/.test(String(s || ""));
 if (!isDate(data.asOf)) problems.push("asOf is not YYYY-MM-DD");
-if (!isDate(data.startMonday)) problems.push("startMonday is not YYYY-MM-DD");
+const isSunday = (s) => isDate(s) && new Date(s + "T00:00:00Z").getUTCDay() === 0;
+if (data.startSunday == null && data.startMonday != null) {
+  if (isSunday(data.startMonday)) problems.push("startMonday is a legacy name: rename it startSunday");
+  else problems.push(`startMonday (${data.startMonday}) is not a Sunday and is ignored: the runway starts on the Sunday on or before asOf. Use startSunday`);
+} else if (!isDate(data.startSunday)) problems.push("startSunday is missing or not YYYY-MM-DD (the runway starts on the Sunday on or before asOf)");
+else if (!isSunday(data.startSunday)) problems.push(`startSunday (${data.startSunday}) is not a Sunday: the page snaps back to the Sunday before`);
+const hz = data.horizons || {};
+for (const k of ["w2", "w4", "w6"]) if (hz[k] && isDate(hz[k]) && new Date(hz[k] + "T00:00:00Z").getUTCDay() !== 6) problems.push(`horizons.${k} (${hz[k]}) is not a Saturday: horizon lines should close on Saturday`);
 if (data.weeks && (data.weeks < 6 || data.weeks > 8)) problems.push("weeks should be 6 to 8 (clamped)");
 for (const e of data.events || []) {
   if (!isDate(e.start)) problems.push(`event ${e.id}: bad start`);
