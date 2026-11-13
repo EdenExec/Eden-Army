@@ -698,22 +698,45 @@ for j in JOD:
 jo_deck.sort(key=lambda j: _ord.get(j.get("priority"), 3))
 
 import geo as _geo_mod
+# Views (Marlowe's review, 13 Nov): each its own SVG so dots stay 0.35% W at every zoom.
+# Boxes are in cqw of the slide (100 wide, 56.25 tall).
+COVER_BOX = {"l": 40.0, "t": 14.0, "w": 56.0}
+COVER_BOX["h"] = round(COVER_BOX["w"] * _geo_mod.H / _geo_mod.W, 2)
+REG_BOX = {"l": 58.0, "t": 5.0, "w": 34.0, "h": 46.0}
+REG_LL = {  # lon0, lon1, lat0, lat1
+    "Florida": (-87.7, -79.6, 24.4, 31.2), "DC and Virginia": (-83.8, -74.0, 35.6, 41.6),
+    "Texas": (-106.8, -93.4, 25.7, 36.7), "West": (-124.9, -108.5, 31.3, 49.2),
+    "Midwest and Gulf": (-104.5, -80.0, 28.6, 49.2),
+}
 _pts = [(j["lon"], j["lat"], 1.0) for j in jo_deck if j["lon"] is not None]
-JOMAP_SVG = _geo_mod.build_svg(HERE, _pts)
-for j in jo_deck:
-    if j["lon"] is not None:
-        x, y = _geo_mod.project(j["lon"], j["lat"])
-        j["px"], j["py"] = round(100 * x / _geo_mod.W, 2), round(100 * y / _geo_mod.H, 2)
+JOMAPS = {"cover": _geo_mod.view_svg(HERE, (0, 0, _geo_mod.W, _geo_mod.H), _pts, COVER_BOX["w"] / 100)}
 _regs = []
 for r in REG_ORDER:
     js_ = [j for j in jo_deck if j["region"] == r]
     if not js_:
         continue
-    xy = [(j["px"], j["py"]) for j in js_ if "px" in j]
-    box = [min(p[0] for p in xy), max(p[0] for p in xy), min(p[1] for p in xy), max(p[1] for p in xy)] if xy else None
-    _regs.append({"name": r, "n": len(js_), "box": box,
-                  "hot": len([j for j in js_ if j.get("priority") == "hot"])})
+    key = re.sub(r"[^a-z0-9]+", "-", r.lower()).strip("-")
+    reg = {"name": r, "n": len(js_), "key": key, "hot": len([j for j in js_ if j.get("priority") == "hot"])}
+    pts_ = [j for j in js_ if j["lon"] is not None]
+    if r in REG_LL and pts_:
+        vw_ = _geo_mod.fit_view(*REG_LL[r], REG_BOX["w"] / REG_BOX["h"])
+        JOMAPS[key] = _geo_mod.view_svg(HERE, vw_, _pts, REG_BOX["w"] / 100, sigma_frac=.05)
+        for j in js_:  # the role card's ring, in cqw
+            if j["lon"] is not None:
+                x, y = _geo_mod.project(j["lon"], j["lat"])
+                j["rx"] = round(REG_BOX["l"] + (x - vw_[0]) / vw_[2] * REG_BOX["w"], 2)
+                j["ry"] = round(REG_BOX["t"] + (y - vw_[1]) / vw_[3] * REG_BOX["h"], 2)
+        # cover pin: the mean of the region's roles, nudged off its heat into open space
+        mx = sum(_geo_mod.project(j["lon"], j["lat"])[0] for j in pts_) / len(pts_)
+        my = sum(_geo_mod.project(j["lon"], j["lat"])[1] for j in pts_) / len(pts_)
+        dx = {"Florida": 5.5, "DC and Virginia": 3.0}.get(r, 0)
+        reg["pin"] = [round(COVER_BOX["l"] + mx / _geo_mod.W * COVER_BOX["w"] + dx, 2),
+                      round(COVER_BOX["t"] + my / _geo_mod.H * COVER_BOX["h"] - 3.2, 2)]
+    _regs.append(reg)
 jo_regions = _regs
+for j in jo_deck:  # internal deck: tiles show the client only when it is a real name
+    j["named"] = (not PARTNER) and j.get("client_blind") in set(CNAMES.values())
+
 
 # ---------------------------------------------------------------- DATA
 DATA = {
@@ -724,7 +747,7 @@ DATA = {
     "flow": flow, "team": team, "recs": recs, "jos": jos, "intv": intv, "mpp": mpp,
     "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "lead_grid": lead_grid, "agents": agents,
     "together": together, "qc": qc, "decisions": decisions,
-    "partner": PARTNER, "jodeck": {"jos": jo_deck, "regions": jo_regions, "mapAspect": round(_geo_mod.W / _geo_mod.H, 4)},
+    "partner": PARTNER, "jodeck": {"jos": jo_deck, "regions": jo_regions, "cover": COVER_BOX, "reg": REG_BOX},
     "credits": credits if CR_ON else None, "ops": OPS or None, "travel": LEAD or None, "touch": touch, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
 }
 
@@ -782,7 +805,7 @@ def globe_uri():
 
 html = html.replace("__GLOBE__", globe_uri())
 import base64 as _b64
-html = html.replace("__JOMAP__", "data:image/svg+xml;base64," + _b64.b64encode(JOMAP_SVG.encode()).decode())
+html = html.replace("/*__JOMAPS__*/", "".join('--jm-%s:url("data:image/svg+xml;base64,%s");' % (k, _b64.b64encode(v.encode()).decode()) for k, v in JOMAPS.items()))
 out = os.path.join(HERE, "review.html")
 with open(out, "w", encoding="utf-8") as f:
     f.write(html)

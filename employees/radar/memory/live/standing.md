@@ -30,7 +30,7 @@
     - Garreth S. runs Miami interiors.
     - Jeff is helping Bobby build the NYC healthcare book, though he lives in Florida now.
     - The NYC occupied-healthcare JO is Promethean.
-  - **INL safety JO.** The client is Baker, the concrete contractor on the job. Baker is "Client · discreet" on everything shared. The seat needs NQA-1 certified safety people from nuclear projects, structural or GC side.
+  - **INL safety JO.** The client is Baker, the concrete contractor on the job. Baker is named outright (Kev, 13 Nov 2026: no client is discreet). The seat needs NQA-1 certified safety people from nuclear projects, structural or GC side.
   - **Megawatt Quincy** is a traveling data center PM role.
   - **Nicknames:** "Juicy" is Andrew.
   - **Tim Norton** is going for the Prometheus Sr PM seat. If he doesn't land it, Noah takes Megawatt San Jose Sr PM/PX and Promethean NYC, and Andrew takes the Triton role (to confirm).
@@ -38,3 +38,6 @@
   - **Job orders on the hub.** The hub gets a Job Orders folder (active JOs, lead sheets, who's on what). Flag any recruiter on one JO past 14 days so Kev can rotate.
 - 2026-10-20: **The Seven Pillars are Eden's core values for 2026**, replacing the four values (Stewardship, Curiosity, Improvement, Dedication) in hiring and onboarding docs. Kev asked for new "2026 v2" versions with the originals kept: New Hire Flow v2 is doc 1DqC3t9asjWF8L4vR7LJQgq-zk6PZp4ObgzZ5bgduIP0.
 - 2026-10-20: **Kyle Cockell joins as a recruiter in Boise.** He already has recruiting experience, so run him through the Eden workflow on an accelerated ramp with speed checkpoints, not the junior trainee track. Culture vetting (Enneagram, Kolbe, Working Genius, interview, references) comes before he starts.
+
+- **Mountain time (Kev, 13 Nov 2026):** "everything will run on MT time now." Schedules, windows and day boundaries are America/Boise. Q moved the Day Board weather routine and set the Round Table Crelate pulls and the CloudTalk dials refresh in MT. Still on Pacific and not changed by Q: the Friday 9:55 PT Round Table pull, the ticket runner and Hawk's, Dean's and the team-watch routines. Radar: confirm with Kev which of those should move.
+- **Round Table freshness (Kev, 13 Nov 2026):** Crelate board pulls Mon to Thu 5:08, 12:08, 15:08, 22:08 MT and Friday 5:08, 12:08, 15:08 (trig_01XcZWno2PBTayqAtetPXXiY, trig_01RkbwYPyLvPJz6X7GG9vA6Z). CloudTalk dials refresh Mon to Thu 5:14, 12:14, 17:14 MT and Friday 5:14, 12:14, 15:14 (trig_01RL9DfefxS3dqUoXBfPV2mv, trig_015gB8FiLjniotbRExTftuHQ), written to Command Center meta/phones and Round Table phones/current. Nothing Friday night or Saturday.

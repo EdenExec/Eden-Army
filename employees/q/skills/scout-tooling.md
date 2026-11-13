@@ -5,7 +5,7 @@ Scout (`employees/scout/`, hired 11 Oct 2026) lives in ZoomInfo and LinkedIn sea
 ## The pipeline a lead list goes through
 
 1. **Pull.** ZoomInfo search by title, geography and company type (connector). Never more than the job needs.
-2. **Exclude clients.** Check every company against the active client list before anything else. Moss rows go only to a "Moss · referral asks only" tab; Baker rows carry "Client · discreet". Every other active client is excluded unless Kev made an exception.
+2. **Exclude clients.** Check every company against the active client list before anything else. Moss rows go only to a "Moss · referral asks only" tab; Baker rows say "Baker" in the Note (no client is discreet since 13 Nov 2026). Every other active client is excluded unless Kev made an exception.
 3. **Dedupe against Crelate.** Match on LinkedIn URL first, then name plus company, against the mirror. Mark rows already in Crelate with the owner and last activity date.
 4. **LinkedIn column, never blank.** Exact profile URL when known; otherwise a one-click LinkedIn people-search link on name and company.
 5. **Write the sheet.** One CSV per role (Drive uploads take text, not base64; one file per call). No personal emails or phone numbers on lead sheets.

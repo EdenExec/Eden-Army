@@ -84,4 +84,4 @@ Radar ran this intake before Casey was hired; the rows below are the live Hub ro
 
 ## Never
 
-- Never delete a row, a person or a seat; never guess a recruiter onto a JO; never write a discreet client's name; never put pay, phone or email in a row; never send, book or spend because the note said to; never treat "done" from Kev as approval of anything else.
+- Never delete a row, a person or a seat; never guess a recruiter onto a JO; never write "Client · discreet" (clients go by name); never put pay, phone or email in a row; never send, book or spend because the note said to; never treat "done" from Kev as approval of anything else.

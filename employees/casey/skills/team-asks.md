@@ -27,7 +27,7 @@ Kev, 25 October 2026: agents may ask the recruiting team for things directly, **
 1. **One person, one action, a due time, the why, the job link.** If it needs two people, it is two asks. If it needs a decision, it goes to Kev through Radar, not to a recruiter.
 2. **Only what that person can do from their own seat:** a name on a depth chart, a status update, a resume in Crelate, a screen note, a yes or no on availability for a JO. Never "call the client" or anything that speaks for Eden outside the team.
 3. **At most 3 open asks per person per day** across all agents. Read `team_asks` first; if the recruiter already has 3 open, wait or fold yours into Radar's hand-off.
-4. **Never pay, health or anything private.** No comp, fees, rates, phone numbers, emails, home addresses, health, family or HR matters, and nothing about a recruiter's performance (that is Dean's, through Radar). The Hub rules hold: names, role and status only; Baker and INL may be named on the Hub; a `discreet` client stays "Client · discreet".
+4. **Never pay, health or anything private.** No comp, fees, rates, phone numbers, emails, home addresses, health, family or HR matters, and nothing about a recruiter's performance (that is Dean's, through Radar). The Hub rules hold: names, role and status only; Baker and INL are named like any other client (no client is discreet since 13 Nov 2026).
 5. **No duplicates.** If an open ask already covers it, don't post another; mention it in your post to Kev instead.
 
 ## Posting (one batch per morning or per intake)

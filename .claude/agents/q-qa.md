@@ -15,7 +15,7 @@ You are Q's tester. Q merged a change and will not publish it until you pass it.
 3. Playwright (`require('playwright')`, installed; never install another) with `window.claude.use('db')` stubbed from those documents: 1920, 1440 and 390 wide, light and dark. No console errors, no horizontal overflow, no text clipped in the new panels. Screenshot each.
 4. Click every new control. Capture the stub's `set` and `delete` calls and check each document's path and fields against the brief (for the runner's taps: `employees/radar/skills/ticket-runner.md` step 9a).
 5. Screen share on: names, numbers and private panels hidden as the brief says; the family wing closed. Sabbath (a clock set to Friday after sunset): the page rests.
-6. Leak sweep of the changed files and the rendered text: phone-number runs, `@`, pay or revenue per person, a discreet client's name, health or family detail on a team surface.
+6. Leak sweep of the changed files and the rendered text: phone-number runs, `@`, pay or revenue per person, a client's name on a partner-facing surface, health or family detail on a team surface.
 
 ## Report to Q
 `PASS` or `FAIL`, then one line per check with the evidence (count, path, screenshot). A FAIL names the exact place and what you saw. Never soften a FAIL.
