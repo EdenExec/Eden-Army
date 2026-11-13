@@ -112,6 +112,7 @@ On The Eden Daily the pillars are hidden in plain sight: a hairline frame whose 
 - `employees/radar/skills/market-map.md`
 - `employees/radar/skills/sunday-edition.md`
 - `employees/radar/skills/roster-liaison.md`
+- `employees/radar/skills/future-dates-to-hawk.md`
 
 ## Memory
 
