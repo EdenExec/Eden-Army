@@ -33,3 +33,4 @@ Add the name to `build.py`, run `python3 build.py template.html out`, publish `o
 ## Design and behaviour
 - Design pass by Marlowe, 13 Nov (Montserrat, black/cream editorial, Must Dos stacked on phones).
 - The open tab is remembered per person and week (browser storage), so a reload or a republish lands them back where they were. Answers are saved to the store as they type. Don't republish between 9:55 and 12:00 PT Friday.
+- Week stamp (Kev's idea, Marlowe's build, 13 Nov): "Sign off the week" unlocks when the required tabs are done and saves `stamp {init, at, edited}` in weeks/<weekOf>. The pull runs Fridays 10:20, 11:20 and 12:20 PT (scheduled task "Friday scorecards to Round Table (stamped)"): newly stamped pages first, everyone at 12:20. The card's wins field shows the stamp or "Not stamped".
