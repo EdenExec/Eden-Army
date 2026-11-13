@@ -284,6 +284,27 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:500}
 .cov .bk{margin:0}
 .cov .bl b{font-size:6.4cqw}
 :root{--globe:url("__GLOBE__")}
+.ra{min-width:0;flex:1}.ra b,.ra span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc .lh{display:flex;justify-content:space-between;align-items:baseline;gap:1cqw;border-bottom:.25cqw solid var(--fg);padding-bottom:.7cqw;margin-bottom:1cqw}
+.lc .lh i{font-style:normal;font-size:2.4cqw;font-weight:900}
+.lc ul{font-size:1.75cqw;font-weight:700;line-height:1.5}
+.lc li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:.12cqw solid var(--line);padding:.35cqw 0}
+.lc li.more{color:var(--muted);font-weight:600;border:0}
+.lc.bbn{background:transparent;border:.25cqw dashed var(--line)}
+.lgg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1cqw;margin-top:1.6cqw}
+.lgt{display:flex;flex-direction:column;gap:.4cqw;background:var(--soft);padding:1.2cqw 1.4cqw;color:var(--fg);text-decoration:none;min-width:0}
+a.lgt:hover,a.lgt:focus-visible{background:var(--fg);color:var(--bg)}
+.lgt b{font-size:1.6cqw;font-weight:800;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.lgt .lr{font-size:1.2cqw;font-weight:800;letter-spacing:.1em;color:var(--muted)}
+.lgt .lm{font-size:1.3cqw;color:var(--muted)}.lgt .lm i{font-style:normal;font-weight:900;color:inherit}
+.lgt .ls{font-size:1.2cqw;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.lgt .ls.ok{color:var(--good)}.lgt .ls.no{color:var(--bad)}
+a.lgt:hover .ls,a.lgt:hover .lm,a.lgt:hover .lr{color:inherit}
+.lc .lh{flex-wrap:wrap}.lc .lh .l{flex:1 1 auto;min-width:0}
+.lc li{white-space:normal;overflow:visible;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mig{margin-top:2.4cqw;flex:1;display:flex;align-items:flex-start}
+.mis{display:block;font-size:3.6cqw;font-weight:800;line-height:1.2;color:var(--fg);text-decoration:none;max-width:78cqw;border-left:1cqw solid var(--fg);padding-left:2cqw}
+.mis .mio{display:block;font-size:1.4cqw;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:1.4cqw}
+a.mis:hover .mio,a.mis:focus-visible .mio{color:var(--fg)}
 </style>
 
 <div id="app" data-view="home">
@@ -757,8 +778,9 @@ function flowRow(v,ratio,small,leakKey){
 function recVal(slug){var r=(D.recs||[]).filter(function(x){return x.slug===slug;})[0]; return r;}
 var LN5=[["offer","Offer"],["interviewing","Interviewing"],["submitted","Resume sent"],["ptc","PTC"],["queue","Queue"]];
 function depthS(d){
-  return K("Depth chart · rank "+nv(d.rank))+H(cut(d.client+" · "+d.role,44),"md")+'<div class="ln2">'+esc(cut(d.loc||"",30))+' · '+esc(d.owner||"no owner")+'</div><div class="lns">'+LN5.map(function(l){var ln=(d.lanes||{})[l[0]]||{total:0,people:[]};
-    return '<div class="lc'+(ln.total?'':' zero')+'"><span class="l">'+l[1]+'</span><b class="num">'+nv(ln.total)+'</b><ul>'+(ln.people||[]).slice(0,3).map(function(p){return '<li class="'+(p.stale?'stale':'')+'">'+esc(cut(p.name,18))+'</li>';}).join("")+'</ul></div>';}).join("")+'</div>';
+  var lanes=LN5.filter(function(l){return l[0]!=="offer"||(((d.lanes||{}).offer||{}).total>0);}); if(d.lanes&&d.lanes.backburner) lanes.push(["backburner","Back burner"]);
+  return K("Depth chart · rank "+nv(d.rank))+H(cut(d.client+" · "+d.role,44),"md")+'<div class="ln2">'+esc(cut(d.loc||"",30))+' · '+esc(d.owner||"no owner")+'</div><div class="lns" style="grid-template-columns:repeat('+lanes.length+',minmax(0,1fr))">'+lanes.map(function(l){var ln=(d.lanes||{})[l[0]]||{total:0,people:[]}, more=(ln.total||0)-(ln.people||[]).length;
+    return '<div class="lc'+(ln.total?'':' zero')+(l[0]==="backburner"?' bbn':'')+'"><div class="lh"><span class="l">'+l[1]+'</span><i class="num">'+nv(ln.total)+'</i></div><ul>'+(ln.people||[]).slice(0,8).map(function(p){return '<li class="'+(p.stale?'stale':'')+'">'+esc(p.name)+'</li>';}).join("")+(more>0?'<li class="more">+'+more+' more</li>':'')+'</ul></div>';}).join("")+'</div>';
 }
 function recTok(){return (D.recs||[]).filter(function(r){return !r.below;});}
 
@@ -781,14 +803,18 @@ S["active-jos"]=function(){var rows=(J_.rows||[]).map(function(r){return {a:cut(
 (D.depth||[]).forEach(function(d,i){var n=i+1; S["depth-"+(n<10?"0":"")+n]=function(){return [depthS(d)];};});
 S["depth-no-candidates"]=function(){var nc=D.nocand||[];return [hero("Depth charts",String(nc.length),"Searches, no candidates","Each one needs a source plan.")].concat(rowsSlides("Depth charts","No candidates yet",nc.map(function(d){return {a:cut(d.client+" · "+d.role,36),b:d.owner||"No owner",st:"warn"};})));};
 S["lead-gen"]=function(){return [hero("Lead gen",fmt(L_.names),"Names landed in 30 days",fmt(L_.dialed)+" people called."),
-  blocks("Lead gen","List to result",[{v:nv(L_.lists),l:"Lists built"},{v:fmt(L_.names),l:"Names landed"},{v:fmt(L_.dialed),l:"People called",st:"warn"},{v:nv(L_.traced),l:"Traced to a result"}],"Dialing is the gap, not the lists.")];};
+  blocks("Lead gen","List to result",[{v:nv(L_.lists),l:"Lists built"},{v:fmt(L_.names),l:"Names landed"},{v:fmt(L_.dialed),l:"People called",st:"warn"},{v:nv(L_.traced),l:"Traced to a result"}],"Dialing is the gap, not the lists.").concat(chunks(D.lead_grid||[],12).map(function(part,pi,arr){return K("Lead gen")+H("Lists built"+(arr.length>1?"  "+(pi+1)+"/"+arr.length:""),"md")+'<div class="lgg">'+part.map(function(x){var inner='<span class="lr">'+esc(x.ref||"")+'</span><b>'+esc(cut(x.jo,40))+'</b><span class="lm"><i class="num">'+nv(x.rows)+'</i> names · '+esc(x.landed||"")+'</span><span class="ls'+(x.status==="In Crelate"?' ok':(x.status==="Not loaded"?' no':''))+'">'+esc(x.status)+(x.url?' · Open':'')+'</span>';return x.url?'<a class="lgt" href="'+esc(x.url)+'" target="_blank" rel="noopener">'+inner+'</a>':'<div class="lgt">'+inner+'</div>';}).join("")+'</div>';}))];};
 S["lead-gen-options"]=function(){return rowsSlides("Lead gen","How exports move",(L_.options||[]).map(function(o){return {a:o.name,b:o.cost,c:cut(o.who,70),st:o.rec?"good":""};}),"Decided 13 Nov: exports move to BPO.");};
 S["credits"]=function(){var z=(C_||{}).zi||{}, e=(C_||{}).el||{};
   return [blocks("Credits","This month",[{v:nv(z.confirmed),l:"ZoomInfo confirmed"},{v:"~"+nv(z.pending),l:"ZoomInfo pending",st:"warn"},{v:fmt(z.allowance),l:"Allowance, unconfirmed",st:"warn"},{v:nv(e.pct)+"%",l:"ElevenLabs used",n:fmt(e.used)+" of "+fmt(e.plan)}]),
     textS("Decided 13 Nov","Exports move to BPO","Kev’s ZoomInfo rep OK’d it."),
     rowsSlides("Credits","What we do not know",(z.unknown||[]).map(function(u){return {a:cut(u,60)};}))[0]];};
-S["market-intel"]=function(){var rows=(K_.markets||[]).map(function(m){return {a:cut(m.market,30),c:cut(m.action,78),b:m.url?"LINK":(m.scoop?"SCOOP":"")};});
-  return [textS("Market intelligence",cut((K_.headline||[])[0]||"Market briefing",90),"")].concat(rowsSlides("Market intelligence","Signals and actions",rows,K_.rhaven||""));};
+S["market-intel"]=function(){var ms=K_.markets||[];
+  var head=textS("Market intelligence","Texas data centers lead","Integra 756 MW and Riot 910 MW this week. Watch the moratorium.");
+  var per=ms.map(function(m){var short=cut(String(m.market||"").replace(/\s*\(.*?\)\s*/g," ").trim(),26);
+    var sig=cut(m.top||"No new signal this week",80);
+    return K("Market intelligence")+H(short,"md")+'<div class="mig">'+(m.url?'<a class="mis" href="'+esc(m.url)+'" target="_blank" rel="noopener">'+esc(sig)+'<span class="mio">Open source</span></a>':'<div class="mis">'+esc(sig)+'</div>')+'</div>'+LN(cut(m.action||"",90));});
+  return [head].concat(per);};
 S["marketing"]=function(){var w=Mk_.wait||[];return [hero("Marketing",String(w.length),"Drafts waiting on Kev",(w[0]?w[0].age+" and counting. ":"")+"Nothing confirmed live.")].concat(rowsSlides("Marketing","Waiting for a yes",w.map(function(r){return {a:cut(r.draft,40),b:r.age,c:r.acct,st:"warn"};}))).concat(rowsSlides("Marketing","What stalled",(Mk_.stalled||[]).map(function(x){return {a:cut(x,70)};})));};
 S["rotation"]=function(){return rowsSlides("Next week","Posts for approval",(R_.posts||[]).map(function(p){return {a:String(p.when).split(" ")[0]+" · "+p.acct,c:cut(p.hook,78),b:"DRAFT"};}),"Nothing is scheduled until Kev says yes.");};
 S["linkedin"]=function(){var n=parseInt(((Li_.numbers||[])[1]||[])[2],10);
@@ -807,8 +833,14 @@ S["at-risk"]=function(){var r=(J_.rows||[]).filter(function(x){return x.risk>0;}
   return [hero("Client care",String(r.length),"JOs at risk","Ranked, with the next move.")].concat(rowsSlides("Client care","At-risk JOs",r.map(function(x){return {a:cut(x.client+" · "+x.role,40),b:nv(x.quiet)+"d quiet",c:cut(x.next,78),st:"bad"};})));};
 S["depth-overview"]=function(){var tot={};LN5.forEach(function(l){tot[l[0]]=0;});(D.depth||[]).forEach(function(d){LN5.forEach(function(l){tot[l[0]]+=num(((d.lanes||{})[l[0]]||{}).total);});});
   return [blocks("Depth charts",(D.depth||[]).length+" searches, all lanes",LN5.map(function(l){return {v:fmt(tot[l[0]]),l:l[1]};}))];};
-S["touch-list"]=function(){var t=D.touch||{},rows=[];[["offer","OFFER"],["interviewing","INTERVIEW"],["ptc","PTC"]].forEach(function(g){(t[g[0]]||[]).forEach(function(p){rows.push({a:p.name,b:g[1],c:cut(p.client+" · "+p.role,60),st:g[0]==="offer"?"good":""});});});
-  return [hero("Client handling",String(rows.length),"Candidates to touch","Offers, interviews, top PTCs on at-risk JOs.")].concat(rowsSlides("Client handling","Who to touch",rows));};
+S["touch-list"]=function(){var t=D.touch||{},all=[];[["offer","OFFER"],["interviewing","INTERVIEW"],["ptc","PTC"]].forEach(function(g){(t[g[0]]||[]).forEach(function(p){all.push({p:p,stage:g[1]});});});
+  all.sort(function(x,y){return (x.p.prio||3)-(y.p.prio||3)||((y.p.days||0)-(x.p.days||0));});
+  var p1=all.filter(function(x){return x.p.prio===1;}).length;
+  var help=(t.help||[]).map(function(h){return {a:h.owner,b:h.p1+" need action",c:h.total+" candidates in play",st:h.p1?"bad":""};});
+  var rows=all.map(function(x){var p=x.p;return {a:p.name,b:p.owner,c:cut(p.client,22)+" \u00B7 "+x.stage.toLowerCase()+(p.why&&x.stage!=="OFFER"?" \u00B7 "+p.why:""),st:p.prio===1?"bad":(x.stage==="OFFER"?"good":"")};});
+  return [hero("Client handling",String(p1),"Need action now",all.length+" in play. Offers, stalled interviews, PTCs on at-risk JOs.")]
+    .concat(rowsSlides("Client handling","Who needs help",help))
+    .concat(rowsSlides("Client handling","Who to touch",rows));};
 S["next-week"]=function(){var rows=(D.recs||[]).filter(function(r){return (r.next||[]).length;}).map(function(r){var n=r.next[0];return {a:r.name.split(" ")[0],b:cut(n.client+" · "+n.role,34)};});return rowsSlides("Next week","Top JO by recruiter",rows);};
 
 function slidesFor(id){
@@ -929,7 +961,7 @@ var HSUB={carousel:CAR_IDS.length+" headline slides, hands free",recruiting:MODE
 $("apps").innerHTML=SEG.map(function(k,i){return '<button type="button" class="mt c'+(i+1)+'" data-m="'+k+'"><b>'+LABEL[k]+'</b><span>'+esc(HSUB[k])+'</span></button>';}).join("")+(JOS.length?'<button type="button" class="mt c6" data-m="jo-deck"><b>JO Deck</b><span>'+JOS.length+' open roles, hot first</span></button>':'<button type="button" class="mt c6" disabled aria-disabled="true"><b>JO Deck</b><span>Coming soon</span></button>');
 $("apps").addEventListener("click",function(e){var b=e.target.closest("button[data-m]"); if(b) location.hash="#"+b.getAttribute("data-m");});
 $("homedate").textContent=M.date+" · Round Table";
-$("homeBtn").addEventListener("click",function(){ if(view==="tile"){tileIdx=-1; route(true);} else location.hash="#home"; });
+$("homeBtn").addEventListener("click",function(){ if(view==="tile"){location.hash="#"+mode;} else location.hash="#home"; });
 
 /* ---- meeting clock and timer ---- */
 var MC={start:null,done:{},iv:null}, T={left:300000,running:false,end:0,fired:false,iv:null,lp:null,lpFired:false}, actx=null;
@@ -966,7 +998,7 @@ function timerPause(){ if(!T.running) return; T.left=Math.max(0,T.end-Date.now()
 function markDone(){ var t=MODES[mode]&&MODES[mode].tiles[tileIdx]; if(t){MC.done[t.id]=1; clockPaint();} }
 function nextTopic(){
   var M_=MODES[mode]; if(!M_||tileIdx<0) return; MC.done[M_.tiles[tileIdx].id]=1; timerStop(true); closeSheet();
-  if(tileIdx<M_.tiles.length-1) tileIdx++; else tileIdx=-1; route(true);
+  if(tileIdx<M_.tiles.length-1) location.hash="#"+mode+"-t"+(tileIdx+1); else location.hash="#"+mode;
 }
 var tb=$("tblock");
 tb.addEventListener("pointerdown",function(){ T.lpFired=false; clearTimeout(T.lp); T.lp=setTimeout(function(){T.lpFired=true; timerStop(true);},700); });
@@ -1053,7 +1085,7 @@ function renderGrid(){
   var M_=MODES[mode]; if(!M_) return;
   $("gridview").innerHTML='<div class="gin"><div class="k">Meeting mode</div><h1 class="gt">'+esc(M_.label)+'</h1><div class="tg" id="tg">'+
     M_.tiles.map(function(t,i){return '<button type="button" class="mt g'+(i%4+1)+(MC.done[t.id]?' done':'')+'" data-t="'+i+'"><i class="tn num">'+(i+1)+'</i><b>'+esc(t.label)+'</b><span>'+(MC.done[t.id]?'Done':esc(t.sub||""))+'</span></button>';}).join("")+'</div></div>';
-  $("tg").addEventListener("click",function(e){var b=e.target.closest("button[data-t]"); if(b){tileIdx=+b.getAttribute("data-t"); route(true);}});
+  $("tg").addEventListener("click",function(e){var b=e.target.closest("button[data-t]"); if(b){location.hash="#"+mode+"-t"+b.getAttribute("data-t");}});
   clockPaint();
 }
 
@@ -1096,6 +1128,12 @@ function setView(v){
 function route(force){
   var h=(location.hash||"").replace(/^#/,"");
   if(h==="carousel"){ if(DK.kind!=="car"||force){mountDeck(CAR_IDS,"car");} setView("car"); carPaint(); carRun(); deckEl.scrollTo({left:DK.cur*deckEl.clientWidth,behavior:"auto"}); paintCount(); return; }
+  var mt=h.match(/^([a-z]+)-t(\d+)$/);
+  if(mt&&MODES[mt[1]]&&MODES[mt[1]].tiles[+mt[2]]){
+    if(mode!==mt[1]){ if(mode&&MC.start) clockReset(); mode=mt[1]; showSolved=false; }
+    if(view==="tile"&&tileIdx===+mt[2]&&!force) return;
+    tileIdx=+mt[2]; h=mode;
+  } else if(MODES[h]){ tileIdx=-1; }
   if(MODES[h]){
     if(mode!==h){ if(mode&&MC.start) clockReset(); mode=h; tileIdx=-1; showSolved=false; }
     if(tileIdx<0){ setView("grid"); renderGrid(); }

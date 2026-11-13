@@ -243,7 +243,9 @@ jos = {
 }
 
 # ---------------------------------------------------------------- interviewing
-live = INTV.get("live", []) or []
+OVR = load("radar/overrides.json", default={}) or {}
+BACKB = {n.strip().lower() for n in (OVR.get("backburner") or [])}
+live = [p for p in (INTV.get("live", []) or []) if (p.get("name") or "").strip().lower() not in BACKB]
 groups = {}
 for p in live:
     key = (p.get("client", ""), p.get("role", ""))
@@ -304,7 +306,17 @@ for fn in files:
         total += tot or 0
         arr = sorted(arr, key=lambda p: bool(p.get("stale")))
         lanes[k] = {"total": tot, "people": [{"name": p.get("name", ""), "status": ("Resume sent" if p.get("status") == "Submitted" else p.get("status", "")),
-                                              "stale": bool(p.get("stale"))} for p in arr[:7]]}
+                                              "stale": bool(p.get("stale"))} for p in arr[:10]]}
+    bb = []
+    for k in list(lanes.keys()):
+        keep = [p for p in lanes[k]["people"] if p["name"].strip().lower() not in BACKB]
+        moved = [p for p in lanes[k]["people"] if p["name"].strip().lower() in BACKB]
+        if moved:
+            lanes[k]["people"] = keep
+            lanes[k]["total"] = max(0, (lanes[k]["total"] or 0) - len(moved))
+            bb += [dict(p, status="Back burner", stale=True) for p in moved]
+    if bb:
+        lanes["backburner"] = {"total": len(bb), "people": bb}
     row = {"client": jo.get("client", ""), "role": jo.get("role", ""), "loc": jo.get("location", ""),
            "owner": jo.get("owner"), "rank": jo.get("rank"), "open": jo.get("days_open"),
            "status": jo.get("status"), "lanes": lanes, "total": total}
@@ -315,6 +327,25 @@ nocand_list.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 99))
 # ---------------------------------------------------------------- lead gen
 T = g(OUT, "totals", default={})
 never = g(OUT, "went_nowhere", "never_loaded", default=[])
+_IDX = []
+try:
+    _IDX = json.load(open("/home/user/Agent-Builder/projects/leads/index.json"))
+    _IDX = _IDX if isinstance(_IDX, list) else (_IDX.get("sheets") or _IDX.get("items") or [])
+except Exception:
+    _IDX = []
+def _url_for(ref):
+    ref = (ref or "").strip()
+    for it in _IDX:
+        t = (it.get("title") or "")
+        if t.startswith(ref + " ") or t.startswith(ref + " ·") or t.split(" · ")[0].strip() == ref:
+            return it.get("driveUrl")
+    return None
+lead_grid = []
+for sh in (BUILT.get("sheets") or []):
+    st = "In Crelate" if sh.get("in_crelate") and str(sh.get("in_crelate"))[:2] == "20" else ("Not loaded" if sh.get("in_crelate") else "Landed")
+    lead_grid.append({"ref": sh.get("ref"), "jo": sh.get("jo_served") or "", "rows": sh.get("rows"), "landed": sh.get("landed"),
+                      "status": st, "url": _url_for(sh.get("ref"))})
+lead_grid.sort(key=lambda x: str(x.get("landed") or ""), reverse=True)
 leadgen = {
     "lists": g(BUILT, "totals", "distinct_lists", default=T.get("distinct_lists")),
     "names": g(BUILT, "totals", "names_on_distinct_lists", default=T.get("names_on_distinct_lists")),
@@ -572,17 +603,43 @@ OPS = load("radar/ops.json")
 LEAD = load("radar/leadership.json")
 risk_keys = {(r["client"], r["role"], r["loc"]) for r in jo_rows if r.get("risk")}
 touch = {"offer": [], "interviewing": [], "ptc": []}
+_live_by = {}
+for p in live:
+    _live_by.setdefault(p.get("name"), p)
+def _days(since):
+    try:
+        return (datetime.date.fromisoformat(ASOF_ISO) - datetime.date.fromisoformat(str(since)[:10])).days
+    except Exception:
+        return None
+def _first(n):
+    return (n or "").split(" ")[0] if n else "No owner"
 for gp in grp:
     for p in gp["people"]:
+        L = _live_by.get(p["name"], {})
+        d = p.get("days") if p.get("days") is not None else _days(L.get("stage_since"))
+        nxt = L.get("next_step") or ""
+        no_next = (not L.get("next_date")) or ("not recorded" in nxt.lower())
+        stalled = (d is not None and d > 14) or no_next
         touch["interviewing"].append({"name": p["name"], "client": gp["client"], "role": gp["role"],
-                                      "note": ("%sd in stage" % p["days"]) if p.get("days") is not None else ""})
+            "owner": _first(L.get("recruiter") or gp.get("owner")), "days": d,
+            "next": "Set next step" if no_next else nxt, "prio": 1 if stalled else 2,
+            "why": ("%sd, no next step" % d) if (stalled and d is not None) else ("%sd in stage" % d if d is not None else "")})
 for dr in depth:
-    off = [p for p in dr["lanes"]["offer"]["people"]]
-    for p in off:
-        touch["offer"].append({"name": p["name"], "client": dr["client"], "role": dr["role"], "note": p.get("status", "")})
+    for p in dr["lanes"]["offer"]["people"]:
+        touch["offer"].append({"name": p["name"], "client": dr["client"], "role": dr["role"],
+            "owner": _first(dr.get("owner")), "days": None, "next": "Close: confirm offer status", "prio": 1, "why": "At offer"})
     if (dr["client"], dr["role"], dr["loc"]) in risk_keys:
         for p in [x for x in dr["lanes"]["ptc"]["people"] if not x["stale"]][:3]:
-            touch["ptc"].append({"name": p["name"], "client": dr["client"], "role": dr["role"], "note": "PTC"})
+            touch["ptc"].append({"name": p["name"], "client": dr["client"], "role": dr["role"],
+                "owner": _first(dr.get("owner")), "days": None, "next": "Submit or release", "prio": 2, "why": "PTC on at-risk JO"})
+# who needs help: per owner, P1 items
+_help = {}
+for g in ("offer", "interviewing", "ptc"):
+    for t in touch[g]:
+        h = _help.setdefault(t["owner"], {"owner": t["owner"], "p1": 0, "total": 0})
+        h["total"] += 1
+        h["p1"] += 1 if t["prio"] == 1 else 0
+touch["help"] = sorted(_help.values(), key=lambda h: (-h["p1"], -h["total"]))
 
 # ---------------------------------------------------------------- JO deck (partner-safe)
 JOD = load("casey/jo-deck.json", default=[])
@@ -604,7 +661,7 @@ DATA = {
              "partial_label": "Week of %s is partial (Mon to Thu)" % datetime.date.fromisoformat(PARTIAL).strftime("%-d %b"),
              "round_table": "Round Table, 11am MT"},
     "flow": flow, "team": team, "recs": recs, "jos": jos, "intv": intv, "mpp": mpp,
-    "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "agents": agents,
+    "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "lead_grid": lead_grid, "agents": agents,
     "together": together, "qc": qc, "decisions": decisions,
     "partner": PARTNER, "jodeck": {"jos": jo_deck},
     "credits": credits if CR_ON else None, "ops": OPS or None, "travel": LEAD or None, "touch": touch, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
