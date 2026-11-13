@@ -48,3 +48,13 @@ If all of the cuts land, runs drop from about 450 to about 290 a week.
 - Runs per routine (from the routine list's last-fired data).
 - Usage percentage by Friday (Kev reads it from Settings; no API exposes it here).
 - Cuts made this week and next week's candidates.
+
+## Decided 13 Nov 2026 (Kev)
+
+| Cut | Status |
+|---|---|
+| Radar inbox sweep from hourly to 9am, 12pm and 4pm MT on weekdays | Done (about 60 runs a week to 15) |
+| Merge the two Hub syncs | Done: the 1:52am PT run now does both halves; the Workshop 2:15am run is paused (14 runs to 7) |
+| Ticket runner to weekdays 6am to 8pm MT | Waiting on Kev: it was created through the API, so only Kev can edit it at claude.ai/code/routines/trig_01ErM2iYRtdYp2ZqvRcF8EVh (cron `CRON_TZ=America/Boise 43 6-20 * * 1-5`) |
+| Q sync patrol | Kept every 2 hours: "I want the command center up to date at all times" |
+| Fable trial | The nightly Eden Daily build (stand up tomorrow) runs on claude-fable-5-2 for a week; compare quality and usage next Friday |
