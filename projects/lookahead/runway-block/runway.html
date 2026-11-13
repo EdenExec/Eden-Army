@@ -87,7 +87,7 @@ section > h2 { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spaci
 .zone.later { color: var(--muted); font-weight: 600 }
 .track { position: relative; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--ink) }
 .track .day { position: absolute; top: 0; bottom: 0 }
-.track .day.mon { border-left: 1px solid var(--rule) }
+.track .day.wk { border-left: 1px solid var(--rule) }
 .track .day.sab { background: var(--rest) }
 .track .day.fri { background: linear-gradient(90deg, transparent 72%, var(--rest) 72%) }
 .track .day.past { background: var(--bg) }
@@ -225,8 +225,8 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
   "asOf": "2026-11-13",
   "owner": "Hawk, for Jenny",
   "weeks": 8,
-  "startMonday": "2026-11-09",
-  "horizons": { "w2": "2026-11-22", "w4": "2026-12-06", "w6": "2026-12-20" },
+  "startSunday": "2026-11-08",
+  "horizons": { "w2": "2026-11-21", "w4": "2026-12-05", "w6": "2026-12-19" },
   "events": [
     { "id": "pipeline-review", "title": "Pipeline review", "start": "2026-11-16", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Quarter numbers, 90 minutes", "source": "calendar" },
     { "id": "client-visit", "title": "Client visit", "start": "2026-11-17", "end": "2026-11-18", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Eden client, on site, two days", "source": "calendar" },
@@ -257,7 +257,7 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
 (function () {
   "use strict";
   var DAY = 864e5;
-  var DOW = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var KINDS = { work: 1, family: 1, travel: 1, milestone: 1, deadline: 1 };
@@ -265,7 +265,7 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
 
   function dn(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || "").trim()); return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) / DAY : NaN; }
   function D(n) { return new Date(n * DAY); }
-  function wd(n) { return (D(n).getUTCDay() + 6) % 7; }
+  function wd(n) { return D(n).getUTCDay(); } // Sunday = 0: weeks run Sunday to Saturday
   function md(n) { return D(n).getUTCDate(); }
   function mo(n) { return D(n).getUTCMonth(); }
   function yr(n) { return D(n).getUTCFullYear(); }
@@ -285,7 +285,9 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
 
   // ---- normalise ----
   var weeks = Math.min(8, Math.max(6, parseInt(data.weeks, 10) || 8));
-  var start = dn(data.startMonday);
+  // startSunday; startMonday is a legacy alias, used only if it happens to be a Sunday
+  var start = dn(data.startSunday);
+  if (isNaN(start)) { var legacy = dn(data.startMonday); if (!isNaN(legacy) && D(legacy).getUTCDay() === 0) start = legacy; }
   if (isNaN(start)) start = dn(data.asOf);
   start -= wd(start);
   var end = start + weeks * 7 - 1;
@@ -368,7 +370,7 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
     var track = h("div", "track");
     var axis = h("div", "axis");
     for (var n = start; n <= end; n++) {
-      var c = h("div", "day" + (wd(n) === 0 ? " mon" : "") + (wd(n) === 4 ? " fri" : "") + (wd(n) === 5 ? " sab" : "") + (n < asOf ? " past" : ""));
+      var c = h("div", "day" + (wd(n) === 0 ? " wk" : "") + (wd(n) === 5 ? " fri" : "") + (wd(n) === 6 ? " sab" : "") + (n < asOf ? " past" : ""));
       c.style.left = pct(n); c.style.width = (100 / span) + "%"; track.appendChild(c);
       if (wd(n) === 0) { var a = h("span", null, md(n) + " " + MON[mo(n)]); a.style.left = pct(n); axis.appendChild(a); }
     }
@@ -437,7 +439,7 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
       title.appendChild(h("small", null, fmt(b.lo).replace(/^\w+ /, "") + " to " + fmt(b.hi).replace(/^\w+ /, "")));
       m.appendChild(title);
       var hd = h("div", "mgrid"); hd.appendChild(h("div", "dow", ""));
-      ["M", "T", "W", "T", "F", "S", "S"].forEach(function (d, i) { hd.appendChild(h("div", "dow" + (i === 5 ? " rest" : ""), d)); });
+      ["S", "M", "T", "W", "T", "F", "S"].forEach(function (d, i) { hd.appendChild(h("div", "dow" + (i === 6 ? " rest" : ""), d)); });
       m.appendChild(hd);
       for (var r0 = b.lo - wd(b.lo); r0 <= b.hi; r0 += 7) {
         var row = h("div", "mrow");
@@ -460,7 +462,7 @@ footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
         H.forEach(function (x, i) { if (x >= r0 && x <= r0 + 6 && x >= lo && x <= hi) hzHere = i; });
         for (var c = 0; c < 7; c++) {
           var n = r0 + c, shown = n >= lo && n <= hi;
-          var bg = h("div", "bg" + (shown ? "" : " void") + (shown && wd(n) === 4 ? " fri" : "") + (shown && wd(n) === 5 ? " sab" : "") + (shown && n < asOf ? " past" : ""));
+          var bg = h("div", "bg" + (shown ? "" : " void") + (shown && wd(n) === 5 ? " fri" : "") + (shown && wd(n) === 6 ? " sab" : "") + (shown && n < asOf ? " past" : ""));
           if (shown && hzHere >= 0) { var x = H[hzHere]; bg.classList.add(n <= x ? "hb" : "ht"); if (n === x && c < 6) bg.classList.add("hr"); }
           bg.style.gridColumn = (c + 2);
           row.appendChild(bg);
