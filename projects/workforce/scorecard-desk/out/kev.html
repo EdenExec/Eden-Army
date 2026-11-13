@@ -182,6 +182,7 @@ function missing(){return STAMP_TABS.filter(function(i){return !done(i)}).map(fu
 function stampWhen(){var t=Date.parse(A.stamp&&A.stamp.at||'');return isFinite(t)?new Date(t).toLocaleDateString('en-US',{weekday:'short',timeZone:'America/Los_Angeles'})+' '+ptTime(t):''}
 function seal(cls){return h('span',{class:'seal'+(cls?' '+cls:''),'aria-hidden':'true',text:A.stamp.init||PERSON.init})}
 function updHeadStamp(){var e=$('hstamp');if(!e)return;e.innerHTML='';if(!A.stamp){e.hidden=true;return}e.hidden=false;e.className='hstamp'+(A.stamp.edited?' edited':'');e.appendChild(seal('sm'));e.appendChild(h('span',{text:'Week complete'+(A.stamp.edited?' · edited after stamp':'')}))}
+var initDraft='';
 function initOk(v){return /^[A-Za-z]{2,3}$/.test((v||'').trim())}
 function doStamp(v){if(locked||!canWrite||missing().length||!initOk(v))return;A.stamp={init:v.trim().toUpperCase(),at:new Date().toISOString()};stamping=true;save('a');stamping=false;renderNav();updScore()}
 function updStamp(){if(!stampEl)return;stampEl.innerHTML='';var miss=missing(),s=A.stamp;
@@ -193,10 +194,10 @@ function updStamp(){if(!stampEl)return;stampEl.innerHTML='';var miss=missing(),s
   if(s&&!s.edited){stampEl.appendChild(h('p',{class:'note',text:'Done. The Round Table picks this up within the hour. Changed something? Re-enter your initials below to finish again.'}))}
   var inp=h('input',{type:'text',id:'f-init',maxlength:'3',autocomplete:'off',autocapitalize:'characters',placeholder:PERSON.init,'aria-describedby':'init-help'});
   var b=h('button',{type:'button',class:'stampbtn',text:s?'Finish the week again':'Finish the week'});b.disabled=true;
-  inp.oninput=function(){b.disabled=!(ok&&initOk(inp.value));if(!b.disabled)b.classList.add('lit');else b.classList.remove('lit')};
+  inp.oninput=function(){initDraft=inp.value;b.disabled=!(ok&&initOk(inp.value));if(!b.disabled)b.classList.add('lit');else b.classList.remove('lit')};
   b.onclick=function(){doStamp(inp.value)};
-  if(!ok)inp.disabled=true;
-  stampEl.appendChild(h('label',{class:'f','for':'f-init'},h('span',null,'1. Your initials',h('small',{id:'init-help',text:'Type your initials to sign off this week\u2019s scorecard.'})),inp));
+  inp.value=initDraft;b.disabled=!(ok&&initOk(initDraft));if(!b.disabled)b.classList.add('lit');
+  stampEl.appendChild(h('label',{class:'f','for':'f-init'},h('span',null,'1. Your initials',h('small',{id:'init-help',text:ok?'Type your initials, then press Finish the week.':'Type your initials now; Finish the week lights up once the tabs listed below are done.'})),inp));
   stampEl.appendChild(h('div',{class:'f'},h('span',{class:'stamp-step',text:'2. Send it in'}),b));
   if(miss.length)stampEl.appendChild(h('p',{class:'note miss',text:'Still to finish: '+miss.join(', ')+'.'}))}
 function updScore(){if(!scoreEl)return;var n=boxCount(),pct=Math.round(n/BOXES*100);scoreEl.innerHTML='';scoreEl.appendChild(h('span',null,h('b',{text:String(n)}),' / '+BOXES+' boxes'));scoreEl.appendChild(h('span',null,h('b',{text:pct+'%'}),' from your boxes'));scoreEl.appendChild(h('span',{class:'chip '+(pct>=90?'ok':'warn'),text:pct>=90?'Win':'Under 90%'}));if(A.stamp)scoreEl.appendChild(h('span',{class:'score-seal',title:'Stamped by '+A.stamp.init},seal('sm'),h('span',{class:'vh',text:'Stamped '+A.stamp.init})))}
