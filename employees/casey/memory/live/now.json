@@ -1,7 +1,7 @@
 {
-  "task": "t-202611091617-scli: refresh Lead Log index (projects/leads/index.json) for the stale Client bench lead-sheet tiles",
-  "since": "2026-11-10T00:00:00Z",
-  "state": "checked; index NOT changed. npm run leads -- verify: OK, 39 sheets, 4897 rows, index matches folder. Newest landedAt 2026-11-02; phonesAt null on every sheet; no dated phone/Crelate event after 2 Nov in the repo. 7 Scout sheets NOT LANDED (no Drive link).",
-  "blockedOn": "Dated facts from Noah/Scout: which sheets got phones added and on what date (EL-035/EL-036 are called done in noah-xl-phone-pass-2026-11-03.txt but undated), and Drive links to land the 7 Scout sheets. Then npm run leads -- stage-set <file> phones <date>.",
-  "updated": "2026-11-10T00:00:00Z"
+  "task": "t-202611130700-jobd: Team Hub board updates from Kev's comments on the meeting room JO deck (13 Nov)",
+  "since": "2026-11-13T07:00:00Z",
+  "state": "APPLIED to Team Hub jobs (batch, if_version pinned): (1) pb-south-hibiscus-night-super set to status closed, closed_on 2026-11-13, board_note 'client hired internally' (now v5); matched on role + West Palm Beach as the only Night Superintendent row, but the row's client is PB South (Hibiscus Garage), not a 'national GC high-rise': Kev to confirm it is the right row. (2) discreet-qc-oil-gas (Baker QC Manager, oil and gas) team set to Nick as lead, Kev not owner (now v3). (3) Baker named outright: all 8 Baker Concrete rows already carry client 'Baker Concrete' / slug 'baker' with no discreet field on the board; the 'discreet-' doc ids stay (ids cannot change). Any 'Client · discreet' label is in the rendered page/docs, not the data; not changed here.",
+  "blockedOn": "Kev: confirm the closed row is the Hibiscus night super (PB South); say where he still sees 'Client · discreet' (page render, not row data).",
+  "updated": "2026-11-13T07:00:00Z"
 }
