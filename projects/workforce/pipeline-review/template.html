@@ -951,7 +951,8 @@ var MODES={
   ]}
 };
 Object.keys(MODES).forEach(function(k){MODES[k].tiles.forEach(function(t){t.cards=t.cards.filter(function(id){return byId[id];});});MODES[k].tiles=MODES[k].tiles.filter(function(t){return t.cards.length;});});
-var CAR_IDS=["cover","rpa-flow","team-board","interviewing","at-risk","lead-gen","credits","market-intel","marketing","rotation","ops-ar","decisions"].filter(function(id){return byId[id];});
+/* Office loop (Kev, 13 Nov: "scrolling this through the office at all times whenever we are not in meetings"): team-facing slides only; money, credits and decisions stay in the Ops and Leadership modes. */
+var CAR_IDS=["cover","rpa-flow","team-board","interviewing","at-risk","touch-list","lead-gen","market-intel","rotation"].filter(function(id){return byId[id];});
 var ALL_IDS=cards.map(function(c){return c.id;});
 var SEG=["carousel","recruiting","ops","leadership","all"];
 var LABEL={carousel:"Carousel",recruiting:"Recruiting",ops:"Ops",leadership:"Leadership",all:"All"};
