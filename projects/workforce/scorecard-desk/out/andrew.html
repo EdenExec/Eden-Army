@@ -132,7 +132,7 @@ function flush(kind){
   var p;
   if(kind==='a'){var d={};for(var k in A)d[k]=A[k];d.updated=new Date().toISOString();d.week_of=meta.weekOf;p=db.doc('weeks/'+meta.weekOf).set(d)}
   else{CD[meta.weekOf]=Object.assign({},C,{updated:new Date().toISOString()});p=db.doc('candor/'+uid).set(CD)}
-  Promise.resolve(p).then(function(){status('Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}))})
+  Promise.resolve(p).then(function(){status('Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}));if(kind==='a'&&A.stamp&&!stampSaved){stampSaved=true;banner('\u2713 Saved. Your scorecard for the week is in. You can close this page.',true);try{window.scrollTo(0,0)}catch(e){}updStamp()}})
   .catch(function(e){status('Not saved');banner('Your answers did not save ('+((e&&e.code)||'error')+'). Keep this tab open and tell Kev.')})
   .then(function(){busy[kind]=false;if(pend[kind]){pend[kind]=false;flush(kind)}});
 }
@@ -184,14 +184,15 @@ function seal(cls){return h('span',{class:'seal'+(cls?' '+cls:''),'aria-hidden':
 function updHeadStamp(){var e=$('hstamp');if(!e)return;e.innerHTML='';if(!A.stamp){e.hidden=true;return}e.hidden=false;e.className='hstamp'+(A.stamp.edited?' edited':'');e.appendChild(seal('sm'));e.appendChild(h('span',{text:'Week complete'+(A.stamp.edited?' · edited after stamp':'')}))}
 var initDraft='';
 function initOk(v){return /^[A-Za-z]{2,3}$/.test((v||'').trim())}
-function doStamp(v){if(locked||!canWrite||missing().length||!initOk(v))return;A.stamp={init:v.trim().toUpperCase(),at:new Date().toISOString()};stamping=true;save('a');stamping=false;renderNav();updScore()}
+var stampSaved=true;
+function doStamp(v){if(locked||!canWrite||missing().length||!initOk(v))return;stampSaved=false;A.stamp={init:v.trim().toUpperCase(),at:new Date().toISOString()};stamping=true;save('a');stamping=false;renderNav();updScore()}
 function updStamp(){if(!stampEl)return;stampEl.innerHTML='';var miss=missing(),s=A.stamp;
   stampEl.appendChild(h('h3',{class:'stamp-h',text:'Sign off the week'}));
   if(s){stampEl.appendChild(h('div',{class:'stamped'+(s.edited?' edited':''),role:'status'},seal(),h('div',{class:'stamp-t'},h('b',{text:'Week complete'}),h('span',{text:stampWhen()}),s.edited?h('span',{class:'ed',text:'Edited after stamp'}):null)))}
   else if(locked){stampEl.appendChild(h('p',{class:'note',text:'Not stamped.'}))}
   if(locked)return;
   var ok=!miss.length&&canWrite;
-  if(s&&!s.edited){stampEl.appendChild(h('p',{class:'note',text:'Done. The Round Table picks this up within the hour. Changed something? Re-enter your initials below to finish again.'}))}
+  if(s&&!s.edited){stampEl.appendChild(h('p',{class:'note',text:stampSaved?'\u2713 Saved. Your scorecard is in, and you can close this page. Changed something? Re-enter your initials below to finish again.':'Saving your scorecard\u2026 keep this page open a moment.'}))}
   var inp=h('input',{type:'text',id:'f-init',maxlength:'3',autocomplete:'off',autocapitalize:'characters',placeholder:PERSON.init,'aria-describedby':'init-help'});
   var b=h('button',{type:'button',class:'stampbtn',text:s?'Finish the week again':'Finish the week'});b.disabled=true;
   inp.oninput=function(){initDraft=inp.value;b.disabled=!(ok&&initOk(inp.value));if(!b.disabled)b.classList.add('lit');else b.classList.remove('lit')};
