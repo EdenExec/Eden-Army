@@ -1,0 +1,176 @@
+<title>Noah · Friday Scorecard</title>
+<style>
+:root{--bg:#faf9f6;--card:#fff;--ink:#16130f;--mut:#6b655c;--line:#e3ded4;--acc:#1f4d3a;--accs:#e5efe9;--warn:#9a3b1c;--warns:#f8e8e1;--chip:#f1eee7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--card:#1d1b18;--ink:#f1ede5;--mut:#a59e92;--line:#34302a;--acc:#8fd1b0;--accs:#1f3329;--warn:#f0a487;--warns:#3a2219;--chip:#26231f}}
+:root[data-theme="dark"]{--bg:#141311;--card:#1d1b18;--ink:#f1ede5;--mut:#a59e92;--line:#34302a;--acc:#8fd1b0;--accs:#1f3329;--warn:#f0a487;--warns:#3a2219;--chip:#26231f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 80px}
+header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px}
+.kick{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:700}
+h1{font-size:24px;margin:2px 0 0;line-height:1.15}
+.sub{color:var(--mut);font-size:13px}
+#status{font-size:12px;color:var(--mut);text-align:right;min-width:90px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;cursor:pointer}
+nav button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-left:6px;vertical-align:middle}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+h2{font-size:17px;margin:0 0 4px}
+.note{color:var(--mut);font-size:13px;margin:0 0 12px}
+.seq{background:var(--accs);border-radius:8px;padding:8px 10px;font-size:13px;margin:0 0 12px}
+label.f{display:block;margin:0 0 12px}
+label.f>span{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
+label.f small{display:block;color:var(--mut);font-weight:400;font-size:12px}
+textarea,input[type=number],select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{min-height:64px;resize:vertical}
+.req{color:var(--warn)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:center}
+th{font-size:12px;color:var(--mut);font-weight:600}
+td.l,th.l{text-align:left}
+td.l small{display:block;color:var(--mut);font-size:12px}
+button.bx{width:34px;height:34px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--acc);font-size:17px;font-weight:700;cursor:pointer}
+button.bx[aria-pressed="true"]{background:var(--accs);border-color:var(--acc)}
+button.bx.short[aria-pressed="true"]{background:var(--warns);border-color:var(--warn);color:var(--warn)}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin-bottom:10px}
+.n{background:var(--chip);border-radius:10px;padding:8px 10px}
+.n b{display:block;font-size:22px;line-height:1.1}
+.n span{font-size:12px;color:var(--mut)}
+.n i{display:block;font-style:normal;font-size:11px;color:var(--mut)}
+.score{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline;margin:6px 0 12px}
+.score b{font-size:28px}
+.chip{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700}
+.chip.ok{background:var(--accs);color:var(--acc)}.chip.warn{background:var(--warns);color:var(--warn)}
+.foot{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
+.foot button{font:inherit;border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
+.foot button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.banner{border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:14px;background:var(--warns);color:var(--warn)}
+.banner.ok{background:var(--accs);color:var(--acc)}
+[hidden]{display:none!important}
+</style>
+<main>
+<header><div><div class="kick">Eden Partner Group · Friday Scorecard</div><h1>Noah</h1><div class="sub" id="wk">Loading the week…</div></div><div id="status" aria-live="polite"></div></header>
+<div id="banner" class="banner" hidden></div>
+<nav id="nav" aria-label="Sections"></nav>
+<div id="pages"></div>
+</main>
+<script>
+(function(){
+var PERSON={slug:'noah',name:'Noah'};
+var PILLARS=['Righteousness','Winning','Accountability','Discipline','Transparency','Growth','Execution'];
+var WEEKLY=['Audit your inventory','Build your own book','Autopsy your week','Grew toward my next role','Replied in a timely manner','Took training seriously','Sharp all week','Push your job orders forward'];
+var WEEKLY_ORDER=[0,7,1,2,3,4,5,6];
+var DAILY=[['Executing on the weekly plan','Worked the plan, not the inbox'],['Don’t chase the day','15 RPs, on track by noon'],['Activity / Inventory / Skill','JOs to required resumes; depth chart owned'],['Power Hours hit','Power Hours taken seriously'],['Reviewed my work','End-of-day admin + check-out'],['Calendar set for tomorrow','Tomorrow booked before leaving'],['Showed up sharp','5 min early is the minimum']];
+var DAYS=['Mon','Tue','Wed','Thu','Fri'];
+var BOXES=43;
+var PAGES=['Wins','Core values','Must Dos','Daily boxes','Numbers','Score & next week','Candor'];
+var $=function(id){return document.getElementById(id)};
+function h(t,a){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='class')e.className=a[k];else e.setAttribute(k,a[k])}for(var i=2;i<arguments.length;i++){var c=arguments[i];if(c==null)continue;e.appendChild(typeof c==='string'?document.createTextNode(c):c)}return e}
+var CD={},db=null,uid=null,meta=null,pre=null,A={},C={},cur=0,locked=false,canWrite=true,timers={},busy={},pend={};
+function ptTime(ms){return new Date(ms).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Los_Angeles'})+' PT'}
+function status(t){$('status').textContent=t}
+function banner(t,ok){var b=$('banner');if(!t){b.hidden=true;return}b.hidden=false;b.className='banner'+(ok?' ok':'');b.textContent=t}
+function arr(a,n){var o=[];for(var i=0;i<n;i++)o.push(!!(a&&a[i]));return o}
+function boxCount(){var n=0;A.d.forEach(function(x){if(x)n++});A.w.forEach(function(x){if(x)n++});return n}
+
+function save(kind){ if(locked||!canWrite||!db)return; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
+function flush(kind){
+  if(busy[kind]){pend[kind]=true;return} busy[kind]=true;
+  var p;
+  if(kind==='a'){var d={};for(var k in A)d[k]=A[k];d.updated=new Date().toISOString();d.week_of=meta.weekOf;p=db.doc('weeks/'+meta.weekOf).set(d)}
+  else{CD[meta.weekOf]=Object.assign({},C,{updated:new Date().toISOString()});p=db.doc('candor/'+uid).set(CD)}
+  Promise.resolve(p).then(function(){status('Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}))})
+  .catch(function(e){status('Not saved');banner('Your answers did not save ('+((e&&e.code)||'error')+'). Keep this tab open and tell Kev.')})
+  .then(function(){busy[kind]=false;if(pend[kind]){pend[kind]=false;flush(kind)}});
+}
+
+function fld(store,key,label,help,req,type){
+  var o=store==='c'?C:A, inp;
+  if(type==='num'){inp=h('input',{type:'number',min:'0',max:'100',step:'1',inputmode:'numeric'});if(o[key]!=null)inp.value=o[key];inp.oninput=function(){var v=inp.value===''?null:Math.max(0,Math.min(100,Number(inp.value)));o[key]=v;save(store);renderNav()}}
+  else if(type&&type.min){inp=h('select');inp.appendChild(h('option',{value:'',text:'Pick'}));for(var i=type.min;i<=type.max;i++){var op=h('option',{value:String(i),text:i+(i===type.min?' · '+type.lo:i===type.max?' · '+type.hi:'')});if(o[key]===i)op.selected=true;inp.appendChild(op)}inp.onchange=function(){o[key]=inp.value?Number(inp.value):null;save(store);renderNav()}}
+  else{inp=h('textarea');inp.value=o[key]||'';inp.oninput=function(){o[key]=inp.value;save(store);renderNav()}}
+  if(locked)inp.disabled=true;
+  var id='f-'+store+key;inp.id=id;
+  return h('label',{class:'f','for':id},h('span',null,label,req?h('b',{class:'req',text:' *'}):null,help?h('small',{text:help}):null),inp);
+}
+function bx(arrName,i,label,short){var on=!!A[arrName][i];var b=h('button',{class:'bx'+(short?' short':''),type:'button','aria-pressed':String(on),'aria-label':label,text:on?'✓':''});if(locked)b.disabled=true;b.onclick=function(){A[arrName][i]=!A[arrName][i];b.setAttribute('aria-pressed',String(A[arrName][i]));b.textContent=A[arrName][i]?'✓':'';save('a');if(arrName!=='cv')updScore();renderNav()};return b}
+
+function pageNumbers(){
+  var s=h('section',null,h('h2',{text:'Your numbers'}),h('p',{class:'note',text:pre&&pre.window?'Crelate and CloudTalk, '+pre.window+'. Read them, don’t retype them.':'Numbers load from Crelate before the Power Hour.'}));
+  if(pre){var g=h('div',{class:'nums'});
+    function n(v,l,r){g.appendChild(h('div',{class:'n'},h('b',{text:v==null?'–':String(v)}),h('span',{text:l}),r?h('i',{text:r}):null))}
+    function ratio(a,b,per){return (a!=null&&b)?(per?Math.round(a/b*per)+' per '+per:(Math.round(a/b*100)/100)+' each'):null}
+    n(pre.dials,'Dials');n(pre.rps,'RPs',pre.dials?Math.round(pre.rps/pre.dials*100)+' per 100 dials':null);n(pre.days_at_15,'Days at 15 RPs','of 5');
+    n(pre.resumes,'Resumes',pre.rps?ratio(pre.resumes,pre.rps,100)+' RPs':null);n(pre.ptcs,'PTCs',pre.resumes?ratio(pre.ptcs,pre.resumes,10)+' resumes':null);n(pre.ftis,'FTIs',pre.ptcs?ratio(pre.ftis,pre.ptcs,10)+' PTCs':null);
+    s.appendChild(g);
+    s.appendChild(h('p',{class:'note',text:'The flow we watch: Dial → RP → Resume → PTC → FTI.'}));}
+  s.appendChild(fld('a','numbers_note','Do these look right? If not, what’s off?','Add anything Crelate missed, like a placement.',false));
+  return s}
+function pageWins(){return h('section',null,h('h2',{text:'Start with wins'}),h('p',{class:'note',text:'Big or small. This is where the Power Hour starts. Then the core values, the Must Dos, your boxes, and your score.'}),
+  fld('a','wins','Biggest win this week','',true),fld('a','grew','How did you get better at your daily work this week?','',true),fld('a','prospect','Which FTI, revenue or notable prospect should we talk about, and why?','',false))}
+function pageValues(){
+  var tb=h('tbody');PILLARS.forEach(function(p,i){tb.appendChild(h('tr',null,h('td',{class:'l',text:(i+1)+'. '+p}),h('td',null,bx('cv',i*3,p+', lived it')),h('td',null,bx('cv',i*3+1,p+', fell short',true)),h('td',null,bx('cv',i*3+2,p+', next week'))))});
+  return h('section',null,h('h2',{text:'The seven core values'}),
+    h('p',{class:'seq',text:'The seven are a sequence: each one is built on the one before it. Righteousness comes first and Execution comes last, so work down the list in order.'}),
+    h('div',{class:'scroll'},h('table',null,h('thead',null,h('tr',null,h('th',{class:'l',text:'Core value'}),h('th',{text:'Lived it'}),h('th',{text:'Fell short'}),h('th',{text:'Next week'}))),tb)),
+    h('div',{style:'height:12px'}),
+    fld('a','lived_out','Where you lived one out this week (one real example)','',true),
+    fld('a','nominee','Who on the team lived out a core value this week, and how?','Counts as a Good Guy of the Week nomination.',false))}
+function pageMust(){
+  var tb=h('tbody');WEEKLY_ORDER.forEach(function(i){tb.appendChild(h('tr',null,h('td',null,bx('w',i,WEEKLY[i])),h('td',{class:'l',text:WEEKLY[i]})))});
+  return h('section',null,h('h2',{text:'Must Dos'}),h('p',{class:'note',text:'Tick each one you did this week.'}),h('table',null,h('thead',null,h('tr',null,h('th',{text:'✓'}),h('th',{class:'l',text:'Weekly Must Do'}))),tb))}
+function pageDaily(){
+  var hd=h('tr',null,h('th',{class:'l',text:'Daily'}));DAYS.forEach(function(d){hd.appendChild(h('th',{text:d}))});
+  var tb=h('tbody');DAILY.forEach(function(m,i){var r=h('tr',null,h('td',{class:'l'},m[0],h('small',{text:m[1]})));DAYS.forEach(function(d,j){r.appendChild(h('td',null,bx('d',i*5+j,m[0]+', '+d)))});tb.appendChild(r)});
+  return h('section',null,h('h2',{text:'The daily boxes'}),h('p',{class:'note',text:'Tick each day you did it. Friday counts from this morning.'}),h('div',{class:'scroll'},h('table',null,h('thead',null,hd),tb)))}
+var scoreEl=null;
+function updScore(){if(!scoreEl)return;var n=boxCount(),pct=Math.round(n/BOXES*100);scoreEl.innerHTML='';scoreEl.appendChild(h('span',null,h('b',{text:String(n)}),' / '+BOXES+' boxes'));scoreEl.appendChild(h('span',null,h('b',{text:pct+'%'}),' from your boxes'));scoreEl.appendChild(h('span',{class:'chip '+(pct>=90?'ok':'warn'),text:pct>=90?'Win':'Under 90%'}))}
+function pageFinal(){scoreEl=h('div',{class:'score'});updScore();
+  return h('section',null,h('h2',{text:'Your score and next week'}),scoreEl,
+    fld('a','self_score','Your score for the week (%)','Your honest read. A win is 90% or better.',true,'num'),
+    fld('a','align','How aligned was this week with your 10-5-3-1?','',true,{min:1,max:5,lo:'off track',hi:'fully aligned'}),
+    fld('a','autopsy','Autopsy: one thing you’d do differently','If you hit 15 RPs every day, write “hit my numbers”.',true),
+    fld('a','next_week','Next week I will: three commitments','These are your action items. We check them first next Friday.',true),
+    fld('a','wip','FTIs, PTCs and pending starts that need a follow-up','',false),
+    fld('a','jos','JOs you want to work next week (and any that are dead)','Leadership confirms in the review.',false))}
+function pageCandor(){return h('section',null,h('h2',{text:'Candor'}),h('p',{class:'note',text:'Only Kev reads this page. Skip anything you’d rather say in person.'}),
+  fld('c','burnout','Burn-out','A workload read only.',false,{min:1,max:10,lo:'fried',hi:'fresh'}),
+  fld('c','need','What do you need from leadership to win next week?','',false),
+  fld('c','resolve','Anything you’d like resolved, or something we should be talking about?','',false))}
+var BUILD=[pageWins,pageValues,pageMust,pageDaily,pageNumbers,pageFinal,pageCandor];
+function done(i){if(i===0)return !!(A.wins&&A.grew);if(i===1)return A.cv.some(Boolean)&&!!A.lived_out;if(i===2)return A.w.some(Boolean);if(i===3)return A.d.some(Boolean);if(i===4)return false;if(i===5)return A.self_score!=null&&!!A.align&&!!A.autopsy&&!!A.next_week;if(i===6)return C.burnout!=null;return true}
+function renderNav(){var n=$('nav');n.innerHTML='';PAGES.forEach(function(p,i){var b=h('button',{type:'button','aria-current':String(i===cur)},(i+1)+' '+p,done(i)?h('span',{class:'dot','aria-label':'done'}):null);b.onclick=function(){go(i)};n.appendChild(b)})}
+function go(i){cur=i;renderNav();var c=$('pages');c.innerHTML='';c.appendChild(BUILD[i]());
+  var f=h('div',{class:'foot'});if(i>0){var b=h('button',{type:'button',class:'ghost',text:'Back'});b.onclick=function(){go(i-1)};f.appendChild(b)}else f.appendChild(h('span'));
+  if(i<PAGES.length-1){var nx=h('button',{type:'button',text:'Next: '+PAGES[i+1]});nx.onclick=function(){go(i+1);window.scrollTo(0,0)};f.appendChild(nx)}else f.appendChild(h('span',{class:'note',text:'That’s it. Everything saves as you go.'}));
+  c.appendChild(f)}
+
+function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.d=arr(A.d,35);go(0)}
+(async function(){
+  status('Connecting…');
+  var to=setTimeout(function(){banner('Could not reach the scorecard store. Refresh the page; if it keeps happening, tell Kev.')},10000);
+  var dbx=null,user=null;
+  try{dbx=await claude.use('db');user=await claude.use('user')}catch(e){}
+  if(!dbx){clearTimeout(to);banner('Sign in to Claude with your Eden account to fill this in.');$('wk').textContent='';return}
+  db=dbx;
+  try{uid=user?await user.id():null}catch(e){}
+  try{
+    var m=await db.doc('meta/week').get();meta=m&&m.exists!==false?(m.data?m.data():m):null;
+  }catch(e){}
+  clearTimeout(to);
+  if(!meta||!meta.weekOf){banner('This week’s scorecard isn’t open yet.');$('wk').textContent='';return}
+  $('wk').textContent='Week of '+meta.weekLabel+(meta.window?' · numbers '+meta.window:'');
+  var lockAt=Date.parse(meta.lockAt||'');locked=isFinite(lockAt)&&Date.now()>=lockAt;
+  try{var p=await db.doc('prefill/'+meta.weekOf).get();pre=p&&p.exists!==false?(p.data?p.data():p):null}catch(e){}
+  try{var a=await db.doc('weeks/'+meta.weekOf).get();A=JSON.parse(JSON.stringify(a&&a.exists!==false?(a.data?a.data():a)||{}:{}))}catch(e){A={}}
+  if(uid){try{var c=await db.doc('candor/'+uid).get();var cd=c&&c.exists!==false?(c.data?c.data():c):null;CD=JSON.parse(JSON.stringify(cd||{}));C=CD[meta.weekOf]||{}}catch(e){C={}}}
+  if(!uid)canWrite=false;
+  status(locked?'Closed':'');
+  if(locked)banner('Closed at '+ptTime(lockAt)+'. Kev has your answers.',true);
+  else if(isFinite(lockAt))banner('Start at 10:00 PT (11:00 MT); about 15 minutes. It saves as you go, and stays open until '+ptTime(lockAt)+' so we can edit it together.',true);
+  start();
+})();
+})();
+</script>
