@@ -75,10 +75,28 @@ table.rate td:not(.l){width:19%}
 .banner.ok{border-color:var(--line);border-left-color:var(--ink);background:var(--card);color:var(--ink)}
 .colophon{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:28px;padding-top:12px;border-top:1px solid var(--line);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);font-weight:600}
 button:disabled{cursor:default;opacity:.6}
+.stampbox{margin-top:26px;padding-top:18px;border-top:2px solid var(--ink)}
+.stamp-h{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px}
+.stampbtn{font:inherit;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;min-height:48px;width:100%;border:2px solid var(--sel);background:transparent;color:var(--ink);border-radius:3px;padding:10px 16px;cursor:pointer}
+.stampbtn:not(:disabled):hover{background:var(--sel);color:var(--selt)}
+.stampbtn:disabled{opacity:1;border-style:dashed;border-color:var(--line);color:var(--mut)}
+.miss{margin:8px 0 0}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;flex:none;border:3px double var(--ink);border-radius:50%;font-weight:800;font-size:20px;letter-spacing:.04em;color:var(--ink);transform:rotate(-8deg)}
+.seal.sm{width:30px;height:30px;font-size:10px;border-width:3px;letter-spacing:0;transform:rotate(-8deg)}
+.stamped{display:flex;align-items:center;gap:16px;padding:14px 16px;border:1px solid var(--line);background:var(--chip);border-radius:3px;margin-bottom:12px}
+.stamp-t b{display:block;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.stamp-t span{display:block;font-size:13px;color:var(--mut)}
+.stamp-t .ed,.hstamp.edited span:last-child{color:var(--warn);font-weight:700}
+.stamped.edited .seal{border-color:var(--mut);color:var(--mut)}
+.hstamp{display:flex;align-items:center;gap:8px;margin:6px 0 4px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.score-seal{display:inline-flex;align-self:center}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+nav button .dot.stampdot{width:8px;height:8px;border-radius:0;background:transparent;border:2px solid var(--ink);transform:rotate(45deg)}
+nav button[aria-current="true"] .dot.stampdot{background:transparent;border-color:var(--selt)}
 [hidden]{display:none!important}
 </style>
 <main>
-<header><div><div class="kick">Eden Partner Group</div><div class="doc">Friday Scorecard</div><h1>Kev</h1><div class="sub" id="wk">Loading the week…</div></div><div id="status" aria-live="polite"></div></header>
+<header><div><div class="kick">Eden Partner Group</div><div class="doc">Friday Scorecard</div><h1>Kev</h1><div id="hstamp" hidden></div><div class="sub" id="wk">Loading the week…</div></div><div id="status" aria-live="polite"></div></header>
 <div id="banner" class="banner" hidden></div>
 <nav id="nav" aria-label="Sections"></nav>
 <div id="pages"></div>
@@ -86,7 +104,7 @@ button:disabled{cursor:default;opacity:.6}
 </main>
 <script>
 (function(){
-var PERSON={slug:'kev',name:'Kev'};
+var PERSON={slug:'kev',name:'Kev',init:'KW'};
 var PILLARS=['Righteousness','Winning','Accountability','Discipline','Transparency','Growth','Execution'];
 var WEEKLY=['Audit your inventory','Build your own book','Autopsy your week','Grew toward my next role','Replied in a timely manner','Took training seriously','Sharp all week','Push your job orders forward'];
 var WEEKLY_ORDER=[0,7,1,2,3,4,5,6];
@@ -105,7 +123,7 @@ function banner(t,ok){var b=$('banner');if(!t){b.hidden=true;return}b.hidden=fal
 function arr(a,n){var o=[];for(var i=0;i<n;i++)o.push(!!(a&&a[i]));return o}
 function boxCount(){var n=0;A.d.forEach(function(x){if(x)n++});A.w.forEach(function(x){if(x)n++});return n}
 
-function save(kind){ if(locked||!canWrite||!db)return; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
+function save(kind){ if(locked||!canWrite||!db)return; if(kind==='a'&&A.stamp&&!stamping)A.stamp.edited=true; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
 function flush(kind){
   if(busy[kind]){pend[kind]=true;return} busy[kind]=true;
   var p;
@@ -156,24 +174,37 @@ function pageDaily(){
   var hd=h('tr',null,h('th',{class:'l',text:'Daily'}));DAYS.forEach(function(d){hd.appendChild(h('th',{text:d}))});
   var tb=h('tbody');DAILY_ORDER.forEach(function(i){var m=DAILY[i];var r=h('tr',null,h('td',{class:'l'},m[0],h('small',{text:m[1]})));DAYS.forEach(function(d,j){r.appendChild(h('td',null,bx('d',i*5+j,m[0]+', '+d)))});tb.appendChild(r)});
   return h('section',null,h('h2',{text:'The daily boxes'}),h('p',{class:'note',text:'Tick each day you did it. Friday counts from this morning.'}),h('div',{class:'scroll'},h('table',null,h('thead',null,hd),tb)))}
-var scoreEl=null;
-function updScore(){if(!scoreEl)return;var n=boxCount(),pct=Math.round(n/BOXES*100);scoreEl.innerHTML='';scoreEl.appendChild(h('span',null,h('b',{text:String(n)}),' / '+BOXES+' boxes'));scoreEl.appendChild(h('span',null,h('b',{text:pct+'%'}),' from your boxes'));scoreEl.appendChild(h('span',{class:'chip '+(pct>=90?'ok':'warn'),text:pct>=90?'Win':'Under 90%'}))}
-function pageFinal(){scoreEl=h('div',{class:'score'});updScore();
+var scoreEl=null,stampEl=null,stamping=false,STAMP_TABS=[0,1,2,3,5];
+function missing(){return STAMP_TABS.filter(function(i){return !done(i)}).map(function(i){return PAGES[i]})}
+function stampWhen(){var t=Date.parse(A.stamp&&A.stamp.at||'');return isFinite(t)?new Date(t).toLocaleDateString('en-US',{weekday:'short',timeZone:'America/Los_Angeles'})+' '+ptTime(t):''}
+function seal(cls){return h('span',{class:'seal'+(cls?' '+cls:''),'aria-hidden':'true',text:A.stamp.init||PERSON.init})}
+function updHeadStamp(){var e=$('hstamp');if(!e)return;e.innerHTML='';if(!A.stamp){e.hidden=true;return}e.hidden=false;e.className='hstamp'+(A.stamp.edited?' edited':'');e.appendChild(seal('sm'));e.appendChild(h('span',{text:'Week complete'+(A.stamp.edited?' · edited after stamp':'')}))}
+function doStamp(){if(locked||!canWrite||missing().length)return;A.stamp={init:PERSON.init,at:new Date().toISOString()};stamping=true;save('a');stamping=false;renderNav();updScore()}
+function updStamp(){if(!stampEl)return;stampEl.innerHTML='';var miss=missing(),s=A.stamp;
+  stampEl.appendChild(h('h3',{class:'stamp-h',text:'Sign off the week'}));
+  if(s){stampEl.appendChild(h('div',{class:'stamped'+(s.edited?' edited':''),role:'status'},seal(),h('div',{class:'stamp-t'},h('b',{text:'Week complete'}),h('span',{text:stampWhen()}),s.edited?h('span',{class:'ed',text:'Edited after stamp'}):null)))}
+  else if(locked){stampEl.appendChild(h('p',{class:'note',text:'Not stamped.'}))}
+  if(locked)return;
+  var ok=!miss.length&&canWrite;var b=h('button',{type:'button',class:'stampbtn','aria-label':(s?'Re-stamp':'Stamp')+' the week complete with initials '+PERSON.init,text:s?(s.edited?'Re-stamp the week':'Re-stamp'):'Stamp the week complete'});if(!ok)b.disabled=true;b.onclick=doStamp;
+  if(!s||s.edited||ok)stampEl.appendChild(b);
+  if(miss.length)stampEl.appendChild(h('p',{class:'note miss',text:'Still to finish: '+miss.join(', ')+'.'}))}
+function updScore(){if(!scoreEl)return;var n=boxCount(),pct=Math.round(n/BOXES*100);scoreEl.innerHTML='';scoreEl.appendChild(h('span',null,h('b',{text:String(n)}),' / '+BOXES+' boxes'));scoreEl.appendChild(h('span',null,h('b',{text:pct+'%'}),' from your boxes'));scoreEl.appendChild(h('span',{class:'chip '+(pct>=90?'ok':'warn'),text:pct>=90?'Win':'Under 90%'}));if(A.stamp)scoreEl.appendChild(h('span',{class:'score-seal',title:'Stamped by '+A.stamp.init},seal('sm'),h('span',{class:'vh',text:'Stamped '+A.stamp.init})))}
+function pageFinal(){scoreEl=h('div',{class:'score'});updScore();stampEl=h('div',{class:'stampbox'});updStamp();
   return h('section',null,h('h2',{text:'Your score and next week'}),scoreEl,
     fld('a','self_score','Your score for the week (%)','Your honest read. A win is 90% or better.',true,'num'),
     fld('a','align','How aligned was this week with your 10-5-3-1?','',true,{min:1,max:5,lo:'off track',hi:'fully aligned'}),
     fld('a','autopsy','Autopsy: one thing you’d do differently','If you hit 15 RPs every day, write “hit my numbers”.',true),
     fld('a','next_week','Next week I will: three commitments','These are your action items. We check them first next Friday.',true),
     fld('a','wip','FTIs, PTCs and pending starts that need a follow-up','',false),
-    fld('a','jos','JOs you want to work next week (and any that are dead)','Leadership confirms in the review.',false))}
+    fld('a','jos','JOs you want to work next week (and any that are dead)','Leadership confirms in the review.',false),stampEl)}
 function pageCandor(){return h('section',null,h('h2',{text:'Candor'}),h('p',{class:'note',text:'Only Kev reads this page. Skip anything you’d rather say in person.'}),
   fld('c','burnout','Burn-out','A workload read only.',false,{min:1,max:10,lo:'fried',hi:'fresh'}),
   fld('c','need','What do you need from leadership to win next week?','',false),
   fld('c','resolve','Anything you’d like resolved, or something we should be talking about?','',false))}
 var BUILD=[pageWins,pageValues,pageMust,pageDaily,pageNumbers,pageFinal,pageCandor];
 function done(i){if(i===0)return !!(A.wins&&A.grew);if(i===1)return A.cv.some(Boolean)&&!!A.lived_out;if(i===2)return A.wr.every(function(x){return x!=null});if(i===3)return A.d.some(Boolean);if(i===4)return false;if(i===5)return A.self_score!=null&&!!A.align&&!!A.autopsy&&!!A.next_week;if(i===6)return C.burnout!=null;return true}
-function renderNav(){var n=$('nav');n.innerHTML='';PAGES.forEach(function(p,i){var b=h('button',{type:'button','aria-current':String(i===cur)},(i+1)+' '+p,done(i)?h('span',{class:'dot','aria-label':'done'}):null);b.onclick=function(){go(i)};n.appendChild(b)})}
-function go(i){cur=i;try{localStorage.setItem('sc-tab-'+PERSON.slug,(meta&&meta.weekOf||'')+'|'+i)}catch(e){}renderNav();var c=$('pages');c.innerHTML='';c.appendChild(BUILD[i]());
+function renderNav(){var n=$('nav');n.innerHTML='';PAGES.forEach(function(p,i){var b=h('button',{type:'button','aria-current':String(i===cur)},(i+1)+' '+p,(i===5&&A.stamp)?h('span',{class:'dot stampdot','aria-label':'stamped'}):done(i)?h('span',{class:'dot','aria-label':'done'}):null);b.onclick=function(){go(i)};n.appendChild(b)});updHeadStamp();updStamp()}
+function go(i){cur=i;stampEl=null;scoreEl=null;try{localStorage.setItem('sc-tab-'+PERSON.slug,(meta&&meta.weekOf||'')+'|'+i)}catch(e){}renderNav();var c=$('pages');c.innerHTML='';c.appendChild(BUILD[i]());
   var f=h('div',{class:'foot'});if(i>0){var b=h('button',{type:'button',class:'ghost',text:'Back'});b.onclick=function(){go(i-1)};f.appendChild(b)}else f.appendChild(h('span'));
   if(i<PAGES.length-1){var nx=h('button',{type:'button',text:'Next: '+PAGES[i+1]});nx.onclick=function(){go(i+1);window.scrollTo(0,0)};f.appendChild(nx)}else f.appendChild(h('span',{class:'note',text:'That’s it. Everything saves as you go.'}));
   c.appendChild(f)}
