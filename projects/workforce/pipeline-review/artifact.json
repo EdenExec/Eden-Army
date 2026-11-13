@@ -1,0 +1,10 @@
+{
+  "url": "https://claude.ai/artifact/4fueMmheVrnVz79KuDDMs2",
+  "title": "Friday Pipeline Review",
+  "published": "2026-11-13",
+  "capabilities": {"comments": {"composer_only": true}},
+  "access": "Kev only until he tests it (Kev, 12 Nov: share with Nick once it's fully dialed)",
+  "built_by": "Dean (scorecards, flow), Casey (JOs, depth charts), Scout (lead gen, credits, market intel), Jenny (design, marketing), Q (collab spec), Radar (QC, dials, publish)",
+  "source": "template.html + build.py here; data lives in the session scratchpad friday-review/ (candidate names never enter the repo)",
+  "refresh": "Fri 10:55am MT: run Dean's refresh (npm run recruiting-board, scorecard-rows), re-pull CloudTalk dials, python3 build.py, republish the same file path"
+}
