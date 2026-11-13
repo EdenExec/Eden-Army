@@ -20,7 +20,7 @@ Field shapes in the live Hub can run ahead of this file: read a document before 
 
 | Field | Values and rule |
 |---|---|
-| `id` | Kebab-case: `<client_slug>-<role>-<place>` (`triton-pm-south-beach`, `pb-south-bench-pm-wpb`). Discreet rows start `discreet-` |
+| `id` | Kebab-case: `<client_slug>-<role>-<place>` (`triton-pm-south-beach`, `pb-south-bench-pm-wpb`). Old `discreet-` ids stay as they are; new rows use the client slug |
 | `status` | `active`, `on-hold`, `filled`, `closed`, `killed`. Killed means Kev pulled it; the reason goes in `board_note`. Never delete a row |
 | `board_note` | Kev's latest instruction on the JO in one or two sentences, close to his words ("Review Matt Paul for this."). Replace it when Kev gives a newer one; the old one goes in the intake record, not the row |
 | `condition` | What has to be true for the JO to run ("Starts when Pruter signs the fee agreement"; "Pushed out to January") |
@@ -34,9 +34,9 @@ Field shapes in the live Hub can run ahead of this file: read a document before 
 
 Status uses Crelate stage words: blank (to review), Pending PTC, PTC, Submitted, Interview, Offer, Placed, On hold, Out. A new name goes under the seat with `by` (the recruiter or Kev), `status` and a dated note ("Kev, 23 Oct: review Betsy for construction admin."). A move is a status change plus a dated note; a drop is "Out" with the reason. Nobody is removed. Seat order and names follow the chart Kev prints for the wall (`employees/radar/skills/standing-rules.md`, depth charts, 8 Oct).
 
-## Discreet and referral-only clients
+## Named and referral-only clients
 
-- **Baker is named (Kev, 5 Nov 2026).** "We can stop calling Baker discreet client, lets name them as Baker." Baker Concrete is written by name on every internal surface (Hub, tickets, briefs to Scout, drafts, team email): `client: "Baker Concrete"`, `client_slug: "baker"`. One client still never sees another client's name. `discreet: true` stays for any client Kev asks to keep unnamed later.
+- **Baker is named; no client is discreet (Kev, 5 and 13 Nov 2026).** "Just say Baker." Baker Concrete and the INL work are written by name on every internal surface (Hub, tickets, briefs to Scout, drafts, team email): `client: "Baker Concrete"`, `client_slug: "baker"`. Never write "Client · discreet" or "discreet client"; `discreet` is false on every row. One client still never sees another client's name, and partner-facing JO descriptions stay blind.
 - Moss is referral-only: a Moss JO can sit on the board, but Scout's brief says "referral asks only" and Moss people are never dial targets.
 - Prometheus (Bay Area real-estate investor, `prometheus`) and Promethean (NYC and Miami GC, sister to PB South, `promethean`) are different clients. Never merge them.
 

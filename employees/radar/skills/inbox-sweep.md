@@ -83,4 +83,4 @@ Kev, 21 Oct: every ready draft gets a Superhuman link, so he can send it from Su
 
 ## New JO catch (Kev, 24 Oct 2026; via Casey, 25 Oct)
 
-Every weekday sweep: read Crelate `jobs` created since the last sweep in the Retained, Top Priority, Go Now and Typical columns (read-only, `jobs?statuses=...&fields=Id,JobNum,Name,CreatedOn,Owners`). Any new JO: ticket **Scout** (lead gen for the JO) and **Casey** (place it on the board, depth chart, Must Dos). Baker shows as "Client · discreet". Never create the ticket twice for the same JobNum.
+Every weekday sweep: read Crelate `jobs` created since the last sweep in the Retained, Top Priority, Go Now and Typical columns (read-only, `jobs?statuses=...&fields=Id,JobNum,Name,CreatedOn,Owners`). Any new JO: ticket **Scout** (lead gen for the JO) and **Casey** (place it on the board, depth chart, Must Dos). Write the client as Crelate stores it (Baker is "Baker"). Never create the ticket twice for the same JobNum.

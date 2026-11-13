@@ -3,7 +3,7 @@
 
 Run:  python3 build.py        (from anywhere)
 Reads the agents' JSON and markdown from ../ , builds one DATA object,
-relabels discreet clients, writes review.html next to this file.
+writes review.html next to this file.
 Tolerant: any missing file or field becomes an empty value and a warning.
 """
 import json, os, re, sys, datetime
@@ -434,9 +434,20 @@ CR_ON = bool(CR)
 
 MI = load("scout/market-intel.json")
 mi_markets = []
+def _minor(x):  # Kev 13 Nov: "too small to really pay attention to" - drop small permits and projects
+    t = str(x.get("text") or "")
+    mm = re.search(r"\$\s?(\d+(?:\.\d+)?)\s*([MBK])", t, re.I)
+    if mm:
+        v = float(mm.group(1)) * {"K": 0.001, "M": 1, "B": 1000}[mm.group(2).upper()]
+        return v < 25
+    return bool(re.search(r"\b\d{1,2}-unit\b", t))
 for m_ in (MI.get("markets") or []):
-    sigs = m_.get("signals") or []
-    live_ = [x for x in sigs if not x.get("context")] or sigs
+    if re.search(r"discreet", m_.get("market", ""), re.I):
+        continue  # Kev 13 Nov: stop talking about discreet clients
+    sigs = [x for x in (m_.get("signals") or []) if x.get("context") or not _minor(x)]
+    if not [x for x in sigs if not x.get("context")]:
+        continue  # no signal worth a slide this week
+    live_ = [x for x in sigs if not x.get("context")]
     top = next((x for x in live_ if x.get("url")), live_[0] if live_ else {})
     mi_markets.append({"market": m_.get("market", ""), "top": plain(top.get("text")), "url": top.get("url"),
                        "scoop": top.get("zoominfo_scoop_id"), "context": bool(top.get("context")),
@@ -646,13 +657,86 @@ JOD = load("casey/jo-deck.json", default=[])
 if isinstance(JOD, dict):
     JOD = JOD.get("jos", [])
 _ord = {"hot": 0, "active": 1, "new": 2}
+# Geography (Kev 13 Nov: "combine these by geo locations ... a map in the background").
+GEO = [  # (pattern, region, lon, lat) - first match wins
+    (r"Miami Beach", "Florida", -80.13, 25.79), (r"Surfside", "Florida", -80.12, 25.88),
+    (r"Fort Lauderdale", "Florida", -80.14, 26.12), (r"Miami / West Palm", "Florida", -80.12, 26.3),
+    (r"West Palm", "Florida", -80.05, 26.71), (r"Miami", "Florida", -80.19, 25.76),
+    (r"Tampa", "Florida", -82.46, 27.95), (r"Florida", "Florida", -81.2, 27.4),
+    (r"Reston|DC metro|Washington, DC|of DC", "DC and Virginia", -77.1, 38.9),
+    (r"Amarillo", "Texas", -101.83, 35.22), (r"Austin", "Texas", -97.74, 30.27),
+    (r"San Antonio", "Texas", -98.49, 29.42), (r"Texas", "Texas", -98.8, 31.2),
+    (r"San Jose", "West", -121.89, 37.34), (r"Reno", "West", -119.81, 39.53),
+    (r"Quincy, WA", "West", -119.85, 47.23), (r"Idaho Falls", "West", -112.04, 43.49),
+    (r"Boise", "West", -116.2, 43.62),
+    (r"Sandusky", "Midwest and Gulf", -82.71, 41.45), (r"North Dakota", "Midwest and Gulf", -100.5, 47.4),
+    (r"Louisiana", "Midwest and Gulf", -91.4, 30.6),
+]
+REG_ORDER = ["Florida", "DC and Virginia", "Texas", "West", "Midwest and Gulf", "Location to confirm"]
+def _geo(market):
+    if not re.search(r"confirm", market or "", re.I) or re.search(r"Florida", market or ""):
+        for rx, reg, lo, la in GEO:
+            if re.search(rx, market or "", re.I):
+                return reg, lo, la
+    return "Location to confirm", None, None
+JO_OVR = OVR.get("jo") or {}
+JO_CLOSED = OVR.get("jo_closed") or {}
+CNAMES = OVR.get("client_names") or {}
 jo_deck = []
 for j in JOD:
     if PARTNER and j.get("review"):
         continue
-    jo_deck.append({k: j.get(k) for k in ("id", "title", "market", "client_blind", "sector", "must_haves", "sell", "priority", "eden_owner")}
-                   | {"review": bool(j.get("review")) and not PARTNER})
+    if j.get("id") in JO_CLOSED:
+        continue
+    row = {k: j.get(k) for k in ("id", "title", "market", "client_blind", "sector", "must_haves", "sell", "priority", "eden_owner")}
+    row.update(JO_OVR.get(j.get("id"), {}))
+    if not PARTNER and row.get("client_blind") in CNAMES:
+        row["client_blind"] = CNAMES[row["client_blind"]]  # internal deck names the client
+    reg, lo, la = _geo(row.get("market"))
+    row.update({"region": reg, "lon": lo, "lat": la, "review": bool(j.get("review")) and not PARTNER})
+    jo_deck.append(row)
 jo_deck.sort(key=lambda j: _ord.get(j.get("priority"), 3))
+
+import geo as _geo_mod
+# Views (Marlowe's review, 13 Nov): each its own SVG so dots stay 0.35% W at every zoom.
+# Boxes are in cqw of the slide (100 wide, 56.25 tall).
+COVER_BOX = {"l": 40.0, "t": 14.0, "w": 56.0}
+COVER_BOX["h"] = round(COVER_BOX["w"] * _geo_mod.H / _geo_mod.W, 2)
+REG_BOX = {"l": 58.0, "t": 5.0, "w": 34.0, "h": 46.0}
+REG_LL = {  # lon0, lon1, lat0, lat1
+    "Florida": (-87.7, -79.6, 24.4, 31.2), "DC and Virginia": (-83.8, -74.0, 35.6, 41.6),
+    "Texas": (-106.8, -93.4, 25.7, 36.7), "West": (-124.9, -108.5, 31.3, 49.2),
+    "Midwest and Gulf": (-104.5, -80.0, 28.6, 49.2),
+}
+_pts = [(j["lon"], j["lat"], 1.0) for j in jo_deck if j["lon"] is not None]
+JOMAPS = {"cover": _geo_mod.view_svg(HERE, (0, 0, _geo_mod.W, _geo_mod.H), _pts, COVER_BOX["w"] / 100)}
+_regs = []
+for r in REG_ORDER:
+    js_ = [j for j in jo_deck if j["region"] == r]
+    if not js_:
+        continue
+    key = re.sub(r"[^a-z0-9]+", "-", r.lower()).strip("-")
+    reg = {"name": r, "n": len(js_), "key": key, "hot": len([j for j in js_ if j.get("priority") == "hot"])}
+    pts_ = [j for j in js_ if j["lon"] is not None]
+    if r in REG_LL and pts_:
+        vw_ = _geo_mod.fit_view(*REG_LL[r], REG_BOX["w"] / REG_BOX["h"])
+        JOMAPS[key] = _geo_mod.view_svg(HERE, vw_, _pts, REG_BOX["w"] / 100, sigma_frac=.05)
+        for j in js_:  # the role card's ring, in cqw
+            if j["lon"] is not None:
+                x, y = _geo_mod.project(j["lon"], j["lat"])
+                j["rx"] = round(REG_BOX["l"] + (x - vw_[0]) / vw_[2] * REG_BOX["w"], 2)
+                j["ry"] = round(REG_BOX["t"] + (y - vw_[1]) / vw_[3] * REG_BOX["h"], 2)
+        # cover pin: the mean of the region's roles, nudged off its heat into open space
+        mx = sum(_geo_mod.project(j["lon"], j["lat"])[0] for j in pts_) / len(pts_)
+        my = sum(_geo_mod.project(j["lon"], j["lat"])[1] for j in pts_) / len(pts_)
+        dx = {"Florida": 5.5, "DC and Virginia": 3.0}.get(r, 0)
+        reg["pin"] = [round(COVER_BOX["l"] + mx / _geo_mod.W * COVER_BOX["w"] + dx, 2),
+                      round(COVER_BOX["t"] + my / _geo_mod.H * COVER_BOX["h"] - 3.2, 2)]
+    _regs.append(reg)
+jo_regions = _regs
+for j in jo_deck:  # internal deck: tiles show the client only when it is a real name
+    j["named"] = (not PARTNER) and j.get("client_blind") in set(CNAMES.values())
+
 
 # ---------------------------------------------------------------- DATA
 DATA = {
@@ -663,17 +747,17 @@ DATA = {
     "flow": flow, "team": team, "recs": recs, "jos": jos, "intv": intv, "mpp": mpp,
     "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "lead_grid": lead_grid, "agents": agents,
     "together": together, "qc": qc, "decisions": decisions,
-    "partner": PARTNER, "jodeck": {"jos": jo_deck},
+    "partner": PARTNER, "jodeck": {"jos": jo_deck, "regions": jo_regions, "cover": COVER_BOX, "reg": REG_BOX},
     "credits": credits if CR_ON else None, "ops": OPS or None, "travel": LEAD or None, "touch": touch, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
 }
 
 # ---------------------------------------------------------------- relabel discreet clients
-DISC = "Client · discreet"
+# Kev 13 Nov (meeting-room comments): "stop referring to Baker as a discreet client", "just say Baker",
+# "find all mentions of discreet client and correct". Baker Concrete and INL (the site) are named outright.
+DISC = "Baker"
 RULES = [
-    (re.compile(r"Baker(?:\s+(?:Construction|Concrete|FL))?", re.I), DISC),
-    (re.compile(r"\bINL\b", re.I), DISC),
-    (re.compile(r"Idaho\s+National(?:\s+Laborator(?:y|ies))?", re.I), DISC),
-    (re.compile(r"Idaho\s+Falls", re.I), "location withheld"),
+    (re.compile(r"Client\s+·\s+discreet", re.I), "Baker"),
+    (re.compile(r"discreet[\s-]+clients?", re.I), "clients"),
 ]
 s = json.dumps(DATA, ensure_ascii=False)
 for rx, rep in RULES:
@@ -690,8 +774,8 @@ assert "__DATA__" in tpl, "template has no __DATA__ placeholder"
 html = tpl.replace("__DATA__", s)
 
 # ---------------------------------------------------------------- guards
-bad = re.search(r"baker|\binl\b|idaho\s+national", html, re.I)
-assert not bad, "discreet client still present: %r" % (bad.group(0) if bad else "")
+bad = re.search(r"Client\s*·\s*discreet|discreet\s+client|\bdiscreet\b(?!-)", html, re.I)
+assert not bad, "'discreet' wording still present: %r" % (html[max(0, bad.start() - 40):bad.end() + 40] if bad else "")
 _nomkt = json.dumps({k: v for k, v in DATA.items() if k not in ("market", "ops")}, ensure_ascii=False)
 _m = re.search(r"\$\s?\d", tpl + _nomkt)  # market intel alone may carry public project values
 if _m:
@@ -720,6 +804,8 @@ def globe_uri():
 
 
 html = html.replace("__GLOBE__", globe_uri())
+import base64 as _b64
+html = html.replace("/*__JOMAPS__*/", "".join('--jm-%s:url("data:image/svg+xml;base64,%s");' % (k, _b64.b64encode(v.encode()).decode()) for k, v in JOMAPS.items()))
 out = os.path.join(HERE, "review.html")
 with open(out, "w", encoding="utf-8") as f:
     f.write(html)
