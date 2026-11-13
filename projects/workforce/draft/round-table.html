@@ -591,8 +591,8 @@ async function run(use){
   A=clone((SC.weeks||{})[meta.weekOf]||{});
   try{CD=body(await db.doc('cd/'+uid).get())||{};C=clone(CD[meta.weekOf]||{})}catch(e){CD={};C={}}
   status(locked?'Closed':'');
-  if(locked)banner('Closed at '+ptTime(lockAt)+'. Kev has your answers.',true);
-  else if(isFinite(lockAt)&&$('sc-banner').hidden)banner('Open from 8:00 PT (9:00 MT); the Power Hour is 10:00 PT (11:00 MT). About 15 minutes; it saves as you go. Finish early and you’re first in line for your leadership meeting. Open until '+ptTime(lockAt)+'.',true);
+  if(locked)banner('Scorecards have closed for the week. See leadership for help.');
+  else if(isFinite(lockAt)&&$('sc-banner').hidden)banner('Open Thursday 5:00 PM PT (6:00 MT) to Sunday 5:00 PM PT (6:00 MT). About 15 minutes; it saves as you go. Open until '+new Date(lockAt).toLocaleDateString('en-US',{weekday:'short',timeZone:'America/Los_Angeles'})+' '+ptTime(lockAt)+'.',true);
   start();
 }
 return {start:function(use){run(use).catch(function(e){try{banner('Something went wrong loading the scorecard. Reload the page; if it keeps happening, tell Kev.')}catch(x){}})}};

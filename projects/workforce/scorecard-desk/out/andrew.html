@@ -242,8 +242,8 @@ function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A
   if(uid){try{var c=await db.doc('candor/'+uid).get();var cd=c&&c.exists!==false?(c.data?c.data():c):null;CD=JSON.parse(JSON.stringify(cd||{}));C=CD[meta.weekOf]||{}}catch(e){C={}}}
   if(!uid)canWrite=false;
   status(locked?'Closed':'');
-  if(locked)banner('Closed at '+ptTime(lockAt)+'. Kev has your answers.',true);
-  else if(isFinite(lockAt))banner('Open from 8:00 PT (9:00 MT); the Power Hour is 10:00 PT (11:00 MT). About 15 minutes; it saves as you go. Finish early and you\u2019re first in line for your leadership meeting. Open until '+ptTime(lockAt)+'.',true);
+  if(locked)banner('Scorecards have closed for the week. See leadership for help.');
+  else if(isFinite(lockAt))banner('Open Thursday 5:00 PM PT (6:00 MT) to Sunday 5:00 PM PT (6:00 MT). About 15 minutes; it saves as you go. Open until '+new Date(lockAt).toLocaleDateString('en-US',{weekday:'short',timeZone:'America/Los_Angeles'})+' '+ptTime(lockAt)+'.',true);
   start();
 })();
 })();
