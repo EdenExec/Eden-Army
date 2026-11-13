@@ -306,27 +306,35 @@ a.lgt:hover .ls,a.lgt:hover .lm,a.lgt:hover .lr{color:inherit}
 .mis .mio{display:block;font-size:1.4cqw;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:1.4cqw}
 a.mis:hover .mio,a.mis:focus-visible .mio{color:var(--fg)}
 
-/* JO deck map (Kev 13 Nov) */
-:root{--jomap:url("__JOMAP__")}
-.jmap{position:absolute;inset:0;background-image:var(--jomap);background-repeat:no-repeat;opacity:.55;pointer-events:none;z-index:-1}
-.jmap.deep{opacity:.34}
-.jmap.dim{opacity:.2}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .jmap{filter:invert(1)}}
-:root[data-theme="dark"] .jmap{filter:invert(1)}
-.st:has(.jmap)::before{background-size:auto 7cqw;background-position:right 2.2cqw bottom 2cqw;opacity:.1}
-.jpin{position:absolute;z-index:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--fg);pointer-events:auto}
-.jpin b{font-size:6.4cqw;font-weight:900;line-height:.9;letter-spacing:-.03em}
-.jpin span{font-size:1.5cqw;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--bg);padding:.2cqw .7cqw;margin-top:.4cqw;white-space:nowrap}
+/* JO deck map (Kev 13 Nov; Marlowe's review) */
+:root{/*__JOMAPS__*/}
+.jmap{position:absolute;background-repeat:no-repeat;background-size:100% 100%;background-position:center;opacity:.85;pointer-events:none;z-index:-1}
+.jmap.reg{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 82%,transparent),linear-gradient(180deg,transparent,#000 9%,#000 88%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 82%,transparent),linear-gradient(180deg,transparent,#000 9%,#000 88%,transparent);mask-composite:intersect}
+.jmap.soft{opacity:.45}
+.jmap.dim{opacity:.4}
+.jmap.soft.dim{opacity:.3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .jmap{filter:invert(1);opacity:1}:root:not([data-theme="light"]) .jmap.soft{opacity:.5}:root:not([data-theme="light"]) .jmap.dim{opacity:.45}}
+:root[data-theme="dark"] .jmap{filter:invert(1);opacity:1}:root[data-theme="dark"] .jmap.soft{opacity:.5}:root[data-theme="dark"] .jmap.dim{opacity:.45}
+.st:has(.jmap)::before{background-size:auto 2.8cqw;background-position:right 1.5cqw bottom 1.5cqw;opacity:.12}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st:has(.jmap)::before{opacity:.1}}
+:root[data-theme="dark"] .st:has(.jmap)::before{opacity:.1}
+.jpin{position:absolute;z-index:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--fg)}
+.jpin b{font-size:5.6cqw;font-weight:900;line-height:.9;letter-spacing:-.03em}
+.jpin span{font-size:1.3cqw;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-top:.4cqw;max-width:11cqw;text-align:center;line-height:1.15}
 .jcn{font-size:17cqw;font-weight:900;line-height:.85;letter-spacing:-.05em;margin-top:1cqw}
 .jtbc{font-size:2.2cqw;font-weight:800;color:var(--muted);margin-top:1.2cqw}
-.jgr{display:grid;grid-template-columns:repeat(2,minmax(0,22.5cqw));gap:1.1cqw;margin-top:2cqw;align-content:start}
-.jt{display:flex;flex-direction:column;justify-content:center;gap:.5cqw;min-height:8.6cqw;padding:1cqw 1.4cqw;background:var(--bg);border:.2cqw solid var(--line);border-left:1cqw solid var(--fg);text-decoration:none;color:var(--fg);min-width:0}
-.jt.hot{border-left-color:var(--bad)}
-.jt.new{border-left-color:var(--muted)}
-.jt b{font-size:1.95cqw;font-weight:900;line-height:1.1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.jt span{font-size:1.35cqw;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jgr{display:grid;grid-template-columns:repeat(2,23.5cqw);grid-auto-rows:minmax(8.4cqw,auto);gap:1.2cqw;margin-top:2cqw;align-content:start}
+.jt{display:flex;flex-direction:column;justify-content:center;gap:.6cqw;padding:1cqw 1.4cqw;background:var(--bg);border:.15cqw solid var(--line);border-left:.75cqw solid var(--fg);text-decoration:none;color:var(--fg);min-width:0;overflow:hidden}
+.jt.hot{border-left-color:#8E3B33}
+.jt b{font-size:2cqw;font-weight:900;line-height:1.08}
+.jt span{font-size:1.4cqw;font-weight:700;color:#555}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .jt span{color:#B8B2A6}}
+:root[data-theme="dark"] .jt span{color:#B8B2A6}
 .jt:hover,.jt:focus-visible{border-color:var(--fg)}
-.jdot{position:absolute;width:2.6cqw;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:.45cqw solid var(--bad);background:transparent;box-sizing:border-box;z-index:-1}
+.jdot{position:absolute;width:2.5cqw;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:2px solid #8E3B33;background:transparent;box-sizing:border-box;z-index:-1}
+.prio.hot{background:#8E3B33;color:#F3EFE6}
+.rvw{border-color:#8A857C;color:#8A857C}
+.rws.jo .ra b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:clip}
 </style>
 
 <div id="app" data-view="home">
@@ -915,7 +923,7 @@ function markSection(i){var cid=DK.cardAt[i], ci=cards.map(function(c){return c.
 /* ---- JO deck ---- */
 var JD=D.jodeck||{jos:[]}, JOS=JD.jos||[], PARTNER=!!D.partner, JF={sector:"all",market:"all"};
 /* Geo (Kev 13 Nov: "combine these by geo locations ... a big subtle map in the background"). */
-var REGS=JD.regions||[], MAPA=JD.mapAspect||1.82;
+var REGS=JD.regions||[], CB=JD.cover||{l:40,t:14,w:56,h:30.8}, RB=JD.reg||{l:58,t:5,w:34,h:46};
 function rslug(n){return "jo-r-"+String(n).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 JOS.forEach(function(j){j._m=j.region||"Location to confirm";});
 var MK_TOP=REGS.map(function(r){return r.name;});
@@ -923,42 +931,32 @@ function mOk(j){return JF.market==="all"||j._m===JF.market;}
 function joMatch(j){return mOk(j)&&(JF.sector==="all"||j.sector===JF.sector);}
 function regFor(n){for(var i=0;i<REGS.length;i++) if(REGS[i].name===n) return REGS[i]; return null;}
 function joIds(){return ["jo-cover"].concat(REGS.filter(function(r){return JOS.some(function(j){return j._m===r.name&&joMatch(j);});}).map(function(r){return rslug(r.name);}));}
-/* map layer: the map is drawn at z x slide width; tx/ty = where its top-left lands, in cqw */
-var MH=100/MAPA;
-function mapFit(box){
-  if(!box) return {z:1,tx:0,ty:0,dim:true};
-  var cx=(box[0]+box[1])/2, cy=(box[2]+box[3])/2*MH/100, bw=box[1]-box[0]+10, bh=(box[3]-box[2]+12)*MH/100;
-  var z=Math.max(1,Math.min(2.8,Math.min(42/bw,40/bh))), tcx=74, tcy=33;
-  return {z:z,tx:tcx-z*cx,ty:tcy-z*cy};
+/* map layer (Marlowe 13 Nov): one SVG per view so the dots keep one size; it sits in its own box clear of the text */
+function mapL(key,box,cls){
+  return '<div class="jmap'+(cls?' '+cls:'')+'" aria-hidden="true" style="left:'+box.l+'cqw;top:'+box.t+'cqw;width:'+box.w+'cqw;height:'+box.h+'cqw;background-image:var(--jm-'+key+')"></div>';
 }
-function mapAt(f,px,py){return {x:f.tx+f.z*px, y:f.ty+f.z*py*MH/100};}
-function mapL(f,pins){
-  return '<div class="jmap'+(f.dim?' dim':'')+(f.z>1.4?' deep':'')+'" aria-hidden="true" style="background-size:'+(100*f.z).toFixed(2)+'cqw auto;background-position:'+f.tx.toFixed(2)+'cqw '+f.ty.toFixed(2)+'cqw"></div>'+(pins||"");
-}
+function regMap(r,cls){ return (r&&r.pin)?mapL(r.key,RB,"reg"+(cls?" "+cls:"")):mapL("cover",CB,(cls?cls+" ":"")+"dim"); }
 function joSlide(j){
-  var rv=(!PARTNER&&j.review)?'<span class="rvw">Review</span>':'', r=regFor(j._m), f=mapFit(r&&r.box);
-  var at=(j.px!=null)?mapAt(f,j.px,j.py):null, pin=at?'<i class="jdot" style="left:'+at.x.toFixed(2)+'cqw;top:'+at.y.toFixed(2)+'cqw"></i>':'';
-  return mapL(f,pin)+'<div class="k">'+esc(j.sector)+' · '+esc(j.market)+rv+'</div><div class="joh">'+H(cut(j.title,52),"md")+'<div class="prio '+esc(j.priority)+'">'+esc(j.priority)+'</div></div><div class="ln2">'+esc(j.client_blind)+'</div>'+
-    '<div class="rws jo">'+(j.must_haves||[]).slice(0,3).map(function(x){return '<div class="rw"><div class="ra"><b>'+esc(cut(x,78))+'</b></div></div>';}).join("")+'</div>'+
+  var rv=(!PARTNER&&j.review)?'<span class="rvw">Review</span>':'', r=regFor(j._m);
+  var pin=(j.rx!=null&&r&&r.pin)?'<i class="jdot" style="left:'+j.rx+'cqw;top:'+j.ry+'cqw"></i>':'';
+  return regMap(r,"soft")+pin+'<div class="k">'+esc(j.sector)+' · '+esc(j.market)+rv+'</div><div class="joh">'+H(cut(j.title,52),"md")+'<div class="prio '+esc(j.priority)+'">'+esc(j.priority)+'</div></div><div class="ln2">'+esc(j.client_blind)+'</div>'+
+    '<div class="rws jo">'+(j.must_haves||[]).slice(0,3).map(function(x){return '<div class="rw"><div class="ra"><b>'+esc(cut(x,140))+'</b></div></div>';}).join("")+'</div>'+
     '<p class="sell">'+esc(cut(j.sell,130))+'</p><div class="own">Coordinate with '+esc(j.eden_owner)+'</div>';
 }
 S["jo-cover"]=function(){
   var mm=JOS.filter(joMatch), n=mm.length, pr={hot:0,active:0,"new":0}; mm.forEach(function(j){pr[j.priority]=(pr[j.priority]||0)+1;});
-  var CF={z:.68,tx:31,ty:9}, SHORT={"DC and Virginia":"DC / VA","Midwest and Gulf":"Midwest, Gulf"};
-  var pins=REGS.filter(function(r){return r.box;}).map(function(r){var c=mm.filter(function(j){return j._m===r.name;}).length; if(!c) return "";
-    var at=mapAt(CF,(r.box[0]+r.box[1])/2,(r.box[2]+r.box[3])/2);
-    return '<a class="jpin" href="#'+rslug(r.name)+'" style="left:'+at.x.toFixed(2)+'cqw;top:'+at.y.toFixed(2)+'cqw"><b>'+c+'</b><span>'+esc(SHORT[r.name]||r.name)+'</span></a>';}).join("");
+  var pins=REGS.filter(function(r){return r.pin;}).map(function(r){var c=mm.filter(function(j){return j._m===r.name;}).length; if(!c) return "";
+    return '<a class="jpin" href="#'+rslug(r.name)+'" style="left:'+r.pin[0]+'cqw;top:'+r.pin[1]+'cqw"><b>'+c+'</b><span>'+esc(r.name)+'</span></a>';}).join("");
   var tbc=mm.filter(function(j){return j._m==="Location to confirm";}).length;
-  return mapL(CF)+pins+
-    K(pr.hot+" hot · "+pr.active+" active · "+pr["new"]+" new")+H("Open roles")+'<div class="jcn num">'+n+'</div>'+(tbc?'<div class="jtbc">+ '+tbc+' location to confirm</div>':'');
+  return mapL("cover",CB)+pins+K(pr.hot+" hot · "+pr.active+" active · "+pr["new"]+" new")+H("Open roles")+'<div class="jcn num">'+n+'</div>'+(tbc?'<div class="jtbc">+ '+tbc+' location to confirm</div>':'');
 };
-var PER=8;
+var PER=6;
 REGS.forEach(function(r){var id=rslug(r.name);
   S[id]=function(){
-    var js=JOS.filter(function(j){return j._m===r.name&&joMatch(j);}), pages=[], f=mapFit(r.box), hot=js.filter(function(j){return j.priority==="hot";}).length;
+    var js=JOS.filter(function(j){return j._m===r.name&&joMatch(j);}), pages=[], hot=js.filter(function(j){return j.priority==="hot";}).length;
     for(var i=0;i<js.length;i+=PER){var pg=js.slice(i,i+PER), np=Math.ceil(js.length/PER);
-      pages.push(mapL(f)+K(js.length+" open role"+(js.length===1?"":"s")+(hot?" · "+hot+" hot":"")+(np>1?" · "+(i/PER+1)+" of "+np:""))+H(r.name)+
-        '<div class="jgr">'+pg.map(function(j){return '<a class="jt '+esc(j.priority)+'" href="#'+esc(j.id)+'"><b>'+esc(cut(j.title,48))+'</b><span>'+esc(j.eden_owner||"")+(j.client_blind?" · "+esc(j.client_blind):"")+'</span></a>';}).join("")+'</div>');}
+      pages.push(regMap(r)+K(js.length+" open role"+(js.length===1?"":"s")+(hot?" · "+hot+" hot":"")+(np>1?" · "+(i/PER+1)+" of "+np:""))+H(r.name)+
+        '<div class="jgr">'+pg.map(function(j){return '<a class="jt '+esc(j.priority)+'" href="#'+esc(j.id)+'"><b>'+esc(j.title)+'</b><span>'+esc(j.eden_owner||"")+(j.named?" · "+esc(j.client_blind):"")+'</span></a>';}).join("")+'</div>');}
     return pages;};
   byId[id]={id:id,title:r.name,kick:"Open roles"};
 });

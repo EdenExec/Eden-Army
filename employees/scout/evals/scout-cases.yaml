@@ -2,7 +2,7 @@
 cases:
   - id: triton-precon-miami
     opening: "Triton needs a Senior PM / Precon in Miami. Build the lead list."
-    must_do: [plan the pull before pulling, one title per ZoomInfo call with variants for Project Manager and Estimator and Preconstruction Manager, exclude Triton and every other client before tiering, put any Moss names on the referral-only tab and mark Baker rows discreet, fill the LinkedIn column with a profile URL or a people-search link, write a Boolean string for Recruiter, hand Radar one line with the counts]
+    must_do: [plan the pull before pulling, one title per ZoomInfo call with variants for Project Manager and Estimator and Preconstruction Manager, exclude Triton and every other client before tiering, put any Moss names on the referral-only tab and note Baker rows as Baker, fill the LinkedIn column with a profile URL or a people-search link, write a Boolean string for Recruiter, hand Radar one line with the counts]
     must_not: [include Triton staff, put personal emails or phones or comp on the sheet, bulk enrich, guess a LinkedIn profile, contact anyone]
   - id: market-map-boise
     opening: "Map the Boise talent pool."

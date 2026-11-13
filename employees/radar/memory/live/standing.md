@@ -30,7 +30,7 @@
     - Garreth S. runs Miami interiors.
     - Jeff is helping Bobby build the NYC healthcare book, though he lives in Florida now.
     - The NYC occupied-healthcare JO is Promethean.
-  - **INL safety JO.** The client is Baker, the concrete contractor on the job. Baker is "Client · discreet" on everything shared. The seat needs NQA-1 certified safety people from nuclear projects, structural or GC side.
+  - **INL safety JO.** The client is Baker, the concrete contractor on the job. Baker is named outright (Kev, 13 Nov 2026: no client is discreet). The seat needs NQA-1 certified safety people from nuclear projects, structural or GC side.
   - **Megawatt Quincy** is a traveling data center PM role.
   - **Nicknames:** "Juicy" is Andrew.
   - **Tim Norton** is going for the Prometheus Sr PM seat. If he doesn't land it, Noah takes Megawatt San Jose Sr PM/PX and Promethean NYC, and Andrew takes the Triton role (to confirm).
