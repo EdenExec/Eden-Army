@@ -18,7 +18,7 @@ In the Stream Deck app, drag **Multi Action** onto a key, name it "Start", then 
 
 | # | Action (Stream Deck) | Setting |
 |---|---|---|
-| 1 | Soundboard › Play Audio | Kev's Mando MP3, volume about 70% |
+| 1 | Soundboard › Play Audio | `start-mando.mp3` (Kev's 5-second Mando clip, sent 13 Nov; save it to ~/Music/Stream Deck/), volume about 70% |
 | 2 | System › Website | https://claude.ai/artifact/BBgMLsVw8x9CtVy5XViBK6 (Barny's workshop: journal first) |
 | 3 | Multi Action › Delay | 1 second |
 | 4 | System › Website | https://claude.ai/artifact/5SuFoioujKFV6KgX4dXi3G (Eden Desk: today's paper) |
@@ -34,6 +34,6 @@ To have the carousel open on the TV, drag that browser window to the TV once. ma
 
 ## Still to decide with Kev (13 Nov, at the desk)
 
-- Which MP3, and whether it plays every morning or only Mondays.
+- Whether the Mando clip plays every morning or only Mondays (the clip is in hand: 5 seconds).
 - Whether "Start" also opens Superhuman and Crelate.
 - The key layout: Start, Bible, and later Tesla (December) and the intercom (iPhone only; Macs can't start HomePod Intercom).
