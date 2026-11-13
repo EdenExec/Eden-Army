@@ -1,5 +1,7 @@
 # Friday scorecard desks (one page per recruiter)
 
+> **13 Nov 2026, late: the scorecard now lives inside the Round Table** (https://claude.ai/artifact/DTXbu7B6F3B2s8NEnmYdCE). Kev shares the Round Table with each recruiter as Contributor; they see only their scorecard, and "Finish the week" lands on Kev's Round Table live (order + card fill), no copy step. Paths there: `scmeta/week`, `scpre/{slug}`, `sc/{uid}`, `cd/{uid}`; layout and rules in `projects/workforce/round-table.md`. The per-person desks below and Dean's pull/queue tasks are superseded; Dean's Friday prefill must write `scpre/{slug}` (and `scmeta/week`) on the Round Table. `compile.py` stays the reference for the merge rules the Round Table runs in JS.
+
 Built 12-13 Nov 2026 for Kev's Friday Power Hour. Each recruiter has their own private Claude page; it replaces the shared scorecard page (`projects/workforce/scorecard-forms/scorecard-page.html`, never used live) and feeds the Round Table (https://claude.ai/artifact/DTXbu7B6F3B2s8NEnmYdCE).
 
 | Recruiter | Page |

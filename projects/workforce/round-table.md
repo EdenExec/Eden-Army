@@ -1,6 +1,6 @@
 # Round Table: database layout (Dean, 21 October 2026)
 
-Page: `projects/workforce/draft/round-table.html` (title "Round Table"). Private to Kev. Read-only: Radar, Dean and Tally write with `ArtifactData`. Not published. Example data shows until `claude.use("db")` resolves, then the page reads the live store only.
+Page: `projects/workforce/draft/round-table.html` (title "Round Table"). Private to Kev; since 13 Nov anyone else it is shared with sees only the Friday scorecard (see the last section). Read-only: Radar, Dean and Tally write with `ArtifactData`. Not published. Example data shows until `claude.use("db")` resolves, then the page reads the live store only.
 
 ## Paths
 
@@ -39,7 +39,7 @@ Top of the landing page: THE BOARD (team totals this week vs last week to the sa
 | `board/current` | The whole board document (the JSON file as is: team, recruiters, leadership, jos, revenue, notes, `generated_at`) | Radar, from Dean's Friday run: `ArtifactData set` with `file_path` |
 | `wip/{slug}-{weekOf}` | One WIP report: slug, week_of, title, received, url (https), note (one line) | Dean or Radar, the day it arrives |
 
-- Until `board/current` exists the page shows the same file embedded in the page (`#board-snapshot`), stamped with its Crelate pull time. When the database document is newer it wins. Re-embed the snapshot when republishing so the fallback is not stale.
+- The page reads `board/current` only. (Until 13 Nov a snapshot was embedded as a fallback; removed because recruiters can now open the page.)
 - Revenue: the Hub "Annual Billings" figure is shown as "not gated by Tally". Per-recruiter billed and percent to the $25k a quarter accelerator read "not synced" until the Rev Report tab is exported (credit = Eden Gross x Split % on rows naming the recruiter, by Start Date in the quarter; Tally to confirm that rule). Screen-share hides all revenue and masks JO names to their number.
 - JO names carry the client name (Kev's 23 Oct ask overrides the "no client names" line above for this table; Kev-only page).
 
@@ -53,10 +53,22 @@ Top of the landing page: THE BOARD (team totals this week vs last week to the sa
 
 `capabilities: {db: {rules: [{path: "", read: "admin", write: "admin"}]}}`. Only Kev and editors read; nobody else sees a row. Limit: rules key on path, so they cannot lock `money` or `coaching` inside `people/{slug}` while leaving the rest open. If Kev wants Nick to see scorecards but not money or coaching, move those two to `private/{slug}/...` and put an owner-only rule on `private`.
 
-## Friday scorecards strip (Dean, 13 Nov 2026)
+## Friday scorecards on the Round Table (Dean, 13 Nov 2026, late)
 
-Landing page, top of the folders section: the leadership-meeting order, by who finished their Friday scorecard first.
+One page, two views. The page asks `user.isOwner()` first:
+- **Kev (owner)**: the Round Table as before, plus the live leadership order and live card fill below.
+- **Anyone else** (recruiters, shared as Contributor): only the 7-tab Friday scorecard (same flow, copy and look as `scorecard-desk/template.html`). Nothing else of the Round Table is drawn or requested; the page reads and writes only the four paths below. Outside Claude (no viewer) the example Round Table shows.
+- The embedded Crelate snapshot (`#board-snapshot`) was removed: page source is readable by everyone the page is shared with and it carried billing figures. The board now comes only from `board/current`.
 
-- `queue/{weekOf}` (weekOf = Monday of the week, Pacific): `week_of`, `checked_at` (ISO), `order` [{`slug`, `name`, `init`, `stamped_at` (ISO)}], `waiting` [names]. Dean writes it; the page subscribes with `onSnapshot` and re-subscribes when the week turns. Missing doc reads "No scorecards in yet." Names and times only, so it stays visible in screen-share; no coaching or money.
-- **Refresh scorecards** button: calls the viewer's Claude Code Remote connector, `fire_trigger` with `trig_01PwR26dHGicgChmvN3URXQh` (Dean's scorecard check), on click only. Errors branch on code: reconnect (needs_reauth, server_not_connected), allow the connector (not_granted, not_in_manifest, consent/approval), otherwise "message Dean 'refresh scorecards'".
-- Publish capabilities now: `{db: {rules: [{path: "", read: "admin", write: "admin"}]}, mcp: {servers: [{server: "Claude Code Remote", tools: ["fire_trigger"]}]}}`.
+| Path | One document is | Writer |
+|---|---|---|
+| `scmeta/week` | weekOf (Monday YYYY-MM-DD), weekLabel, window, lockAt (ISO; read-only after) | Dean / Kev (admin) |
+| `scpre/{slug}` | dials, rps, days_at_15, resumes, ptcs, ftis, mps, window | Dean (admin), from the Friday prefill |
+| `sc/{uid}` | {person: slug, name, weeks: {weekOf: answers}}; answers exactly as the desk template stores them (wins, grew, prospect, cv[21], lived_out, nominee, wr[8], w[8], d[35], numbers_note, self_score, align, autopsy, next_week, wip, jos, stamp {init, at, edited}, updated, week_of) | The recruiter (whole-doc `set`, debounced) |
+| `cd/{uid}` | {weekOf: {burnout, need, resolve, updated}} candor | The recruiter; only Kev reads |
+
+- Identity: `uid = user.id()`. First visit: profile first name matched against Max, Evan, Noah, Andrew, Bridger, Nick; otherwise a one-time picker. `person` is then fixed (Kev fixes a wrong one by editing `sc/{uid}.person`).
+- Leadership order: Kev's view subscribes to `sc` and lists people with `weeks[weekOf].stamp`, by `stamp.at` ("1 · Evan · EM · 8:42 AM PT"); Waiting = roster minus stamped, "(started)" when they have answers. `queue/{weekOf}` and the Refresh button are retired (no `mcp` capability).
+- Live card fill: when a person's week is stamped, Kev's open page merges it into `people/{slug}/cards/{weekOf}` by `scorecard-desk/compile.py` rules (ported to JS): text fields with survey_src replacement, boxes only where the card has none, burnout from `cd` only if the card has none, never kev_score/coach_notes/needs/advice/pip/pip_reason; adds survey_compiled, survey_src, stamp. One write per card, only when the text or stamp changed. Runs only while Kev has the page open.
+- The card tab shows "From the scorecard" (finished time, initials, self score) and, outside screen-share, Kev-only candor in the coach box. Screen-share hides burnout, candor and coaching and drops the `cd` subscription.
+- Rules (published 13 Nov, contract 0.2.88): `[{path:"",read:"admin",write:"admin"},{path:"sc",read:"owner",write:"owner"},{path:"sc/{self}",read:"interact",write:"interact"},{path:"cd",read:"owner",write:"owner"},{path:"cd/{self}",read:"interact",write:"interact"},{path:"scmeta",read:"interact",write:"admin"},{path:"scpre",read:"interact",write:"admin"}]`, plus `user: {scopes: ["profile"]}`. Probed at `interact`: people, board, queue, cd read empty; sc/<other id> and scmeta writes refused; scmeta/week readable.
