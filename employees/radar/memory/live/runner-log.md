@@ -433,3 +433,4 @@
 2026-11-13 09:50 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; floor refreshed (64 writes pushed). Skipped: Notion Family ledger, crelate-tasks, CloudTalk phones, benches 8a, cockpit doc, Today taps (those connectors not attached to this run).
 - 2026-11-13 10:45 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. One ticket t-202611131750-jxsc (q) already working from a live session, left alone. Floor refresh (step 8) not run in this session.
 - 2026-11-13 11:50 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue: only t-202611131750-jxsc (q, working since 9:50 PT, under 2h; left alone). Floor refresh (step 8) done, 64 writes pushed. Skipped: Notion Family ledger, crelate-tasks, CloudTalk phones, benches 8a, cockpit doc, Today taps (connectors not attached to this run).
+- 2026-11-13 12:45 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Floor refresh (step 8) not run this hour: dump of agents/alerts/meta only.
