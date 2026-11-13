@@ -8,6 +8,10 @@ Tolerant: any missing file or field becomes an empty value and a warning.
 """
 import json, os, re, sys, datetime
 
+# One flag for the later partner edition: True renders only non-review JOs, hides review blocks,
+# the IDS pad and the timer, and adds the confidentiality footer. The internal room stays False.
+PARTNER = False
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 WARN = []
@@ -580,6 +584,19 @@ for dr in depth:
         for p in [x for x in dr["lanes"]["ptc"]["people"] if not x["stale"]][:3]:
             touch["ptc"].append({"name": p["name"], "client": dr["client"], "role": dr["role"], "note": "PTC"})
 
+# ---------------------------------------------------------------- JO deck (partner-safe)
+JOD = load("casey/jo-deck.json", default=[])
+if isinstance(JOD, dict):
+    JOD = JOD.get("jos", [])
+_ord = {"hot": 0, "active": 1, "new": 2}
+jo_deck = []
+for j in JOD:
+    if PARTNER and j.get("review"):
+        continue
+    jo_deck.append({k: j.get(k) for k in ("id", "title", "market", "client_blind", "sector", "must_haves", "sell", "priority", "eden_owner")}
+                   | {"review": bool(j.get("review")) and not PARTNER})
+jo_deck.sort(key=lambda j: _ord.get(j.get("priority"), 3))
+
 # ---------------------------------------------------------------- DATA
 DATA = {
     "meta": {"title": "Friday Pipeline Review", "date": "13 Nov 2026", "pulled": PULLED,
@@ -589,6 +606,7 @@ DATA = {
     "flow": flow, "team": team, "recs": recs, "jos": jos, "intv": intv, "mpp": mpp,
     "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "agents": agents,
     "together": together, "qc": qc, "decisions": decisions,
+    "partner": PARTNER, "jodeck": {"jos": jo_deck},
     "credits": credits if CR_ON else None, "ops": OPS or None, "travel": LEAD or None, "touch": touch, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
 }
 
@@ -627,6 +645,24 @@ for pat, what in [(r"\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b", "phone number"),
     if m:
         warn("%s found in output near %r" % (what, html[max(0, m.start() - 30):m.end() + 30]))
 
+def globe_uri():
+    """One big Eden globe, re-encoded at ~900px as grayscale+alpha, embedded once as a CSS variable."""
+    import base64, io
+    for p in (os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(HERE)))), "docs/brand/logos/eden-globe-black-600.png"),
+              "/home/user/Agent-Builder/docs/brand/logos/eden-globe-black-600.png"):
+        if os.path.exists(p):
+            try:
+                from PIL import Image
+                im = Image.open(p).convert("RGBA").resize((900, 900), Image.LANCZOS)
+                buf = io.BytesIO(); im.save(buf, "PNG", optimize=True)
+                return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+            except Exception as e:
+                warn("globe re-encode failed: %s" % e)
+    warn("globe png not found")
+    return ""
+
+
+html = html.replace("__GLOBE__", globe_uri())
 out = os.path.join(HERE, "review.html")
 with open(out, "w", encoding="utf-8") as f:
     f.write(html)
