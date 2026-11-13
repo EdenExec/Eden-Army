@@ -1,3 +1,53 @@
+# Cowork task: Stream Deck kit v6 (13 November 2026)
+
+## v6 run (13 Nov): Start key, Bible key, Music page, 4:45am Mando mode
+
+**Read first:** `WHATS-NEW-v6.md` and `morning/morning-button.md`. This is an update. The Eden, Zoom and Google Calendar profiles from 12 Nov stay as they are.
+
+1. **Back up.** Export every Stream Deck + profile into `exports/`, with `-before-13nov` added to each name.
+2. **Update the plugin.** Open `plugin/com.kdtw.edendeck.streamDeckPlugin` and replace the installed copy if asked. Confirm Eden Deck still shows its keys and dials.
+3. **Copy the clip.** Copy `morning/start-mando.mp3` to `~/Music/Stream Deck/`, making the folder if it isn't there.
+4. **Build the Start key** on a new **page 2** of the Eden profile. Page 1 is full, so do not replace any key there. Make it a Multi Action named "Start" with these steps in order:
+   1. Soundboard › Play Audio: `~/Music/Stream Deck/start-mando.mp3`, volume about 70%.
+   2. System › Website: https://claude.ai/artifact/BBgMLsVw8x9CtVy5XViBK6
+   3. Multi Action › Delay: 1 second.
+   4. System › Website: https://claude.ai/artifact/5SuFoioujKFV6KgX4dXi3G
+   5. System › Website: https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW
+   6. System › Website: https://claude.ai/artifact/4fueMmheVrnVz79KuDDMs2#carousel
+
+   Icon: `icons/key-start-288.png`. Leave the title blank.
+5. **Bible key** on Eden page 2, next to Start: System › Website, https://claude.ai/artifact/BBgMLsVw8x9CtVy5XViBK6. Icon: `icons/key-word-288.png`. Leave the title blank.
+5b. **Music profile (Kev, 13 Nov: "when we open Music we should have back, play/pause, forward and any other relevant buttons").** Create a new Stream Deck + profile named **Music**, set to switch automatically when the **Music** app is in front. Keys (built-in Stream Deck › Multimedia actions unless noted), titles blank:
+   - Top row: Back = Multimedia › Previous Track (`key-music-prev-288.png`); Play/Pause = Multimedia › Play/Pause (`key-music-playpause-288.png`); Next = Multimedia › Next Track (`key-music-next-288.png`); Now playing = System › Hotkey, Cmd+L, Music's "Go to Current Song" (`key-music-now-288.png`, TEST: if Cmd+L does nothing, use Shuffle instead, see below).
+   - Bottom row: Vol – = Multimedia › Volume Down (`key-music-voldown-288.png`); Vol + = Multimedia › Volume Up (`key-music-volup-288.png`); Mute = Multimedia › Mute (`key-music-mute-288.png`); Eden = Stream Deck › Switch Profile › Eden (`key-music-eden-288.png`).
+   - Dials: copy Eden's four dials so Volume stays on dial 4.
+   - Shuffle (optional, `key-music-shuffle-288.png`): Music has no built-in shortcut. If Kev wants it, add one in System Settings › Keyboard › Keyboard Shortcuts › App Shortcuts for Music (Kev clicks Allow / does the settings change himself), then point a System › Hotkey key at it. Do not change System Settings yourself.
+   - Test: open Music, minimise the Stream Deck window, confirm the deck flips to Music; press Play/Pause, Next, Back, the volume keys; switch to Chrome and confirm the deck goes back to Eden.
+6. **Mando profile.** Create a new Stream Deck + profile named **Mando**.
+   - Top-right key only: a copy of the Start multi-action. Every other key, the dials and the strip stay empty.
+   - Icon: `icons/key-start-288.png` for now. Kev will drop his own helmet image on it.
+   - Add one more step at the end of the Mando copy: Stream Deck › Switch Profile › Eden.
+7. **The Mando Morning applet.**
+   - Open `morning/mando-morning.applescript` in Script Editor.
+   - Save it as an Application named "Mando Morning" in /Applications, with "Stay open after run handler" ticked.
+   - In Stream Deck, open the Mando profile's settings and set it to switch automatically when **Mando Morning** is in front (Smart Profile / app assignment).
+8. **Stop and hand to Kev for these.** They need his password or a Terminal, so Kev does them himself:
+   - Wake at 4:44 on weekdays: `sudo pmset repeat wakeorpoweron MTWRF 04:44:00`
+   - Install the 4:45 job:
+     - `cp morning/com.kdtw.mando-morning.plist ~/Library/LaunchAgents/`
+     - `launchctl load ~/Library/LaunchAgents/com.kdtw.mando-morning.plist`
+   - Allow any macOS prompts: Automation, and Accessibility for Stream Deck or Mando Morning.
+9. **Test with Kev.**
+   - Run `open -a "Mando Morning"` in Terminal. The deck should switch to Mando, with only the top-right key showing.
+   - Press it. The clip should play, the four pages should open, and the deck should return to Eden.
+   - Then lock the screen and run the same command over SSH, or wait for a test time, to see whether Smart Profiles still switch on the lock screen.
+   - If they don't, use the fallback: make **Mando** the default profile, and keep the Switch Profile › Eden step at the end of its Start key. Kev decides.
+10. **Report.** Add a "v6 run" section to `report.md`: what worked, what didn't, and a screenshot of Eden page 2 and the Mando profile. Export the Eden, Mando and Music profiles to `exports/` with `-after-13nov` added to each name.
+
+Rules: same as below. Change only the Eden, Mando and Music profiles, the plugin and the applet. Never type a password, and never touch other profiles or apps.
+
+---
+
 # Cowork task: set up Kev's Stream Deck +
 
 Paste the block under "The task" into a new Cowork task, with this kit folder connected. Written by Q, 12 November 2026.
