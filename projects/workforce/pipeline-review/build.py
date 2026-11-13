@@ -740,7 +740,7 @@ for j in jo_deck:  # internal deck: tiles show the client only when it is a real
 
 # ---------------------------------------------------------------- DATA
 DATA = {
-    "meta": {"title": "Friday Pipeline Review", "date": "13 Nov 2026", "pulled": PULLED,
+    "meta": {"title": "WIP & PIPE Display", "date": "13 Nov 2026", "pulled": PULLED,
              "board_asof": ASOF, "partial_week": PARTIAL,
              "partial_label": "Week of %s is partial (Mon to Thu)" % datetime.date.fromisoformat(PARTIAL).strftime("%-d %b"),
              "round_table": "Round Table, 11am MT"},
