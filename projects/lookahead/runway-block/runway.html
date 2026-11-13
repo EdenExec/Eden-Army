@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Runway</title>
+<style>
+/* KDTW Group runway block. Cream and ink, brass only for "due" and "decide". No color carries meaning on its own: kind is told by shape, status by line. */
+:root {
+  --bg: #f4f0e7;
+  --paper: #fbf9f4;
+  --ink: #1d1b17;
+  --muted: #6c665b;
+  --faint: #b0a898;
+  --rule: #ddd5c6;
+  --stone: #e4dccd;
+  --hatch: #8f877a;
+  --rest: #ebe5d8;
+  --brass: #8a6a35;
+  --font: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --lane: 19px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151412; --paper: #1c1a17; --ink: #ebe5d8; --muted: #a39b8c; --faint: #59534a; --rule: #35312a;
+  --stone: #3a352d; --hatch: #8a8273; --rest: #23211d; --brass: #c4a46c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151412; --paper: #1c1a17; --ink: #ebe5d8; --muted: #a39b8c; --faint: #59534a; --rule: #35312a;
+  --stone: #3a352d; --hatch: #8a8273; --rest: #23211d; --brass: #c4a46c; color-scheme: dark }
+
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; font-variant-numeric: tabular-nums }
+.wrap { max-width: 1560px; margin: 0 auto; padding-block: 28px 24px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.label { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted) }
+.sheet { background: var(--paper); border: 1px solid var(--rule); border-radius: 4px; padding: 28px 32px 22px }
+
+/* header */
+header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 32px; padding-bottom: 16px; border-bottom: 1.5px solid var(--ink) }
+.brand { min-width: 0 }
+.brand .org { font-size: 11px; font-weight: 700; letter-spacing: .28em }
+.brand h1 { margin: 4px 0 0; font-size: 30px; font-weight: 700; font-style: italic; letter-spacing: -.01em; line-height: 1.1 }
+.brand .span { margin-top: 4px; color: var(--muted); font-size: 13px }
+.asof { text-align: right; min-width: 0 }
+.asof .d { font-size: 22px; font-weight: 700; line-height: 1.15 }
+.asof .by { color: var(--muted); font-size: 12.5px }
+
+/* legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-block: 12px 4px; font-size: 12px; color: var(--muted) }
+.legend > span { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap }
+.sw { display: inline-block; width: 26px; height: 12px; border-radius: 2px; flex: none; border: 1px solid transparent }
+
+/* marks and bars (shared by strip and month grid) */
+.bar { border-radius: 3px; border: 1px solid transparent; font-size: 11.5px; font-weight: 600; line-height: calc(var(--lane) - 4px); padding: 0 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; min-width: 0; color: var(--ink) }
+.bar.work, .sw.work { background: var(--paper); border-color: var(--ink) }
+.bar.family, .sw.family { background: var(--stone); border-color: var(--stone) }
+.bar.travel, .sw.travel { background: var(--paper) repeating-linear-gradient(135deg, var(--hatch) 0 1px, transparent 1px 5px); border-color: var(--ink) }
+.bar.travel { text-shadow: 0 0 2px var(--paper), 0 0 2px var(--paper), 0 0 3px var(--paper) }
+.bar.tent, .sw.tent { border-style: dashed; border-color: var(--muted); font-style: italic; font-weight: 500 }
+.bar.family.tent { background: transparent }
+.bar.cl { border-left-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0 }
+.bar.cr { border-right-width: 0; border-top-right-radius: 0; border-bottom-right-radius: 0 }
+
+.mk { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; min-width: 0; white-space: nowrap; color: var(--ink); line-height: calc(var(--lane) - 4px) }
+.mk > .t { overflow: hidden; text-overflow: ellipsis; min-width: 0 }
+.mk::before { content: ""; flex: none; display: block }
+.mk.work::before { width: 7px; height: 7px; border: 1.5px solid var(--ink) }
+.mk.family::before { width: 8px; height: 8px; border-radius: 50%; background: var(--muted) }
+.mk.travel::before { width: 9px; height: 9px; border: 1px solid var(--ink); background: repeating-linear-gradient(135deg, var(--hatch) 0 1px, transparent 1px 3px) }
+.mk.milestone::before { width: 7px; height: 7px; background: var(--ink); transform: rotate(45deg); margin: 0 1px }
+.mk.deadline { color: var(--brass); font-weight: 700 }
+.mk.deadline::before { width: 3px; height: 12px; background: var(--brass) }
+.mk.decide { color: var(--brass) }
+.mk.decide::before { width: 6px; height: 6px; border: 1.5px solid var(--brass); transform: rotate(45deg); margin: 0 1px }
+.mk.tent { font-style: italic; font-weight: 500; color: var(--muted) }
+.mk.tent.milestone::before, .mk.tent.family::before { background: transparent; border: 1.5px dashed var(--muted) }
+.mk.tent.work::before { border-style: dashed; border-color: var(--muted) }
+
+section { margin-top: 22px; min-width: 0 }
+section > h2 { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase }
+
+/* runway strip */
+.strip { position: relative; min-width: 0; overflow: hidden }
+.zones { position: relative; height: 22px }
+.zone { position: absolute; top: 0; height: 22px; border-left: 1.5px solid var(--ink); padding-left: 7px; font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; line-height: 22px }
+.zone .s { display: none }
+.zone.later { color: var(--muted); font-weight: 600 }
+.track { position: relative; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--ink) }
+.track .day { position: absolute; top: 0; bottom: 0 }
+.track .day.wk { border-left: 1px solid var(--rule) }
+.track .day.sab { background: var(--rest) }
+.track .day.fri { background: linear-gradient(90deg, transparent 72%, var(--rest) 72%) }
+.track .day.past { background: var(--bg) }
+.track .lbl { position: absolute; font-size: 11.5px; font-weight: 600; white-space: nowrap; line-height: calc(var(--lane) - 4px); padding-left: 5px }
+.track .lbl.tent { font-style: italic; font-weight: 500; color: var(--muted) }
+.track .hz { position: absolute; top: -23px; bottom: -1px; border-left: 1.5px solid var(--ink) }
+.track .today { position: absolute; top: 0; bottom: -6px; border-left: 2px solid var(--ink) }
+.track .item { position: absolute; height: calc(var(--lane) - 2px) }
+.axis { position: relative; height: 22px }
+.axis span { position: absolute; top: 5px; font-size: 10.5px; color: var(--muted); white-space: nowrap; padding-left: 4px }
+.axis span.now { color: var(--ink); font-weight: 700 }
+
+/* month blocks */
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 22px 32px; align-items: start }
+.month { min-width: 0 }
+.month h3 { margin: 0 0 6px; font-size: 17px; font-weight: 700; display: flex; align-items: baseline; justify-content: space-between; gap: 8px }
+.month h3 small { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .04em }
+.mgrid { display: grid; grid-template-columns: 24px repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--ink) }
+.dow { font-size: 10px; font-weight: 600; letter-spacing: .1em; color: var(--muted); padding: 5px 0 4px 6px; border-bottom: 1px solid var(--rule) }
+.dow.rest { color: var(--ink) }
+.mrow { display: grid; grid-template-columns: 24px repeat(7, minmax(0, 1fr)); grid-auto-rows: var(--lane); position: relative }
+.mrow > .bg { grid-row: 1 / -1; border-left: 1px solid var(--rule); border-bottom: 1px solid var(--rule); min-width: 0 }
+.mrow > .bg:last-of-type { border-right: 1px solid var(--rule) }
+.mrow > .bg.sab { background: var(--rest) }
+.mrow > .bg.fri { background: linear-gradient(90deg, transparent 72%, var(--rest) 72%) }
+.mrow > .bg.void { background: transparent; border-left-color: transparent; border-bottom-color: transparent }
+.mrow > .bg.void + .bg:not(.void) { border-left-color: var(--rule) }
+.mrow > .bg.past { background: var(--bg) }
+.num.past { color: var(--muted); font-weight: 500 }
+.mrow > .bg.hb { border-bottom: 2px solid var(--ink) }
+.mrow > .bg.ht { border-top: 2px solid var(--ink) }
+.mrow > .bg.hr { border-right: 2px solid var(--ink) }
+.gut { grid-row: 1 / -1; grid-column: 1; font-size: 10px; color: var(--muted); padding-top: 3px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding-bottom: 3px }
+.gut b { font-size: 9.5px; color: var(--ink); letter-spacing: .04em }
+.num { grid-row: 1; font-size: 11px; font-weight: 600; padding: 2px 0 0 6px; color: var(--ink); z-index: 1; line-height: 15px; white-space: nowrap }
+.num.off { color: var(--faint); font-weight: 500 }
+.num.today span { background: var(--ink); color: var(--paper); border-radius: 2px; padding: 0 4px; margin-left: -4px }
+.num em { font-style: normal; font-weight: 500; color: var(--muted); font-size: 10px }
+.mrow > .bar, .mrow > .mk { z-index: 2; margin: 1px 2px; align-self: center }
+.mrow > .mk { padding-left: 4px }
+
+/* lists */
+.lists { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px }
+.col { min-width: 0 }
+.col h3 { margin: 0; font-size: 15px; font-weight: 700; padding-bottom: 2px }
+.col .rng { font-size: 11.5px; color: var(--muted); padding-bottom: 6px; border-bottom: 1px solid var(--ink) }
+.col h3.sub { margin-top: 16px }
+.li { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--rule) }
+.li .when { font-size: 12px; font-weight: 600; line-height: 1.35 }
+.li .what { min-width: 0 }
+.li .l1 { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; min-width: 0 }
+.li .l1 .mk { font-size: 13px; line-height: 1.35 }
+.li .who { font-size: 11.5px; color: var(--muted); white-space: nowrap; flex: none }
+.li .l2 { font-size: 12px; color: var(--muted); line-height: 1.35; margin-top: 1px; overflow-wrap: anywhere }
+.tag { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; border: 1px dashed var(--muted); color: var(--muted); border-radius: 2px; padding: 0 4px; margin-left: 4px; font-style: normal; vertical-align: 1px }
+.empty { color: var(--muted); font-size: 12.5px; padding: 8px 0 }
+
+/* decisions */
+.dec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 0 32px; border-top: 1px solid var(--ink) }
+.dec > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 8px 0; border-bottom: 1px solid var(--rule); min-width: 0 }
+.dec .mk { font-size: 13px; grid-row: span 2; white-space: normal; line-height: 1.35 }
+.dec .by { font-size: 12px; font-weight: 600; text-align: right; white-space: nowrap }
+.dec .left { font-size: 11.5px; color: var(--muted); text-align: right; white-space: nowrap }
+.dec .left.late { color: var(--brass); font-weight: 700 }
+
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; margin-top: 22px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--muted) }
+footer b { color: var(--ink); letter-spacing: .26em; font-size: 10.5px }
+.err { padding: 20px; border: 1.5px solid var(--brass); color: var(--ink) }
+
+@media (max-width: 760px) {
+  .wrap { padding-block: 14px 14px }
+  .sheet { padding: 18px 14px 16px; border-radius: 3px }
+  .brand h1 { font-size: 25px }
+  .asof { text-align: left }
+  .asof .d { font-size: 18px }
+  .lists { grid-template-columns: minmax(0, 1fr) }
+  .col + .col { margin-top: 18px }
+  .zone .l { display: none }
+  .zone .s { display: inline }
+  .li { grid-template-columns: 92px minmax(0, 1fr) }
+  .bar, .mk, .track .lbl { font-size: 10.5px }
+  .legend { gap: 6px 16px }
+}
+
+@page { size: letter landscape; margin: 0.32in }
+@media print {
+  :root { --lane: 15px; color-scheme: light !important;
+    --bg: #ffffff; --paper: #ffffff; --ink: #000000; --muted: #555049; --faint: #b3ab9c; --rule: #d6cfc1; --stone: #e2dacb; --hatch: #8a8273; --rest: #ece6d9; --brass: #7d5f2e }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact }
+  body { font-size: 10px; background: #fff }
+  .wrap { max-width: none; padding: 0 }
+  .sheet { border: 0; padding: 0 }
+  header.top { padding-bottom: 6px }
+  .brand h1 { font-size: 20px; margin-top: 1px }
+  .brand .org { font-size: 8.5px }
+  .brand .span, .asof .by { font-size: 9.5px; margin-top: 0 }
+  .asof .d { font-size: 15px }
+  .legend { padding-block: 5px 0; font-size: 8.5px; gap: 4px 14px }
+  .sw { width: 18px; height: 9px }
+  section { margin-top: 9px }
+  .month, .li, .dec > div { break-inside: avoid }
+  section > h2 { font-size: 8px; margin-bottom: 4px }
+  .bar, .mk, .track .lbl { font-size: 8.5px }
+  .zones, .zone { height: 15px; line-height: 15px; font-size: 7.5px }
+  .track .hz { top: -16px }
+  .axis { height: 14px }
+  .axis span { font-size: 7.5px; top: 2px }
+  .months { grid-template-columns: repeat(var(--nblocks, 2), minmax(0, 1fr)); gap: 10px 20px }
+  .month h3 { font-size: 12px; margin-bottom: 2px }
+  .dow { font-size: 7.5px; padding: 2px 0 2px 4px }
+  .num { font-size: 8.5px; line-height: 12px; padding: 1px 0 0 4px }
+  .gut { font-size: 7.5px }
+  .gut b { font-size: 7px }
+  .lists { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 18px }
+  .col + .col { margin-top: 0 }
+  .col h3 { font-size: 10.5px }
+  .col h3.sub { margin-top: 6px }
+  .col .rng { font-size: 8px; padding-bottom: 2px }
+  .li { grid-template-columns: 76px minmax(0, 1fr); gap: 6px; padding: 2.5px 0 }
+  .li .when, .li .who, .li .l2 { font-size: 8px; line-height: 1.25 }
+  .li .l1 .mk { font-size: 9px; line-height: 1.25 }
+  .tag { font-size: 6.5px }
+  .dec > div { padding: 3px 0 }
+  .dec .mk { font-size: 9px }
+  .dec .by, .dec .left { font-size: 8px }
+  footer { margin-top: 8px; padding-top: 4px; font-size: 7.5px }
+  footer b { font-size: 7.5px }
+}
+</style>
+</head>
+<body>
+<!-- Hawk replaces only the contents of this tag each week. Schema: design-direction.md -->
+<script type="application/json" id="runway-data">
+{
+  "asOf": "2026-11-13",
+  "owner": "Hawk, for Jenny",
+  "weeks": 8,
+  "startSunday": "2026-11-08",
+  "horizons": { "w2": "2026-11-21", "w4": "2026-12-05", "w6": "2026-12-19" },
+  "events": [
+    { "id": "pipeline-review", "title": "Pipeline review", "start": "2026-11-16", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Quarter numbers, 90 minutes", "source": "calendar" },
+    { "id": "client-visit", "title": "Client visit", "start": "2026-11-17", "end": "2026-11-18", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Eden client, on site, two days", "source": "calendar" },
+    { "id": "brief-signoff", "title": "Brief sign-off", "start": "2026-11-19", "kind": "deadline", "status": "confirmed", "who": "Kev", "note": "Home brief back to the architect", "source": "page" },
+    { "id": "thanksgiving-trip", "title": "Thanksgiving trip", "start": "2026-11-24", "end": "2026-11-29", "kind": "travel", "status": "confirmed", "who": "Family", "note": "Fly Tue morning, home Sun", "source": "calendar" },
+    { "id": "thanksgiving", "title": "Thanksgiving", "start": "2026-11-26", "kind": "family", "status": "confirmed", "who": "Family", "note": "Dinner with family", "source": "page" },
+    { "id": "q1-plan", "title": "Q1 plan draft", "start": "2026-11-30", "kind": "milestone", "status": "confirmed", "who": "Kev", "note": "First draft to the team", "source": "call" },
+    { "id": "site-trip", "title": "Site trip", "start": "2026-12-03", "end": "2026-12-04", "kind": "travel", "status": "confirmed", "who": "Kev & Ally", "note": "Lot walk with the builder, back Fri noon", "source": "calendar" },
+    { "id": "job-fair", "title": "Job fair", "start": "2026-12-08", "kind": "work", "status": "tentative", "who": "Team", "note": "Booth not yet confirmed", "source": "call" },
+    { "id": "school-concert", "title": "School concert", "start": "2026-12-10", "kind": "family", "status": "confirmed", "who": "Ally", "note": "Evening", "source": "page" },
+    { "id": "plan-review", "title": "House plan review", "start": "2026-12-14", "kind": "milestone", "status": "confirmed", "who": "Kev & Ally", "note": "Schematic set, decide the layout", "source": "page" },
+    { "id": "year-end", "title": "Year-end plans due", "start": "2026-12-17", "kind": "deadline", "status": "confirmed", "who": "Kev", "source": "call" },
+    { "id": "family-trip", "title": "Family trip", "start": "2026-12-21", "end": "2026-12-30", "kind": "travel", "status": "tentative", "who": "Family", "note": "Hold until the go or no-go", "source": "call" },
+    { "id": "christmas", "title": "Christmas", "start": "2026-12-25", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "new-year", "title": "New Year's Day", "start": "2027-01-01", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" }
+  ],
+  "openDecisions": [
+    { "title": "Site trip: fly or drive", "decideBy": "2026-11-23" },
+    { "title": "Job fair: send the team or skip", "decideBy": "2026-11-25" },
+    { "title": "Family trip: go or hold", "decideBy": "2026-12-01" }
+  ]
+}
+</script>
+
+<div class="wrap"><div class="sheet" id="sheet"></div></div>
+
+<script>
+(function () {
+  "use strict";
+  var DAY = 864e5;
+  var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var KINDS = { work: 1, family: 1, travel: 1, milestone: 1, deadline: 1 };
+  var sheet = document.getElementById("sheet");
+
+  function dn(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || "").trim()); return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) / DAY : NaN; }
+  function D(n) { return new Date(n * DAY); }
+  function wd(n) { return D(n).getUTCDay(); } // Sunday = 0: weeks run Sunday to Saturday
+  function md(n) { return D(n).getUTCDate(); }
+  function mo(n) { return D(n).getUTCMonth(); }
+  function yr(n) { return D(n).getUTCFullYear(); }
+  function mkey(n) { return yr(n) * 12 + mo(n); }
+  function fmt(n) { return DOW[wd(n)] + " " + md(n) + " " + MON[mo(n)]; }
+  function fmtRange(a, b) {
+    if (a === b) return fmt(a);
+    if (mo(a) === mo(b)) return DOW[wd(a)] + " " + md(a) + " to " + DOW[wd(b)] + " " + md(b) + " " + MON[mo(b)];
+    return fmt(a) + " to " + fmt(b);
+  }
+  function h(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function add(p) { for (var i = 1; i < arguments.length; i++) if (arguments[i]) p.appendChild(arguments[i]); return p; }
+
+  var data;
+  try { data = JSON.parse(document.getElementById("runway-data").textContent); }
+  catch (e) { sheet.appendChild(h("div", "err", "The runway data could not be read: " + e.message)); return; }
+
+  // ---- normalise ----
+  var weeks = Math.min(8, Math.max(6, parseInt(data.weeks, 10) || 8));
+  // startSunday; startMonday is a legacy alias, used only if it happens to be a Sunday
+  var start = dn(data.startSunday);
+  if (isNaN(start)) { var legacy = dn(data.startMonday); if (!isNaN(legacy) && D(legacy).getUTCDay() === 0) start = legacy; }
+  if (isNaN(start)) start = dn(data.asOf);
+  start -= wd(start);
+  var end = start + weeks * 7 - 1;
+  var asOf = dn(data.asOf); if (isNaN(asOf)) asOf = start;
+  var hz = data.horizons || {};
+  var H = [dn(hz.w2), dn(hz.w4), dn(hz.w6)];
+  [13, 27, 41].forEach(function (d, i) { if (isNaN(H[i])) H[i] = start + d; });
+  H.push(end);
+  var HL = ["2W", "4W", "6W", weeks + "W"];
+  var ZONES = [
+    { l: "Next 2 weeks", s: "1-2", a: start, b: H[0] },
+    { l: "Weeks 3 to 4", s: "3-4", a: H[0] + 1, b: H[1] },
+    { l: "Weeks 5 to 6", s: "5-6", a: H[1] + 1, b: H[2] },
+    { l: weeks > 7 ? "Weeks 7 to 8" : "Week 7", s: weeks > 7 ? "7-8" : "7", a: H[2] + 1, b: end }
+  ].filter(function (z) { return z.b >= z.a; });
+  function zoneOf(n) { for (var i = 0; i < ZONES.length; i++) if (n <= ZONES[i].b) return i; return ZONES.length - 1; }
+
+  var events = (data.events || []).map(function (e, i) {
+    var s = dn(e.start), t = dn(e.end); if (isNaN(t) || t < s) t = s;
+    return { id: e.id || "e" + i, title: String(e.title || "Untitled"), s: s, e: t,
+      kind: KINDS[e.kind] ? e.kind : "work", tent: e.status === "tentative",
+      who: e.who || "", note: e.note || "", source: e.source || "" };
+  }).filter(function (e) { return !isNaN(e.s) && e.e >= start && e.s <= end; })
+    .sort(function (a, b) { return a.s - b.s || (b.e - b.s) - (a.e - a.s); });
+  var decisions = (data.openDecisions || []).map(function (d) { return { title: String(d.title || ""), by: dn(d.decideBy) }; })
+    .filter(function (d) { return d.title; }).sort(function (a, b) { return (a.by || 1e9) - (b.by || 1e9); });
+  var marks = events.concat(decisions.filter(function (d) { return d.by >= start && d.by <= end; }).map(function (d) {
+    return { title: "Decide: " + d.title.split(":")[0], s: d.by, e: d.by, kind: "decide", tent: false };
+  }));
+
+  // ---- text measuring (for label room) ----
+  var ctx = document.createElement("canvas").getContext("2d");
+  function textW(t, px, weight) { ctx.font = (weight || 600) + " " + px + "px " + getComputedStyle(document.body).fontFamily; return ctx.measureText(t).width; }
+  function lanes(items) { // items: {a, b} in any unit; returns lane count, sets it.lane
+    var ends = [];
+    items.forEach(function (it) {
+      for (var l = 0; l <= ends.length; l++) if (l === ends.length || ends[l] < it.a) { ends[l] = it.b; it.lane = l; break; }
+    });
+    return ends.length;
+  }
+  function itemEl(ev, clipL, clipR) {
+    var multi = ev.e > ev.s && ev.kind !== "decide" && ev.kind !== "milestone" && ev.kind !== "deadline";
+    var el;
+    if (multi) { el = h("div", "bar " + ev.kind + (ev.tent ? " tent" : "") + (clipL ? " cl" : "") + (clipR ? " cr" : ""), ev.title + (ev.tent ? " ?" : "")); }
+    else { el = h("div", "mk " + ev.kind + (ev.tent ? " tent" : "")); el.appendChild(h("span", "t", ev.title + (ev.tent ? " ?" : ""))); }
+    el.title = ev.title + ", " + fmtRange(ev.s, ev.e) + (ev.tent ? " (tentative)" : "");
+    return { el: el, multi: multi };
+  }
+
+  // ---- header ----
+  function renderHeader() {
+    var top = h("header", "top");
+    var b = add(h("div", "brand"), h("div", "org", "KDTW GROUP"), h("h1", null, "Runway"),
+      h("div", "span", weeks + " weeks, " + fmt(start) + " to " + fmt(end)));
+    var a = add(h("div", "asof"), h("div", "label", "As of"), h("div", "d", fmt(asOf) + " " + yr(asOf)),
+      h("div", "by", data.owner ? "Kept by " + data.owner : ""));
+    add(top, b, a);
+    var lg = h("div", "legend");
+    function sw(cls, t) { var s = h("span"); s.appendChild(h("i", "sw " + cls)); s.appendChild(document.createTextNode(t)); return s; }
+    function mk(cls, t) { var s = h("span"); var m = h("i", "mk " + cls); m.appendChild(h("span", "t", t)); s.appendChild(m); return s; }
+    add(lg, sw("work", "Work"), sw("family", "Family"), sw("travel", "Travel"),
+      mk("milestone", "Milestone"), mk("deadline", "Deadline"), mk("decide", "Decide by"),
+      sw("work tent", "Tentative: dashed, with ?"),
+      sw("rest", "Sabbath, Fri sunset to Sat sunset"));
+    lg.lastChild.firstChild.style.background = "var(--rest)";
+    return [top, lg];
+  }
+
+  // ---- runway strip ----
+  var stripSec, monthsSec;
+  function renderStrip() {
+    var sec = h("section"); sec.appendChild(h("h2", null, "The runway at a glance"));
+    var wrap = h("div", "strip"); sec.appendChild(wrap);
+    var span = end - start + 1; function pct(n) { return ((n - start) / span * 100) + "%"; }
+    var zones = h("div", "zones");
+    ZONES.forEach(function (z, i) {
+      var e = h("div", "zone" + (i >= 2 ? " later" : "")); e.style.left = pct(z.a); e.style.width = ((z.b - z.a + 1) / span * 100) + "%";
+      add(e, h("span", "l", z.l), h("span", "s", z.s)); zones.appendChild(e);
+    });
+    var track = h("div", "track");
+    var axis = h("div", "axis");
+    for (var n = start; n <= end; n++) {
+      var c = h("div", "day" + (wd(n) === 0 ? " wk" : "") + (wd(n) === 5 ? " fri" : "") + (wd(n) === 6 ? " sab" : "") + (n < asOf ? " past" : ""));
+      c.style.left = pct(n); c.style.width = (100 / span) + "%"; track.appendChild(c);
+      if (wd(n) === 0) { var a = h("span", null, md(n) + " " + MON[mo(n)]); a.style.left = pct(n); axis.appendChild(a); }
+    }
+    H.slice(0, 3).forEach(function (x) { if (x < end) { var l = h("div", "hz"); l.style.left = pct(x + 1); track.appendChild(l); } });
+    if (asOf >= start && asOf <= end) { var t = h("div", "today"); t.style.left = pct(asOf); track.appendChild(t); }
+    add(wrap, zones, track, axis);
+    // items: trips, milestones, deadlines and anything longer than a day
+    sec._layout = function () {
+      var W = track.clientWidth || 1000, px = W / span, fs = W < 600 ? 10.5 : 11.5;
+      function P(x) { return (x / W * 100) + "%"; } // percentages, so print reflow keeps bars on their dates
+      Array.prototype.slice.call(track.querySelectorAll(".item, .lbl")).forEach(function (x) { x.remove(); });
+      var its = events.filter(function (e) { return e.kind === "travel" || e.kind === "milestone" || e.kind === "deadline" || e.e > e.s; })
+        .map(function (e) {
+          var s = Math.max(e.s, start), t = Math.min(e.e, end), x0 = (s - start) * px, x1 = (t - start + 1) * px;
+          var r = itemEl(e, e.s < start, e.e > end), lw = textW(r.el.textContent, fs) + (r.multi ? 14 : 20);
+          var fits = !r.multi || lw <= x1 - x0;
+          var flip = r.multi ? (!fits && x1 + lw > W) : x0 + lw > W; // near the right edge: label goes to the left
+          var a = r.multi ? (fits ? x0 : flip ? x0 - lw : x0) : (flip ? x1 - lw : x0);
+          var b = r.multi ? (fits || flip ? x1 : x1 + lw) + 3 : (flip ? x1 : x0 + lw) + 4;
+          return { ev: e, r: r, x0: x0, x1: x1, lw: lw, flip: flip, a: a, b: b, w: r.multi ? x1 - x0 : lw };
+        });
+      var nl = Math.max(2, lanes(its));
+      track.style.height = "calc(" + nl + " * var(--lane) + 6px)";
+      its.forEach(function (it) {
+        var el = it.r.el; el.classList.add("item");
+        el.style.left = P(it.r.multi ? it.x0 : it.flip ? it.x1 - it.lw - 1 : it.x0 + 1);
+        if (it.flip && !it.r.multi) { el.style.flexDirection = "row-reverse"; el.style.justifyContent = "flex-start"; }
+        el.style.width = it.r.multi ? P(Math.max(4, it.w - 1)) : it.lw + "px";
+        el.style.top = "calc(" + it.lane + " * var(--lane) + 3px)";
+        track.appendChild(el);
+        if (it.r.multi && it.lw > it.w) { // label does not fit inside: put it just after the bar
+          var lb = h("div", "lbl" + (it.ev.tent ? " tent" : ""), el.textContent); el.textContent = "";
+          if (it.flip) { lb.style.left = P(it.x0 - it.lw); lb.style.width = it.lw + "px"; lb.style.textAlign = "right"; lb.style.paddingRight = "5px"; }
+          else lb.style.left = P(it.x0 + it.w);
+          lb.style.top = "calc(" + it.lane + " * var(--lane) + 3px)";
+          track.appendChild(lb);
+        }
+      });
+    };
+    return sec;
+  }
+
+  // ---- month blocks ----
+  function blocksPlan() {
+    var counts = {}, order = [];
+    for (var n = start; n <= end; n++) { var k = mkey(n); if (!(k in counts)) { counts[k] = 0; order.push(k); } counts[k]++; }
+    var main = order.filter(function (k) { return counts[k] >= 7; });
+    if (!main.length) main = [order[0]];
+    var owner = {}; // month key -> block month key
+    order.forEach(function (k) { owner[k] = main.indexOf(k) >= 0 ? k : (k < main[0] ? main[0] : main[main.length - 1]); });
+    return main.map(function (k) {
+      var days = [];
+      for (var n = start; n <= end; n++) if (owner[mkey(n)] === k) days.push(n);
+      return { k: k, lo: days[0], hi: days[days.length - 1] };
+    });
+  }
+  function renderMonths(cellPx) {
+    var sec = h("section"); sec.appendChild(h("h2", null, "Month by month"));
+    var grid = h("div", "months"); sec.appendChild(grid);
+    var plan = blocksPlan();
+    document.documentElement.style.setProperty("--nblocks", plan.length);
+    var fs = cellPx < 60 ? 10.5 : 11.5;
+    plan.forEach(function (b) {
+      var m = h("div", "month");
+      var title = h("h3", null, MONTH[b.k % 12] + " " + Math.floor(b.k / 12));
+      title.appendChild(h("small", null, fmt(b.lo).replace(/^\w+ /, "") + " to " + fmt(b.hi).replace(/^\w+ /, "")));
+      m.appendChild(title);
+      var hd = h("div", "mgrid"); hd.appendChild(h("div", "dow", ""));
+      ["S", "M", "T", "W", "T", "F", "S"].forEach(function (d, i) { hd.appendChild(h("div", "dow" + (i === 6 ? " rest" : ""), d)); });
+      m.appendChild(hd);
+      for (var r0 = b.lo - wd(b.lo); r0 <= b.hi; r0 += 7) {
+        var row = h("div", "mrow");
+        var lo = Math.max(r0, b.lo), hi = Math.min(r0 + 6, b.hi);
+        // lanes for this row
+        var its = marks.filter(function (e) { return e.e >= lo && e.s <= hi; }).map(function (e) {
+          var s = Math.max(e.s, lo), t = Math.min(e.e, hi), r = itemEl(e, e.s < lo, e.e > hi);
+          var c0 = s - r0, c1 = t - r0;
+          if (!r.multi) { var need = Math.ceil((textW(r.el.textContent, fs) + 24) / Math.max(20, cellPx)); c1 = Math.min(6, c0 + need - 1); }
+          return { r: r, c0: c0, cv: t - r0, a: c0, b: c1 };
+        });
+        its.sort(function (x, y) { return x.a - y.a || (y.b - y.a) - (x.b - x.a); });
+        var nl = Math.max(2, lanes(its));
+        row.style.gridTemplateRows = "repeat(" + (nl + 1) + ", var(--lane)) 3px";
+        // gutter
+        var wk = Math.floor((r0 - start) / 7) + 1, gut = h("div", "gut");
+        gut.appendChild(h("span", null, "W" + wk));
+        // background cells and numbers
+        var hzHere = -1;
+        H.forEach(function (x, i) { if (x >= r0 && x <= r0 + 6 && x >= lo && x <= hi) hzHere = i; });
+        for (var c = 0; c < 7; c++) {
+          var n = r0 + c, shown = n >= lo && n <= hi;
+          var bg = h("div", "bg" + (shown ? "" : " void") + (shown && wd(n) === 5 ? " fri" : "") + (shown && wd(n) === 6 ? " sab" : "") + (shown && n < asOf ? " past" : ""));
+          if (shown && hzHere >= 0) { var x = H[hzHere]; bg.classList.add(n <= x ? "hb" : "ht"); if (n === x && c < 6) bg.classList.add("hr"); }
+          bg.style.gridColumn = (c + 2);
+          row.appendChild(bg);
+          if (shown) {
+            var num = h("div", "num" + (n === asOf ? " today" : "") + (n < asOf ? " past" : ""));
+            var s = h("span", null, String(md(n))); num.appendChild(s);
+            if (mkey(n) !== b.k || (md(n) === 1 && n !== b.lo)) num.appendChild(h("em", null, " " + MON[mo(n)]));
+            num.style.gridColumn = (c + 2); row.appendChild(num);
+          }
+        }
+        if (hzHere >= 0) gut.appendChild(h("b", null, HL[hzHere]));
+        row.insertBefore(gut, row.firstChild);
+        its.forEach(function (it) {
+          var el = it.r.el, cEnd = it.r.multi ? it.cv : it.b;
+          el.style.gridColumn = (it.c0 + 2) + " / " + (cEnd + 3);
+          el.style.gridRow = String(it.lane + 2);
+          row.appendChild(el);
+        });
+        m.appendChild(row);
+      }
+      grid.appendChild(m);
+    });
+    return sec;
+  }
+
+  // ---- lists ----
+  function renderLists() {
+    var sec = h("section"); sec.appendChild(h("h2", null, "In date order"));
+    var lists = h("div", "lists"); sec.appendChild(lists);
+    var cols = [h("div", "col"), h("div", "col"), h("div", "col")];
+    cols.forEach(function (c) { lists.appendChild(c); });
+    var live = events.filter(function (e) { return e.e >= asOf; });
+    ZONES.forEach(function (z, i) {
+      var col = cols[Math.min(i, 2)];
+      col.appendChild(h("h3", i === 3 ? "sub" : null, i === 2 && ZONES.length > 3 ? z.l : z.l));
+      col.appendChild(h("div", "rng", fmtRange(Math.max(z.a, i === 0 ? Math.min(asOf, z.b) : z.a), z.b)));
+      var inz = live.filter(function (e) { return zoneOf(Math.max(e.s, asOf)) === i; });
+      if (!inz.length) col.appendChild(h("div", "empty", "Nothing on the runway yet."));
+      inz.forEach(function (e) {
+        var li = h("div", "li");
+        li.appendChild(h("div", "when", fmtRange(e.s, e.e)));
+        var what = h("div", "what"), l1 = h("div", "l1");
+        var mk = h("span", "mk " + e.kind + (e.tent ? " tent" : "")); mk.appendChild(h("span", "t", e.title));
+        if (e.tent) mk.appendChild(h("span", "tag", "Tentative"));
+        add(l1, mk, h("span", "who", e.who));
+        what.appendChild(l1);
+        var bits = [];
+        if (e.note) bits.push(/[.!?]$/.test(e.note) ? e.note : e.note + ".");
+        if (e.source && e.source !== "calendar") bits.push(e.source === "call" ? "From a call, not on the calendar." : "Added on the Look Ahead page.");
+        if (bits.length) what.appendChild(h("div", "l2", bits.join(" ")));
+        li.appendChild(what); col.appendChild(li);
+      });
+    });
+    return sec;
+  }
+
+  // ---- decisions ----
+  function renderDecisions() {
+    var sec = h("section"); sec.appendChild(h("h2", null, "Open decisions"));
+    var box = h("div", "dec"); sec.appendChild(box);
+    if (!decisions.length) box.appendChild(h("div", "empty", "No open decisions."));
+    decisions.forEach(function (d) {
+      var row = h("div"), mk = h("span", "mk decide"); mk.appendChild(h("span", "t", d.title));
+      var left = isNaN(d.by) ? "" : d.by - asOf;
+      add(row, mk, h("span", "by", isNaN(d.by) ? "No date yet" : "Decide by " + fmt(d.by)),
+        h("span", "left" + (left !== "" && left < 0 ? " late" : ""), left === "" ? "" : left < 0 ? "Overdue " + (-left) + (left === -1 ? " day" : " days") : left === 0 ? "Today" : "In " + left + (left === 1 ? " day" : " days")));
+      box.appendChild(row);
+    });
+    return sec;
+  }
+
+  function cellWidth() { var c = sheet.querySelector(".mrow > .bg:not(.void)"); return c ? c.getBoundingClientRect().width : 0; }
+  function render() {
+    sheet.textContent = "";
+    renderHeader().forEach(function (e) { sheet.appendChild(e); });
+    stripSec = renderStrip(); sheet.appendChild(stripSec);
+    monthsSec = renderMonths(70); sheet.appendChild(monthsSec);
+    var cw = cellWidth();
+    if (cw && Math.abs(cw - 70) > 2) { var again = renderMonths(cw); sheet.replaceChild(again, monthsSec); monthsSec = again; }
+    sheet.appendChild(renderLists());
+    sheet.appendChild(renderDecisions());
+    var f = h("footer"); add(f, h("b", null, "KDTW GROUP"), h("span", null, "Runway kept by Hawk. Sources: calendar, calls and the Look Ahead page. Brass means it needs a decision or is due."));
+    sheet.appendChild(f);
+    stripSec._layout();
+    document.documentElement.setAttribute("data-rendered", "1");
+  }
+  function relayout() {
+    sheet.style.zoom = "";
+    var cw = cellWidth(); stripSec._layout();
+    var again = renderMonths(cw || 70); sheet.replaceChild(again, monthsSec); monthsSec = again;
+    fitPrint();
+  }
+  // In print, shrink the whole sheet until it fits one US Letter landscape page (10.36 x 7.86 in of content).
+  function fitPrint() {
+    if (!window.matchMedia || !window.matchMedia("print").matches) { sheet.style.zoom = ""; return; }
+    var room = 7.7 * 96, hgt = sheet.getBoundingClientRect().height;
+    sheet.style.zoom = hgt > room ? String(Math.floor(room / hgt * 100) / 100) : "";
+  }
+  render();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(relayout, 120); });
+  if (window.matchMedia) { var mq = window.matchMedia("print"); if (mq.addEventListener) mq.addEventListener("change", relayout); }
+  window.addEventListener("beforeprint", relayout);
+  window.__runwayRelayout = relayout;
+})();
+</script>
+</body>
+</html>

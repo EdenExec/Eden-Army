@@ -1,0 +1,28 @@
+{
+  "asOf": "2026-11-13",
+  "owner": "Hawk, for Jenny",
+  "weeks": 8,
+  "startSunday": "2026-11-08",
+  "horizons": { "w2": "2026-11-21", "w4": "2026-12-05", "w6": "2026-12-19" },
+  "events": [
+    { "id": "pipeline-review", "title": "Pipeline review", "start": "2026-11-16", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Quarter numbers, 90 minutes", "source": "calendar" },
+    { "id": "client-visit", "title": "Client visit", "start": "2026-11-17", "end": "2026-11-18", "kind": "work", "status": "confirmed", "who": "Kev", "note": "Eden client, on site, two days", "source": "calendar" },
+    { "id": "brief-signoff", "title": "Brief sign-off", "start": "2026-11-19", "kind": "deadline", "status": "confirmed", "who": "Kev", "note": "Home brief back to the architect", "source": "page" },
+    { "id": "thanksgiving-trip", "title": "Thanksgiving trip", "start": "2026-11-24", "end": "2026-11-29", "kind": "travel", "status": "confirmed", "who": "Family", "note": "Fly Tue morning, home Sun", "source": "calendar" },
+    { "id": "thanksgiving", "title": "Thanksgiving", "start": "2026-11-26", "kind": "family", "status": "confirmed", "who": "Family", "note": "Dinner with family", "source": "page" },
+    { "id": "q1-plan", "title": "Q1 plan draft", "start": "2026-11-30", "kind": "milestone", "status": "confirmed", "who": "Kev", "note": "First draft to the team", "source": "call" },
+    { "id": "site-trip", "title": "Site trip", "start": "2026-12-03", "end": "2026-12-04", "kind": "travel", "status": "confirmed", "who": "Kev & Ally", "note": "Lot walk with the builder, back Fri noon", "source": "calendar" },
+    { "id": "job-fair", "title": "Job fair", "start": "2026-12-08", "kind": "work", "status": "tentative", "who": "Team", "note": "Booth not yet confirmed", "source": "call" },
+    { "id": "school-concert", "title": "School concert", "start": "2026-12-10", "kind": "family", "status": "confirmed", "who": "Ally", "note": "Evening", "source": "page" },
+    { "id": "plan-review", "title": "House plan review", "start": "2026-12-14", "kind": "milestone", "status": "confirmed", "who": "Kev & Ally", "note": "Schematic set, decide the layout", "source": "page" },
+    { "id": "year-end", "title": "Year-end plans due", "start": "2026-12-17", "kind": "deadline", "status": "confirmed", "who": "Kev", "source": "call" },
+    { "id": "family-trip", "title": "Family trip", "start": "2026-12-21", "end": "2026-12-30", "kind": "travel", "status": "tentative", "who": "Family", "note": "Hold until the go or no-go", "source": "call" },
+    { "id": "christmas", "title": "Christmas", "start": "2026-12-25", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "new-year", "title": "New Year's Day", "start": "2027-01-01", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" }
+  ],
+  "openDecisions": [
+    { "title": "Site trip: fly or drive", "decideBy": "2026-11-23" },
+    { "title": "Job fair: send the team or skip", "decideBy": "2026-11-25" },
+    { "title": "Family trip: go or hold", "decideBy": "2026-12-01" }
+  ]
+}
