@@ -31,11 +31,19 @@ def lines(*parts):
     return "\n".join(p.strip() for p in parts if p and str(p).strip())
 
 
-def merge_text(old, new):
-    old, new = (old or "").strip(), (new or "").strip()
-    if not new or new in old:
+DIV = "\n— from the scorecard —\n"
+
+
+def merge_text(old, new, prev):
+    """Put the survey text on the card; on a re-pull replace what the last pull wrote, never Kev's text."""
+    old, new, prev = (old or "").strip(), (new or "").strip(), (prev or "").strip()
+    if prev and old == prev:
+        old = ""
+    elif prev and old.endswith(DIV.strip() + "\n" + prev):
+        old = old[: -len(DIV.strip() + "\n" + prev)].rstrip()
+    if not new:
         return old
-    return new if not old else old + "\n— from the scorecard —\n" + new
+    return new if not old else old + DIV + new
 
 
 def main():
@@ -46,7 +54,9 @@ def main():
 
     wr = a.get("wr") or []
     ratings = ", ".join(f"{WEEKLY[i]} {RATE[v]}" for i, v in enumerate(wr) if v is not None)
+    st = a.get("stamp") or {}
     summary = lines(
+        f"Week stamped complete: {st.get('init', '')} {st.get('at', '')[:16].replace('T', ' ')} UTC" + (" (edited after stamp)" if st.get("edited") else "") if st else "Not stamped",
         f"Self score {a['self_score']}%" if a.get("self_score") is not None else "",
         f"10-5-3-1 alignment {a['align']}/5" if a.get("align") else "",
         f"Must Dos: {ratings}" if ratings else "",
@@ -57,8 +67,11 @@ def main():
     lived = lines(a.get("lived_out"), f"Nominates: {a['nominee']}" if a.get("nominee") else "")
     nxt = lines(a.get("next_week"), f"WIP to follow up: {a['wip']}" if a.get("wip") else "",
                 f"JOs: {a['jos']}" if a.get("jos") else "")
+    prev_src = card.get("survey_src") or {}
+    texts = {}
     for key, val in (("wins", wins), ("lived_out", lived), ("autopsy", a.get("autopsy")), ("next_week", nxt)):
-        merged = merge_text(card.get(key), val)
+        texts[key] = (val or "").strip()
+        merged = merge_text(card.get(key), val, prev_src.get(key))
         if merged != (card.get(key) or ""):
             upd[key] = merged
     if c.get("burnout") is not None and card.get("burnout") is None:
@@ -77,6 +90,9 @@ def main():
     if upd:
         upd["week_of"] = card.get("week_of") or week
         upd["survey_compiled"] = True
+        upd["survey_src"] = texts
+        if st:
+            upd["stamp"] = st
     json.dump(upd, open(out, "w"), indent=1)
     print(f"{len(upd)} fields:", ", ".join(sorted(upd)) or "nothing to write")
 
