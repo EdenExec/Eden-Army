@@ -429,3 +429,4 @@
 - 2026-11-13 04:44 PT (fired outside 6am-10pm window): picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; floor refresh (step 8), benches, cockpit, taps NOT run this pass (off-hours).
 - 2026-11-13 07:10 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; floor refresh (step 8) pushed (64 writes: agents, alerts, benches, meta, tools). Skipped: Notion ledger/Family bench, Crelate tasks, CloudTalk dials, benches 8a, cockpit doc, Today taps (Notion, CloudTalk, Google Docs, QuickBooks connectors failed to connect this run).
 - 2026-11-13 08:07 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Floor refreshed (65 writes). Skipped this run: Notion Family ledger, crelate-tasks, CloudTalk phones, cockpit doc, daily benches (no Notion/CloudTalk/Docs connectors checked).
+2026-11-13 08:50 PT · picked 1 · closed 1 (pm spm1) · gated 0 · blocked 0 · FAILs 0 · floor refresh (step 8) not run this session (dump/sync skipped)

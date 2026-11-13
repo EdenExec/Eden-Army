@@ -1,7 +1,7 @@
 {
-  "task": "Eden Staffing schedule status 11 Nov 21:00 PT (Wednesday chase pass, ticket t-202611120420-qpam): no new evidence since 10 Nov; 3 of 26 Done, 13 Slipped (AB-07 newly), 10 open not yet due; M1 and M6 missed, M4 and M7 at risk; all Wed 11 Nov (A) dates moved to Thu 12 Nov (A), AB-07 to Fri 13 Nov (A); M2 Fri 20 Nov (A) proposed; Nick chase (refreshed draft) and Docket ticket still drafts for Kev, nothing sent",
+  "task": "Eden Staffing schedule status 13 Nov 09:50 PT (Friday status refresh, ticket t-202611130840-spm1): no new evidence since 11 Nov; 3 of 26 Done, 15 Slipped (ES-12, ES-13 newly), 8 open not yet due; M1, M4, M6, M7 missed; Thu 12 Nov (A) dates moved to Mon 16 Nov (A) (Sabbath), M2 Fri 20 Nov (A) proposed; Nick chase and Docket ticket still drafts for Kev, nothing sent",
   "since": "2026-10-22T06:15:50Z",
   "state": "blocked",
-  "blockedOn": "Kev: confirm owners and dates (ES-01, recovery Mon 9 Nov), answer the three open questions (ES-02), decide Docket's issues memo (AB-02, Mon 9 Nov), send Nick the trades-list note (projects/eden-staffing/nick-chase-draft.md), approve any attorney or broker spend (AB-03, ES-09)",
-  "updated": "2026-11-12T05:00:00Z"
+  "blockedOn": "Kev: confirm owners and dates (ES-01, recovery Mon 16 Nov (A)), answer the three open questions (ES-02), decide Docket's issues memo (AB-02, Mon 16 Nov (A)), send Nick the trades-list note (projects/eden-staffing/nick-chase-draft.md), approve any attorney or broker spend (AB-03, ES-09)",
+  "updated": "2026-11-13T17:50:00Z"
 }
