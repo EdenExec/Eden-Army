@@ -70,3 +70,21 @@ Switching by the clock (Friday sunset to Saturday sunset) comes with the plugin.
 ## What the plugin adds
 
 The strip with your next meeting and its countdown, the four dials (Day, Desktop, Focus, Volume), the Join key and the automatic Sabbath page. It reads your Kev - Eden calendar through a private read-only address that only lives on your Mac.
+
+## Music page (profile "Music", Kev 13 Nov 2026)
+
+Switches automatically when the Music app is in front. Built-in Stream Deck › Multimedia actions unless noted.
+
+| Key | Action | Icon |
+|---|---|---|
+| Back | Multimedia › Previous Track | `key-music-prev-288.png` |
+| Play/Pause | Multimedia › Play/Pause | `key-music-playpause-288.png` |
+| Next | Multimedia › Next Track | `key-music-next-288.png` |
+| Now playing | System › Hotkey, Cmd+L (Go to Current Song). TEST | `key-music-now-288.png` |
+| Vol – | Multimedia › Volume Down | `key-music-voldown-288.png` |
+| Vol + | Multimedia › Volume Up | `key-music-volup-288.png` |
+| Mute | Multimedia › Mute | `key-music-mute-288.png` |
+| Eden | Stream Deck › Switch Profile › Eden | `key-music-eden-288.png` |
+
+Shuffle (`key-music-shuffle-288.png`) is optional: Music has no built-in shortcut, so Kev adds one under App Shortcuts first. Dials copy Eden's (Volume on dial 4).
+The Start (`key-start-288.png`) and WORD (`key-word-288.png`) keys sit on Eden page 2; the Mando profile is in `docs/streamdeck/morning-button.md`.
