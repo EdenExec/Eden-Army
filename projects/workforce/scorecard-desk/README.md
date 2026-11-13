@@ -15,7 +15,7 @@ Built 12-13 Nov 2026 for Kev's Friday Power Hour. Each recruiter has their own p
 Sharing (Kev, Share menu): each page with its one person as **Contributor** (Nick's with Nick; Kev owns his). Nobody else. The whole company fills these in at the Friday Scorecard Power Hour, 10:00 PT / 11:00 MT.
 
 ## The flow (Kev, 12 Nov)
-10:00 PT / 11:00 MT, about 15 minutes: Wins → the seven core values, in sequence (Lived it / Fell short / Next week, mirrors the card) → Must Dos (the card's 8 weekly) → daily boxes (the card's 35) → numbers (Dial → RP → Resume → PTC → FTI, prefilled) → self score, 10-5-3-1, autopsy, next week I will (action items), WIP and JOs → Candor (Kev only: burnout, what you need, anything to resolve). Stays editable until 12:00 PT so Kev and the recruiter can edit together.
+10:00 PT / 11:00 MT, about 15 minutes: Wins → the seven core values in sequence → Must Dos (Poor to Excellent) → daily boxes → numbers (prefilled) → Candor (Kev only) → Score & finish (self score, 10-5-3-1, autopsy, next week I will, WIP and JOs, then initials + "Finish the week"). Stays editable until 12:00 PT so Kev and the recruiter can edit together.
 
 ## Data (per page)
 - `meta/week`: weekOf (the Monday, same key as the Round Table card), weekLabel, window, lockAt. Dean writes.
