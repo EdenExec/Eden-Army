@@ -148,10 +148,10 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:500}
 .deck::-webkit-scrollbar{display:none}
 .sl{flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always}
 .cell{width:100%;height:100%;container-type:size;display:grid;place-items:center}
-.st{position:relative;width:min(100cqw,calc(100cqh*16/9));aspect-ratio:16/9;container-type:inline-size;background:var(--card);overflow:hidden;color:var(--fg)}
-.st::before{content:"";position:absolute;inset:0;background:var(--globe) no-repeat right 3% center/auto 114%;opacity:.06;pointer-events:none}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st::before,:root:not([data-theme="light"]) #homeview::before,:root:not([data-theme="light"]) #gridview::before{filter:invert(1);opacity:.07}}
-:root[data-theme="dark"] .st::before,:root[data-theme="dark"] #homeview::before,:root[data-theme="dark"] #gridview::before{filter:invert(1);opacity:.07}
+.st{position:relative;width:min(100cqw,calc(100cqh*16/9));aspect-ratio:16/9;container-type:inline-size;background:transparent;overflow:hidden;color:var(--fg)}
+.st::before{content:"";position:absolute;inset:0;background:var(--globe) no-repeat right 4% center/auto 96%;opacity:.028;pointer-events:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st::before,:root:not([data-theme="light"]) #homeview::before,:root:not([data-theme="light"]) #gridview::before{filter:invert(1);opacity:.035}}
+:root[data-theme="dark"] .st::before,:root[data-theme="dark"] #homeview::before,:root[data-theme="dark"] #gridview::before{filter:invert(1);opacity:.035}
 .arrow{position:absolute;top:0;bottom:0;width:var(--aw);border:0;border-radius:0;background:var(--ghost);color:var(--fg);display:flex;align-items:center;justify-content:center;padding:0;z-index:3}
 .arrow.l{left:0}.arrow.r{right:0}
 .arrow svg{width:70%;height:auto;max-height:30%}
@@ -221,7 +221,7 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:500}
 /* home and topic tiles */
 #homeview,#gridview{overflow-y:auto;padding:max(18px,2.6vw)}
 #homeview{display:flex;flex-direction:column}
-#homeview::before,#gridview::before{content:"";position:absolute;inset:0;background:var(--globe) no-repeat right 2% center/auto 120%;opacity:.06;pointer-events:none}
+#homeview::before,#gridview::before{content:"";position:absolute;inset:0;background:var(--globe) no-repeat right 4% center/auto 96%;opacity:.028;pointer-events:none}
 #homeview>*,#gridview>*{position:relative}
 .ht{font-size:clamp(30px,6vw,104px);line-height:.95;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;margin:.1em 0 .35em}
 .kk{font-size:clamp(11px,1.2vw,20px);letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--muted)}
@@ -1141,5 +1141,27 @@ route(false);
   try{ if(window.claude&&typeof window.claude.use==="function"){ c=await window.claude.use("comments"); } }catch(e){ c=null; }
   if(c&&typeof c.openComposer==="function"){ window.__comments=c; noteBtns.forEach(function(b){b.hidden=false;}); }
 })();
+})();
+</script>
+<script>
+/* Keep big numbers inside their blocks (Kev, 13 Nov: "numbers are outside of text"). */
+(function(){
+  function fitAll(){
+    var els=document.querySelectorAll('.st .num, .st .bn, .st .bv');
+    for(var i=0;i<els.length;i++){
+      var el=els[i], box=el.parentElement; if(!box) continue;
+      el.style.fontSize=''; el.style.whiteSpace='nowrap';
+      var cs=getComputedStyle(box), avail=box.clientWidth-parseFloat(cs.paddingLeft||0)-parseFloat(cs.paddingRight||0);
+      if(avail<=0) continue;
+      var rg=document.createRange(); rg.selectNodeContents(el);
+      var w=rg.getBoundingClientRect().width, fs=parseFloat(getComputedStyle(el).fontSize), n=0;
+      while(w>avail*0.96 && fs>10 && n<30){ fs*=0.9; el.style.fontSize=fs+'px'; w=rg.getBoundingClientRect().width; n++; }
+    }
+  }
+  var t; function later(){ clearTimeout(t); t=setTimeout(fitAll,120); }
+  window.addEventListener('resize',later); window.addEventListener('hashchange',later);
+  document.addEventListener('click',later,true);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(later);
+  setTimeout(fitAll,400); setTimeout(fitAll,1500);
 })();
 </script>
