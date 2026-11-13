@@ -34,3 +34,8 @@ Add the name to `build.py`, run `python3 build.py template.html out`, publish `o
 - Design pass by Marlowe, 13 Nov (Montserrat, black/cream editorial, Must Dos stacked on phones).
 - The open tab is remembered per person and week (browser storage), so a reload or a republish lands them back where they were. Answers are saved to the store as they type. Don't republish between 9:55 and 12:00 PT Friday.
 - Week stamp (Kev's idea, Marlowe's build, 13 Nov): "Sign off the week" unlocks when the required tabs are done and saves `stamp {init, at, edited}` in weeks/<weekOf>. The pull runs Fridays 10:20, 11:20 and 12:20 PT (scheduled task "Friday scorecards to Round Table (stamped)"): newly stamped pages first, everyone at 12:20. The card's wins field shows the stamp or "Not stamped".
+
+## Friday cadence (Kev, 13 Nov, late)
+- Pages open from 8:00 PT (9:00 MT); Power Hour 10:00 PT; lock 12:00 PT. Numbers refresh 7:50 PT. No republishing 7:50–12:00 Friday.
+- Checks (pull newly finished scorecards into the Round Table and rewrite `queue/<weekOf>` = leadership order by stamp time): 8:01, 9:01, 10:01 PT (weekly), 10:15, 10:25, 10:35, 10:50 (one-shots; cron can't run under an hour apart, so the 10:01 run re-arms them each week), 12:05 final (everyone, stamped or not).
+- On demand: the Round Table's "Refresh scorecards" button fires the scheduled task "Refresh scorecards (Round Table button)" through Kev's Claude Code Remote connector.

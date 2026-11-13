@@ -243,7 +243,7 @@ function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A
   if(!uid)canWrite=false;
   status(locked?'Closed':'');
   if(locked)banner('Closed at '+ptTime(lockAt)+'. Kev has your answers.',true);
-  else if(isFinite(lockAt))banner('Start at 10:00 PT (11:00 MT); about 15 minutes. It saves as you go, and stays open until '+ptTime(lockAt)+' so we can edit it together.',true);
+  else if(isFinite(lockAt))banner('Open from 8:00 PT (9:00 MT); the Power Hour is 10:00 PT (11:00 MT). About 15 minutes; it saves as you go. Finish early and you\u2019re first in line for your leadership meeting. Open until '+ptTime(lockAt)+'.',true);
   start();
 })();
 })();
