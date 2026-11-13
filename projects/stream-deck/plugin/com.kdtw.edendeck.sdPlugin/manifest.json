@@ -1,0 +1,183 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "SDKVersion": 3,
+  "Name": "Eden Deck",
+  "Version": "0.1.0.0",
+  "Author": "KDTW Group",
+  "Description": "Private plugin: next meeting and Join key, focus timer, desktop and volume dials, and simple keys. Reads a private calendar address you paste into settings.",
+  "Category": "Eden Deck",
+  "CategoryIcon": "imgs/category",
+  "Icon": "imgs/plugin",
+  "UUID": "com.kdtw.edendeck",
+  "CodePath": "bin/plugin.js",
+  "Nodejs": {
+    "Version": "20"
+  },
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "13"
+    }
+  ],
+  "Software": {
+    "MinimumVersion": "7.1"
+  },
+  "PropertyInspectorPath": "ui/calendar.html",
+  "Actions": [
+    {
+      "Name": "Day",
+      "UUID": "com.kdtw.edendeck.day",
+      "Icon": "imgs/actions/day",
+      "Tooltip": "Turn: Left/Right Arrow to the front app (steps the Day Board). Press: nothing (flash).",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/slice.json",
+        "Icon": "imgs/dial",
+        "TriggerDescription": {
+          "Push": "Flash only",
+          "Rotate": "Previous / next day",
+          "Touch": "Refresh calendar"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/dial"
+        }
+      ]
+    },
+    {
+      "Name": "Desktop",
+      "UUID": "com.kdtw.edendeck.desktop",
+      "Icon": "imgs/actions/desktop",
+      "Tooltip": "Turn: Control+Left/Right (switch desktop). Press: Mission Control.",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/slice.json",
+        "Icon": "imgs/dial",
+        "TriggerDescription": {
+          "Push": "Mission Control",
+          "Rotate": "Switch desktop",
+          "Touch": "Refresh calendar"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/dial"
+        }
+      ]
+    },
+    {
+      "Name": "Focus",
+      "UUID": "com.kdtw.edendeck.focus",
+      "Icon": "imgs/actions/focus",
+      "Tooltip": "Turn: set minutes (5 to 120). Press: start or stop the timer.",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/slice.json",
+        "Icon": "imgs/dial",
+        "TriggerDescription": {
+          "Push": "Start / stop timer",
+          "Rotate": "Set minutes",
+          "Touch": "Refresh calendar"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/dial"
+        }
+      ]
+    },
+    {
+      "Name": "Volume",
+      "UUID": "com.kdtw.edendeck.volume",
+      "Icon": "imgs/actions/volume",
+      "Tooltip": "Turn: system volume. Press: mute or unmute.",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "layouts/slice.json",
+        "Icon": "imgs/dial",
+        "TriggerDescription": {
+          "Push": "Mute / unmute",
+          "Rotate": "Volume",
+          "Touch": "Refresh calendar"
+        }
+      },
+      "States": [
+        {
+          "Image": "imgs/dial"
+        }
+      ]
+    },
+    {
+      "Name": "Join",
+      "UUID": "com.kdtw.edendeck.join",
+      "Icon": "imgs/actions/join",
+      "Tooltip": "Joins the next meeting. Cream 15 minutes before, press opens the link.",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ]
+    },
+    {
+      "Name": "Open link",
+      "UUID": "com.kdtw.edendeck.openlink",
+      "Icon": "imgs/actions/openlink",
+      "Tooltip": "Opens a web address in the default browser.",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ],
+      "PropertyInspectorPath": "ui/openlink.html"
+    },
+    {
+      "Name": "Open app",
+      "UUID": "com.kdtw.edendeck.openapp",
+      "Icon": "imgs/actions/openapp",
+      "Tooltip": "Opens a Mac app by name.",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ],
+      "PropertyInspectorPath": "ui/openapp.html"
+    },
+    {
+      "Name": "Desktop (key)",
+      "UUID": "com.kdtw.edendeck.desktop-key",
+      "Icon": "imgs/actions/desktop-key",
+      "Tooltip": "Control+number, or open an app instead.",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ],
+      "PropertyInspectorPath": "ui/desktop-key.html"
+    }
+  ]
+}

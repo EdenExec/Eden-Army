@@ -1,0 +1,46 @@
+# Cowork task: set up Kev's Stream Deck +
+
+Paste the block under "The task" into a new Cowork task, with this kit folder connected. Written by Q, 12 November 2026.
+
+## Fix run (12 November, second pass): keep the Eden skin up in every app
+
+Kev's complaint: when he opens an app like Claude or Music, the deck falls back to the old layout. He wants the Eden skin showing in every app, except in Zoom (the Zoom profile) and in Google Calendar (the Google Calendar profile). Stream Deck switches to the **default profile** whenever the app in front has no profile of its own, so the likely causes are (a) the old layout is the default profile for the Stream Deck +, or (b) an old profile is assigned to those apps. Do this first, before the update run below:
+
+1. Export a backup of every profile on this Stream Deck + into `exports/` with `-before-fix` in the name. Take a screenshot of the profile list.
+2. For every profile, open its settings and write down which app (if any) it switches to automatically, and whether it is the default. Put the list in `report.md` (names only).
+3. Make **Eden** the default profile for the Stream Deck + (in the profile list, right-click Eden or use the profile's settings; the wording may be "Set as default"). Confirm Eden is the only one marked default.
+4. For every other profile except Zoom and Google Calendar: remove its automatic app assignment (do NOT delete the profile and do not change its keys). Kev has said this is allowed for this fix only.
+5. Test: bring Claude, Music, Chrome, Finder, Messages, Duet and the Eden Day Board app to the front one at a time (the Stream Deck window must be minimized, because switching is off while it is open). The deck should show Eden each time. Zoom should show the Zoom profile and Google Calendar should show the Google Calendar profile. Report any app that still shows another layout and which profile it shows.
+6. If an app shows the Google Calendar profile when it should not (for example any Chrome window), say so: that profile may be assigned to Chrome instead of the Calendar web app, and Kev decides.
+
+## Update run (12 November): read this first
+
+The Eden and Zoom profiles already exist from the 11 November run, and the Eden Deck plugin is installed. This is an update, not a rebuild. Before changing anything, export a backup of each existing profile into `exports/` with `-before-12nov` in the name. Then change the existing profiles to match the steps below, skip anything that is already right, and do not delete the old profiles. Replace the installed plugin with the newer file in `plugin/` (open it; if the app asks, replace). New things in this run: the bottom row opens apps, Zoom page Chat and Copy invite link and Participants, the Google Calendar profile, the Wispr Flow "bring up its window" option, and the new icons in `icons/`.
+
+## The task
+
+You are setting up an Elgato Stream Deck + (8 keys, a touch strip, 4 dials) on this Mac for Kev. The kit folder has everything: `setup.md` (the key-by-key plan), `icons/` (key faces, use the `-288.png` files), `plugin/com.kdtw.edendeck.streamDeckPlugin` (a private plugin called Eden Deck), and `design/contact-sheet.png` (the original look; it predates the 12 November changes, so `setup.md` wins where they differ).
+
+Read `setup.md` and `design/contact-sheet.png` first. Then work in the Stream Deck app, one step at a time:
+
+1. Open the Stream Deck app. Note its version (it must be 7.1 or later; if older, stop and tell Kev).
+2. Install the plugin by opening `plugin/com.kdtw.edendeck.streamDeckPlugin`. Confirm "Eden Deck" shows under Keys (Join, Open link, Open app, Desktop key) and under Dials (Day, Desktop, Focus, Volume).
+3. Create a profile named **Eden** for the Stream Deck +, and build the home page from `setup.md`: top row Radar, Command, Flow, Duet; bottom row Agenda, Zoom, Crelate, Music. Give every key its icon from `icons/` and clear the key title (the picture already carries the word).
+   - Radar: System, Website. Ask Kev for the full Radar link (it starts claude.ai/project/). Do not guess it.
+   - Command: System, Website, https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW
+   - Flow: Eden Deck, Open app, the app named Wispr Flow, with "Also bring up its window" ticked and "Menu item to click" set to Open Wispr Flow (the newer plugin has this field). Kev wants the real Wispr Flow window (Dictation, Notetaker, Insights) to appear. If pressing Flow does not bring up that window, do not guess: first try by hand (click the Flow icon in the Mac menu bar and note the exact title of the menu item that opens the window), put that exact title in the key's Menu item to click field, and press again. If it still fails, report the key's alert reason and what the menu bar menu shows. Never type or read anything in Wispr Flow's dictation or notes.
+   - Duet (top right, replaces Join, 12 Nov): System, Open, the Duet Chrome app, icon key-duet. The old Join key errored (no calendar address) and Kev does not need it. Leave the Eden Deck Join action unused.
+   - Bottom row opens apps (changed 12 Nov, the Control+number keys failed silently): Agenda = System, Open, the Eden Day Board Chrome app (it still errors on Kev's deck: pick the app FILE with System, Open's file picker, in Applications, Chrome Apps, instead of typing a name; if that fails use System, Website with https://claude.ai/artifact/4QFTb8NFvWhbc2jg5zD4hc and report it); Zoom = System, Open, the Zoom app (replaces Claude); Crelate = System, Open, the Crelate desktop app (replaces LinkedIn and the second Duet); Music = System, Open, the Music app (opens anywhere, not tied to a desktop; remove any leftover Control+4 hotkey on that key). Icons: key-agenda-dayboard, key-zoom-app, key-crelate, key-music (no desktop numbers). Duet is the top right key, not on the bottom row.
+4. Dials: put Eden Deck Day, Desktop, Focus and Volume on dials 1, 2, 3, 4 in that order.
+5. Create a second profile named **Zoom** with the 8 keys in `setup.md` (Elgato's Zoom plugin for Mic, Camera, Share; Flow as on the home page; Leave). Set it to switch automatically when Zoom is in front. Key 4 is Chat (System, Hotkey, Shift+Cmd+H) and the key that was empty is Copy invite link (System, Hotkey, Shift+Cmd+I). Leave is a normal press with the new icon (no HOLD). Participants (System, Hotkey, Cmd+U, icon key-zoom-participants) takes the slot Radar had on the Zoom page (Radar stays on the Eden page).
+5a. Create a third profile named **Google Calendar**, set to switch automatically when Google Calendar is in front: key 1 New event (System, Hotkey, Google Calendar's new-event shortcut; confirm it in the app), key 2 Paste Zoom link (System, Text). Do not type or ask for the Zoom invite text: Kev types it into the key's text box himself. Never read, copy or log it.
+6. Stop and hand over to Kev for these three things, which only Kev does:
+   - Pasting the Google Calendar "secret address in iCal format" into the Eden Deck calendar setting (click the Day dial and use the panel at the bottom). Never read, copy, log or repeat that address. It is a password.
+   - Typing his Zoom invite text into the Paste Zoom link key.
+   - Clicking Allow on any macOS permission prompt (Accessibility, Automation, files). Do not change System Settings permissions yourself.
+   - Pressing the real keys and dials to confirm they work.
+7. Check what you can without the secret: press each new app key and say which ones open their app, especially Flow (does the Wispr Flow window appear?). Take a screenshot of each page of the deck in the app.
+8. Export the Eden, Zoom and Google Calendar profiles (in the app, right-click a profile and choose Export) into the kit folder's `exports/` folder.
+9. Write `report.md` in the kit folder: what you set up, what you could not do, anything that behaved differently from `setup.md`, and the macOS and Stream Deck versions.
+
+Rules: change only the Eden, Zoom and Google Calendar profiles and the Eden Deck plugin, plus (for the fix run only) the default-profile choice and the automatic app assignments on Kev's other profiles, after backing them up. Do not delete or edit any other profile, app, file or setting. Do not open email, messages or documents. Do not enter or look up passwords. If a step does not match what you see, stop and ask Kev instead of improvising.

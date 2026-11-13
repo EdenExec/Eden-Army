@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+<head lang="en"><meta charset="utf-8" /><title>Open app</title><script src="sdpi-components.js"></script></head>
+<body>
+	<sdpi-item label="App name"><sdpi-textfield setting="app" placeholder="Wispr Flow"></sdpi-textfield></sdpi-item>
+	<sdpi-item label="Show window"><sdpi-checkbox setting="showWindow" label="Also bring up its window (menu-bar apps like Wispr Flow)"></sdpi-checkbox></sdpi-item>
+	<sdpi-item label="Menu item to click"><sdpi-textfield setting="menuItem" placeholder="Open Wispr Flow (blank for Wispr Flow = this default; clear it to skip)"></sdpi-textfield></sdpi-item>
+	<sdpi-item><p>Used only when "Also bring up its window" is ticked and the app has no window open. The plugin clicks the app's menu bar icon, then this menu item. Needs Accessibility permission for Stream Deck.</p></sdpi-item>
+	<sdpi-item label="Label"><sdpi-textfield setting="label" maxlength="12" placeholder="Flow"></sdpi-textfield></sdpi-item>
+</body>
+</html>
