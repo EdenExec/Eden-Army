@@ -276,6 +276,21 @@ a.go{font-weight:700}
   .cell:nth-child(n+5){border-bottom:1px solid var(--bd-line)} .cell:nth-child(n+7){border-bottom:0}
 }
 @media (max-width:480px){.cell{padding:12px 12px 11px}.golf th,.golf td{padding-right:8px}.lb-body{padding:10px}}
+/* Friday scorecards strip (Kev, 13 Nov 2026): the leadership-meeting order, by who finished their Friday scorecard first.
+   Dean writes queue/{weekOf}; the button asks Dean (through the viewer's Claude Code Remote connector) to re-check now. Names and times only. */
+.queue{border:1px solid var(--ink);background:var(--paper);box-shadow:var(--lift);padding:12px 14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.queue-h{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap}
+.qbtn{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;min-height:40px;padding:0 14px;font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.qbtn:hover{opacity:.88}
+.qbtn:disabled{background:var(--paper);color:var(--mute);border-color:var(--line);cursor:default;opacity:1}
+.qlist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.qlist li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding:8px 0;border-bottom:1px solid var(--line);min-width:0}
+.qlist .qn{font:500 12px/1 var(--mono);color:var(--mute);min-width:1.6em}
+.qlist .qname{font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;overflow-wrap:anywhere}
+.qlist .qi{font:500 10.5px/1 var(--mono);letter-spacing:.1em;color:var(--mute)}
+.qlist .qt{font:500 11px/1 var(--mono);margin-left:auto;font-variant-numeric:tabular-nums}
+.qmsg{font:500 10.5px/1.4 var(--mono);letter-spacing:.04em;color:var(--mute);overflow-wrap:anywhere}
+.qmsg.bad{color:var(--a)}
 </style>
 
 <div class="wrap">
@@ -645,10 +660,76 @@ a.go{font-weight:700}
     det.appendChild(body); return det;
   }
 
+  /* ---------------- Friday scorecards: leadership order (Kev, 13 Nov 2026) ----------------
+     queue/{weekOf}   week_of (Monday, PT), checked_at (ISO), order [{slug, name, init, stamped_at (ISO)}], waiting [names]. Dean writes it; the page only reads.
+     The Refresh button fires Dean's scorecard check (a scheduled task) through the viewer's Claude Code Remote connector, on click only. */
+  var Q_SERVER = 'Claude Code Remote', Q_TOOL = 'fire_trigger', Q_TRIGGER = 'trig_01PwR26dHGicgChmvN3URXQh';
+  var Q_FALLBACK = function (code) { return 'Couldn\u2019t reach Dean' + (code ? ' (' + code + ')' : '') + '. Message Dean \u2018refresh scorecards\u2019 instead.'; };
+  S.queue = null; S.qWeek = null; S.qUnsub = null; S.mcp = 'pending'; S.qBtn = { busy: false, msg: '', bad: false, off: false };
+  function ptTime(iso) { var t = Date.parse(iso || ''); return isFinite(t) ? new Date(t).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles' }) + ' PT' : ''; }
+  function ptDayTime(iso) { var t = Date.parse(iso || ''); return isFinite(t) ? new Date(t).toLocaleDateString('en-US', { weekday: 'short', timeZone: 'America/Los_Angeles' }) + ' ' + ptTime(iso) : 'time unknown'; }
+  function watchQueue() {
+    if (!S.db) return; var wk = weekOfNow(); if (S.qWeek === wk && S.qUnsub) return;
+    if (S.qUnsub) { try { S.qUnsub(); } catch (e) {} }
+    S.qWeek = wk; S.queue = null;
+    S.qUnsub = S.db.doc('queue/' + wk).onSnapshot(function (snap) { S.queue = snap.exists ? JSON.parse(JSON.stringify(snap.data() || {})) : {}; paintQueue(); }, function () { S.queue = { error: true }; paintQueue(); });
+  }
+  function paintQueue() { var old = document.getElementById('queue'); if (old) old.replaceWith(renderQueue()); }
+  function renderQueue() {
+    var q = S.queue, b = S.qBtn, box = h('section', { class: 'queue', id: 'queue', 'aria-label': 'Friday scorecards' });
+    var noMcp = S.mcp === 'none' || b.off;
+    box.appendChild(h('div', { class: 'queue-h' },
+      h('span', { class: 'eyebrow', text: 'Friday scorecards \u00b7 leadership order' + (S.qWeek ? ' \u00b7 week of ' + nice(S.qWeek) : '') }),
+      h('button', { class: 'qbtn', id: 'qrefresh', type: 'button', disabled: b.busy || noMcp ? true : null, 'aria-describedby': 'qmsg' }, b.busy ? 'Asking Dean\u2026' : 'Refresh scorecards')));
+    var order = q && Array.isArray(q.order) ? q.order : [], waiting = q && Array.isArray(q.waiting) ? q.waiting : [];
+    if (!S.live) box.appendChild(h('div', { class: 'qmsg', text: 'Open this page in Claude to load the order.' }));
+    else if (q == null) box.appendChild(h('div', { class: 'qmsg', text: 'Loading the order\u2026' }));
+    else if (q.error) box.appendChild(h('div', { class: 'qmsg bad', text: 'Could not read the order.' }));
+    else if (!order.length) box.appendChild(h('div', { class: 'qmsg', text: 'No scorecards in yet.' }));
+    else {
+      var ol = h('ol', { class: 'qlist' });
+      order.forEach(function (o, i) { ol.appendChild(h('li', null, h('span', { class: 'qn', text: String(i + 1) }), h('span', { class: 'qname', text: o.name || o.slug || '' }), o.init ? h('span', { class: 'qi', text: String(o.init).toUpperCase() }) : null, h('span', { class: 'qt', text: ptTime(o.stamped_at) || '\u2013' }))); });
+      box.appendChild(ol);
+    }
+    if (S.live && q && !q.error && waiting.length) box.appendChild(h('div', { class: 'qmsg', text: 'Waiting: ' + waiting.join(', ') }));
+    if (S.live && q && !q.error && q.checked_at) box.appendChild(h('div', { class: 'stamp', text: 'Checked ' + ptDayTime(q.checked_at) }));
+    var msg = noMcp && !b.msg ? Q_FALLBACK('') : b.msg;
+    box.appendChild(h('div', { class: 'qmsg' + (b.bad ? ' bad' : ''), id: 'qmsg', role: 'status', text: msg || '' }));
+    return box;
+  }
+  function qSay(msg, bad, off) { S.qBtn = { busy: false, msg: msg, bad: !!bad, off: !!off }; paintQueue(); }
+  function refreshScorecards() {
+    if (S.qBtn.busy) return;
+    S.qBtn = { busy: true, msg: '', bad: false, off: false }; paintQueue();
+    var use = window.claude && typeof window.claude.use === 'function' ? window.claude.use.bind(window.claude) : null;
+    (use ? use('mcp') : Promise.resolve(null)).then(function (mcp) {
+      if (!mcp) { S.mcp = 'none'; qSay(Q_FALLBACK(''), true, true); return; }
+      S.mcp = 'ready';
+      return mcp.listTools(Q_SERVER).then(function (r) {
+        var sv = (r && r.servers || []).filter(function (x) { return x.server === Q_SERVER; })[0];
+        if (!sv) return { stop: 'server_not_connected' };
+        if (sv.tools && sv.tools.length && !sv.tools.some(function (t) { return t.name === Q_TOOL; })) return { stop: 'no_tool' };
+        return {};
+      }, function () { return {}; }).then(function (pre) {
+        if (pre.stop) throw { code: pre.stop };
+        return mcp.callTool(Q_SERVER, Q_TOOL, { trigger_id: Q_TRIGGER });
+      }).then(function () {
+        qSay('Asked Dean to refresh \u00b7 ' + ptTime(new Date().toISOString()) + '. The order updates here by itself in a minute or two.', false);
+      });
+    }).catch(function (e) {
+      var code = e && e.code ? String(e.code) : 'unknown';
+      if (code === 'needs_reauth' || code === 'server_not_connected') qSay('Connect Claude Code Remote in claude.ai Settings \u2192 Connectors, then tap again.', true);
+      else if (code === 'not_granted' || code === 'not_in_manifest' || code === 'consent_required' || code === 'approval_required') qSay('Allow the connector for this page to use the button.', true);
+      else qSay(Q_FALLBACK(code), true);
+    });
+  }
+  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#qrefresh')) refreshScorecards(); });
+
   function landing() {
     var box = h('div', { class: 'wrap-l', style: 'display:flex;flex-direction:column;gap:22px' });
     box.appendChild(renderBoardBlock()); box.appendChild(renderLeaderboard()); box.appendChild(renderJos()); box.appendChild(renderWip());
     box.appendChild(h('div', { class: 'eyebrow', text: 'Folders · one per person' }));
+    box.appendChild(renderQueue());
     box.appendChild(h('p', { class: 'sub', text: 'Open one folder at a time. Each folder holds that person’s scorecard, coaching, revenue, goals and deliverables. Nothing from another person loads while one is open.' }));
     if (!S.people.length) {
       box.appendChild(h('div', { class: 'empty', text: S.live ? (S.peopleLoaded ? 'No folders yet. Radar adds each person once Kev confirms the roster.' : 'Loading folders…') : 'Open this page in Claude to load the Round Table.' }));
@@ -1075,6 +1156,7 @@ a.go{font-weight:700}
   /* ---------------- boot: example data first, then the database ---------------- */
   function goLive(db) {
     S.db = db; S.live = true; S.example = false; S.people = []; S.peopleLoaded = false; closeFolder(); status('live'); render();
+    watchQueue();
     db.collection('board').onSnapshot(function (s) {
       var cur = s.docs.map(own).filter(function (d) { return d.id === 'current'; })[0];
       pickBoard(cur || null); render();
@@ -1101,9 +1183,11 @@ a.go{font-weight:700}
     var use = window.claude && typeof window.claude.use === 'function' ? window.claude.use.bind(window.claude) : null;
     if (!use) return;
     use('db').then(function (db) { if (db) goLive(db); }, function () {});
+    use('mcp').then(function (m) { if (S.mcp === 'pending') { S.mcp = m ? 'ready' : 'none'; paintQueue(); } }, function () { S.mcp = 'none'; paintQueue(); });
   }
   boot();
   // keep the leaderboard's "pulled … ago" stamp honest through the day without rebuilding anything
+  setInterval(function () { if (S.live && S.qWeek && weekOfNow() !== S.qWeek) watchQueue(); }, 60000);
   setInterval(function () { var el = document.getElementById('lb-ago'); if (el && S.board) el.textContent = 'Crelate pulled ' + (S.board.as_of || 'at an unknown time') + ' · ' + agoText(ago(S.board.generated_at)); }, 60000);
 })();
 </script>

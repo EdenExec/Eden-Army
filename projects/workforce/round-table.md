@@ -52,3 +52,11 @@ Top of the landing page: THE BOARD (team totals this week vs last week to the sa
 ## Rules to declare at publish (A, Kev to confirm who sees it)
 
 `capabilities: {db: {rules: [{path: "", read: "admin", write: "admin"}]}}`. Only Kev and editors read; nobody else sees a row. Limit: rules key on path, so they cannot lock `money` or `coaching` inside `people/{slug}` while leaving the rest open. If Kev wants Nick to see scorecards but not money or coaching, move those two to `private/{slug}/...` and put an owner-only rule on `private`.
+
+## Friday scorecards strip (Dean, 13 Nov 2026)
+
+Landing page, top of the folders section: the leadership-meeting order, by who finished their Friday scorecard first.
+
+- `queue/{weekOf}` (weekOf = Monday of the week, Pacific): `week_of`, `checked_at` (ISO), `order` [{`slug`, `name`, `init`, `stamped_at` (ISO)}], `waiting` [names]. Dean writes it; the page subscribes with `onSnapshot` and re-subscribes when the week turns. Missing doc reads "No scorecards in yet." Names and times only, so it stays visible in screen-share; no coaching or money.
+- **Refresh scorecards** button: calls the viewer's Claude Code Remote connector, `fire_trigger` with `trig_01PwR26dHGicgChmvN3URXQh` (Dean's scorecard check), on click only. Errors branch on code: reconnect (needs_reauth, server_not_connected), allow the connector (not_granted, not_in_manifest, consent/approval), otherwise "message Dean 'refresh scorecards'".
+- Publish capabilities now: `{db: {rules: [{path: "", read: "admin", write: "admin"}]}, mcp: {servers: [{server: "Claude Code Remote", tools: ["fire_trigger"]}]}}`.
