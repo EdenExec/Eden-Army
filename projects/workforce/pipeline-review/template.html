@@ -120,6 +120,79 @@ svg .m{fill:var(--muted)}
 .list{margin:0;padding:0;list-style:none}
 .list li{padding:5px 0;border-bottom:1px solid var(--line);font-size:12px}
 .blk h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px;font-weight:700}
+
+/* meeting room */
+[hidden]{display:none!important}
+#mh:focus{outline:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.topr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pillb{border:1px solid var(--line);background:transparent;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:600}
+.pillb:hover{background:var(--soft)}
+.pillb[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.wrapm{max-width:1200px;margin:0 auto}
+.hh{font-size:clamp(24px,4.5vw,40px);line-height:1.1;margin:4px 0 6px;font-weight:700}
+.hp{margin:0 0 18px;max-width:60ch}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.mode{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px;min-height:130px}
+.mode:hover{background:var(--soft);border-color:var(--fg)}
+.mode b{font-size:20px;font-weight:700}
+.mode span{color:var(--muted);font-size:12px}
+.mode .go{margin-top:auto;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--fg)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:10px}
+.tile{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:14px;min-height:96px;display:flex;flex-direction:column;gap:4px}
+.tile:hover{background:var(--soft);border-color:var(--fg)}
+.tile .tn{font-size:10px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.tile b{font-size:14px;line-height:1.25}
+.tile span.sb{font-size:11px;color:var(--muted)}
+.tile.done{border-style:dashed}
+.mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.mbar{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:10px 16px;margin:10px 0}
+.mbar .tt{flex:1 1 180px}
+.mbar .tt b{font-size:15px}
+.timer{font-size:clamp(40px,9vw,60px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.timer.amber{color:var(--warn)}.timer.red{color:var(--bad)}
+.mbar.amber{border-color:var(--warn);background:var(--warn-bg)}.mbar.red{border-color:var(--bad);background:var(--bad-bg)}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:transparent;border-radius:6px;padding:8px 14px;font-size:12px;font-weight:600}
+.btn:hover{background:var(--soft)}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn:disabled{opacity:.4;cursor:default}
+.mgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+@media (min-width:1000px){.mgrid{grid-template-columns:minmax(0,1fr) 340px}.pad{position:sticky;top:8px}}
+.mcards{display:flex;flex-direction:column;gap:12px}
+.mcards .card{height:auto;min-height:0;max-height:none}
+.mcards .card-b{overflow:visible}
+.pad{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:14px 16px}
+.pad h3{margin:0 0 2px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.pad label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-top:8px}
+.pad textarea,.pad input{width:100%;font:inherit;font-size:13px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px;margin-top:3px;text-transform:none;letter-spacing:0;font-weight:400}
+.pad textarea{resize:vertical;min-height:52px}
+.padrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.issue{border-bottom:1px solid var(--line);padding:8px 0;font-size:12px}
+.issue.solved{opacity:.55}
+.issue .ih{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.issue label{display:flex;align-items:center;gap:5px;margin:0;font-size:10px;white-space:nowrap}
+.issue input{width:auto;margin:0}
+.emptyds{border:1px dashed var(--line);border-radius:6px;padding:16px;text-align:center;color:var(--muted);font-size:12px}
+.mclock{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));z-index:5;display:flex;align-items:center;gap:8px;background:var(--fg);color:var(--bg);border-radius:999px;padding:6px 8px 6px 14px;font-size:11px;font-weight:600;font-variant-numeric:tabular-nums;max-width:calc(100vw - 24px)}
+.mclock .pillb{color:var(--bg);border-color:var(--bg);padding:2px 9px}
+.mclock .pillb:hover{background:transparent;opacity:.8}
+/* carousel */
+.car .chead{display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-bottom:8px}
+.car .ctl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.car .stage{cursor:pointer}
+.car .card{height:calc(100dvh - 175px);min-height:420px;max-height:none}
+.car .card.enter{animation:cin .35s ease-out}
+@keyframes cin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.car .prog{height:4px;background:var(--ghost);border-radius:2px;margin:6px 0 0}
+.car .prog i{display:block;height:100%;width:0;background:var(--bar);border-radius:2px}
+.car .dots{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.car .dots i{width:8px;height:8px;border-radius:50%;background:var(--ghost)}
+.car .dots i.on{background:var(--fg)}
+@media (min-width:1000px){.car .card-b{zoom:1.3}.car h2{font-size:30px}.car .kick{font-size:12px}}
+@media (min-width:1500px){.car .card-b{zoom:1.6}.car h2{font-size:40px}}
+@media (prefers-reduced-motion: reduce){.car .card.enter{animation:none}}
+:fullscreen body,:fullscreen{background:var(--bg)}
 @media (max-width:640px){
   .card{height:calc(100dvh - 190px);min-height:480px}
   .card-h,.card-b,.card-f{padding-left:14px;padding-right:14px}
@@ -132,14 +205,26 @@ svg .m{fill:var(--muted)}
 
 <div class="top">
   <div><div class="brand">EDEN PARTNER GROUP</div><div class="doc">Friday Pipeline Review</div></div>
-  <div class="sub" id="stamp"></div>
+  <div class="topr"><button class="pillb" id="homeBtn" type="button" hidden>Meeting room</button><div class="sub" id="stamp"></div></div>
 </div>
+<main id="homeview" class="wrapm" hidden>
+  <div class="kick">Eden meeting room</div>
+  <h1 class="hh">Pick how you want to run the room.</h1>
+  <p class="muted hp">Each meeting mode is a grid of topic tiles. Every tile has a five-minute timer and an IDS pad.</p>
+  <div class="modes" id="modes"></div>
+</main>
+<section id="carview" class="wrapm car" hidden aria-label="Carousel"></section>
+<section id="meetview" class="wrapm" hidden></section>
+<div id="allview" hidden>
 <nav class="index" id="index" aria-label="Sections"></nav>
 <div class="deckwrap">
   <div class="track" id="track" tabindex="0" aria-label="Pipeline review cards. Use arrow keys to move between cards."></div>
 </div>
 <div class="pos"><button class="nav" id="prev" aria-label="Previous card">&#8592;</button><span id="pos"></span><button class="nav" id="next" aria-label="Next card">&#8594;</button></div>
+</div>
 <div class="foot"><span>edenpartnergroup.com</span><span>EDEN PARTNER GROUP</span></div>
+<div id="mclock" class="mclock" hidden role="status"><span id="mclockt"></span><button type="button" class="pillb" id="mreset">Reset</button></div>
+<div class="sr" id="live" aria-live="polite"></div>
 
 <script id="data" type="application/json">__DATA__</script>
 <script>
@@ -504,6 +589,37 @@ secStart("dec","Decisions");
   add("decisions","dec","For Kev and Nick","Decisions",b,"Scout, Q, Casey");
 })();
 
+/* ---------- extra cards (meeting modes only, not in the all-cards deck) ---------- */
+var extra={};
+function addX(id,kick,title,body,src){extra[id]={id:id,sec:"x",kick:kick,title:title,body:body,src:src||"",cls:""};}
+function stat3(v,l,n){return '<div class="stat"><div class="big num" style="font-size:26px">'+esc(v)+'</div><div class="l">'+esc(l)+'</div>'+(n?'<div class="muted" style="font-size:11px;margin-top:4px">'+esc(n)+'</div>':'')+'</div>';}
+(function(){
+  var O=D.ops, L=D.travel, J=D.jos||{}, rows=J.rows||[];
+  if(O){
+    var ar=O.ar||{};
+    addX("ops-ar","Ops","Invoicing and AR",
+      '<div class="stats">'+(ar.tiles||[]).map(function(x){return stat3(x.value,x.label,x.note);}).join("")+'</div>'+
+      '<div class="sec">Chase order</div><ol class="list" style="padding-left:0">'+(ar.chase_order||[]).map(function(x,i){return '<li><span class="num muted">'+(i+1)+'</span> '+esc(x)+'</li>';}).join("")+'</ol>'+
+      '<div class="muted" style="font-size:10px;margin-top:8px">'+esc(ar.source||"")+'</div>',"Tally hand-off, checked by Docket, "+esc(O.as_of));
+    addX("ops-decisions","Ops","Decisions to make on AR",
+      '<ol class="list" style="padding-left:0">'+(ar.decisions||[]).map(function(x,i){return '<li><span class="num muted">'+(i+1)+'</span> <b>'+esc(x)+'</b></li>';}).join("")+'</ol>',"Tally and Docket, "+esc(O.as_of));
+    var cs=O.cost||[];
+    addX("ops-claude","Ops","Claude usage and cost",'<div class="stats">'+[0,2,3].map(function(i){return cs[i]?stat3(cs[i].value,cs[i].label,cs[i].note):"";}).join("")+'</div>',"Radar, "+esc(O.as_of));
+    addX("ops-routines","Ops","Scheduled-routine usage",'<div class="stats">'+(cs[1]?stat3(cs[1].value,cs[1].label,cs[1].note):"")+'</div>',"Radar, "+esc(O.as_of));
+  }
+  if(L){
+    var tv=(L.travel||[]).map(function(x){return '<tr><td style="white-space:nowrap"><b>'+esc(x.when)+'</b></td><td style="white-space:normal">'+esc(x.what)+'</td><td style="white-space:normal">'+esc(x.note)+'</td></tr>';}).join("");
+    addX("travel","Leadership","Travel",tv?'<div class="tw"><table style="min-width:420px"><tr><th>When</th><th>What</th><th>To confirm</th></tr>'+tv+'</table></div>':'<span class="empty">No trips logged</span>',"Radar, leadership.json");
+  }
+  var risk=rows.filter(function(r){return r.risk>0;}).sort(function(a,b){return a.risk-b.risk;});
+  addX("at-risk","Client care","At-risk JOs",risk.length?'<div class="tw"><table style="min-width:520px"><tr><th>#</th><th>JO</th><th>Owner</th><th class="r">Quiet days</th><th>Next move</th></tr>'+risk.map(function(r){return '<tr><td class="num">'+r.risk+'</td><td style="white-space:normal"><b>'+esc(r.client)+'</b> '+esc(r.role)+'<div class="muted" style="font-size:10px">'+esc(r.loc)+'</div></td><td>'+esc(r.owner||"no owner")+'</td><td class="r num">'+nv(r.quiet)+'</td><td style="white-space:normal;min-width:180px">'+esc(r.next||"")+'</td></tr>';}).join("")+'</table></div>':'<span class="empty">No at-risk JOs flagged</span>',"Casey, JO board");
+  var dp=D.depth||[], LN=[["offer","Offer"],["interviewing","Int"],["submitted","Sent"],["ptc","PTC"],["queue","Queue"]];
+  addX("depth-overview","Depth charts","Depth charts at a glance",'<div class="tw"><table style="min-width:520px"><tr><th>JO</th><th>Owner</th>'+LN.map(function(l){return '<th class="r">'+l[1]+'</th>';}).join("")+'</tr>'+dp.map(function(d){return '<tr><td style="white-space:normal"><b>'+esc(d.client)+'</b> '+esc(d.role)+'</td><td>'+esc(d.owner||"none")+'</td>'+LN.map(function(l){return '<td class="r num">'+nv(((d.lanes||{})[l[0]]||{}).total)+'</td>';}).join("")+'</tr>';}).join("")+'</table></div><div class="muted" style="font-size:11px;margin-top:8px">Full charts are in All cards, Depth charts.</div>',"Casey, Crelate stage history");
+  var TC=D.touch||{}, grp=[["offer","At offer"],["interviewing","Interviewing now"],["ptc","Top PTCs on at-risk JOs"]];
+  addX("touch-list","Client handling","Candidates to touch",grp.map(function(g_){var a=TC[g_[0]]||[];return '<div class="sec">'+g_[1]+' ('+a.length+')</div>'+(a.length?'<div class="tw"><table style="min-width:420px">'+a.map(function(p){return '<tr><td style="white-space:normal"><b>'+esc(p.name)+'</b></td><td style="white-space:normal">'+esc(p.client)+' '+esc(p.role)+'</td><td class="muted">'+esc(p.note||"")+'</td></tr>';}).join("")+'</table></div>':'<span class="empty">none</span>');}).join(""),"Casey, Crelate stage history");
+  addX("next-week","Next week","Next week by recruiter",'<div class="cols">'+(D.recs||[]).filter(function(r){return (r.next||[]).length;}).map(function(r){return '<div><div class="sec">'+esc(r.name)+'</div><ul class="list">'+r.next.slice(0,3).map(function(n){return '<li><b>'+esc(n.client)+'</b> '+esc(n.role)+'<div class="muted" style="font-size:10px">'+esc(n.loc)+' · PTC '+nv(n.ptc)+', resume sent '+nv(n.sub)+', int '+nv(n.int)+'</div></li>';}).join("")+'</ul></div>';}).join("")+'</div>',"Casey, next-week.json");
+})();
+
 /* ---------- assemble ---------- */
 var track=document.getElementById("track"), idx=document.getElementById("index"), prevB=document.getElementById("prev"), nextB=document.getElementById("next"), posEl=document.getElementById("pos");
 document.getElementById("stamp").textContent="Pulled "+M.pulled+" · "+M.partial_label;
@@ -520,13 +636,14 @@ sections.forEach(function(s,i){
   var b=document.createElement("button"); b.type="button"; b.textContent=s.label; b.setAttribute("data-s",i);
   b.addEventListener("click",function(){go(s.first);}); idx.appendChild(b);
 });
+var view="home";
 var cur=0, reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 function secOf(i){var k=0;sections.forEach(function(s,j){if(i>=s.first)k=j;});return k;}
 function mark(i){
   cur=i; prevB.disabled=i<=0; nextB.disabled=i>=cards.length-1;
   posEl.textContent="Card "+(i+1)+" of "+cards.length;
   var k=secOf(i); Array.prototype.forEach.call(idx.children,function(b,j){ if(j===k){b.setAttribute("aria-current","true"); try{b.scrollIntoView({inline:"nearest",block:"nearest"});}catch(e){}} else b.removeAttribute("aria-current"); });
-  try{ history.replaceState(null,"","#"+cards[i].id); }catch(e){}
+  if(view==="all"){ try{ history.replaceState(null,"","#"+cards[i].id); }catch(e){} }
 }
 function go(i,instant){
   i=Math.max(0,Math.min(cards.length-1,i));
@@ -541,27 +658,271 @@ prevB.addEventListener("click",function(){go(cur-1);});
 nextB.addEventListener("click",function(){go(cur+1);});
 document.addEventListener("keydown",function(e){
   if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(view!=="all")return;
   var t=e.target&&e.target.tagName; if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;
   if(e.key==="ArrowRight"){e.preventDefault();go(cur+1);} else if(e.key==="ArrowLeft"){e.preventDefault();go(cur-1);}
 });
 window.addEventListener("resize",function(){track.scrollTo({left:cur*track.clientWidth,behavior:"auto"});});
-function fromHash(){
-  var h=(location.hash||"").replace(/^#/,""), i=-1;
-  cards.forEach(function(c,j){if(c.id===h)i=j;});
-  return i;
-}
-window.addEventListener("hashchange",function(){var i=fromHash(); if(i>=0&&i!==cur)go(i);});
-var start=fromHash(); go(start>=0?start:0,true);
 /* JO filters */
-var fil=document.getElementById("jofil");
-if(fil){fil.addEventListener("click",function(e){
-  var b=e.target.closest("button"); if(!b)return; var f=b.getAttribute("data-f");
-  Array.prototype.forEach.call(fil.children,function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
-  Array.prototype.forEach.call(document.querySelectorAll("#jotbl tr[data-r]"),function(tr){
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".filters button"); if(!b||!b.hasAttribute("data-f"))return; var f=b.getAttribute("data-f"), box=b.parentNode, scope=b.closest(".card-b")||document;
+  Array.prototype.forEach.call(box.children,function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
+  Array.prototype.forEach.call(scope.querySelectorAll("tr[data-r]"),function(tr){
     var show=f==="all"||(f==="r"&&tr.dataset.r==="1")||(f==="n"&&tr.dataset.n==="1")||(f==="l"&&tr.dataset.l==="1");
     tr.hidden=!show;
   });
-});}
+});
+/* ================= meeting room ================= */
+var byId={}; cards.forEach(function(c){byId[c.id]=c;}); Object.keys(extra).forEach(function(k){byId[k]=extra[k];});
+function makeCard(id){
+  var c=byId[id]; if(!c) return null;
+  var a=document.createElement("article"); a.className="card"; a.setAttribute("data-card",id);
+  a.innerHTML='<div class="card-h"><div><div class="kick">'+esc(c.kick)+'</div><h2>'+esc(c.title)+'</h2></div></div><div class="card-b">'+c.body+'</div><div class="card-f"><span>'+esc(c.src)+'</span><button class="note" type="button" hidden>Add a note</button></div>';
+  var nb=a.querySelector(".note"); noteBtns.push(nb); nb.hidden=!window.__comments;
+  nb.addEventListener("click",function(){ if(window.__comments){ try{ window.__comments.openComposer({element:a}); }catch(e){} } });
+  return a;
+}
+function $(id){return document.getElementById(id);}
+function ls(k,v){try{ if(v===undefined) return localStorage.getItem(k); if(v===null) localStorage.removeItem(k); else localStorage.setItem(k,v); }catch(e){} return null;}
+
+var REC_TILES=(D.recs||[]).map(function(r){return {id:"recruiter-"+r.slug,label:r.name,sub:r.below?"Below the line":nv(r.total)+" RPs so far",cards:["recruiter-"+r.slug]};});
+var MODES={
+  recruiting:{label:"Recruiting",who:"Sales team: recruiting update and WIPs",tiles:[
+    {id:"rpa",label:"RPA flow",sub:"Dial to FTI",cards:["rpa-flow"]},
+    {id:"team",label:"Team board",sub:"By recruiter",cards:["team-board"]}
+  ].concat(REC_TILES).concat([
+    {id:"intv",label:"Interviewing now",sub:"Live people",cards:["interviewing"]},
+    {id:"mpp",label:"Recent MPs and PTCs",sub:"Activity",cards:["mps-ptcs"]},
+    {id:"next",label:"Next week by recruiter",sub:"Top JOs to push",cards:["next-week"]},
+    {id:"lead",label:"Lead gen",sub:"List to result, BPO",cards:["lead-gen","lead-gen-options"]},
+    {id:"intel",label:"Market intel",sub:"Signals and actions",cards:["market-intel"]},
+    {id:"wip",label:"Agent WIP",sub:"What the agents built",cards:["wip-dean","wip-casey","wip-scout","wip-jenny","wip-q","wip-working-together"]}
+  ])},
+  ops:{label:"Ops",who:"Ops meeting: credits, cost, invoicing",tiles:[
+    {id:"credits",label:"Credits",sub:"ZoomInfo and ElevenLabs",cards:["credits"]},
+    {id:"claude",label:"Claude usage and cost",sub:"Weekly use, spend",cards:["ops-claude"]},
+    {id:"ar",label:"Invoicing and AR",sub:"Past due, chase order",cards:["ops-ar"]},
+    {id:"routines",label:"Scheduled routines",sub:"Runs a week",cards:["ops-routines"]},
+    {id:"decisions",label:"Decisions",sub:"AR calls and open items",cards:["ops-decisions","decisions"]}
+  ]},
+  leadership:{label:"Leadership",who:"Leadership: client care, depth, travel, touch list",tiles:[
+    {id:"care",label:"Client care",sub:"At-risk and active JOs",cards:["at-risk","active-jos"]},
+    {id:"depth",label:"Depth charts",sub:"Every search at a glance",cards:["depth-overview","depth-no-candidates"]},
+    {id:"travel",label:"Travel",sub:"Trips this week",cards:["travel"]},
+    {id:"touch",label:"Candidates to touch",sub:"For the client-handling team",cards:["touch-list"]},
+    {id:"mkt",label:"Marketing and LinkedIn",sub:"Recap, posts, page plan",cards:["marketing","rotation","linkedin"]}
+  ]}
+};
+Object.keys(MODES).forEach(function(k){MODES[k].tiles.forEach(function(t){t.cards=t.cards.filter(function(id){return byId[id];});});MODES[k].tiles=MODES[k].tiles.filter(function(t){return t.cards.length;});});
+var CAR_IDS=["cover","rpa-flow","team-board","interviewing","at-risk","lead-gen","credits","market-intel","marketing","rotation","ops-ar","decisions"].filter(function(id){return byId[id];});
+
+var mode=null, tileIdx=-1;
+var allView=$("allview"), homeView=$("homeview"), carView=$("carview"), meetView=$("meetview"), homeBtn=$("homeBtn");
+
+/* home */
+(function(){
+  var items=[["carousel","Carousel","Always-on. Headline cards advance by themselves, readable across the room."],
+    ["recruiting","Recruiting",MODES.recruiting.who+". "+MODES.recruiting.tiles.length+" tiles."],
+    ["ops","Ops",MODES.ops.who+". "+MODES.ops.tiles.length+" tiles."],
+    ["leadership","Leadership",MODES.leadership.who+". "+MODES.leadership.tiles.length+" tiles."],
+    ["all","All cards","Today’s full Friday review deck, "+cards.length+" cards."]];
+  $("modes").innerHTML=items.map(function(m){return '<button type="button" class="mode" data-m="'+m[0]+'"><b>'+esc(m[1])+'</b><span>'+esc(m[2])+'</span><span class="go">Open</span></button>';}).join("");
+  $("modes").addEventListener("click",function(e){var b=e.target.closest("button[data-m]"); if(b) location.hash="#"+b.getAttribute("data-m");});
+  homeBtn.addEventListener("click",function(){location.hash="#home";});
+})();
+
+/* ---- meeting clock and timer ---- */
+var MC={start:null,done:{},iv:null}, T={left:300000,running:false,end:0,fired:false,iv:null}, actx=null;
+var clockEl=$("mclock"), clockT=$("mclockt");
+function fmtT(ms){var s=Math.max(0,Math.ceil(ms/1000)); return Math.floor(s/60)+":"+("0"+(s%60)).slice(-2);}
+function clockPaint(){
+  if(!MODES[mode]||!MC.start){clockEl.hidden=true;return;}
+  clockEl.hidden=false; var n=Object.keys(MC.done).length;
+  clockT.textContent="Meeting "+fmtT(Date.now()-MC.start).replace(/^/,"")+" · "+n+" of "+MODES[mode].tiles.length+" topics done";
+}
+function clockStart(){ if(!MC.start){MC.start=Date.now(); MC.iv=setInterval(clockPaint,1000);} clockPaint(); }
+function clockReset(){ MC.start=null; MC.done={}; if(MC.iv){clearInterval(MC.iv);MC.iv=null;} timerStop(true); clockEl.hidden=true; if(view==="meet") renderMeet(); }
+$("mreset").addEventListener("click",clockReset);
+function chime(){
+  try{ var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; actx=actx||new AC(); if(actx.state==="suspended") actx.resume();
+    [[660,0],[880,.25]].forEach(function(n){var o=actx.createOscillator(), g=actx.createGain(), t0=actx.currentTime+n[1];
+      o.type="sine"; o.frequency.value=n[0]; g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(0.08,t0+0.05); g.gain.exponentialRampToValueAtTime(0.0001,t0+0.7);
+      o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+0.75);}); }catch(e){}
+}
+function timerPaint(){
+  var el=$("timer"), bar=$("mbar"); if(!el) return;
+  el.textContent=fmtT(T.left);
+  var cls=T.left<=0?"red":(T.left<=60000?"amber":"");
+  el.className="timer "+cls; bar.className="mbar "+cls;
+  var s=$("tstart"), p=$("tpause"); if(s){s.disabled=T.running||T.left<=0; p.disabled=!T.running; s.textContent=T.running?"Running":((T.left<300000&&T.left>0)?"Resume":"Start");}
+}
+function timerStop(reset){ if(T.iv){clearInterval(T.iv);T.iv=null;} T.running=false; if(reset){T.left=300000;T.fired=false;} timerPaint(); }
+function timerStart(){
+  try{ var AC=window.AudioContext||window.webkitAudioContext; if(AC){actx=actx||new AC(); if(actx.state==="suspended")actx.resume();} }catch(e){}
+  if(T.running||T.left<=0) return; clockStart(); T.running=true; T.end=Date.now()+T.left;
+  T.iv=setInterval(function(){
+    T.left=T.end-Date.now();
+    if(T.left<=0){T.left=0; clearInterval(T.iv); T.iv=null; T.running=false; if(!T.fired){T.fired=true; chime(); markDone(); $("live").textContent="Time is up for this topic.";}}
+    timerPaint();
+  },250);
+  timerPaint();
+}
+function timerPause(){ if(!T.running) return; T.left=Math.max(0,T.end-Date.now()); timerStop(false); }
+function markDone(){ var t=MODES[mode]&&MODES[mode].tiles[tileIdx]; if(t){MC.done[t.id]=1; clockPaint();} }
+
+/* ---- IDS store ---- */
+var dbh=null, dbState="none", issuesRemote={}, issuesLocal=[], pendingSet={}, statusOv={}, uid=null, loadTimer=null, showSolved=false;
+try{ var raw=ls("ids-local"); if(raw) issuesLocal=JSON.parse(raw)||[]; }catch(e){ issuesLocal=[]; }
+function allIssues(){
+  var m={}; Object.keys(issuesRemote).forEach(function(k){m[k]=issuesRemote[k];});
+  Object.keys(pendingSet).forEach(function(k){ if(!m[k]) m[k]=pendingSet[k]; });
+  var out=Object.keys(m).map(function(k){var d=Object.assign({},m[k]); if(statusOv[k]) d.status=statusOv[k]; return d;});
+  return out.concat(issuesLocal).filter(function(d){return d.mode===mode;}).sort(function(a,b){return String(b.createdAt).localeCompare(String(a.createdAt));});
+}
+function renderIssues(){
+  var host=$("ids-list"); if(!host) return;
+  var list=allIssues(), open=list.filter(function(d){return d.status!=="solved";}), solved=list.filter(function(d){return d.status==="solved";});
+  var shown=showSolved?list:open, html="";
+  if(dbState==="loading"&&!list.length) html='<div class="emptyds">Loading the issues list…</div>';
+  else if(!shown.length) html='<div class="emptyds"><b style="display:block;color:var(--fg);margin-bottom:2px">No issues yet.</b>Identify one above.</div>';
+  else html=shown.map(function(d){
+    return '<div class="issue'+(d.status==="solved"?' solved':'')+'"><div class="ih"><div><b>'+esc(d.identify)+'</b><div class="muted" style="font-size:10px">'+esc(d.tile)+(d.owner?' · '+esc(d.owner):'')+(d.due?' · due '+esc(d.due):'')+'</div></div><label><input type="checkbox" data-id="'+esc(d.id)+'"'+(d.status==="solved"?' checked':'')+'> Solved</label></div>'+
+      (d.discuss?'<div style="margin-top:3px"><span class="muted">Discuss:</span> '+esc(d.discuss)+'</div>':'')+(d.solve?'<div><span class="muted">Solve:</span> '+esc(d.solve)+'</div>':'')+'</div>';}).join("");
+  host.innerHTML=html;
+  var sb=$("ids-solved"); if(sb){sb.textContent=(showSolved?"Hide":"Show")+" solved ("+solved.length+")"; sb.hidden=!solved.length&&!showSolved;}
+  var nt=$("ids-note"); if(nt) nt.textContent=dbState==="ready"?"Saved issues are shared and read back into Radar’s ledger after the meeting.":(dbState==="loading"?"Connecting to the issues list…":"Notes stay on this screen only");
+}
+function setIssueStatus(id,st){
+  var local=issuesLocal.filter(function(d){return d.id===id;})[0];
+  if(local){local.status=st; ls("ids-local",JSON.stringify(issuesLocal)); renderIssues(); return;}
+  statusOv[id]=st; renderIssues();
+  if(dbh){ try{ var p=dbh.doc("ids/"+id).update({status:st}); if(p&&p.catch) p.catch(function(){delete statusOv[id]; renderIssues();}); }catch(e){delete statusOv[id]; renderIssues();} }
+}
+(async function(){
+  try{ if(window.claude&&typeof window.claude.use==="function"){
+    try{ var u=await window.claude.use("user"); uid=u&&u.id?await u.id():null; }catch(e){ uid=null; }
+    dbh=await window.claude.use("db"); } }catch(e){ dbh=null; }
+  if(!dbh){ dbState="none"; renderIssues(); return; }
+  dbState="loading"; renderIssues();
+  loadTimer=setTimeout(function(){ if(dbState==="loading"){dbState="error"; renderIssues();} },10000);
+  try{
+    dbh.collection("ids").onSnapshot(function(s){
+      var m={}; s.docs.forEach(function(d){m[d.id]=Object.assign({id:d.id},JSON.parse(JSON.stringify(d.data()||{})));});
+      issuesRemote=m; Object.keys(pendingSet).forEach(function(k){if(m[k]) delete pendingSet[k];}); Object.keys(statusOv).forEach(function(k){if(m[k]&&m[k].status===statusOv[k]) delete statusOv[k];});
+      clearTimeout(loadTimer); dbState="ready"; renderIssues();
+    },function(){ clearTimeout(loadTimer); dbState="error"; renderIssues(); });
+  }catch(e){ clearTimeout(loadTimer); dbState="error"; renderIssues(); }
+})();
+function newId(){ try{ if(window.crypto&&crypto.randomUUID) return "i-"+crypto.randomUUID().slice(0,12);}catch(e){} return "i-"+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+async function saveIssue(){
+  var f={i:$("ids-i"),d:$("ids-d"),s:$("ids-s"),o:$("ids-o"),u:$("ids-u")}, msg=$("ids-msg"), t=MODES[mode].tiles[tileIdx];
+  if(!f.i.value.trim()){ msg.textContent="Write the issue under Identify first."; f.i.focus(); return; }
+  var doc={mode:mode,tile:t.label,identify:f.i.value.trim(),discuss:f.d.value.trim(),solve:f.s.value.trim(),owner:f.o.value.trim(),due:f.u.value||"",status:"open",createdAt:new Date().toISOString(),by:uid||""};
+  var id=newId(), saved=false;
+  if(dbh&&dbState!=="error"){
+    try{ pendingSet[id]=Object.assign({id:id},doc); renderIssues(); await dbh.doc("ids/"+id).set(doc); saved=true; }catch(e){ delete pendingSet[id]; }
+  }
+  if(!saved){ issuesLocal.push(Object.assign({id:id},doc)); ls("ids-local",JSON.stringify(issuesLocal)); }
+  msg.textContent=saved?"Saved to the issues list.":"Saved on this screen only.";
+  [f.i,f.d,f.s,f.o,f.u].forEach(function(x){x.value="";}); ls("ids-draft:"+mode+":"+t.id,null);
+  renderIssues();
+}
+
+/* ---- mode view ---- */
+function renderMeet(){
+  var M_=MODES[mode]; if(!M_) return;
+  timerStop(true);
+  if(tileIdx<0){
+    var tiles=M_.tiles.map(function(t,i){return '<button type="button" class="tile'+(MC.done[t.id]?' done':'')+'" data-t="'+i+'"><span class="tn">TOPIC '+(i+1)+(MC.done[t.id]?' · DONE':'')+'</span><b>'+esc(t.label)+'</b><span class="sb">'+esc(t.sub||"")+'</span></button>';}).join("");
+    meetView.innerHTML='<div class="mhead"><div><div class="kick">Meeting mode</div><h1 class="hh" id="mh" tabindex="-1" style="margin-bottom:0">'+esc(M_.label)+'</h1><div class="muted" style="font-size:12px">'+esc(M_.who)+'. Pick a tile; each gets a 5-minute timer and an IDS pad.</div></div></div><div class="tiles" id="tiles">'+tiles+'</div>';
+    $("tiles").addEventListener("click",function(e){var b=e.target.closest("button[data-t]"); if(b){tileIdx=+b.getAttribute("data-t"); renderMeet(); window.scrollTo(0,0);}});
+    clockPaint(); return;
+  }
+  var t=M_.tiles[tileIdx]; clockStart();
+  meetView.innerHTML='<div class="mhead"><div><div class="kick">'+esc(M_.label)+' · topic '+(tileIdx+1)+' of '+M_.tiles.length+'</div><h1 class="hh" id="mh" tabindex="-1" style="margin-bottom:0;font-size:clamp(22px,4vw,32px)">'+esc(t.label)+'</h1></div><button type="button" class="btn" id="back">All tiles</button></div>'+
+    '<div class="mbar" id="mbar"><div class="timer" id="timer" role="timer" aria-label="Topic timer">5:00</div><div class="btns"><button type="button" class="btn pri" id="tstart">Start</button><button type="button" class="btn" id="tpause">Pause</button><button type="button" class="btn" id="treset">Reset</button></div><div class="tt muted" style="font-size:11px">5 minutes. Amber at 1 minute, red at 0.</div><button type="button" class="btn pri" id="tnext">'+(tileIdx<M_.tiles.length-1?'Next topic':'Finish')+'</button></div>'+
+    '<div class="mgrid"><div class="mcards" id="mcards"></div><section class="pad" aria-label="IDS scratch pad"><h3>IDS scratch pad</h3><div class="muted" style="font-size:11px">Identify, Discuss, Solve.</div>'+
+    '<label for="ids-i">Identify</label><textarea id="ids-i" rows="2"></textarea><label for="ids-d">Discuss</label><textarea id="ids-d" rows="2"></textarea><label for="ids-s">Solve</label><textarea id="ids-s" rows="2"></textarea>'+
+    '<div class="padrow"><div><label for="ids-o">Owner</label><input id="ids-o" type="text"></div><div><label for="ids-u">Due</label><input id="ids-u" type="date"></div></div>'+
+    '<div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button type="button" class="btn pri" id="ids-save">Save to issues list</button><span class="muted" id="ids-msg" role="status" style="font-size:11px"></span></div>'+
+    '<div class="sec" style="display:flex;justify-content:space-between;align-items:center;gap:6px">Issues, '+esc(M_.label)+' <button type="button" class="pillb" id="ids-solved" hidden></button></div><div id="ids-list"></div><div class="muted" id="ids-note" style="font-size:10px;margin-top:8px"></div></section></div>';
+  var host=$("mcards"); t.cards.forEach(function(id){var a=makeCard(id); if(a) host.appendChild(a);});
+  if(t.id==="depth"){var more=document.createElement("button"); more.type="button"; more.className="btn"; more.textContent="Open every depth chart"; more.addEventListener("click",function(){location.hash="#depth-01";}); host.appendChild(more);}
+  // draft
+  var dk="ids-draft:"+mode+":"+t.id, fl={i:$("ids-i"),d:$("ids-d"),s:$("ids-s"),o:$("ids-o"),u:$("ids-u")};
+  try{ var dr=JSON.parse(ls(dk)||"null"); if(dr){fl.i.value=dr.i||"";fl.d.value=dr.d||"";fl.s.value=dr.s||"";fl.o.value=dr.o||"";fl.u.value=dr.u||"";} }catch(e){}
+  Object.keys(fl).forEach(function(k){fl[k].addEventListener("input",function(){ ls(dk,JSON.stringify({i:fl.i.value,d:fl.d.value,s:fl.s.value,o:fl.o.value,u:fl.u.value})); });});
+  $("ids-save").addEventListener("click",saveIssue);
+  $("ids-solved").addEventListener("click",function(){showSolved=!showSolved; renderIssues();});
+  $("ids-list").addEventListener("change",function(e){var c=e.target; if(c&&c.type==="checkbox") setIssueStatus(c.getAttribute("data-id"),c.checked?"solved":"open");});
+  $("tstart").addEventListener("click",timerStart); $("tpause").addEventListener("click",timerPause); $("treset").addEventListener("click",function(){timerStop(true);});
+  $("tnext").addEventListener("click",function(){ MC.done[t.id]=1; timerStop(true); if(tileIdx<M_.tiles.length-1) tileIdx++; else tileIdx=-1; renderMeet(); window.scrollTo(0,0); });
+  $("back").addEventListener("click",function(){timerStop(true); tileIdx=-1; renderMeet();});
+  timerPaint(); renderIssues(); clockPaint();
+  var h=$("mh"); if(h) try{h.focus({preventScroll:true});}catch(e){}
+}
+
+/* ---- carousel ---- */
+var CAR={i:0,secs:+(ls("car-secs")||20),manual:false,hover:false,elapsed:0,iv:null,last:0};
+if([10,20,60].indexOf(CAR.secs)<0) CAR.secs=20;
+function carShow(i,anim){
+  CAR.i=(i+CAR_IDS.length)%CAR_IDS.length; CAR.elapsed=0;
+  var st=$("cstage"); if(!st) return; st.innerHTML=""; var a=makeCard(CAR_IDS[CAR.i]); if(!a) return;
+  if(anim&&!reduce) a.className+=" enter"; st.appendChild(a);
+  $("cdots").innerHTML=CAR_IDS.map(function(_,k){return '<i'+(k===CAR.i?' class="on"':'')+'></i>';}).join("");
+  $("cprog").style.width="0%"; $("clive").textContent=byId[CAR_IDS[CAR.i]].title;
+}
+function carPaused(){return CAR.manual||CAR.hover;}
+function carPaint(){ var b=$("cpause"); if(b){b.textContent=carPaused()?"Play":"Pause"; b.setAttribute("aria-pressed",CAR.manual?"true":"false");} var s=$("cstate"); if(s) s.textContent=carPaused()?"Paused":""; }
+function carRun(){
+  carStop(); CAR.last=Date.now();
+  CAR.iv=setInterval(function(){
+    var now=Date.now(), dt=now-CAR.last; CAR.last=now; if(carPaused()) return;
+    CAR.elapsed+=dt; var p=$("cprog"); if(p) p.style.width=Math.min(100,CAR.elapsed/(CAR.secs*1000)*100)+"%";
+    if(CAR.elapsed>=CAR.secs*1000) carShow(CAR.i+1,true);
+  },200);
+}
+function carStop(){ if(CAR.iv){clearInterval(CAR.iv);CAR.iv=null;} }
+function renderCar(){
+  carView.innerHTML='<div class="chead"><div><div class="kick">Carousel</div><div class="muted" style="font-size:12px"><span id="cstate"></span> <span id="clive" class="sr" aria-live="polite"></span></div></div><div class="ctl"><span class="muted" style="font-size:11px">Every</span>'+
+    [10,20,60].map(function(n){return '<button type="button" class="pillb" data-s="'+n+'" aria-pressed="'+(n===CAR.secs)+'">'+n+'s</button>';}).join("")+
+    '<button type="button" class="pillb" id="cprev" aria-label="Previous card">Prev</button><button type="button" class="pillb" id="cpause" aria-pressed="false">Pause</button><button type="button" class="pillb" id="cnext" aria-label="Next card">Next</button><button type="button" class="pillb" id="cfs" hidden>Fullscreen</button></div></div>'+
+    '<div class="stage" id="cstage" title="Tap to pause or play"></div><div class="prog"><i id="cprog"></i></div><div class="dots" id="cdots" aria-hidden="true"></div>';
+  carView.querySelector(".ctl").addEventListener("click",function(e){var b=e.target.closest("button[data-s]"); if(!b) return; CAR.secs=+b.getAttribute("data-s"); ls("car-secs",String(CAR.secs)); CAR.elapsed=0;
+    Array.prototype.forEach.call(carView.querySelectorAll("button[data-s]"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false");}); });
+  $("cprev").addEventListener("click",function(){carShow(CAR.i-1,true);}); $("cnext").addEventListener("click",function(){carShow(CAR.i+1,true);});
+  $("cpause").addEventListener("click",function(){CAR.manual=!CAR.manual; carPaint();});
+  var st=$("cstage");
+  st.addEventListener("click",function(e){ if(e.target.closest("button,a,input,textarea,select")) return; CAR.manual=!CAR.manual; carPaint(); });
+  st.addEventListener("pointerenter",function(e){ if(e.pointerType==="mouse"){CAR.hover=true; carPaint();} });
+  st.addEventListener("pointerleave",function(e){ if(e.pointerType==="mouse"){CAR.hover=false; carPaint();} });
+  var fs=$("cfs"), de=document.documentElement;
+  if(de.requestFullscreen){ fs.hidden=false; fs.addEventListener("click",function(){
+    try{ var p=document.fullscreenElement?document.exitFullscreen():de.requestFullscreen(); if(p&&p.catch) p.catch(function(){fs.hidden=true;}); }catch(e){fs.hidden=true;} }); }
+  carShow(CAR.i,false); carPaint(); carRun();
+}
+
+/* ---- views and routing ---- */
+function setView(v){
+  view=v; homeView.hidden=v!=="home"; carView.hidden=v!=="car"; meetView.hidden=v!=="meet"; allView.hidden=v!=="all"; homeBtn.hidden=v==="home";
+  if(v!=="car") carStop(); if(v!=="meet"){ timerStop(false); }
+  clockEl.hidden=!(v==="meet"&&MC.start);
+}
+function route(){
+  var h=(location.hash||"").replace(/^#/,"");
+  if(h==="carousel"){ setView("car"); renderCar(); return; }
+  if(MODES[h]){ if(mode!==h){ if(mode&&MC.start) clockReset(); mode=h; tileIdx=-1; showSolved=false; } setView("meet"); renderMeet(); return; }
+  var i=-1; cards.forEach(function(c,j){if(c.id===h)i=j;});
+  if(h==="all"||i>=0){ setView("all"); go(i>=0?i:cur,true); return; }
+  setView("home");
+}
+window.addEventListener("hashchange",route);
+document.addEventListener("keydown",function(e){
+  if(view!=="car"||e.altKey||e.ctrlKey||e.metaKey) return;
+  var t=e.target&&e.target.tagName; if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT"||t==="BUTTON") return;
+  if(e.key==="ArrowRight"){carShow(CAR.i+1,true);} else if(e.key==="ArrowLeft"){carShow(CAR.i-1,true);} else if(e.key===" "){e.preventDefault(); CAR.manual=!CAR.manual; carPaint();}
+});
+route();
 /* comments capability: composer only, the shell shows threads */
 (async function(){
   var c=null;

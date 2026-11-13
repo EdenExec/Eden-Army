@@ -563,6 +563,23 @@ if not qc_rows:
         "Open PTCs and client needs", "Open tickets and team requests")]
 qc = {"as_of": QC.get("as_of", ""), "rows": qc_rows, "filled": bool(QC.get("rows"))}
 
+# ---------------------------------------------------------------- ops, travel, touch list
+OPS = load("radar/ops.json")
+LEAD = load("radar/leadership.json")
+risk_keys = {(r["client"], r["role"], r["loc"]) for r in jo_rows if r.get("risk")}
+touch = {"offer": [], "interviewing": [], "ptc": []}
+for gp in grp:
+    for p in gp["people"]:
+        touch["interviewing"].append({"name": p["name"], "client": gp["client"], "role": gp["role"],
+                                      "note": ("%sd in stage" % p["days"]) if p.get("days") is not None else ""})
+for dr in depth:
+    off = [p for p in dr["lanes"]["offer"]["people"]]
+    for p in off:
+        touch["offer"].append({"name": p["name"], "client": dr["client"], "role": dr["role"], "note": p.get("status", "")})
+    if (dr["client"], dr["role"], dr["loc"]) in risk_keys:
+        for p in [x for x in dr["lanes"]["ptc"]["people"] if not x["stale"]][:3]:
+            touch["ptc"].append({"name": p["name"], "client": dr["client"], "role": dr["role"], "note": "PTC"})
+
 # ---------------------------------------------------------------- DATA
 DATA = {
     "meta": {"title": "Friday Pipeline Review", "date": "13 Nov 2026", "pulled": PULLED,
@@ -572,7 +589,7 @@ DATA = {
     "flow": flow, "team": team, "recs": recs, "jos": jos, "intv": intv, "mpp": mpp,
     "depth": depth, "nocand": nocand_list, "leadgen": leadgen, "agents": agents,
     "together": together, "qc": qc, "decisions": decisions,
-    "credits": credits if CR_ON else None, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
+    "credits": credits if CR_ON else None, "ops": OPS or None, "travel": LEAD or None, "touch": touch, "market": market, "marketing": marketing, "rotation": rotation, "linkedin": linkedin,
 }
 
 # ---------------------------------------------------------------- relabel discreet clients
@@ -600,10 +617,10 @@ html = tpl.replace("__DATA__", s)
 # ---------------------------------------------------------------- guards
 bad = re.search(r"baker|\binl\b|idaho\s+national", html, re.I)
 assert not bad, "discreet client still present: %r" % (bad.group(0) if bad else "")
-_nomkt = json.dumps({k: v for k, v in DATA.items() if k != "market"}, ensure_ascii=False)
+_nomkt = json.dumps({k: v for k, v in DATA.items() if k not in ("market", "ops")}, ensure_ascii=False)
 _m = re.search(r"\$\s?\d", tpl + _nomkt)  # market intel alone may carry public project values
 if _m:
-    warn("dollar figure found outside #market-intel near %r" % (tpl + _nomkt)[max(0, _m.start() - 30):_m.end() + 30])
+    warn("dollar figure found outside #market-intel and the ops cards near %r" % (tpl + _nomkt)[max(0, _m.start() - 30):_m.end() + 30])
 for pat, what in [(r"\b\d{3}[-.\s]\d{3}[-.\s]\d{4}\b", "phone number"),
                   (r"[\w.+-]+@[\w-]+\.[\w.]+", "email address")]:
     m = re.search(pat, html)
