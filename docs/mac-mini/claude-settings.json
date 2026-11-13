@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./ops/*)",
+      "Bash(git *)",
+      "Bash(npm run *)",
+      "Bash(open -a *)",
+      "Bash(pmset -g*)",
+      "Bash(pgrep *)",
+      "Read",
+      "Edit(~/Eden/**)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(sudo *)",
+      "Bash(kill *)",
+      "Bash(pkill *)",
+      "Bash(osascript *)"
+    ],
+    "deny": [
+      "Read(~/Library/**)",
+      "Read(~/Library/Application Support/Wispr Flow/**)",
+      "Bash(security *)"
+    ]
+  }
+}
