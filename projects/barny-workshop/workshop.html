@@ -121,9 +121,12 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .pw-more{font:500 12px/1.3 var(--ui);color:var(--mute)}
 .onair{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:#C0392B}
 .onair i{width:9px;height:9px;border-radius:50%;background:#E5483B;box-shadow:0 0 0 0 rgba(229,72,59,.6);animation:onair 1.6s ease-in-out infinite}
-.onair.wait{color:var(--mute)} .onair.wait i{background:var(--mute);animation:none;box-shadow:none}
+.onair.amber{color:#B7791F} .onair.amber i{background:#E9A23B;animation:blink 1.1s ease-in-out infinite}
+.onair.green{color:#2F7A4A} .onair.green i{background:#3FA46A;animation:glowg 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px 1px rgba(233,162,59,.7)}50%{opacity:.25;box-shadow:none}}
+@keyframes glowg{0%,100%{box-shadow:0 0 3px 1px rgba(63,164,106,.35)}50%{box-shadow:0 0 9px 3px rgba(63,164,106,.6)}}
 @keyframes onair{0%{box-shadow:0 0 0 0 rgba(229,72,59,.55);opacity:1}70%{box-shadow:0 0 0 8px rgba(229,72,59,0);opacity:.75}100%{box-shadow:0 0 0 0 rgba(229,72,59,0);opacity:1}}
-@media (prefers-reduced-motion:reduce){.onair i{animation:none}}
+@media (prefers-reduced-motion:reduce){.onair i{animation:none!important}}
 details.fold>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 details.fold>summary::-webkit-details-marker{display:none}
 details.fold>summary .fold-t{font-weight:600}
@@ -666,9 +669,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata'].forEach(function (e) { AUD.addEventListener(e, podTick); });
   function podWidget(s) {
     var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
-    var live = S.pod.busy ? 'Writing the script' : ep && !ep.audio && ep.studio === 'rendering' ? 'Recording' : ep && !ep.audio && ep.studio === 'requested' ? 'Waiting to record' : '';
+    var live = S.pod.busy ? ['Writing the script', 'red'] : ep && !ep.audio && ep.studio === 'rendering' ? ['Recording', 'red'] : ep && !ep.audio && ep.studio === 'requested' ? ['Recording requested', 'amber'] : ep && ep.audio && !ep.played ? ['New episode ready', 'green'] : null;
     var lib = h('a', { href: '#podcasts', class: 'pw-more', text: 'Podcast library' });
-    var box = h('section', { class: 'sheet' }, h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast' }), live ? h('span', { class: 'onair' + (live === 'Waiting to record' ? ' wait' : ''), role: 'status' }, h('i'), live) : lib));
+    var box = h('section', { class: 'sheet' }, h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast' }), live ? h('span', { class: 'onair ' + live[1], role: 'status' }, h('i'), live[0]) : lib));
     if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-200) })); return box; }
     if (ep && ep.audio) {
       if (AUD.getAttribute('data-ep') !== ep.id) { AUD.src = ep.audio; AUD.setAttribute('data-ep', ep.id); }
@@ -676,7 +679,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       var back = h('button', { type: 'button', 'aria-label': 'Back 15 seconds', text: '− 15s' }), pp = h('button', { class: 'primary', type: 'button', id: 'pod-pp', text: AUD.paused ? 'Play' : 'Pause' }), fwd = h('button', { type: 'button', 'aria-label': 'Forward 15 seconds', text: '+ 15s' });
       back.addEventListener('click', function () { AUD.currentTime = Math.max(0, AUD.currentTime - 15); });
       fwd.addEventListener('click', function () { AUD.currentTime = Math.min(AUD.duration || 1e9, AUD.currentTime + 15); });
-      pp.addEventListener('click', function () { if (AUD.paused) AUD.play().catch(function () {}); else AUD.pause(); });
+      pp.addEventListener('click', function () { if (AUD.paused) { AUD.play().catch(function () {}); if (!ep.played) { var d = Object.assign({}, ep); delete d.id; d.played = new Date().toISOString(); saved(mine(ep.id).set(d)).catch(function () {}); } } else AUD.pause(); });
       box.appendChild(h('div', { class: 'pod-ctl' }, back, pp, fwd, h('span', { class: 'pod-time', id: 'pod-time' })));
       var bar = h('div', { class: 'pod-bar', role: 'presentation' }, h('i', { id: 'pod-bar-i' }));
       bar.addEventListener('click', function (e) { var r = bar.getBoundingClientRect(); if (isFinite(AUD.duration)) AUD.currentTime = AUD.duration * (e.clientX - r.left) / r.width; });
