@@ -126,7 +126,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 (function () {
   var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -279,9 +279,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var side = h('aside');
     side.appendChild(rhythmBox(s));
     side.appendChild(prayerBox());
-    side.appendChild(podBox(s));
     side.appendChild(promptsBox(s));
     side.appendChild(askBox(s));
+    m.appendChild(podWidget(s));
     cols.appendChild(sh); cols.appendChild(side); m.appendChild(cols);
   }
   function list(parent, title, arr, tag) { if (!(arr || []).length) return; parent.appendChild(h('h3', { text: title })); var l = h(tag || 'ul', { class: 'q' }); arr.forEach(function (x) { l.appendChild(h('li', { text: x })); }); parent.appendChild(l); }
@@ -542,7 +542,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     b.addEventListener('click', function () { var d = Object.assign({}, ep); delete d.id; d.studio = asked ? null : 'requested'; saved(mine(ep.id).set(d)).catch(function () {}); });
     return b;
   }
-  function podPrompt(s) {
+  var POD_LENGTHS = [[5, 'About 5 minutes'], [10, 'About 10 minutes'], [15, 'About 15 minutes'], [20, 'About 20 minutes']];
+  function podPrompt(s, f) {
+    var mins = +f.length || 10, words = mins * 150;
     var parts = ['Study: ' + (s.title || '') + ' (' + ((s.passage || {}).ref || '') + ')'];
     if (s.readAloud) parts.push('ESV text you may quote exactly: ' + s.readAloud);
     if (s.setting) parts.push('Setting: ' + s.setting);
@@ -550,35 +552,70 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if ((s.reflect || []).length) parts.push('Questions: ' + s.reflect.join(' | '));
     if (s.practice) parts.push('Practice: ' + s.practice.name + '. ' + s.practice.how);
     if (s.carry) parts.push('Verse to carry: ' + s.carry);
-    return 'Write a podcast script: a warm two-voice conversation about this Bible study between BARNY (Barnabas, Kev\'s spiritual advisor: Scripture-first, historically orthodox and evangelical, encouraging) and ATLAS (a curious tutor who asks the questions a thoughtful listener would ask and pushes for plain, everyday examples). The listener is Kev: a husband, father and business owner who studies on Saturdays.\n\nLength: 900 to 1,200 words, about 7 minutes. Format: every line starts with "BARNY:" or "ATLAS:". No headings, stage directions, lists, markdown or emoji. Spoken English, contractions, short sentences.\n\nRules: quote Scripture only from the ESV text given below, word for word; for any other verse, name the reference and paraphrase. Where faithful Christians differ (anything marked DISPUTED), say so plainly, give the main views fairly, and suggest bringing it to his pastor; never pick a side on a secondary matter. Never claim a word from God or invent a quotation from a teacher. Open with a vivid question, not "welcome to the show". Close with one sentence to carry and the practice.\n\n' + parts.join('\n\n');
+    var brief = ['Themes Kev wants: ' + (f.themes || 'the study as a whole'), 'Focus areas: ' + ((f.focus || []).concat(f.focusOther ? [f.focusOther] : []).join('; ') || 'Barny\'s choice'), 'Direction from Kev: ' + (f.direction || 'none given')].join('\n');
+    return 'Write a podcast script: a warm two-voice conversation about this Bible study between BARNY (Barnabas, Kev\'s spiritual advisor: Scripture-first, historically orthodox and evangelical, encouraging) and ATLAS (a curious tutor who asks the questions a thoughtful listener would ask and pushes for plain, everyday examples). The listener is Kev: a husband, father and business owner who studies on Saturdays.\n\nKev\'s brief for this episode:\n' + brief + '\nFollow his themes, focus and direction closely.\n\nLength: about ' + words + ' words (' + mins + ' minutes spoken). Format: every line starts with "BARNY:" or "ATLAS:". No headings, stage directions, lists, markdown or emoji. Spoken English, contractions, short sentences.\n\nRules: quote Scripture only from the ESV text given below, word for word; for any other verse, name the reference and paraphrase. Where faithful Christians differ (anything marked DISPUTED), say so plainly, give the main views fairly, and suggest bringing it to his pastor; never pick a side on a secondary matter. Never claim a word from God or invent a quotation from a teacher. Open with a vivid question, not "welcome to the show". Close with one sentence to carry and the practice.\n\n' + parts.join('\n\n');
   }
-  function podBox(s) {
-    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Podcast · Barny and Atlas' })), ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
-    if (ep && !S.pod.busy) {
-      box.appendChild(h('p', { class: 'note', text: parseScript(ep.script).length + ' turns · written ' + short(ep.at) }));
-      box.appendChild(playerControls(ep));
-      var open = h('button', { class: 'link', type: 'button', text: 'Read the script, pick voices and render' }); open.addEventListener('click', function () { location.hash = '#podcasts'; });
-      box.appendChild(open);
-    }
-    if (!S.sample) { box.appendChild(h('p', { class: 'note', text: 'Generating a podcast lights up when this page can ask Claude.' })); return box; }
-    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Barny and Atlas are writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-280) })); return box; }
-    if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
-    var go = h('button', { class: ep ? '' : 'primary', type: 'button', text: ep ? 'Generate again' : 'Generate podcast' }); go.disabled = !S.live;
-    go.addEventListener('click', function () {
-      S.pod = { busy: true, text: '', err: '' }; render();
-      S.sample([{ role: 'user', content: podPrompt(s) }], { modelTier: 'default', cache: false, onText: function (x) { S.pod.text = x.text; var el = document.getElementById('pod-live'); if (el) el.textContent = x.text.slice(-280); } })
-        .then(function (r) {
-          var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
-          var id = ep ? ep.id : 'ep-' + Date.now().toString(36);
-          return saved(mine(id).set({ title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, at: new Date().toISOString(), studio: ep ? ep.studio || null : null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
-        })
-        .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
-        .then(function () { render(); });
+  function podForm(s) {
+    var f = S.podForm, wrap = h('form', { class: 'sheet', style: 'background:var(--soft)' }, h('span', { class: 'eyebrow', text: 'Shape this episode' }));
+    function keep(k, v) { f[k] = v; }
+    var themes = h('input', { type: 'text', id: 'pf-themes', 'aria-label': 'Themes', placeholder: 'Themes, e.g. rest, the finished work, drifting' }); themes.value = f.themes || ''; themes.addEventListener('input', function () { keep('themes', themes.value); });
+    wrap.appendChild(h('label', { for: 'pf-themes', class: 'note', text: 'Themes' })); wrap.appendChild(themes);
+    wrap.appendChild(h('span', { class: 'note', text: 'Focus areas (pick any)' }));
+    var chips = h('div', { class: 'chips' });
+    (s.sections || []).map(function (x) { return x.heading; }).concat(['Application at Eden', 'Husband and father', 'Prayer']).forEach(function (t) {
+      var on = (f.focus || []).indexOf(t) >= 0, c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(on), text: t });
+      c.addEventListener('click', function () { var a = (f.focus || []).filter(function (x) { return x !== t; }); if (!on) a.push(t); f.focus = a; render(); });
+      chips.appendChild(c);
     });
-    box.appendChild(go);
-    box.appendChild(h('p', { class: 'note', text: 'Barny writes a 7-minute conversation with Atlas from this study. Render it with ElevenLabs in the voices you pick in Podcasts.' }));
+    wrap.appendChild(chips);
+    var other = h('input', { type: 'text', id: 'pf-other', 'aria-label': 'Other focus', placeholder: 'Anything else to focus on (optional)' }); other.value = f.focusOther || ''; other.addEventListener('input', function () { keep('focusOther', other.value); });
+    wrap.appendChild(other);
+    var dir = h('textarea', { id: 'pf-dir', 'aria-label': 'Direction', rows: '3', placeholder: 'Any direction: tone, a question to answer, who it is for (e.g. "talk to me as a leader going into a hard week")' }); dir.value = f.direction || ''; dir.addEventListener('input', function () { keep('direction', dir.value); });
+    wrap.appendChild(h('label', { for: 'pf-dir', class: 'note', text: 'Direction' })); wrap.appendChild(dir);
+    var len = h('select', { id: 'pf-len', 'aria-label': 'Ideal length' }); POD_LENGTHS.forEach(function (l) { var o = h('option', { value: String(l[0]), text: l[1] }); if (+f.length === l[0]) o.selected = true; len.appendChild(o); }); len.addEventListener('change', function () { keep('length', len.value); });
+    wrap.appendChild(h('label', { for: 'pf-len', class: 'note', text: 'Ideal length' })); wrap.appendChild(len);
+    var go = h('button', { class: 'primary', type: 'submit', text: 'Write the script' }), cancel = h('button', { type: 'button', text: 'Cancel' });
+    cancel.addEventListener('click', function () { S.podForm = null; render(); });
+    wrap.appendChild(h('div', { class: 'row' }, go, cancel, h('span', { class: 'note', text: 'Barny and Atlas write it from this study and your answers.' })));
+    wrap.addEventListener('submit', function (e) { e.preventDefault(); document.activeElement && document.activeElement.blur(); generatePod(s, Object.assign({}, f)); });
+    return wrap;
+  }
+  function generatePod(s, f) {
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
+    S.podForm = null; S.pod = { busy: true, text: '', err: '' }; render();
+    S.sample([{ role: 'user', content: podPrompt(s, f) }], { modelTier: 'default', cache: false, onText: function (x) { S.pod.text = x.text; var el = document.getElementById('pod-live'); if (el) el.textContent = x.text.slice(-320); } })
+      .then(function (r) {
+        var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
+        var id = ep ? ep.id : 'ep-' + Date.now().toString(36);
+        return saved(mine(id).set({ title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, brief: f, minutes: +f.length || 10, at: new Date().toISOString(), studio: null, audio: null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
+      })
+      .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
+      .then(function () { render(); });
+  }
+  function podWidget(s) {
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0], b = chosenVoice('barny'), a = chosenVoice('atlas');
+    var box = h('section', { class: 'sheet' });
+    var voices = h('button', { class: 'link', type: 'button', text: 'Barny: ' + (b ? b.name : 'pick a voice') + ' · Atlas: ' + (a ? a.name : 'pick a voice') }); voices.addEventListener('click', function () { location.hash = '#podcasts'; });
+    box.appendChild(h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast · Barny and Atlas' }), voices));
+    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Barny and Atlas are writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-320) })); return box; }
+    if (ep) {
+      box.appendChild(h('h3', { text: (ep.minutes ? ep.minutes + '-minute episode' : 'Episode') + ' · ' + (ep.ref || '') }));
+      if (ep.brief && ep.brief.themes) box.appendChild(h('p', { class: 'note', text: 'Themes: ' + ep.brief.themes }));
+      box.appendChild(playerControls(ep));
+      var row = h('div', { class: 'row' }), st = studioButton(ep); if (st) row.appendChild(st);
+      var read = h('details', null, h('summary', { class: 'note', text: 'Read the script (' + parseScript(ep.script).length + ' turns)' }), scriptView(ep));
+      box.appendChild(row); box.appendChild(read);
+      if (ep.studio === 'requested' && !ep.audio) box.appendChild(h('p', { class: 'note', text: 'Send Barny a comment (tick Send to Claude) and he renders it now. About ' + (ep.minutes || 10) * 600 + ' characters of your ElevenLabs plan.' }));
+    }
+    if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
+    if (!S.sample) { box.appendChild(h('p', { class: 'note', text: 'Generating lights up when this page can ask Claude.' })); return box; }
+    if (S.podForm) { box.appendChild(podForm(s)); return box; }
+    var go = h('button', { class: ep ? '' : 'primary', type: 'button', text: ep ? 'Generate a new episode' : 'Generate podcast' }); go.disabled = !S.live;
+    go.addEventListener('click', function () { S.podForm = Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); });
+    box.appendChild(h('div', { class: 'row' }, go, ep ? null : h('span', { class: 'note', text: 'A short brief first: themes, focus, direction and length.' })));
     return box;
   }
+
   /* ElevenLabs voice samples, rendered by Barny and published with the page (voices/*.mp3). Kev's pick saves to data/users/<id>/voices. */
   var VOICE_SAMPLES = [
     { who: 'barny', id: 'zD5RRa1ndly0YgnhdKgR', name: 'Jesse', about: 'Natural audiobook voice, middle-aged American, relaxed storyteller', file: 'voices/barny-jesse.mp3' },
