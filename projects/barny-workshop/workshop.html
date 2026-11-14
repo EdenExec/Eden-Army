@@ -119,7 +119,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 (function () {
   var ROOMS = ['sabbath', 'journal', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], progress: {}, rhythm: {}, pick: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -163,7 +163,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
           snap.docs.forEach(function (d) {
             var v = d.data() || {};
             if (d.id === 'progress') S.progress = v.studies || {};
-            else if (d.id === 'choices') S.pick = v.next || null;
+            else if (d.id === 'choices') { S.pick = v.next || null; S.more = v.more || null; }
             else if (d.id.indexOf('rhythm-') === 0) S.rhythm[d.id.slice(7)] = v.ticks || {};
             else if (d.id.indexOf('j-') === 0) j.push(Object.assign({ id: d.id }, v));
           });
@@ -198,9 +198,54 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts })[r](m);
   }
 
+  /* A Sabbath doc may belong to a series (study + session). The room opens on the first one not yet completed. */
+  function sabKey(s) { return [s.study || 'sabbath', s.session || s.id]; }
+  function sabDone(s) { var k = sabKey(s); return !!((S.progress[k[0]] || {})[k[1]]); }
+  function sabSeries(study) { return S.sabbath.filter(function (d) { return d.study === study; }).sort(function (a, b) { return (a.session || 0) - (b.session || 0); }); }
+  function sabCurrent() {
+    if (!S.sabbath.length) return null;
+    var pick = S.sabSel && S.sabbath.filter(function (d) { return d.id === S.sabSel; })[0]; if (pick) return pick;
+    var today = new Date().toISOString().slice(0, 10), asc = S.sabbath.slice().sort(function (a, b) { return String(a.date || a.id).localeCompare(String(b.date || b.id)); });
+    var past = asc.filter(function (d) { return String(d.date || d.id).slice(0, 10) <= today; }), anchor = past.length ? past[past.length - 1] : asc[0];
+    if (!anchor.study) return anchor;
+    var series = sabSeries(anchor.study);
+    return series.filter(function (d) { return !sabDone(d); })[0] || series[series.length - 1];
+  }
+  function setSabDone(s, val) {
+    var k = sabKey(s), all = Object.assign({}, S.progress), p = Object.assign({}, all[k[0]] || {}); p[k[1]] = val; all[k[0]] = p; S.progress = all;
+    return saved(mine('progress').set({ studies: all, at: new Date().toISOString() }));
+  }
+  function completeBox(s, series) {
+    var box = h('div', { class: 'practice row' }), done = sabDone(s), i = series.indexOf(s), next = i >= 0 ? series[i + 1] : null;
+    if (!S.live) { box.appendChild(h('p', { class: 'note', text: 'Open this page in Claude, signed in, to mark the study complete.' })); return box; }
+    if (!done) {
+      var b = h('button', { class: 'primary', type: 'button', text: 'Complete this study' });
+      b.addEventListener('click', function () { b.disabled = true; setSabDone(s, true).then(function () { S.sabSel = next ? next.id : s.id; render(); window.scrollTo(0, 0); }, function () { b.disabled = false; }); render(); });
+      box.appendChild(b);
+      if (next) box.appendChild(h('span', { class: 'note', text: 'Next: ' + ((next.passage || {}).ref || next.title) }));
+      return box;
+    }
+    box.appendChild(h('span', { class: 'status next', text: 'Completed' }));
+    if (next) { var go = h('button', { class: 'primary', type: 'button', text: 'Go to the next study: ' + ((next.passage || {}).ref || next.title) }); go.addEventListener('click', function () { S.sabSel = next.id; render(); window.scrollTo(0, 0); }); box.appendChild(go); }
+    else if (s.study) {
+      var asked = S.more === s.study, more = h('button', { class: asked ? '' : 'primary', type: 'button', 'aria-pressed': String(asked), text: asked ? 'Asked for the next chapters' : 'Ask Barny for the next chapters' });
+      more.addEventListener('click', function () { S.more = asked ? null : s.study; saved(mine('choices').set({ next: S.pick, more: S.more, at: new Date().toISOString() })).catch(function () {}); render(); });
+      box.appendChild(more);
+      box.appendChild(h('span', { class: 'note', text: asked ? 'Barny sees this the next time you open his session, and sets out the next chapters in this same layout.' : 'This is the last session set out so far.' }));
+    }
+    var undo = h('button', { class: 'link', type: 'button', text: 'Mark not done' }); undo.addEventListener('click', function () { setSabDone(s, false).catch(function () {}); S.sabSel = s.id; render(); }); box.appendChild(undo);
+    return box;
+  }
+
   function roomSabbath(m) {
-    var s = S.sabbath[0];
-    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'This Sabbath' }), h('span', { class: 'eyebrow', text: s ? fmtDate(s.date || s.id) : '' })));
+    var s = sabCurrent(), today = new Date().toISOString().slice(0, 10), when = s ? String(s.date || s.id) : '';
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'This Sabbath' }), h('span', { class: 'eyebrow', text: s ? (when.slice(0, 10) > today ? 'Planned for ' : '') + fmtDate(when) : '' })));
+    var series = s && s.study ? sabSeries(s.study) : [];
+    if (series.length > 1) {
+      var strip = h('div', { class: 'chips', role: 'group', 'aria-label': 'Studies in this series' });
+      series.forEach(function (d) { var c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(d.id === s.id), text: (sabDone(d) ? '\u2713 ' : '') + (d.session ? d.session + ' \u00b7 ' : '') + ((d.passage || {}).ref || d.title || d.id) }); c.addEventListener('click', function () { S.sabSel = d.id; render(); }); strip.appendChild(c); });
+      m.appendChild(strip);
+    }
     if (!s) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: S.live ? 'Barny sets out each Sabbath\'s passage, study and practice here by Friday afternoon.' : 'The passage, study and practice for the Sabbath appear here.' }))); return; }
     var cols = h('div', { class: 'cols' }), sh = h('article', { class: 'sheet reading' });
     var p = s.passage || {};
@@ -208,6 +253,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (s.readAloud) sh.appendChild(h('blockquote', { text: s.readAloud }));
     if (s.readAloud && s.readAloudNote) sh.appendChild(h('p', { class: 'note', text: s.readAloudNote }));
     if (s.setting) { sh.appendChild(h('h3', { text: 'The setting' })); sh.appendChild(h('p', { text: s.setting })); }
+    (s.sections || []).forEach(function (x) { sh.appendChild(h('h3', null, x.heading || '', grade(x.grade))); sh.appendChild(h('p', { text: x.body || '' })); });
     list(sh, 'Look closely', s.observe, 'ol');
     if ((s.words || []).length) { sh.appendChild(h('h3', { text: 'Word by word' })); var dl = h('dl', { class: 'words' }); s.words.forEach(function (w) { dl.appendChild(h('dt', null, '“' + w.word + '”' + (w.orig ? ' · ' + w.orig : ''), grade(w.grade))); dl.appendChild(h('dd', { text: w.note || '' })); }); sh.appendChild(dl); }
     if ((s.crossRefs || []).length) { sh.appendChild(h('h3', { text: 'Across the Bible' })); var ul = h('ul', { class: 'q' }); s.crossRefs.forEach(function (c) { ul.appendChild(h('li', null, link(c.ref, c.link), c.note ? ' · ' + c.note : '')); }); sh.appendChild(ul); }
@@ -215,6 +261,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (s.practice) sh.appendChild(h('div', { class: 'practice' }, h('span', { class: 'eyebrow', text: 'Practice' + (s.practice.stream ? ' · ' + s.practice.stream : '') }), h('h3', { text: s.practice.name || '' }), h('p', { text: s.practice.how || '' })));
     if (s.pray) { sh.appendChild(h('h3', { text: 'Pray' })); sh.appendChild(h('p', { text: s.pray })); }
     if (s.carry) sh.appendChild(h('p', { class: 'note' }, 'Carry into the week: ', link(s.carry, s.carryLink || 'https://www.esv.org/' + encodeURIComponent(s.carry) + '/')));
+    sh.appendChild(completeBox(s, series));
     var side = h('aside');
     side.appendChild(rhythmBox(s));
     side.appendChild(promptsBox(s));
@@ -375,7 +422,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     sec.appendChild(h('p', { class: 'note', text: S.pick ? 'Your pick is marked. Barny reads it when he plans the next Sabbaths.' : 'Pick one. Barny reads your pick when he plans the next Sabbaths. His recommendation is first.' }));
     S.next.forEach(function (n, i) {
       var picked = S.pick === n.id, b = h('button', { type: 'button', class: picked ? 'primary' : '', 'aria-pressed': String(picked), text: picked ? 'Your pick' : 'Pick this' }); b.disabled = !S.live;
-      b.addEventListener('click', function () { S.pick = picked ? null : n.id; saved(mine('choices').set({ next: S.pick, at: new Date().toISOString() })).catch(function () {}); render(); });
+      b.addEventListener('click', function () { S.pick = picked ? null : n.id; saved(mine('choices').set({ next: S.pick, more: S.more, at: new Date().toISOString() })).catch(function () {}); render(); });
       sec.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: (n.stream || '') + (i === 0 ? ' · Barny\'s recommendation' : '') })), h('h3', { text: n.title }), h('p', { text: n.why || '' }), h('div', { class: 'row' }, b)));
     });
     m.appendChild(sec);

@@ -8,6 +8,12 @@ The workshop is a private page (an artifact only Kev can open, https://claude.ai
 2. Write the session as `sabbath-<date>.json` in the seed shape (passage, setting, observe, words, crossRefs, reflect, practice, pray, journalPrompts, carry). Follow `skills/study-guide.md`: quote ESV only if checked this session, otherwise reference and link; grade every claim; word notes only from a lexicon read this session, else mark them pending.
 3. Offer the next study from `next.json`, recommendation first. Push nothing into the Sabbath. When Kev opens the workshop or a session on Saturday to study, study with him fully (Kev, 14 November 2026).
 
+## Study series (Kev, 14 November 2026)
+
+Kev asked to complete a study on the page and keep going through a book in the same layout. A Sabbath doc may carry `study` (a `studies` id) and `session` (its number), plus optional `sections` [{heading, body, grade}] rendered after the setting. The This Sabbath room opens on the first session in the series Kev has not completed, shows the series as chips, and ends with **Complete this study**, which ticks `progress.studies[study][session]` (the same ticks as the Studies room) and moves to the next session. After the last session the button becomes **Ask Barny for the next chapters**, which sets `choices.more` to the study id.
+
+At the start of every session, read Kev's `choices` doc: if `more` names a study, set out its next three or four sessions in the same shape (doc id = the planned Saturday's date), add them to the `studies` doc's sessions, check every ESV quote this session, then clear `more` (keep `next`). The Hebrews series seeds live in `workshop/seed/hebrews/`.
+
 ## Filing content
 
 File with ArtifactData on https://claude.ai/artifact/BBgMLsVw8x9CtVy5XViBK6 into these collections: `sabbath` (doc id = the Sabbath's date, YYYY-MM-DD; the page shows the latest), `studies` (with `order`), `people`, `next` (with `order`, recommendation at 0), `podcasts` (with `order`; add `script` and `audio` links when ready, `status` idea|script|ready), `charts` ({title, kind, about, link, order}). The framework is the doc `meta/framework` ({intro, rhythm [{step, minutes, what}], streams}). Use "set" for new docs and pin updates with if_version.
