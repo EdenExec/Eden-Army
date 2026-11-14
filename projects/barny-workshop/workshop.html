@@ -22,7 +22,14 @@ header.top{grid-column:1/-1;display:flex;justify-content:space-between;align-ite
 h1{font:600 26px/1.1 var(--display);letter-spacing:.08em;margin:0}
 .sub{color:var(--mute);font-size:13px}
 .eyebrow{font:600 11px/1.3 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-nav.rooms{display:flex;flex-direction:column;gap:2px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start}
+.rail{display:flex;flex-direction:column;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;min-width:0;max-height:calc(100vh - 32px);overflow:auto}
+nav.rooms{display:flex;flex-direction:column;gap:2px}
+nav.rooms a.title{font:700 17px/1.3 var(--ui);letter-spacing:.01em}
+details.more>summary{list-style:none;cursor:pointer;padding:8px 10px;border-radius:4px;font:600 11px/1.3 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:'+';font-size:14px;letter-spacing:0} details.more[open]>summary::after{content:'\2212'}
+details.more>summary:hover{background:var(--page)}
+details.more[open]{display:flex;flex-direction:column;gap:2px}
 nav.rooms a{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:4px;color:var(--ink);text-decoration:none;font-weight:500}
 nav.rooms a small{color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
 nav.rooms a:hover{background:var(--page)} nav.rooms a[aria-current="page"]{background:var(--soft);font-weight:600}
@@ -99,8 +106,7 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
-  nav.rooms{position:static;flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:4px}
-  nav.rooms a{white-space:nowrap} nav.rooms a small{display:none}
+  .rail{position:static;max-height:none;overflow:visible}
   .sheet{padding:16px}
 }
 footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;font:600 11px/1.3 var(--ui);letter-spacing:.14em;color:var(--mute)}
@@ -114,16 +120,22 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     <div><span class="eyebrow">KDTW GROUP · Sabbath study</span><h1>BARNY'S WORKSHOP</h1></div>
     <div class="sub" id="state">Opening the workshop…</div>
   </header>
+  <div class="rail">
   <nav class="rooms" aria-label="Rooms">
-    <a href="#sabbath" data-room="sabbath">This Sabbath</a>
-    <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
-    <a href="#prayer" data-room="prayer">Who needs prayer? <small id="n-prayer"></small></a>
-    <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
-    <a href="#people" data-room="people">Saints and teachers <small id="n-people"></small></a>
-    <a href="#charts" data-room="charts">Charts and maps</a>
-    <a href="#ahead" data-room="ahead">Look ahead</a>
-    <a href="#podcasts" data-room="podcasts">Podcasts</a>
+    <a href="#sabbath" data-room="sabbath" class="title">This Sabbath</a>
+    <details class="more" id="rooms-more">
+      <summary>Rooms</summary>
+      <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
+      <a href="#prayer" data-room="prayer">Prayer list and answers <small id="n-prayer"></small></a>
+      <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
+      <a href="#people" data-room="people">Saints and teachers <small id="n-people"></small></a>
+      <a href="#charts" data-room="charts">Charts and maps</a>
+      <a href="#ahead" data-room="ahead">Look ahead</a>
+      <a href="#podcasts" data-room="podcasts">Podcasts</a>
+    </details>
   </nav>
+  <div id="rail-prayer"></div>
+  </div>
   <main id="main" aria-live="polite"></main>
   <footer class="kd"><span>KDTW GROUP</span><span class="mono" role="img" aria-label="KDTW monogram">KDTW</span></footer>
 </div>
@@ -212,9 +224,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     $('#n-prayer').textContent = S.prayers.filter(function (x) { return !x.answered; }).length || '';
     $('#n-studies').textContent = S.studies.length || '';
     $('#n-people').textContent = S.people.length || '';
-    var ae = document.activeElement, keep = ae && ae.id && m.contains(ae) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
+    var rail = $('#rail-prayer'), ae = document.activeElement, keep = ae && ae.id && (m.contains(ae) || rail.contains(ae)) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
     if (keep && (/^(TEXTAREA|SELECT)$/.test(ae.tagName) || (ae.tagName === 'INPUT' && ae.type !== 'checkbox'))) return;   // never rebuild under someone typing (a ticked box may rebuild; focus comes back below)
-    m.textContent = '';
+    m.textContent = ''; rail.textContent = ''; rail.appendChild(prayerBox());
     ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts, prayer: roomPrayer })[r](m);
   }
 
@@ -285,7 +297,6 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var side = h('aside');
     side.appendChild(podWidget(s));
     side.appendChild(rhythmBox(s));
-    side.appendChild(prayerBox());
     side.appendChild(promptsBox(s));
     side.appendChild(askBox(s));
     cols.appendChild(sh); cols.appendChild(side); m.appendChild(cols);
@@ -705,6 +716,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(g);
   }
 
+  (function () { var d = document.getElementById('rooms-more'); if (!d) return; if (store('bw-menu') || (location.hash && ['#sabbath', ''].indexOf(location.hash) < 0)) d.open = true; d.addEventListener('toggle', function () { store('bw-menu', d.open); }); })();
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { S.podForm = null; render(); } });
   window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
   boot();
