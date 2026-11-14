@@ -124,6 +124,17 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .onair.wait{color:var(--mute)} .onair.wait i{background:var(--mute);animation:none;box-shadow:none}
 @keyframes onair{0%{box-shadow:0 0 0 0 rgba(229,72,59,.55);opacity:1}70%{box-shadow:0 0 0 8px rgba(229,72,59,0);opacity:.75}100%{box-shadow:0 0 0 0 rgba(229,72,59,0);opacity:1}}
 @media (prefers-reduced-motion:reduce){.onair i{animation:none}}
+details.fold>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary .fold-t{font-weight:600}
+details.fold>summary .fold-t::before{content:'\25B8';display:inline-block;width:16px;color:var(--mute);transition:transform .15s}
+details.fold[open]>summary .fold-t::before{transform:rotate(90deg)}
+details.fold>summary .fold-n{font:500 12px/1 var(--ui);color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fold-in{display:flex;flex-direction:column;gap:10px;padding:10px 0 4px 16px;min-width:0}
+details.fold.sheet{padding:10px 18px} details.fold.sheet>summary{border-bottom:0}
+.fold-add{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.fold-add textarea{min-height:0}
+.fold-in>button,.fold-in>.link{align-self:flex-start}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
@@ -234,6 +245,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (!S.live) return Promise.reject(new Error('offline'));
     var id = e.id || ('j-' + Date.now().toString(36));
     var doc = { kind: e.kind, text: e.text, ref: e.ref || '', prompt: e.prompt || '', sabbath: e.sabbath || '', at: e.at || new Date().toISOString(), edited: e.id ? new Date().toISOString() : null, notion: e.notion || false };
+    if (e.ep) { doc.ep = e.ep; doc.tag = e.tag || 'note'; }
     return saved(mine(id).set(doc));
   }
 
@@ -678,7 +690,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       var at = mmss(AUD.currentTime), ta = h('textarea', { id: 'pod-note', 'aria-label': 'Note', rows: '3', placeholder: 'Your note at ' + at }); ta.value = S.podNote;
       ta.addEventListener('input', function () { S.podNote = ta.value; });
       var save = h('button', { class: 'primary', type: 'button', text: 'Save to journal' }), cancel = h('button', { type: 'button', text: 'Cancel' });
-      save.addEventListener('click', function () { var t = ta.value.trim(); if (!t) return; S.podNote = null; ta.blur(); saveEntry({ kind: 'study', text: t, ref: (ep.ref || '') + ' · podcast ' + at, sabbath: s.id }).catch(function () {}); render(); });
+      save.addEventListener('click', function () { var t = ta.value.trim(); if (!t) return; S.podNote = null; ta.blur(); saveEntry({ kind: 'study', text: t, ref: (ep.ref || '') + ' · podcast ' + at, sabbath: s.id, ep: ep.id, tag: 'note' }).catch(function () {}); render(); });
       cancel.addEventListener('click', function () { S.podNote = null; render(); });
       box.appendChild(ta); box.appendChild(h('div', { class: 'row' }, save, cancel));
     }
@@ -709,37 +721,62 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     { who: 'atlas', id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', about: 'Wise, mature and balanced, older American', file: 'voices/atlas-bill.mp3' }
   ];
   function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || VOICE_SAMPLES.filter(function (x) { return x.id === (who === 'atlas' ? 'PerZoH0r6nxBZXCoIPpv' : 'f5gk6ENs9vgDBvfkTj7e'); })[0]; }
-  function voicePicker() {
-    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Voices · ElevenLabs' }));
-    box.appendChild(h('p', { class: 'note', text: 'Listen to each and pick one for Barny and one for Atlas. Episodes render in the voices you pick.' }));
-    [['barny', 'Barny'], ['atlas', 'Atlas']].forEach(function (w) {
-      var cur = chosenVoice(w[0]);
-      box.appendChild(h('h3', { text: w[1] + (cur ? ': ' + cur.name : ': not chosen yet') }));
-      VOICE_SAMPLES.filter(function (v) { return v.who === w[0]; }).forEach(function (v) {
-        var on = cur && cur.id === v.id, a = h('audio', { controls: true, preload: 'none', src: v.file }); a.style.width = '100%';
-        var pick = h('button', { class: on ? 'primary' : '', type: 'button', 'aria-pressed': String(!!on), text: on ? 'Chosen' : 'Choose ' + v.name }); pick.disabled = !S.live;
-        pick.addEventListener('click', function () { var nv = Object.assign({}, S.voices); delete nv.at; nv[w[0]] = v.id; S.voices = nv; saved(mine('voices').set(Object.assign({ at: new Date().toISOString() }, nv))).catch(function () {}); render(); });
-        box.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('strong', { text: v.name }), h('span', { text: v.about })), a, h('div', { class: 'row' }, pick)));
-      });
-    });
-    return box;
+  /* The podcast library: episodes filed by study series, each holding Kev's notes, concepts and responses (journal entries tagged with the episode). */
+  var POD_TAGS = [['note', 'Note'], ['concept', 'Concept'], ['response', 'Response']];
+  function fold(key, summary, openByDefault) {
+    var d = h('details', { class: 'fold' }), st = store('bw-fold-' + key); d.open = st == null ? !!openByDefault : !!st;
+    d.addEventListener('toggle', function () { store('bw-fold-' + key, d.open); });
+    var sm = h('summary'); [].concat(summary).forEach(function (x) { if (x) sm.appendChild(x); }); d.appendChild(sm); return d;
   }
-
+  function epNotes(ep) { return S.journal.filter(function (j) { return j.ep === ep.id; }).sort(function (a, b) { return String(a.at).localeCompare(String(b.at)); }); }
+  function epCard(ep) {
+    var notes = epNotes(ep);
+    var d = fold('ep-' + ep.id, [h('span', { class: 'fold-t', text: (ep.ref || 'Episode') + (ep.minutes ? ' · ' + ep.minutes + ' min' : '') }), h('span', { class: 'fold-n', text: (ep.audio ? '' : 'script only · ') + notes.length + (notes.length === 1 ? ' note' : ' notes') })], false);
+    var body = h('div', { class: 'fold-in' });
+    if (ep.brief && ep.brief.themes) body.appendChild(h('p', { class: 'note', text: 'Themes: ' + ep.brief.themes + (ep.brief.direction ? ' · ' + ep.brief.direction : '') }));
+    if (ep.audio) { var a = h('audio', { controls: true, preload: 'none', src: ep.audio }); a.style.width = '100%'; body.appendChild(a); }
+    else { body.appendChild(h('p', { class: 'note', text: ep.studio === 'rendering' ? 'Barny is recording it now.' : ep.studio === 'requested' ? 'Waiting for Barny to record it.' : 'Script only. Render it from This Sabbath to hear it.' })); var sb = studioButton(ep); if (sb) body.appendChild(sb); }
+    POD_TAGS.forEach(function (t) {
+      var mine2 = notes.filter(function (n) { return (n.tag || 'note') === t[0]; }); if (!mine2.length) return;
+      var f = fold('ep-' + ep.id + '-' + t[0], [h('span', { class: 'fold-t', text: t[1] + 's' }), h('span', { class: 'fold-n', text: String(mine2.length) })], true);
+      var inner = h('div', { class: 'fold-in' });
+      mine2.forEach(function (n) { inner.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: n.ref || '' }), h('span', { text: short(n.at) })), h('p', { class: 'body', text: n.text }))); });
+      f.appendChild(inner); body.appendChild(f);
+    });
+    if (S.live) {
+      var tag = 'note', chips = h('div', { class: 'chips', role: 'group', 'aria-label': 'Kind of note' });
+      POD_TAGS.forEach(function (t, i) { var c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(i === 0), text: t[1] }); c.addEventListener('click', function () { tag = t[0]; chips.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); }); }); chips.appendChild(c); });
+      var ta = h('textarea', { id: 'epn-' + ep.id, rows: '2', 'aria-label': 'Add a note to this episode', placeholder: 'A note, a concept, or your response to this episode' });
+      var add = h('button', { class: 'primary', type: 'button', text: 'Add' });
+      add.addEventListener('click', function () { var v = ta.value.trim(); if (!v) return; ta.value = ''; ta.blur(); saveEntry({ kind: 'study', text: v, ref: ep.ref || '', sabbath: ep.sabbath, ep: ep.id, tag: tag }).catch(function () {}); });
+      body.appendChild(h('div', { class: 'fold-add' }, chips, ta, h('div', { class: 'row' }, add)));
+    }
+    var scr = fold('ep-' + ep.id + '-script', [h('span', { class: 'fold-t', text: 'Script' }), h('span', { class: 'fold-n', text: parseScript(ep.script).length + ' turns' })], false);
+    scr.appendChild(h('div', { class: 'fold-in' }, scriptView(ep))); body.appendChild(scr);
+    var del = h('button', { class: 'link', type: 'button', text: 'Delete episode' });
+    del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good? Notes stay in the journal'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete episode'; }, 4000); });
+    body.appendChild(del);
+    d.appendChild(body); return d;
+  }
   function roomPodcasts(m) {
-    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Podcasts' }), h('span', { class: 'eyebrow', text: 'Two voices, one subject' })));
-    m.appendChild(voicePicker());
-    if (S.eps.length) {
-      m.appendChild(h('h3', { text: 'Your episodes' }));
-      S.eps.forEach(function (ep) {
-        var del = h('button', { class: 'link', type: 'button', text: 'Delete' });
-        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete'; }, 4000); });
-        m.appendChild(h('article', { class: 'sheet' }, h('span', { class: 'eyebrow', text: (ep.ref || '') + ' · ' + short(ep.at) }), h('h3', { text: ep.title || 'Episode' }), playerControls(ep), scriptView(ep), h('div', { class: 'row' }, studioButton(ep), del),
-          ep.studio === 'requested' ? h('p', { class: 'note', text: 'Barny renders it with ElevenLabs in your chosen voices the next time his session is open (send him a comment to wake him). About 6,000 characters of your plan per episode.' }) : null));
-      });
-    } else m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Open This Sabbath and tap Generate podcast. Barny writes a conversation with Atlas on the study, and it plays here in two voices.' })));
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Podcast library' }), h('span', { class: 'eyebrow', text: S.eps.length + (S.eps.length === 1 ? ' episode' : ' episodes') })));
+    if (!S.eps.length) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'No episodes yet. On This Sabbath, tap Generate new podcast. Each episode files here by study, with your notes, concepts and responses kept under it.' }))); }
+    var groups = {}, order = [];
+    S.eps.forEach(function (ep) {
+      var sab = S.sabbath.filter(function (x) { return x.id === ep.sabbath; })[0] || {}, st = S.studies.filter(function (x) { return x.id === sab.study; })[0];
+      var key = st ? st.id : 'other', title = st ? st.title : 'Other studies';
+      if (!groups[key]) { groups[key] = { title: title, eps: [] }; order.push(key); }
+      groups[key].eps.push(Object.assign({ _n: sab.session || 0 }, ep));
+    });
+    order.forEach(function (k) {
+      var g = groups[k]; g.eps.sort(function (a, b) { return (a._n - b._n) || String(a.at).localeCompare(String(b.at)); });
+      var f = fold('series-' + k, [h('span', { class: 'fold-t', text: g.title }), h('span', { class: 'fold-n', text: g.eps.length + (g.eps.length === 1 ? ' episode' : ' episodes') })], true);
+      var inner = h('div', { class: 'fold-in' }); g.eps.forEach(function (ep) { inner.appendChild(epCard(S.eps.filter(function (x) { return x.id === ep.id; })[0])); });
+      f.appendChild(inner); f.classList.add('sheet'); m.appendChild(f);
+    });
     if (!S.podcasts.length) return;
-    m.appendChild(h('h3', { text: 'From Barny' }));
-    roomPodcastsShared(m);
+    var fb = fold('series-barny', [h('span', { class: 'fold-t', text: 'From Barny' }), h('span', { class: 'fold-n', text: String(S.podcasts.length) })], false); fb.classList.add('sheet');
+    var wrapB = h('div', { class: 'fold-in' }); roomPodcastsShared(wrapB); fb.appendChild(wrapB); m.appendChild(fb);
   }
   function roomPodcastsShared(m) {
     var g = h('div', { class: 'grid' });
