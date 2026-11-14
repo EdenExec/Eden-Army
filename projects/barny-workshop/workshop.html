@@ -576,14 +576,14 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   }
   function podForm(s) {
     var f = S.podForm, wrap = h('form', { class: 'sheet' }, h('h3', { text: 'Generate new podcast' }), h('p', { class: 'note', text: 'A few questions so Barny and Atlas head in the right direction.' }));
-    function keep(k, v) { f[k] = v; }
+    function keep(k, v) { f[k] = v; store('bw-podform', f); }
     var themes = h('input', { type: 'text', id: 'pf-themes', 'aria-label': 'Themes', placeholder: 'Themes, e.g. rest, the finished work, drifting' }); themes.value = f.themes || ''; themes.addEventListener('input', function () { keep('themes', themes.value); });
     wrap.appendChild(h('label', { for: 'pf-themes', class: 'note', text: 'Themes' })); wrap.appendChild(themes);
     wrap.appendChild(h('span', { class: 'note', text: 'Focus areas (pick any)' }));
     var chips = h('div', { class: 'chips' });
     (s.sections || []).map(function (x) { return x.heading; }).concat(['Application at Eden', 'Husband and father', 'Prayer']).forEach(function (t) {
       var on = (f.focus || []).indexOf(t) >= 0, c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(on), text: t });
-      c.addEventListener('click', function () { var a = (f.focus || []).filter(function (x) { return x !== t; }); if (!on) a.push(t); f.focus = a; render(); });
+      c.addEventListener('click', function () { var a = (f.focus || []).filter(function (x) { return x !== t; }); if (!on) a.push(t); f.focus = a; store('bw-podform', f); render(); });
       chips.appendChild(c);
     });
     wrap.appendChild(chips);
@@ -594,14 +594,14 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var len = h('select', { id: 'pf-len', 'aria-label': 'Ideal length' }); POD_LENGTHS.forEach(function (l) { var o = h('option', { value: String(l[0]), text: l[1] }); if (+f.length === l[0]) o.selected = true; len.appendChild(o); }); len.addEventListener('change', function () { keep('length', len.value); });
     wrap.appendChild(h('label', { for: 'pf-len', class: 'note', text: 'Ideal length' })); wrap.appendChild(len);
     var go = h('button', { class: 'primary', type: 'submit', text: 'Write the script' }), cancel = h('button', { type: 'button', text: 'Cancel' });
-    cancel.addEventListener('click', function () { S.podForm = null; render(); });
+    cancel.addEventListener('click', function () { S.podForm = null; store('bw-podform', null); render(); });
     wrap.appendChild(h('div', { class: 'row' }, go, cancel, h('span', { class: 'note', text: 'Barny and Atlas write it from this study and your answers.' })));
     wrap.addEventListener('submit', function (e) { e.preventDefault(); document.activeElement && document.activeElement.blur(); generatePod(s, Object.assign({}, f)); });
     return wrap;
   }
   function generatePod(s, f) {
     var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
-    S.podForm = null; S.pod = { busy: true, text: '', err: '' }; render();
+    S.podForm = null; store('bw-podform', null); S.pod = { busy: true, text: '', err: '' }; render();
     S.sample([{ role: 'user', content: podPrompt(s, f) }], { modelTier: 'default', cache: false, onText: function (x) { S.pod.text = x.text; var el = document.getElementById('pod-live'); if (el) el.textContent = x.text.slice(-320); } })
       .then(function (r) {
         var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
@@ -650,13 +650,13 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     }
     var row = h('div', { class: 'row' });
     if (ep && S.podNote === null) { var note = h('button', { type: 'button', text: 'Make a note' }); note.disabled = !S.live; note.addEventListener('click', function () { S.podNote = ''; render(); setTimeout(function () { var t = document.getElementById('pod-note'); if (t) t.focus(); }, 0); }); row.appendChild(note); }
-    if (S.sample) { var gen = h('button', { type: 'button', class: ep ? '' : 'primary', text: 'Generate new podcast' }); gen.disabled = !S.live; gen.addEventListener('click', function () { S.podForm = Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); }); row.appendChild(gen); }
+    if (S.sample) { var gen = h('button', { type: 'button', class: ep ? '' : 'primary', text: 'Generate new podcast' }); gen.disabled = !S.live; gen.addEventListener('click', function () { S.podForm = store('bw-podform') || Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); }); row.appendChild(gen); }
     box.appendChild(row);
     if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
     if (ep) { var read = h('details', null, h('summary', { class: 'note', text: 'Read the script' }), scriptView(ep)); box.appendChild(read); }
     if (S.podForm) {
       var modal = h('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Generate new podcast' }, podForm(s));
-      modal.addEventListener('click', function (e) { if (e.target === modal) { S.podForm = null; render(); } });
+      modal.addEventListener('click', function (e) { if (e.target === modal) { store('bw-podform', S.podForm); S.podForm = null; render(); } });
       box.appendChild(modal);
     }
     return box;
@@ -720,8 +720,21 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 
   (function () { var d = document.getElementById('rooms-more'); if (!d) return; if (store('bw-menu') || (location.hash && ['#sabbath', ''].indexOf(location.hash) < 0)) d.open = true; d.addEventListener('toggle', function () { store('bw-menu', d.open); }); })();
   document.getElementById('home').addEventListener('click', function () { S.sabSel = null; if (location.hash === '#sabbath') { render(); window.scrollTo(0, 0); } });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { S.podForm = null; render(); } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { store('bw-podform', S.podForm); S.podForm = null; render(); } });
   window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
-  boot();
+  /* Keep Kev's place when Barny republishes: the viewer hands this state to the new version (window.claude.hot). */
+  function start(data) {
+    data = data || {};
+    if (data.podForm) S.podForm = data.podForm;
+    if (data.podNote != null) S.podNote = data.podNote;
+    if (data.sabSel) S.sabSel = data.sabSel;
+    if (data.answering) S.answering = data.answering;
+    if (data.room && ROOMS.indexOf(data.room) >= 0 && !location.hash) store('bw-room', data.room);
+    boot();
+    if (data.scroll) setTimeout(function () { window.scrollTo(0, data.scroll); }, 60);
+  }
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.snapshot) hot.snapshot(function () { return { podForm: S.podForm, podNote: S.podNote, sabSel: S.sabSel, answering: S.answering, room: room(), scroll: window.scrollY }; });
+  if (hot && hot.ready) hot.ready(start); else start((hot && hot.data) || {});
 })();
 </script>
