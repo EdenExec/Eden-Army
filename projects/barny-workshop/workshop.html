@@ -278,9 +278,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     sh.appendChild(completeBox(s, series));
     var side = h('aside');
     side.appendChild(rhythmBox(s));
-    side.appendChild(promptsBox(s));
     side.appendChild(prayerBox());
     side.appendChild(podBox(s));
+    side.appendChild(promptsBox(s));
     side.appendChild(askBox(s));
     cols.appendChild(sh); cols.appendChild(side); m.appendChild(cols);
   }
@@ -492,11 +492,30 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     });
     m.appendChild(ans);
   }
+  /* The prayer widget: the same shape as The Rhythm (tick, name, a quiet count on the right), with a quick add and answered prayers kept. */
   function prayerBox() {
-    var act = S.prayers.filter(function (x) { return !x.answered; }), box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Who needs prayer?' }));
-    if (!act.length) box.appendChild(h('p', { class: 'note', text: 'Keep a list of who you are praying for, tick them as you go, and keep the answers.' }));
-    act.slice(0, 8).forEach(function (x) { box.appendChild(prayRow(x, true)); });
-    var go = h('button', { type: 'button', text: act.length ? 'Open the prayer list' : 'Start the prayer list' }); go.addEventListener('click', function () { location.hash = '#prayer'; });
+    var t = dayKey(), act = S.prayers.filter(function (x) { return !x.answered; }), nAns = S.prayers.length - act.length;
+    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Who needs prayer?' }));
+    if (act.length) {
+      var ol = h('ol', { class: 'rhythm' }), prayed = 0;
+      act.forEach(function (x) {
+        var on = (x.days || []).indexOf(t) >= 0, n = (x.days || []).length; if (on) prayed++;
+        var cb = h('input', { type: 'checkbox', id: 'pw-' + x.id, 'aria-label': 'Prayed for ' + x.who + ' today' }); cb.checked = on; cb.disabled = !S.live;
+        cb.addEventListener('change', function () { var d = (x.days || []).filter(function (k) { return k !== t; }); if (cb.checked) d.push(t); savePrayer(Object.assign({}, x, { days: d })).catch(function () {}); });
+        var ans = h('button', { class: 'link', type: 'button', text: 'Answered' }); ans.style.fontSize = '12px';
+        ans.addEventListener('click', function () { S.answering = x.id; location.hash = '#prayer'; });
+        ol.appendChild(h('li', { class: on ? 'done' : '' }, cb, h('span', { class: 't' }, x.who, x.for ? h('div', { class: 'note', text: x.for }) : null, S.live ? h('div', null, ans) : null), h('span', { class: 'm', text: n ? n + (n === 1 ? ' day' : ' days') : 'new' })));
+      });
+      box.appendChild(ol);
+      box.appendChild(h('p', { class: 'note', text: 'Prayed for ' + prayed + ' of ' + act.length + ' today. Ticks start fresh each morning.' }));
+    } else box.appendChild(h('p', { class: 'note', text: 'Add who you are praying for, tick them as you pray, and keep the answers.' }));
+    if (S.live) {
+      var who = h('input', { type: 'text', id: 'pw-new', 'aria-label': 'Add someone to pray for', placeholder: 'Add a name' }), add = h('button', { type: 'submit', text: 'Add' });
+      var f = h('form', { class: 'row' }, h('div', { style: 'flex:1 1 120px;min-width:0' }, who), add);
+      f.addEventListener('submit', function (e) { e.preventDefault(); var w = who.value.trim(); if (!w) return; who.value = ''; who.blur(); savePrayer({ id: 'p-' + Date.now().toString(36), who: w, for: '', started: new Date().toISOString(), days: [] }).catch(function () {}); });
+      box.appendChild(f);
+    }
+    var go = h('button', { class: 'link', type: 'button', text: (nAns ? nAns + ' answered · ' : '') + 'Open the full list' }); go.addEventListener('click', function () { location.hash = '#prayer'; });
     box.appendChild(go); return box;
   }
 
