@@ -118,6 +118,11 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .pw-list li.done .pw-name{color:var(--mute);text-decoration:line-through}
 .pw input[type=text]{font:13px/1.3 var(--ui);padding:5px 8px;background:transparent}
 .pw-more{font:500 12px/1.3 var(--ui);color:var(--mute)}
+.onair{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:#C0392B}
+.onair i{width:9px;height:9px;border-radius:50%;background:#E5483B;box-shadow:0 0 0 0 rgba(229,72,59,.6);animation:onair 1.6s ease-in-out infinite}
+.onair.wait{color:var(--mute)} .onair.wait i{background:var(--mute);animation:none;box-shadow:none}
+@keyframes onair{0%{box-shadow:0 0 0 0 rgba(229,72,59,.55);opacity:1}70%{box-shadow:0 0 0 8px rgba(229,72,59,0);opacity:.75}100%{box-shadow:0 0 0 0 rgba(229,72,59,0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.onair i{animation:none}}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
@@ -574,7 +579,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     return box;
   }
   function studioButton(ep) {
-    if (ep.audio) return null; var asked = ep.studio === 'requested', b = h('button', { class: asked ? 'link' : 'primary', type: 'button', text: asked ? 'Render requested (tap to cancel)' : 'Render with ElevenLabs' });
+    if (ep.audio || ep.studio === 'rendering') return null; var asked = ep.studio === 'requested', b = h('button', { class: asked ? 'link' : 'primary', type: 'button', text: asked ? 'Render requested (tap to cancel)' : 'Render with ElevenLabs' });
     b.addEventListener('click', function () { var d = Object.assign({}, ep); delete d.id; d.studio = asked ? null : 'requested'; saved(mine(ep.id).set(d)).catch(function () {}); });
     return b;
   }
@@ -623,7 +628,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       .then(function (r) {
         var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
         var id = ep ? ep.id : 'ep-' + Date.now().toString(36);
-        return saved(mine(id).set({ title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, brief: f, minutes: +f.length || 10, at: new Date().toISOString(), studio: null, audio: null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
+        return saved(mine(id).set({ kind: 'ep', title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, brief: f, minutes: +f.length || 10, at: new Date().toISOString(), studio: null, audio: null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
       })
       .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
       .then(function () { render(); });
@@ -639,7 +644,10 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   }
   ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata'].forEach(function (e) { AUD.addEventListener(e, podTick); });
   function podWidget(s) {
-    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0], box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Podcast' }));
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
+    var live = S.pod.busy ? 'Writing the script' : ep && !ep.audio && ep.studio === 'rendering' ? 'Recording' : ep && !ep.audio && ep.studio === 'requested' ? 'Waiting to record' : '';
+    var lib = h('a', { href: '#podcasts', class: 'pw-more', text: 'Podcast library' });
+    var box = h('section', { class: 'sheet' }, h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast' }), live ? h('span', { class: 'onair' + (live === 'Waiting to record' ? ' wait' : ''), role: 'status' }, h('i'), live) : lib));
     if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-200) })); return box; }
     if (ep && ep.audio) {
       if (AUD.getAttribute('data-ep') !== ep.id) { AUD.src = ep.audio; AUD.setAttribute('data-ep', ep.id); }
@@ -654,7 +662,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       box.appendChild(bar);
       setTimeout(podTick, 0);
     } else if (ep) {
-      box.appendChild(h('p', { class: 'note', text: ep.studio === 'requested' ? 'Script ready. Rendering is requested; send Barny a comment and it plays here.' : 'Script ready. Render it to play here.' }));
+      box.appendChild(h('p', { class: 'note', text: ep.studio === 'rendering' ? 'Barny is recording it now. It plays here when it is done.' : ep.studio === 'requested' ? 'Script ready. Rendering is requested; send Barny a comment and it plays here.' : 'Script ready. Render it to play here.' }));
       var st = studioButton(ep); if (st) box.appendChild(st);
     } else box.appendChild(h('p', { class: 'note', text: 'No episode for this study yet.' }));
     if (ep && S.podNote !== null) {
@@ -668,6 +676,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var row = h('div', { class: 'row' });
     if (ep && S.podNote === null) { var note = h('button', { type: 'button', text: 'Make a note' }); note.disabled = !S.live; note.addEventListener('click', function () { S.podNote = ''; render(); setTimeout(function () { var t = document.getElementById('pod-note'); if (t) t.focus(); }, 0); }); row.appendChild(note); }
     if (S.sample) { var gen = h('button', { type: 'button', class: ep ? '' : 'primary', text: 'Generate new podcast' }); gen.disabled = !S.live; gen.addEventListener('click', function () { S.podForm = store('bw-podform') || Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); }); row.appendChild(gen); }
+    if (live) row.appendChild(lib);
     box.appendChild(row);
     if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
     if (ep) { var read = h('details', null, h('summary', { class: 'note', text: 'Read the script' }), scriptView(ep)); box.appendChild(read); }
