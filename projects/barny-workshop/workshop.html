@@ -84,6 +84,12 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .stream-h{display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--ink);padding-left:12px}
 .answer{font:400 15.5px/1.7 var(--read);white-space:pre-wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pr{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;border-top:1px solid var(--line);padding-top:10px}
+.pr:first-of-type{border-top:0;padding-top:0}
+.pr .who{font-weight:600} .pr .for{font:400 15px/1.55 var(--read)} .pr.done .who{text-decoration:line-through;color:var(--mute)}
+.script{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;padding-right:4px}
+.script p{font:400 15px/1.6 var(--read)} .script b{font:600 11px/1 var(--ui);letter-spacing:.12em;margin-right:6px}
+.script p.speaking{background:var(--soft);border-radius:4px;outline:4px solid var(--soft)}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
@@ -105,6 +111,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   <nav class="rooms" aria-label="Rooms">
     <a href="#sabbath" data-room="sabbath">This Sabbath</a>
     <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
+    <a href="#prayer" data-room="prayer">Who needs prayer? <small id="n-prayer"></small></a>
     <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
     <a href="#people" data-room="people">Saints and teachers <small id="n-people"></small></a>
     <a href="#charts" data-room="charts">Charts and maps</a>
@@ -117,9 +124,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 
 <script>
 (function () {
-  var ROOMS = ['sabbath', 'journal', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
+  var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, answering: null, play: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -159,14 +166,20 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
         listen('charts', 'charts', function (a, b) { return (a.order || 0) - (b.order || 0); });
         db.doc('meta/framework').onSnapshot(function (s) { S.framework = s.exists ? s.data() : null; render(); }, function () {});
         db.collection('data/users/' + id).onSnapshot(function (snap) {
-          var j = [];
+          var j = [], pr = [], ep = [];
           snap.docs.forEach(function (d) {
             var v = d.data() || {};
             if (d.id === 'progress') S.progress = v.studies || {};
             else if (d.id === 'choices') { S.pick = v.next || null; S.more = v.more || null; }
             else if (d.id.indexOf('rhythm-') === 0) S.rhythm[d.id.slice(7)] = v.ticks || {};
             else if (d.id.indexOf('j-') === 0) j.push(Object.assign({ id: d.id }, v));
+            else if (d.id.indexOf('p-') === 0) pr.push(Object.assign({ id: d.id }, v));
+            else if (d.id.indexOf('ep-') === 0) ep.push(Object.assign({ id: d.id }, v));
+            else if (d.id === 'voices') S.voices = v;
           });
+          pr.sort(function (a, b) { return String(b.started).localeCompare(String(a.started)); });
+          ep.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
+          S.prayers = pr; S.eps = ep;
           j.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
           S.journal = j; render();
         }, function () {});
@@ -190,12 +203,13 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var r = room(), m = $('#main');
     document.querySelectorAll('nav.rooms a').forEach(function (a) { if (a.getAttribute('data-room') === r) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     $('#n-journal').textContent = S.journal.length || '';
+    $('#n-prayer').textContent = S.prayers.filter(function (x) { return !x.answered; }).length || '';
     $('#n-studies').textContent = S.studies.length || '';
     $('#n-people').textContent = S.people.length || '';
     var ae = document.activeElement, keep = ae && ae.id && m.contains(ae) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
-    if (keep && /^(TEXTAREA|INPUT|SELECT)$/.test(ae.tagName)) return;   // never rebuild under someone typing
+    if (keep && (/^(TEXTAREA|SELECT)$/.test(ae.tagName) || (ae.tagName === 'INPUT' && ae.type !== 'checkbox'))) return;   // never rebuild under someone typing (a ticked box may rebuild; focus comes back below)
     m.textContent = '';
-    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts })[r](m);
+    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts, prayer: roomPrayer })[r](m);
   }
 
   /* A Sabbath doc may belong to a series (study + session). The room opens on the first one not yet completed. */
@@ -265,6 +279,8 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var side = h('aside');
     side.appendChild(rhythmBox(s));
     side.appendChild(promptsBox(s));
+    side.appendChild(prayerBox());
+    side.appendChild(podBox(s));
     side.appendChild(askBox(s));
     cols.appendChild(sh); cols.appendChild(side); m.appendChild(cols);
   }
@@ -428,9 +444,184 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(sec);
   }
 
+  /* ---------- prayer (private to Kev: data/users/<id>/p-*) ---------- */
+  function dayKey() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function savePrayer(x) { var doc = { who: x.who, for: x.for || '', started: x.started, days: x.days || [], answered: !!x.answered, answeredAt: x.answeredAt || null, answer: x.answer || '' }; return saved(mine(x.id).set(doc)); }
+  function prayRow(x, compact) {
+    var t = dayKey(), today = (x.days || []).indexOf(t) >= 0;
+    var cb = h('input', { type: 'checkbox', id: 'pr-' + x.id, 'aria-label': 'Prayed for ' + x.who + ' today' }); cb.checked = today; cb.disabled = !S.live;
+    cb.addEventListener('change', function () { var d = (x.days || []).filter(function (k) { return k !== t; }); if (cb.checked) d.push(t); savePrayer(Object.assign({}, x, { days: d })).catch(function () {}); });
+    var n = (x.days || []).length, body = h('div', null, h('div', { class: 'who', text: x.who }), x.for ? h('div', { class: 'for', text: x.for }) : null,
+      compact ? null : h('div', { class: 'note', text: 'Praying since ' + (x.started ? new Date(x.started).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '') + ' · prayed on ' + n + (n === 1 ? ' day' : ' days') }));
+    if (!compact && S.live) {
+      if (S.answering === x.id) {
+        var ta = h('textarea', { id: 'pr-ans-' + x.id, 'aria-label': 'How God answered', placeholder: 'How did God answer?', rows: '3' }), ok = h('button', { class: 'primary', type: 'button', text: 'Mark answered' }), no = h('button', { type: 'button', text: 'Cancel' });
+        ok.addEventListener('click', function () { S.answering = null; savePrayer(Object.assign({}, x, { answered: true, answeredAt: new Date().toISOString(), answer: ta.value.trim() })).catch(function () {}); ta.blur(); render(); });
+        no.addEventListener('click', function () { S.answering = null; render(); });
+        body.appendChild(ta); body.appendChild(h('div', { class: 'row' }, ok, no));
+      } else {
+        var ans = h('button', { class: 'link', type: 'button', text: 'Answered' }); ans.addEventListener('click', function () { S.answering = x.id; render(); });
+        var del = h('button', { class: 'link', type: 'button', text: 'Remove' });
+        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(x.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Remove for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Remove'; }, 4000); });
+        body.appendChild(h('div', { class: 'row' }, ans, del));
+      }
+    }
+    return h('div', { class: 'pr' + (today ? ' done' : '') }, cb, body);
+  }
+  function addPrayerForm() {
+    var who = h('input', { type: 'text', id: 'pr-new-who', 'aria-label': 'Who needs prayer', placeholder: 'Who needs prayer?' });
+    var what = h('input', { type: 'text', id: 'pr-new-for', 'aria-label': 'What to pray for', placeholder: 'What to pray for (optional)' });
+    var b = h('button', { class: 'primary', type: 'submit', text: 'Add to the list' }); b.disabled = !S.live;
+    var f = h('form', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Add someone' }), h('div', { class: 'row' }, h('div', { style: 'flex:1 1 180px;min-width:0' }, who), h('div', { style: 'flex:2 1 240px;min-width:0' }, what)), h('div', { class: 'row' }, b));
+    f.addEventListener('submit', function (e) { e.preventDefault(); var w = who.value.trim(); if (!w) return; var x = { id: 'p-' + Date.now().toString(36), who: w, for: what.value.trim(), started: new Date().toISOString(), days: [] }; who.value = ''; what.value = ''; who.blur(); what.blur(); savePrayer(x).catch(function () {}); });
+    return f;
+  }
+  function roomPrayer(m) {
+    var act = S.prayers.filter(function (x) { return !x.answered; }), done = S.prayers.filter(function (x) { return x.answered; }).sort(function (a, b) { return String(b.answeredAt).localeCompare(String(a.answeredAt)); });
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Who needs prayer?' }), h('span', { class: 'eyebrow', text: 'Private to you' })));
+    m.appendChild(addPrayerForm());
+    var list = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Praying for (' + act.length + ')' }), h('p', { class: 'note', text: 'Tick each one as you pray today. Ticks start fresh each morning; the count keeps the history. This list lives only in your account; Barny never reads it unless you bring it to him.' }));
+    if (!act.length) list.appendChild(h('p', { class: 'empty', text: S.live ? 'Add the first name above.' : 'Open this page in Claude, signed in, to keep your prayer list.' }));
+    act.forEach(function (x) { list.appendChild(prayRow(x)); });
+    m.appendChild(list);
+    var ans = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Answered prayers (' + done.length + ')' }));
+    if (!done.length) ans.appendChild(h('p', { class: 'empty', text: 'When God answers, tap Answered and write how. They gather here to remember (Psalm 77:11).' }));
+    done.forEach(function (x) {
+      var back = h('button', { class: 'link', type: 'button', text: 'Keep praying' }); back.addEventListener('click', function () { savePrayer(Object.assign({}, x, { answered: false, answeredAt: null })).catch(function () {}); });
+      ans.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: x.who + (x.for ? ' · ' + x.for : '') }), h('span', { text: 'Answered ' + (x.answeredAt ? new Date(x.answeredAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '') })), x.answer ? h('p', { class: 'body', text: x.answer }) : null, h('div', { class: 'row' }, back)));
+    });
+    m.appendChild(ans);
+  }
+  function prayerBox() {
+    var act = S.prayers.filter(function (x) { return !x.answered; }), box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Who needs prayer?' }));
+    if (!act.length) box.appendChild(h('p', { class: 'note', text: 'Keep a list of who you are praying for, tick them as you go, and keep the answers.' }));
+    act.slice(0, 8).forEach(function (x) { box.appendChild(prayRow(x, true)); });
+    var go = h('button', { type: 'button', text: act.length ? 'Open the prayer list' : 'Start the prayer list' }); go.addEventListener('click', function () { location.hash = '#prayer'; });
+    box.appendChild(go); return box;
+  }
+
+  /* ---------- podcast: Barny writes a two-voice script with Atlas; the browser reads it aloud ---------- */
+  var SYN = window.speechSynthesis || null;
+  if (SYN && SYN.addEventListener) SYN.addEventListener('voiceschanged', function () { render(); });
+  function voiceList() { if (!SYN) return []; return SYN.getVoices().filter(function (v) { return /^en/i.test(v.lang); }); }
+  function voiceFor(who) {
+    var vs = voiceList(), want = (S.voices || {})[who];
+    var v = vs.filter(function (x) { return x.name === want; })[0]; if (v) return v;
+    return vs[who === 'atlas' ? Math.min(1, vs.length - 1) : 0] || null;
+  }
+  function parseScript(t) {
+    var out = [];
+    String(t || '').split(/\n+/).forEach(function (ln) {
+      var m = ln.match(/^\s*\**\s*(BARNY|ATLAS)\s*\**\s*:\s*(.*)$/i);
+      if (m) out.push({ who: m[1].toLowerCase(), text: m[2].trim() }); else if (out.length && ln.trim()) out[out.length - 1].text += ' ' + ln.trim();
+    });
+    return out.filter(function (x) { return x.text; });
+  }
+  function stopPlay() { if (SYN) SYN.cancel(); var was = S.play; S.play = null; if (was) document.querySelectorAll('.script p.speaking').forEach(function (p) { p.classList.remove('speaking'); }); }
+  function playEp(ep, from) {
+    if (!SYN) return; stopPlay();
+    var turns = parseScript(ep.script), i = from || 0, token = {};
+    S.play = { id: ep.id, token: token, paused: false }; render();
+    (function next() {
+      if (!S.play || S.play.token !== token) return;
+      document.querySelectorAll('.script p.speaking').forEach(function (p) { p.classList.remove('speaking'); });
+      if (i >= turns.length) { S.play = null; render(); return; }
+      var el = document.getElementById('ln-' + ep.id + '-' + i); if (el) { el.classList.add('speaking'); el.scrollIntoView({ block: 'nearest' }); }
+      var u = new SpeechSynthesisUtterance(turns[i].text), v = voiceFor(turns[i].who);
+      if (v) u.voice = v; u.rate = turns[i].who === 'atlas' ? 1.04 : 0.97; u.pitch = turns[i].who === 'atlas' ? 1.05 : 0.95;
+      u.onend = function () { i++; setTimeout(next, 280); }; u.onerror = function () { i++; next(); };
+      SYN.speak(u);
+    })();
+  }
+  function playerControls(ep) {
+    if (!SYN) return h('p', { class: 'note', text: 'This browser cannot read aloud here. Read the script, or ask Atlas for studio audio.' });
+    var on = S.play && S.play.id === ep.id, row = h('div', { class: 'row' });
+    var play = h('button', { class: on ? '' : 'primary', type: 'button', text: on ? (S.play.paused ? 'Resume' : 'Pause') : 'Play' });
+    play.addEventListener('click', function () { if (!on) return playEp(ep); if (S.play.paused) { SYN.resume(); S.play.paused = false; } else { SYN.pause(); S.play.paused = true; } render(); });
+    row.appendChild(play);
+    if (on) { var st = h('button', { type: 'button', text: 'Stop' }); st.addEventListener('click', function () { stopPlay(); render(); }); row.appendChild(st); }
+    return row;
+  }
+  function scriptView(ep) {
+    var box = h('div', { class: 'script', role: 'list' });
+    parseScript(ep.script).forEach(function (t, i) { var p = h('p', { id: 'ln-' + ep.id + '-' + i, role: 'listitem' }, h('b', { text: t.who === 'atlas' ? 'ATLAS' : 'BARNY' }), t.text); p.addEventListener('click', function () { playEp(ep, i); }); p.title = 'Play from here'; box.appendChild(p); });
+    return box;
+  }
+  function studioButton(ep) {
+    var asked = ep.studio === 'requested', b = h('button', { class: 'link', type: 'button', text: asked ? 'Studio audio requested from Atlas (tap to cancel)' : 'Ask Atlas for studio audio' });
+    b.addEventListener('click', function () { var d = Object.assign({}, ep); delete d.id; d.studio = asked ? null : 'requested'; saved(mine(ep.id).set(d)).catch(function () {}); });
+    return b;
+  }
+  function podPrompt(s) {
+    var parts = ['Study: ' + (s.title || '') + ' (' + ((s.passage || {}).ref || '') + ')'];
+    if (s.readAloud) parts.push('ESV text you may quote exactly: ' + s.readAloud);
+    if (s.setting) parts.push('Setting: ' + s.setting);
+    (s.sections || []).forEach(function (x) { parts.push(x.heading + (x.grade ? ' [' + x.grade + ']' : '') + ': ' + x.body); });
+    if ((s.reflect || []).length) parts.push('Questions: ' + s.reflect.join(' | '));
+    if (s.practice) parts.push('Practice: ' + s.practice.name + '. ' + s.practice.how);
+    if (s.carry) parts.push('Verse to carry: ' + s.carry);
+    return 'Write a podcast script: a warm two-voice conversation about this Bible study between BARNY (Barnabas, Kev\'s spiritual advisor: Scripture-first, historically orthodox and evangelical, encouraging) and ATLAS (a curious tutor who asks the questions a thoughtful listener would ask and pushes for plain, everyday examples). The listener is Kev: a husband, father and business owner who studies on Saturdays.\n\nLength: 900 to 1,200 words, about 7 minutes. Format: every line starts with "BARNY:" or "ATLAS:". No headings, stage directions, lists, markdown or emoji. Spoken English, contractions, short sentences.\n\nRules: quote Scripture only from the ESV text given below, word for word; for any other verse, name the reference and paraphrase. Where faithful Christians differ (anything marked DISPUTED), say so plainly, give the main views fairly, and suggest bringing it to his pastor; never pick a side on a secondary matter. Never claim a word from God or invent a quotation from a teacher. Open with a vivid question, not "welcome to the show". Close with one sentence to carry and the practice.\n\n' + parts.join('\n\n');
+  }
+  function podBox(s) {
+    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Podcast · Barny and Atlas' })), ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
+    if (ep && !S.pod.busy) {
+      box.appendChild(h('p', { class: 'note', text: parseScript(ep.script).length + ' turns · written ' + short(ep.at) }));
+      box.appendChild(playerControls(ep));
+      var open = h('button', { class: 'link', type: 'button', text: 'Read the script and pick voices' }); open.addEventListener('click', function () { location.hash = '#podcasts'; });
+      box.appendChild(open);
+    }
+    if (!S.sample) { box.appendChild(h('p', { class: 'note', text: 'Generating a podcast lights up when this page can ask Claude.' })); return box; }
+    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Barny and Atlas are writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-280) })); return box; }
+    if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
+    var go = h('button', { class: ep ? '' : 'primary', type: 'button', text: ep ? 'Generate again' : 'Generate podcast' }); go.disabled = !S.live;
+    go.addEventListener('click', function () {
+      S.pod = { busy: true, text: '', err: '' }; render();
+      S.sample([{ role: 'user', content: podPrompt(s) }], { modelTier: 'default', cache: false, onText: function (x) { S.pod.text = x.text; var el = document.getElementById('pod-live'); if (el) el.textContent = x.text.slice(-280); } })
+        .then(function (r) {
+          var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
+          var id = ep ? ep.id : 'ep-' + Date.now().toString(36);
+          return saved(mine(id).set({ title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, at: new Date().toISOString(), studio: ep ? ep.studio || null : null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
+        })
+        .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
+        .then(function () { render(); });
+    });
+    box.appendChild(go);
+    box.appendChild(h('p', { class: 'note', text: 'Barny writes a 7-minute conversation with Atlas from this study; your browser reads it in two voices.' }));
+    return box;
+  }
+  function voicePicker() {
+    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Voices' }));
+    var vs = voiceList();
+    if (!SYN || !vs.length) { box.appendChild(h('p', { class: 'note', text: SYN ? 'Your device has not listed its voices yet. Reload in a moment.' : 'This browser cannot read aloud here.' })); return box; }
+    box.appendChild(h('p', { class: 'note', text: 'Vet a voice for each of them. Tap Hear to try it; your pick saves to your account. On a Mac or iPhone, the Enhanced or Premium voices sound best (add them in your device\'s Spoken Content settings).' }));
+    [['barny', 'Barny'], ['atlas', 'Atlas']].forEach(function (w) {
+      var sel = h('select', { id: 'voice-' + w[0], 'aria-label': w[1] + '\'s voice' }), cur = voiceFor(w[0]);
+      vs.forEach(function (v) { var o = h('option', { value: v.name, text: v.name + ' (' + v.lang + ')' }); if (cur && v.name === cur.name) o.selected = true; sel.appendChild(o); });
+      sel.addEventListener('change', function () { var nv = Object.assign({}, S.voices); nv[w[0]] = sel.value; S.voices = nv; saved(mine('voices').set(Object.assign({ at: new Date().toISOString() }, nv))).catch(function () {}); sel.blur(); });
+      var hear = h('button', { type: 'button', text: 'Hear' });
+      hear.addEventListener('click', function () { stopPlay(); var u = new SpeechSynthesisUtterance(w[0] === 'atlas' ? 'I\'m Atlas. So what does it mean that he sat down?' : 'I\'m Barny. It means the work is finished, and you can rest in it.'); var v = voiceFor(w[0]); if (v) u.voice = v; SYN.speak(u); });
+      box.appendChild(h('div', { class: 'row' }, h('strong', { text: w[1], style: 'width:52px' }), h('div', { style: 'flex:1 1 200px;min-width:0' }, sel), hear));
+    });
+    return box;
+  }
+
   function roomPodcasts(m) {
     m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Podcasts' }), h('span', { class: 'eyebrow', text: 'Two voices, one subject' })));
-    if (!S.podcasts.length) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Episodes on the week\'s study, read aloud in two voices, appear here with their scripts.' }))); return; }
+    m.appendChild(voicePicker());
+    if (S.eps.length) {
+      m.appendChild(h('h3', { text: 'Your episodes' }));
+      S.eps.forEach(function (ep) {
+        var del = h('button', { class: 'link', type: 'button', text: 'Delete' });
+        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { stopPlay(); saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete'; }, 4000); });
+        m.appendChild(h('article', { class: 'sheet' }, h('span', { class: 'eyebrow', text: (ep.ref || '') + ' · ' + short(ep.at) }), h('h3', { text: ep.title || 'Episode' }), playerControls(ep), scriptView(ep), h('div', { class: 'row' }, studioButton(ep), del),
+          ep.studio === 'requested' ? h('p', { class: 'note', text: 'Atlas renders a studio version the next time his session is opened, and it plays here. If it needs paid voice credits beyond what you have approved, he asks you first.' }) : null));
+      });
+    } else m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Open This Sabbath and tap Generate podcast. Barny writes a conversation with Atlas on the study, and it plays here in two voices.' })));
+    if (!S.podcasts.length) return;
+    m.appendChild(h('h3', { text: 'From Barny' }));
+    roomPodcastsShared(m);
+  }
+  function roomPodcastsShared(m) {
     var g = h('div', { class: 'grid' });
     S.podcasts.forEach(function (p) {
       var card = h('article', { class: 'card' }, h('span', { class: 'kind', text: [p.stream, p.length].filter(Boolean).join(' · ') }), h('h3', { text: p.title }), h('p', { text: p.premise || '' }));
@@ -442,7 +633,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(g);
   }
 
-  window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { if (S.play && room() !== 'podcasts' && room() !== 'sabbath') stopPlay(); store('bw-room', room()); render(); window.scrollTo(0, 0); });
   boot();
 })();
 </script>

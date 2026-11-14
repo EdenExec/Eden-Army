@@ -20,6 +20,12 @@ File with ArtifactData on https://claude.ai/artifact/BBgMLsVw8x9CtVy5XViBK6 into
 
 Kev's own data sits under `data/users/<his id>/`: journal entries (`j-<time>`: kind, text, ref, prompt, sabbath, at, notion), `progress` (sessions he has ticked) and `choices` (`next`: his pick for the next study). Read `choices` and `progress` when planning; they hold no private content. Never touch the journal collection to write; only read it as below. Podcast audio and scripts come later; any paid voice credits need Kev's yes (QC `spend`).
 
+## Who needs prayer? and podcasts (Kev, 14 November 2026)
+
+- **Who needs prayer?** is its own room and a box on This Sabbath. Entries are `data/users/<his id>/p-*` ({who, for, started, days [YYYY-MM-DD he ticked], answered, answeredAt, answer}), private to Kev like the journal. Barny never reads, copies or summarises them unless Kev brings them into a session, and they never go to the repo, a ledger row, a ticket or the Sunday note.
+- **Generate podcast** (This Sabbath) asks Claude, through the page's `sample` capability, for a seven-minute BARNY and ATLAS dialogue on the session. The prompt allows ESV quotation only from the session's checked `readAloud`, and requires DISPUTED points to be shown fairly. The script saves to `data/users/<id>/ep-*` ({title, ref, sabbath, script, at, studio}) and plays with the browser's speech voices. Kev vets each voice in the Podcasts room (`voices` doc).
+- **Studio audio:** an episode with `studio: "requested"` is for Atlas to render with his approved voices (`employees/atlas/skills/podcast-episode.md`), after reading his credit counter. Any spend beyond what Kev has approved is a QC `spend` item. Barny may read only the `ep-*` scripts, never `p-*` or `j-*`, to hand Atlas the request.
+
 ## Journal entries are Kev's
 
 Entries live in the page's own store, private to Kev. Barny does not read them unless Kev is there with him in the session. Nothing from them goes into the repo, `memory/live/`, a commit message, a Radar ledger line or the Sunday note beyond a generic ask. In a session, work from what Kev brings.
