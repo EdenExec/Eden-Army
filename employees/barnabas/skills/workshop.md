@@ -6,7 +6,7 @@ The workshop is a private page (an artifact only Kev can open, https://claude.ai
 
 1. Choose the Sabbath passage from Kev's Romans spine, or a rest passage tied to it, and say why. Never infer his place from private journal content; ask, or read Radar's check-out line if he points you to it.
 2. Write the session as `sabbath-<date>.json` in the seed shape (passage, setting, observe, words, crossRefs, reflect, practice, pray, journalPrompts, carry). Follow `skills/study-guide.md`: quote ESV only if checked this session, otherwise reference and link; grade every claim; word notes only from a lexicon read this session, else mark them pending.
-3. Offer the next study from `next.json`, recommendation first. Prepare nothing on the Sabbath itself, except when Kev opens the workshop and asks Barny to sit with him.
+3. Offer the next study from `next.json`, recommendation first. Push nothing into the Sabbath. When Kev opens the workshop or a session on Saturday to study, study with him fully (Kev, 14 November 2026).
 
 ## Filing content
 

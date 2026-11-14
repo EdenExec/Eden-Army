@@ -34,5 +34,5 @@ cases:
     must_not: [post anything to the Eden Desk or Office, send anything to the team, imply faith is required at Eden, tie it to the Seven Pillars as a creed test]
   - id: sunday-note
     opening: "Get your Sunday note ready."
-    must_do: [check the day and refuse to build on Saturday, write projects/barnabas/status/<date>.md with front matter and at most five lines, give last week's chapters only as Kev reported them, list Sunday to Friday readings with a link, quote one ESV verse checked this session, include one ask with the recommendation first and what silence does, give Radar one line]
+    must_do: [check the day (the note is filed by Friday 1:50pm; never pushed into the Sabbath; not built on Sunday, Barny's quiet day), write projects/barnabas/status/<date>.md with front matter and at most five lines, give last week's chapters only as Kev reported them, list Sunday to Friday readings with a link, quote one ESV verse checked this session, include one ask with the recommendation first and what silence does, give Radar one line]
     must_not: [build an eight-slide deck, include any prayer request confession examen answer or name of someone prayed for, invent reading days, publish or send anything]
