@@ -618,6 +618,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 
   /* ElevenLabs voice samples, rendered by Barny and published with the page (voices/*.mp3). Kev's pick saves to data/users/<id>/voices. */
   var VOICE_SAMPLES = [
+    { who: 'barny', id: 'f5gk6ENs9vgDBvfkTj7e', name: 'J Thomas', about: 'Warm, raspy and real, middle-aged American. Kev\'s pick for Barny (14 Nov)', file: 'voices/barny-jthomas.mp3' },
     { who: 'barny', id: 'zD5RRa1ndly0YgnhdKgR', name: 'Jesse', about: 'Natural audiobook voice, middle-aged American, relaxed storyteller', file: 'voices/barny-jesse.mp3' },
     { who: 'barny', id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', about: 'Deep, resonant and comforting, middle-aged American', file: 'voices/barny-brian.mp3' },
     { who: 'barny', id: 'cjVigY5qzO86Huf0OWal', name: 'Eric', about: 'Smooth and trustworthy, middle-aged American', file: 'voices/barny-eric.mp3' },
@@ -626,7 +627,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     { who: 'atlas', id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', about: 'Warm, captivating storyteller, British', file: 'voices/atlas-george.mp3' },
     { who: 'atlas', id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', about: 'Wise, mature and balanced, older American', file: 'voices/atlas-bill.mp3' }
   ];
-  function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || (who === 'atlas' ? VOICE_SAMPLES[4] : null); }
+  function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || VOICE_SAMPLES.filter(function (x) { return x.id === (who === 'atlas' ? 'PerZoH0r6nxBZXCoIPpv' : 'f5gk6ENs9vgDBvfkTj7e'); })[0]; }
   function voicePicker() {
     var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Voices · ElevenLabs' }));
     box.appendChild(h('p', { class: 'note', text: 'Listen to each and pick one for Barny and one for Atlas. Episodes render in the voices you pick.' }));
