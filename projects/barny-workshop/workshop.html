@@ -126,7 +126,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 (function () {
   var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, answering: null, play: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -520,14 +520,6 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   }
 
   /* ---------- podcast: Barny writes a two-voice script with Atlas; the browser reads it aloud ---------- */
-  var SYN = window.speechSynthesis || null;
-  if (SYN && SYN.addEventListener) SYN.addEventListener('voiceschanged', function () { render(); });
-  function voiceList() { if (!SYN) return []; return SYN.getVoices().filter(function (v) { return /^en/i.test(v.lang); }); }
-  function voiceFor(who) {
-    var vs = voiceList(), want = (S.voices || {})[who];
-    var v = vs.filter(function (x) { return x.name === want; })[0]; if (v) return v;
-    return vs[who === 'atlas' ? Math.min(1, vs.length - 1) : 0] || null;
-  }
   function parseScript(t) {
     var out = [];
     String(t || '').split(/\n+/).forEach(function (ln) {
@@ -536,38 +528,17 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     });
     return out.filter(function (x) { return x.text; });
   }
-  function stopPlay() { if (SYN) SYN.cancel(); var was = S.play; S.play = null; if (was) document.querySelectorAll('.script p.speaking').forEach(function (p) { p.classList.remove('speaking'); }); }
-  function playEp(ep, from) {
-    if (!SYN) return; stopPlay();
-    var turns = parseScript(ep.script), i = from || 0, token = {};
-    S.play = { id: ep.id, token: token, paused: false }; render();
-    (function next() {
-      if (!S.play || S.play.token !== token) return;
-      document.querySelectorAll('.script p.speaking').forEach(function (p) { p.classList.remove('speaking'); });
-      if (i >= turns.length) { S.play = null; render(); return; }
-      var el = document.getElementById('ln-' + ep.id + '-' + i); if (el) { el.classList.add('speaking'); el.scrollIntoView({ block: 'nearest' }); }
-      var u = new SpeechSynthesisUtterance(turns[i].text), v = voiceFor(turns[i].who);
-      if (v) u.voice = v; u.rate = turns[i].who === 'atlas' ? 1.04 : 0.97; u.pitch = turns[i].who === 'atlas' ? 1.05 : 0.95;
-      u.onend = function () { i++; setTimeout(next, 280); }; u.onerror = function () { i++; next(); };
-      SYN.speak(u);
-    })();
-  }
   function playerControls(ep) {
-    if (!SYN) return h('p', { class: 'note', text: 'This browser cannot read aloud here. Read the script, or ask Atlas for studio audio.' });
-    var on = S.play && S.play.id === ep.id, row = h('div', { class: 'row' });
-    var play = h('button', { class: on ? '' : 'primary', type: 'button', text: on ? (S.play.paused ? 'Resume' : 'Pause') : 'Play' });
-    play.addEventListener('click', function () { if (!on) return playEp(ep); if (S.play.paused) { SYN.resume(); S.play.paused = false; } else { SYN.pause(); S.play.paused = true; } render(); });
-    row.appendChild(play);
-    if (on) { var st = h('button', { type: 'button', text: 'Stop' }); st.addEventListener('click', function () { stopPlay(); render(); }); row.appendChild(st); }
-    return row;
+    if (ep.audio) { var a = h('audio', { controls: true, preload: 'none', src: ep.audio }); a.style.width = '100%'; return a; }
+    return h('p', { class: 'note', text: ep.studio === 'requested' ? 'Rendering with ElevenLabs is requested: Barny renders it in his session and it plays here.' : 'Script ready. Tap "Render with ElevenLabs" and Barny renders it in your chosen voices.' });
   }
   function scriptView(ep) {
     var box = h('div', { class: 'script', role: 'list' });
-    parseScript(ep.script).forEach(function (t, i) { var p = h('p', { id: 'ln-' + ep.id + '-' + i, role: 'listitem' }, h('b', { text: t.who === 'atlas' ? 'ATLAS' : 'BARNY' }), t.text); p.addEventListener('click', function () { playEp(ep, i); }); p.title = 'Play from here'; box.appendChild(p); });
+    parseScript(ep.script).forEach(function (t, i) { box.appendChild(h('p', { id: 'ln-' + ep.id + '-' + i, role: 'listitem' }, h('b', { text: t.who === 'atlas' ? 'ATLAS' : 'BARNY' }), t.text)); });
     return box;
   }
   function studioButton(ep) {
-    var asked = ep.studio === 'requested', b = h('button', { class: 'link', type: 'button', text: asked ? 'Studio audio requested from Atlas (tap to cancel)' : 'Ask Atlas for studio audio' });
+    if (ep.audio) return null; var asked = ep.studio === 'requested', b = h('button', { class: asked ? 'link' : 'primary', type: 'button', text: asked ? 'Render requested (tap to cancel)' : 'Render with ElevenLabs' });
     b.addEventListener('click', function () { var d = Object.assign({}, ep); delete d.id; d.studio = asked ? null : 'requested'; saved(mine(ep.id).set(d)).catch(function () {}); });
     return b;
   }
@@ -586,7 +557,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (ep && !S.pod.busy) {
       box.appendChild(h('p', { class: 'note', text: parseScript(ep.script).length + ' turns · written ' + short(ep.at) }));
       box.appendChild(playerControls(ep));
-      var open = h('button', { class: 'link', type: 'button', text: 'Read the script and pick voices' }); open.addEventListener('click', function () { location.hash = '#podcasts'; });
+      var open = h('button', { class: 'link', type: 'button', text: 'Read the script, pick voices and render' }); open.addEventListener('click', function () { location.hash = '#podcasts'; });
       box.appendChild(open);
     }
     if (!S.sample) { box.appendChild(h('p', { class: 'note', text: 'Generating a podcast lights up when this page can ask Claude.' })); return box; }
@@ -605,21 +576,32 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
         .then(function () { render(); });
     });
     box.appendChild(go);
-    box.appendChild(h('p', { class: 'note', text: 'Barny writes a 7-minute conversation with Atlas from this study; your browser reads it in two voices.' }));
+    box.appendChild(h('p', { class: 'note', text: 'Barny writes a 7-minute conversation with Atlas from this study. Render it with ElevenLabs in the voices you pick in Podcasts.' }));
     return box;
   }
+  /* ElevenLabs voice samples, rendered by Barny and published with the page (voices/*.mp3). Kev's pick saves to data/users/<id>/voices. */
+  var VOICE_SAMPLES = [
+    { who: 'barny', id: 'zD5RRa1ndly0YgnhdKgR', name: 'Jesse', about: 'Natural audiobook voice, middle-aged American, relaxed storyteller', file: 'voices/barny-jesse.mp3' },
+    { who: 'barny', id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', about: 'Deep, resonant and comforting, middle-aged American', file: 'voices/barny-brian.mp3' },
+    { who: 'barny', id: 'cjVigY5qzO86Huf0OWal', name: 'Eric', about: 'Smooth and trustworthy, middle-aged American', file: 'voices/barny-eric.mp3' },
+    { who: 'barny', id: 'iP95p4xoKVk53GoZ742B', name: 'Chris', about: 'Charming and down-to-earth, middle-aged American', file: 'voices/barny-chris.mp3' },
+    { who: 'atlas', id: 'PerZoH0r6nxBZXCoIPpv', name: 'Michael Moody', about: 'Grandfatherly, warm and deep. Atlas\'s voice on the family episodes since October', file: 'voices/atlas-michael.mp3' },
+    { who: 'atlas', id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', about: 'Warm, captivating storyteller, British', file: 'voices/atlas-george.mp3' },
+    { who: 'atlas', id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', about: 'Wise, mature and balanced, older American', file: 'voices/atlas-bill.mp3' }
+  ];
+  function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || (who === 'atlas' ? VOICE_SAMPLES[4] : null); }
   function voicePicker() {
-    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Voices' }));
-    var vs = voiceList();
-    if (!SYN || !vs.length) { box.appendChild(h('p', { class: 'note', text: SYN ? 'Your device has not listed its voices yet. Reload in a moment.' : 'This browser cannot read aloud here.' })); return box; }
-    box.appendChild(h('p', { class: 'note', text: 'Vet a voice for each of them. Tap Hear to try it; your pick saves to your account. On a Mac or iPhone, the Enhanced or Premium voices sound best (add them in your device\'s Spoken Content settings).' }));
+    var box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Voices · ElevenLabs' }));
+    box.appendChild(h('p', { class: 'note', text: 'Listen to each and pick one for Barny and one for Atlas. Episodes render in the voices you pick.' }));
     [['barny', 'Barny'], ['atlas', 'Atlas']].forEach(function (w) {
-      var sel = h('select', { id: 'voice-' + w[0], 'aria-label': w[1] + '\'s voice' }), cur = voiceFor(w[0]);
-      vs.forEach(function (v) { var o = h('option', { value: v.name, text: v.name + ' (' + v.lang + ')' }); if (cur && v.name === cur.name) o.selected = true; sel.appendChild(o); });
-      sel.addEventListener('change', function () { var nv = Object.assign({}, S.voices); nv[w[0]] = sel.value; S.voices = nv; saved(mine('voices').set(Object.assign({ at: new Date().toISOString() }, nv))).catch(function () {}); sel.blur(); });
-      var hear = h('button', { type: 'button', text: 'Hear' });
-      hear.addEventListener('click', function () { stopPlay(); var u = new SpeechSynthesisUtterance(w[0] === 'atlas' ? 'I\'m Atlas. So what does it mean that he sat down?' : 'I\'m Barny. It means the work is finished, and you can rest in it.'); var v = voiceFor(w[0]); if (v) u.voice = v; SYN.speak(u); });
-      box.appendChild(h('div', { class: 'row' }, h('strong', { text: w[1], style: 'width:52px' }), h('div', { style: 'flex:1 1 200px;min-width:0' }, sel), hear));
+      var cur = chosenVoice(w[0]);
+      box.appendChild(h('h3', { text: w[1] + (cur ? ': ' + cur.name : ': not chosen yet') }));
+      VOICE_SAMPLES.filter(function (v) { return v.who === w[0]; }).forEach(function (v) {
+        var on = cur && cur.id === v.id, a = h('audio', { controls: true, preload: 'none', src: v.file }); a.style.width = '100%';
+        var pick = h('button', { class: on ? 'primary' : '', type: 'button', 'aria-pressed': String(!!on), text: on ? 'Chosen' : 'Choose ' + v.name }); pick.disabled = !S.live;
+        pick.addEventListener('click', function () { var nv = Object.assign({}, S.voices); delete nv.at; nv[w[0]] = v.id; S.voices = nv; saved(mine('voices').set(Object.assign({ at: new Date().toISOString() }, nv))).catch(function () {}); render(); });
+        box.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('strong', { text: v.name }), h('span', { text: v.about })), a, h('div', { class: 'row' }, pick)));
+      });
     });
     return box;
   }
@@ -631,9 +613,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       m.appendChild(h('h3', { text: 'Your episodes' }));
       S.eps.forEach(function (ep) {
         var del = h('button', { class: 'link', type: 'button', text: 'Delete' });
-        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { stopPlay(); saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete'; }, 4000); });
+        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete'; }, 4000); });
         m.appendChild(h('article', { class: 'sheet' }, h('span', { class: 'eyebrow', text: (ep.ref || '') + ' · ' + short(ep.at) }), h('h3', { text: ep.title || 'Episode' }), playerControls(ep), scriptView(ep), h('div', { class: 'row' }, studioButton(ep), del),
-          ep.studio === 'requested' ? h('p', { class: 'note', text: 'Atlas renders a studio version the next time his session is opened, and it plays here. If it needs paid voice credits beyond what you have approved, he asks you first.' }) : null));
+          ep.studio === 'requested' ? h('p', { class: 'note', text: 'Barny renders it with ElevenLabs in your chosen voices the next time his session is open (send him a comment to wake him). About 6,000 characters of your plan per episode.' }) : null));
       });
     } else m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Open This Sabbath and tap Generate podcast. Barny writes a conversation with Atlas on the study, and it plays here in two voices.' })));
     if (!S.podcasts.length) return;
@@ -652,7 +634,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(g);
   }
 
-  window.addEventListener('hashchange', function () { if (S.play && room() !== 'podcasts' && room() !== 'sabbath') stopPlay(); store('bw-room', room()); render(); window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
   boot();
 })();
 </script>
