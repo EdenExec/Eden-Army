@@ -13,6 +13,10 @@ Kev, 24 October 2026: "start building your knowledge base... start building the 
 
 The page reads the JSON, so adding a row to a seed and republishing is the whole job. Nothing here is private; it can be shared (sharing it beyond Kev is his call).
 
+## In the workshop (Kev, 14 November 2026)
+
+Barny's Workshop has a **Biblical Timeline** room (left menu) built from the same seeds, published with the workshop under `data/` (events, finds, scripture, genealogy). It has folding sections for the timeline with finds, the Old Testament in the New, and the genealogy (`memory/seed/bible-maps/genealogy.json`, Adam to Jesus). When a seed changes, republish both the map and the workshop with the four `data/` files.
+
 ## The honesty rule (John's, and ours)
 
 Archaeology confirms real places, rulers and events. It cannot prove the faith, and it cannot test creation, the visions or the resurrection. The resurrection rests on eyewitness testimony (1 Corinthians 15:3-8) and is stated plainly as a first-order truth. Never stretch a find to fit.

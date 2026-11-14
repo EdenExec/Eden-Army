@@ -138,6 +138,7 @@ details.fold.sheet{padding:10px 18px} details.fold.sheet>summary{border-bottom:0
 .fold-add{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
 .fold-add textarea{min-height:0}
 .fold-in>button,.fold-in>.link{align-self:flex-start}
+.gen{font:500 14.5px/1.9 var(--read)}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
@@ -160,6 +161,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     <a href="#sabbath" data-room="sabbath" class="title">This Sabbath</a>
     <details class="more" id="rooms-more">
       <summary>Rooms</summary>
+      <a href="#timeline" data-room="timeline">Biblical Timeline</a>
       <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
       <a href="#prayer" data-room="prayer">Prayer list and answers <small id="n-prayer"></small></a>
       <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
@@ -177,9 +179,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 
 <script>
 (function () {
-  var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
+  var ROOMS = ['sabbath', 'timeline', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, podNote: null, pwOpen: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, tl: null, tlErr: false, podNote: null, pwOpen: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -263,7 +265,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var rail = $('#rail-prayer'), ae = document.activeElement, keep = ae && ae.id && (m.contains(ae) || rail.contains(ae)) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
     if (keep && (/^(TEXTAREA|SELECT)$/.test(ae.tagName) || (ae.tagName === 'INPUT' && ae.type !== 'checkbox'))) return;   // never rebuild under someone typing (a ticked box may rebuild; focus comes back below)
     m.textContent = ''; rail.textContent = ''; rail.appendChild(prayerBox());
-    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts, prayer: roomPrayer })[r](m);
+    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts, prayer: roomPrayer, timeline: roomTimeline })[r](m);
     var rh = m.querySelector('.room-h');   // Home sits under the date (or the room's label) on every room
     if (rh) {
       var right = rh.children.length > 1 ? rh.lastElementChild : null, col = h('div', { class: 'top-right' });
@@ -724,6 +726,58 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     { who: 'atlas', id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', about: 'Wise, mature and balanced, older American', file: 'voices/atlas-bill.mp3' }
   ];
   function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || VOICE_SAMPLES.filter(function (x) { return x.id === (who === 'atlas' ? 'PerZoH0r6nxBZXCoIPpv' : 'f5gk6ENs9vgDBvfkTj7e'); })[0]; }
+  /* Biblical Timeline room: the same data as the interactive map (published with this page under data/), plus the genealogy. */
+  var MAP_URL = 'https://claude.ai/artifact/LHME6tkLhLWV4hygaT1Z8f';
+  function esvLink(ref) { return link(ref, 'https://www.esv.org/' + ref.replace(/ /g, '+') + '/'); }
+  function loadTimeline() {
+    if (S.tl || S.tlErr) return;
+    S.tl = 'loading';
+    Promise.all(['events', 'finds', 'scripture', 'genealogy'].map(function (n) { return fetch('data/' + n + '.json').then(function (r) { if (!r.ok) throw new Error(n); return r.json(); }); }))
+      .then(function (x) { S.tl = { events: x[0].events, finds: x[1].finds, ot: x[2].ot, nt: x[2].nt, links: x[2].links, gen: x[3].segments }; render(); }, function () { S.tl = null; S.tlErr = true; render(); });
+  }
+  function roomTimeline(m) {
+    var open = h('a', { href: MAP_URL, target: '_blank', rel: 'noopener', class: 'pw-more', text: 'Open the interactive map' });
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Biblical Timeline' }), h('span', { class: 'eyebrow', text: 'Genesis to Revelation' })));
+    m.appendChild(h('p', { class: 'note' }, 'Finds and records, the Old Testament in the New, and the line of promise. The full interactive map: ', open));
+    loadTimeline();
+    if (S.tlErr) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'The timeline data did not load. Reload the page to try again.' }))); return; }
+    if (!S.tl || S.tl === 'loading') { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Opening the timeline…' }))); return; }
+    var T = S.tl, nm = {}; T.events.forEach(function (e) { nm[e.id] = e; });
+    // 1. Timeline
+    var f1 = fold('tl-events', [h('span', { class: 'fold-t', text: 'Timeline' }), h('span', { class: 'fold-n', text: T.events.length + ' events · ' + T.finds.length + ' finds' })], true); f1.classList.add('sheet');
+    var in1 = h('div', { class: 'fold-in' });
+    T.events.forEach(function (e) {
+      var fs = []; T.finds.forEach(function (f) { f.links.forEach(function (l) { if (l.to === e.id) fs.push({ f: f, l: l }); }); });
+      var ef = fold('tl-e-' + e.id, [h('span', { class: 'fold-t', text: e.title }), h('span', { class: 'fold-n', text: e.when + ' · ' + fs.length + (fs.length === 1 ? ' find' : ' finds') })], false);
+      var body = h('div', { class: 'fold-in' }, h('p', { class: 'note', text: e.note }));
+      var refs = h('div', { class: 'chips' }); e.refs.forEach(function (r) { refs.appendChild(esvLink(r)); }); body.appendChild(refs);
+      fs.forEach(function (x) { body.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('strong', { text: x.f.name }), h('span', { text: x.f.when })), h('p', { class: 'body', text: x.l.note }), h('span', { class: 'note' }, x.l.type === 'names' ? 'Names a person' : x.l.type === 'confirms' ? 'Confirms' : x.l.type === 'setting' ? 'Real setting' : 'Parallel', grade(x.l.grade), ' · ' + x.f.nowAt))); });
+      ef.appendChild(body); in1.appendChild(ef);
+    });
+    f1.appendChild(in1); m.appendChild(f1);
+    // 2. Old and New
+    var f2 = fold('tl-scripture', [h('span', { class: 'fold-t', text: 'Old Testament in the New' }), h('span', { class: 'fold-n', text: T.links.length + ' links' })], false); f2.classList.add('sheet');
+    var in2 = h('div', { class: 'fold-in' }), ntRef = {}; T.nt.forEach(function (n) { ntRef[n.id] = n.ref; });
+    var lastEra = null;
+    T.ot.forEach(function (o) {
+      if (o.era !== lastEra) { in2.appendChild(h('span', { class: 'eyebrow', text: (nm[o.era] || {}).title || o.era })); lastEra = o.era; }
+      var ls = T.links.filter(function (l) { return l.from === o.id; }), row = h('div', { class: 'entry' }, h('div', { class: 'meta' }, esvLink(o.ref), h('span', { text: o.gist })));
+      var list = h('div', { class: 'chips' }); ls.forEach(function (l) { list.appendChild(h('span', { class: 'note' }, (l.type === 'quote' ? 'Quoted in ' : l.type === 'fulfillment' ? 'Fulfilled in ' : 'Echoed in '), esvLink(ntRef[l.to]))); });
+      row.appendChild(list); in2.appendChild(row);
+    });
+    f2.appendChild(in2); m.appendChild(f2);
+    // 3. Genealogy
+    var f3 = fold('tl-gen', [h('span', { class: 'fold-t', text: 'Genealogy: the line of promise' }), h('span', { class: 'fold-n', text: 'Adam to Jesus' })], false); f3.classList.add('sheet');
+    var in3 = h('div', { class: 'fold-in' });
+    T.gen.forEach(function (g, i) {
+      var gf = fold('tl-g-' + i, [h('span', { class: 'fold-t', text: g.title }), h('span', { class: 'fold-n', text: g.names.length + ' names' })], i === 0);
+      var refs = h('div', { class: 'chips' }); g.refs.forEach(function (r) { refs.appendChild(esvLink(r)); });
+      gf.appendChild(h('div', { class: 'fold-in' }, h('p', { class: 'gen', text: g.names.join('  →  ') }), h('p', { class: 'note', text: g.note }), refs));
+      in3.appendChild(gf);
+    });
+    f3.appendChild(in3); m.appendChild(f3);
+  }
+
   /* The podcast library: episodes filed by study series, each holding Kev's notes, concepts and responses (journal entries tagged with the episode). */
   var POD_TAGS = [['note', 'Note'], ['concept', 'Concept'], ['response', 'Response']];
   function fold(key, summary, openByDefault) {
