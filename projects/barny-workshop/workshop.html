@@ -108,10 +108,14 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .pw{display:flex;flex-direction:column;gap:6px;padding:0 10px}
 .pw-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .pw-list li{border-bottom:1px solid var(--line)} .pw-list li:last-child{border-bottom:0}
-.pw-list label{display:flex;align-items:center;gap:8px;padding:4px 0;font:400 13px/1.35 var(--ui);cursor:pointer;min-width:0}
-.pw-list label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-row{display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0}
+.pw-name{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font:400 13px/1.35 var(--ui);color:var(--ink);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-name[aria-expanded="true"]{font-weight:600}
+.pw-detail{display:flex;flex-direction:column;gap:4px;padding:0 0 8px 22px}
+.pw-detail textarea{min-height:0;font:13px/1.45 var(--read);padding:5px 8px;background:transparent}
+.pw-detail .link{align-self:flex-start;font-size:12px;padding:0}
 .pw-list input[type=checkbox]{width:14px;height:14px;margin:0;flex:none}
-.pw-list li.done span{color:var(--mute);text-decoration:line-through}
+.pw-list li.done .pw-name{color:var(--mute);text-decoration:line-through}
 .pw input[type=text]{font:13px/1.3 var(--ui);padding:5px 8px;background:transparent}
 .pw-more{font:500 12px/1.3 var(--ui);color:var(--mute)}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
@@ -155,7 +159,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 (function () {
   var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, podNote: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, podNote: null, pwOpen: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -528,7 +532,17 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     act.forEach(function (x) {
       var on = (x.days || []).indexOf(t) >= 0, cb = h('input', { type: 'checkbox', id: 'pw-' + x.id, 'aria-label': 'Prayed for ' + x.who + ' today' }); cb.checked = on; cb.disabled = !S.live;
       cb.addEventListener('change', function () { var d = (x.days || []).filter(function (k) { return k !== t; }); if (cb.checked) d.push(t); savePrayer(Object.assign({}, x, { days: d })).catch(function () {}); });
-      ul.appendChild(h('li', { class: on ? 'done' : '', title: x.for || '' }, h('label', null, cb, h('span', { text: x.who }))));
+      var open = S.pwOpen === x.id, nm = h('button', { type: 'button', class: 'pw-name', 'aria-expanded': String(open), text: x.who });
+      nm.addEventListener('click', function () { S.pwOpen = open ? null : x.id; render(); });
+      var li = h('li', { class: on ? 'done' : '' }, h('div', { class: 'pw-row' }, cb, nm));
+      if (open) {
+        var req = h('textarea', { id: 'pw-req-' + x.id, rows: '2', 'aria-label': 'What to pray for', placeholder: 'What to pray for' }); req.value = x.for || '';
+        function saveReq() { var v = req.value.trim(); if (v !== (x.for || '')) savePrayer(Object.assign({}, x, { for: v })).catch(function () {}); }
+        req.addEventListener('blur', saveReq); req.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); req.blur(); } });
+        var ans = h('button', { class: 'link', type: 'button', text: 'Answered' }); ans.addEventListener('click', function () { S.answering = x.id; S.pwOpen = null; location.hash = '#prayer'; });
+        li.appendChild(h('div', { class: 'pw-detail' }, req, ans));
+      }
+      ul.appendChild(li);
     });
     if (act.length) box.appendChild(ul);
     if (S.live) {
