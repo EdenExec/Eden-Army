@@ -90,6 +90,12 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .script{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;padding-right:4px}
 .script p{font:400 15px/1.6 var(--read)} .script b{font:600 11px/1 var(--ui);letter-spacing:.12em;margin-right:6px}
 .script p.speaking{background:var(--soft);border-radius:4px;outline:4px solid var(--soft)}
+.pod-ctl{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pod-ctl button{padding:8px 11px;min-width:44px}
+.pod-time{font:500 12px/1 var(--ui);color:var(--mute);font-variant-numeric:tabular-nums}
+.pod-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer} .pod-bar i{display:block;height:100%;width:0;background:var(--ink)}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow:auto}
+.modal>.sheet{width:min(640px,100%);max-height:100%;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.3)}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
@@ -126,7 +132,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 (function () {
   var ROOMS = ['sabbath', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, podNote: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -277,11 +283,11 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (s.carry) sh.appendChild(h('p', { class: 'note' }, 'Carry into the week: ', link(s.carry, s.carryLink || 'https://www.esv.org/' + encodeURIComponent(s.carry) + '/')));
     sh.appendChild(completeBox(s, series));
     var side = h('aside');
+    side.appendChild(podWidget(s));
     side.appendChild(rhythmBox(s));
     side.appendChild(prayerBox());
     side.appendChild(promptsBox(s));
     side.appendChild(askBox(s));
-    m.appendChild(podWidget(s));
     cols.appendChild(sh); cols.appendChild(side); m.appendChild(cols);
   }
   function list(parent, title, arr, tag) { if (!(arr || []).length) return; parent.appendChild(h('h3', { text: title })); var l = h(tag || 'ul', { class: 'q' }); arr.forEach(function (x) { l.appendChild(h('li', { text: x })); }); parent.appendChild(l); }
@@ -556,7 +562,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     return 'Write a podcast script: a warm two-voice conversation about this Bible study between BARNY (Barnabas, Kev\'s spiritual advisor: Scripture-first, historically orthodox and evangelical, encouraging) and ATLAS (a curious tutor who asks the questions a thoughtful listener would ask and pushes for plain, everyday examples). The listener is Kev: a husband, father and business owner who studies on Saturdays.\n\nKev\'s brief for this episode:\n' + brief + '\nFollow his themes, focus and direction closely.\n\nLength: about ' + words + ' words (' + mins + ' minutes spoken). Format: every line starts with "BARNY:" or "ATLAS:". No headings, stage directions, lists, markdown or emoji. Spoken English, contractions, short sentences.\n\nRules: quote Scripture only from the ESV text given below, word for word; for any other verse, name the reference and paraphrase. Where faithful Christians differ (anything marked DISPUTED), say so plainly, give the main views fairly, and suggest bringing it to his pastor; never pick a side on a secondary matter. Never claim a word from God or invent a quotation from a teacher. Open with a vivid question, not "welcome to the show". Close with one sentence to carry and the practice.\n\n' + parts.join('\n\n');
   }
   function podForm(s) {
-    var f = S.podForm, wrap = h('form', { class: 'sheet', style: 'background:var(--soft)' }, h('span', { class: 'eyebrow', text: 'Shape this episode' }));
+    var f = S.podForm, wrap = h('form', { class: 'sheet' }, h('h3', { text: 'Generate new podcast' }), h('p', { class: 'note', text: 'A few questions so Barny and Atlas head in the right direction.' }));
     function keep(k, v) { f[k] = v; }
     var themes = h('input', { type: 'text', id: 'pf-themes', 'aria-label': 'Themes', placeholder: 'Themes, e.g. rest, the finished work, drifting' }); themes.value = f.themes || ''; themes.addEventListener('input', function () { keep('themes', themes.value); });
     wrap.appendChild(h('label', { for: 'pf-themes', class: 'note', text: 'Themes' })); wrap.appendChild(themes);
@@ -592,27 +598,54 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
       .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
       .then(function () { render(); });
   }
+  /* One audio element for the page, outside the rebuilt DOM, so playback survives re-renders. */
+  var AUD = new Audio(); AUD.preload = 'none';
+  function mmss(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); }
+  function podTick() {
+    var tm = document.getElementById('pod-time'), bar = document.getElementById('pod-bar-i'), pp = document.getElementById('pod-pp');
+    if (tm) tm.textContent = mmss(AUD.currentTime) + (isFinite(AUD.duration) ? ' / ' + mmss(AUD.duration) : '');
+    if (bar && isFinite(AUD.duration) && AUD.duration) bar.style.width = (100 * AUD.currentTime / AUD.duration) + '%';
+    if (pp) pp.textContent = AUD.paused ? 'Play' : 'Pause';
+  }
+  ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata'].forEach(function (e) { AUD.addEventListener(e, podTick); });
   function podWidget(s) {
-    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0], b = chosenVoice('barny'), a = chosenVoice('atlas');
-    var box = h('section', { class: 'sheet' });
-    var voices = h('button', { class: 'link', type: 'button', text: 'Barny: ' + (b ? b.name : 'pick a voice') + ' · Atlas: ' + (a ? a.name : 'pick a voice') }); voices.addEventListener('click', function () { location.hash = '#podcasts'; });
-    box.appendChild(h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast · Barny and Atlas' }), voices));
-    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Barny and Atlas are writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-320) })); return box; }
-    if (ep) {
-      box.appendChild(h('h3', { text: (ep.minutes ? ep.minutes + '-minute episode' : 'Episode') + ' · ' + (ep.ref || '') }));
-      if (ep.brief && ep.brief.themes) box.appendChild(h('p', { class: 'note', text: 'Themes: ' + ep.brief.themes }));
-      box.appendChild(playerControls(ep));
-      var row = h('div', { class: 'row' }), st = studioButton(ep); if (st) row.appendChild(st);
-      var read = h('details', null, h('summary', { class: 'note', text: 'Read the script (' + parseScript(ep.script).length + ' turns)' }), scriptView(ep));
-      box.appendChild(row); box.appendChild(read);
-      if (ep.studio === 'requested' && !ep.audio) box.appendChild(h('p', { class: 'note', text: 'Send Barny a comment (tick Send to Claude) and he renders it now. About ' + (ep.minutes || 10) * 600 + ' characters of your ElevenLabs plan.' }));
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0], box = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Podcast' }));
+    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-200) })); return box; }
+    if (ep && ep.audio) {
+      if (AUD.getAttribute('data-ep') !== ep.id) { AUD.src = ep.audio; AUD.setAttribute('data-ep', ep.id); }
+      box.appendChild(h('p', { class: 'note', text: (ep.ref || '') + (ep.minutes ? ' · ' + ep.minutes + ' min' : '') }));
+      var back = h('button', { type: 'button', 'aria-label': 'Back 15 seconds', text: '− 15s' }), pp = h('button', { class: 'primary', type: 'button', id: 'pod-pp', text: AUD.paused ? 'Play' : 'Pause' }), fwd = h('button', { type: 'button', 'aria-label': 'Forward 15 seconds', text: '+ 15s' });
+      back.addEventListener('click', function () { AUD.currentTime = Math.max(0, AUD.currentTime - 15); });
+      fwd.addEventListener('click', function () { AUD.currentTime = Math.min(AUD.duration || 1e9, AUD.currentTime + 15); });
+      pp.addEventListener('click', function () { if (AUD.paused) AUD.play().catch(function () {}); else AUD.pause(); });
+      box.appendChild(h('div', { class: 'pod-ctl' }, back, pp, fwd, h('span', { class: 'pod-time', id: 'pod-time' })));
+      var bar = h('div', { class: 'pod-bar', role: 'presentation' }, h('i', { id: 'pod-bar-i' }));
+      bar.addEventListener('click', function (e) { var r = bar.getBoundingClientRect(); if (isFinite(AUD.duration)) AUD.currentTime = AUD.duration * (e.clientX - r.left) / r.width; });
+      box.appendChild(bar);
+      setTimeout(podTick, 0);
+    } else if (ep) {
+      box.appendChild(h('p', { class: 'note', text: ep.studio === 'requested' ? 'Script ready. Rendering is requested; send Barny a comment and it plays here.' : 'Script ready. Render it to play here.' }));
+      var st = studioButton(ep); if (st) box.appendChild(st);
+    } else box.appendChild(h('p', { class: 'note', text: 'No episode for this study yet.' }));
+    if (ep && S.podNote !== null) {
+      var at = mmss(AUD.currentTime), ta = h('textarea', { id: 'pod-note', 'aria-label': 'Note', rows: '3', placeholder: 'Your note at ' + at }); ta.value = S.podNote;
+      ta.addEventListener('input', function () { S.podNote = ta.value; });
+      var save = h('button', { class: 'primary', type: 'button', text: 'Save to journal' }), cancel = h('button', { type: 'button', text: 'Cancel' });
+      save.addEventListener('click', function () { var t = ta.value.trim(); if (!t) return; S.podNote = null; ta.blur(); saveEntry({ kind: 'study', text: t, ref: (ep.ref || '') + ' · podcast ' + at, sabbath: s.id }).catch(function () {}); render(); });
+      cancel.addEventListener('click', function () { S.podNote = null; render(); });
+      box.appendChild(ta); box.appendChild(h('div', { class: 'row' }, save, cancel));
     }
+    var row = h('div', { class: 'row' });
+    if (ep && S.podNote === null) { var note = h('button', { type: 'button', text: 'Make a note' }); note.disabled = !S.live; note.addEventListener('click', function () { S.podNote = ''; render(); setTimeout(function () { var t = document.getElementById('pod-note'); if (t) t.focus(); }, 0); }); row.appendChild(note); }
+    if (S.sample) { var gen = h('button', { type: 'button', class: ep ? '' : 'primary', text: 'Generate new podcast' }); gen.disabled = !S.live; gen.addEventListener('click', function () { S.podForm = Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); }); row.appendChild(gen); }
+    box.appendChild(row);
     if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
-    if (!S.sample) { box.appendChild(h('p', { class: 'note', text: 'Generating lights up when this page can ask Claude.' })); return box; }
-    if (S.podForm) { box.appendChild(podForm(s)); return box; }
-    var go = h('button', { class: ep ? '' : 'primary', type: 'button', text: ep ? 'Generate a new episode' : 'Generate podcast' }); go.disabled = !S.live;
-    go.addEventListener('click', function () { S.podForm = Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); });
-    box.appendChild(h('div', { class: 'row' }, go, ep ? null : h('span', { class: 'note', text: 'A short brief first: themes, focus, direction and length.' })));
+    if (ep) { var read = h('details', null, h('summary', { class: 'note', text: 'Read the script' }), scriptView(ep)); box.appendChild(read); }
+    if (S.podForm) {
+      var modal = h('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Generate new podcast' }, podForm(s));
+      modal.addEventListener('click', function (e) { if (e.target === modal) { S.podForm = null; render(); } });
+      box.appendChild(modal);
+    }
     return box;
   }
 
@@ -672,6 +705,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(g);
   }
 
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { S.podForm = null; render(); } });
   window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
   boot();
 })();
