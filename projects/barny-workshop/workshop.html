@@ -672,7 +672,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var live = S.pod.busy ? ['Writing the script', 'red'] : ep && !ep.audio && ep.studio === 'rendering' ? ['Recording', 'red'] : ep && !ep.audio && ep.studio === 'requested' ? ['Recording requested', 'amber'] : ep && ep.audio && !ep.played ? ['New episode ready', 'green'] : null;
     var lib = h('a', { href: '#podcasts', class: 'pw-more', text: 'Podcast library' });
     var box = h('section', { class: 'sheet' }, h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast' }), live ? h('span', { class: 'onair ' + live[1], role: 'status' }, h('i'), live[0]) : lib));
-    if (S.pod.busy) { box.appendChild(h('p', { class: 'note', text: 'Writing the script…' })); box.appendChild(h('p', { class: 'answer', id: 'pod-live', text: S.pod.text.slice(-200) })); return box; }
+    if (S.pod.busy) return box;   // the light in the header is enough (Kev, 14 Nov)
     if (ep && ep.audio) {
       if (AUD.getAttribute('data-ep') !== ep.id) { AUD.src = ep.audio; AUD.setAttribute('data-ep', ep.id); }
       box.appendChild(h('p', { class: 'note', text: (ep.ref || '') + (ep.minutes ? ' · ' + ep.minutes + ' min' : '') }));
