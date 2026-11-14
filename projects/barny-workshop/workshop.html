@@ -18,7 +18,9 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--ui);margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px}
-header.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px}
+header.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+a.home{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--ui);color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--page);border-radius:4px;padding:9px 14px}
+a.home:hover{background:var(--soft)} a.home:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 h1{font:600 26px/1.1 var(--display);letter-spacing:.08em;margin:0}
 .sub{color:var(--mute);font-size:13px}
 .eyebrow{font:600 11px/1.3 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
@@ -117,7 +119,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
 
 <div class="wrap">
   <header class="top">
-    <div><span class="eyebrow">KDTW GROUP · Sabbath study</span><h1>BARNY'S WORKSHOP</h1></div>
+    <a href="#sabbath" class="home" id="home" aria-label="Home: This Sabbath"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 7.5 8 2.5l6 5M3.5 6.5V13.5h3.5V9.5h2v4h3.5V6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg><span>Home</span></a>
     <div class="sub" id="state">Opening the workshop…</div>
   </header>
   <div class="rail">
@@ -717,6 +719,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
   }
 
   (function () { var d = document.getElementById('rooms-more'); if (!d) return; if (store('bw-menu') || (location.hash && ['#sabbath', ''].indexOf(location.hash) < 0)) d.open = true; d.addEventListener('toggle', function () { store('bw-menu', d.open); }); })();
+  document.getElementById('home').addEventListener('click', function () { S.sabSel = null; if (location.hash === '#sabbath') { render(); window.scrollTo(0, 0); } });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { S.podForm = null; render(); } });
   window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
   boot();
