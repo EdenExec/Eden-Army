@@ -3,7 +3,7 @@
   "subject": "Carmel RPO bridge agreement additions (term sheet)",
   "preparer": "docket",
   "checker": "tally",
-  "status": "open",
+  "status": "passed",
   "items": [
     {
       "label": "Option B monthly retainer",
@@ -137,83 +137,110 @@
       "label": "Guarantee notice window",
       "claimed": 10,
       "unit": "count",
-      "source": "Term sheet s.8 Conditions, in business days. NEW: proposal is silent; the 2025 Carmel & EES engaged agreement (Drive) used a different window."
+      "source": "Term sheet s.8 Conditions, in business days. NEW: proposal is silent; the 2025 Carmel & EES engaged agreement (Drive) used a different window.",
+      "recomputed": 10,
+      "ok": true
     },
     {
       "label": "Candidate ownership tail",
       "claimed": 12,
       "unit": "count",
-      "source": "Months. Proposal page 03 Safeguards ('within one year') and task brief; term sheet s.9."
+      "source": "Months. Proposal page 03 Safeguards ('within one year') and task brief; term sheet s.9.",
+      "recomputed": 12,
+      "ok": true
     },
     {
       "label": "Active-candidate lookback",
       "claimed": 6,
       "unit": "count",
-      "source": "Months. NEW, term sheet s.9 'Already in Carmel's process'."
+      "source": "Months. NEW, term sheet s.9 'Already in Carmel's process'.",
+      "recomputed": 6,
+      "ok": true
     },
     {
       "label": "Carmel duplicate-claim window",
       "claimed": 2,
       "unit": "count",
-      "source": "Business days after a Submittal. NEW, term sheet s.9."
+      "source": "Business days after a Submittal. NEW, term sheet s.9.",
+      "recomputed": 2,
+      "ok": true
     },
     {
       "label": "Unused credit life after agreement ends",
       "claimed": 90,
       "unit": "days",
-      "source": "Proposal page 03 'How the credit works'; term sheet s.6."
+      "source": "Proposal page 03 'How the credit works'; term sheet s.6.",
+      "recomputed": 90,
+      "ok": true
     },
     {
       "label": "Hire fee due after Start",
       "claimed": 30,
       "unit": "days",
-      "source": "Proposal page 03 Payment row; term sheet s.5. Cross-check Carmel invoice 62048 terms (Drive)."
+      "source": "Proposal page 03 Payment row; term sheet s.5. Cross-check Carmel invoice 62048 terms (Drive).",
+      "recomputed": 30,
+      "ok": true
     },
     {
       "label": "Termination notice",
       "claimed": 30,
       "unit": "days",
-      "source": "Proposal page 03 Term; term sheet s.2."
+      "source": "Proposal page 03 Term; term sheet s.2.",
+      "recomputed": 30,
+      "ok": true
     },
     {
       "label": "Applicant refresh frequency",
       "claimed": 2,
       "unit": "count",
-      "source": "Times per week. NEW, term sheet s.4 Applicants."
+      "source": "Times per week. NEW, term sheet s.4 Applicants.",
+      "recomputed": 2,
+      "ok": true
     },
     {
       "label": "Security incident notice",
       "claimed": 72,
       "unit": "count",
-      "source": "Hours. NEW, term sheet s.10."
+      "source": "Hours. NEW, term sheet s.10.",
+      "recomputed": 72,
+      "ok": true
     },
     {
       "label": "Data return or deletion window",
       "claimed": 10,
       "unit": "count",
-      "source": "Business days after the agreement ends. NEW, term sheet s.10."
+      "source": "Business days after the agreement ends. NEW, term sheet s.10.",
+      "recomputed": 10,
+      "ok": true
     },
     {
       "label": "Hiring-manager feedback standard",
       "claimed": 2,
       "unit": "count",
-      "source": "Business days. Proposal page 03 Service standards; term sheet s.4 and s.11."
+      "source": "Business days. Proposal page 03 Service standards; term sheet s.4 and s.11.",
+      "recomputed": 2,
+      "ok": true
     },
     {
       "label": "First candidates standard",
       "claimed": 10,
       "unit": "count",
-      "source": "Business days, now counted from intake. Proposal page 03 Service standards ('first candidates within ten', start point unstated); term sheet s.11."
+      "source": "Business days, now counted from intake. Proposal page 03 Service standards ('first candidates within ten', start point unstated); term sheet s.11.",
+      "recomputed": 10,
+      "ok": true
     },
     {
       "label": "Old EES agreement worked example: 22.5% of $165,000",
       "claimed": 37125,
       "unit": "usd",
-      "source": "Drive doc 'Engaged Fee Search Agreement _ Carmel Partners & EES', Schedule A example. Recompute; the doc's printed figure is suspected wrong (template fix, not in the term sheet)."
+      "source": "Drive doc 'Engaged Fee Search Agreement _ Carmel Partners & EES', Schedule A example. Recompute; the doc's printed figure is suspected wrong (template fix, not in the term sheet).",
+      "recomputed": 37125,
+      "ok": true
     }
   ],
   "createdAt": "2026-11-15T00:34:05.195Z",
   "doc": "/tmp/claude-0/-home-user-Agent-Builder/fd7334b6-e351-59ff-b6a1-40fa39714868/scratchpad/carmel/out/agreement-additions.md",
   "ask": "Kev: confirm the open items before the term sheet goes to Brandy",
-  "checkedBy": "tally"
+  "checkedBy": "tally",
+  "closedAt": "2026-11-15T00:36:20.137Z"
 }
