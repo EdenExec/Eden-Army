@@ -443,3 +443,4 @@
 - 2026-11-15 03:44 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run fired outside 6am-10pm window, floor refresh left to the 6am run.
 - 2026-11-15 04:45 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run fired outside 6am-10pm window, floor refresh left to the 6am run.
 - 2026-11-15 05:43 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run fired before the 6am window, floor refresh left to the 6am run.
+- 2026-11-15 06:55 PT: picked 1, closed 1 (radar t-202611151421-qfam: 37 Family rows from Notion ledger, Family bench refreshed), gated 0, blocked 0, FAILs 0. Full floor refresh pushed (87 writes, 2 batches). Not run this hour: Crelate tasks pull, daily benches (8a), CloudTalk dials (8c), cockpit doc, taps (9a) — left to the next run.
