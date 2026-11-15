@@ -72,3 +72,24 @@ One page, two views. The page asks `user.isOwner()` first:
 - Live card fill: when a person's week is stamped, Kev's open page merges it into `people/{slug}/cards/{weekOf}` by `scorecard-desk/compile.py` rules (ported to JS): text fields with survey_src replacement, boxes only where the card has none, burnout from `cd` only if the card has none, never kev_score/coach_notes/needs/advice/pip/pip_reason; adds survey_compiled, survey_src, stamp. One write per card, only when the text or stamp changed. Runs only while Kev has the page open.
 - The card tab shows "From the scorecard" (finished time, initials, self score) and, outside screen-share, Kev-only candor in the coach box. Screen-share hides burnout, candor and coaching and drops the `cd` subscription.
 - Rules (published 13 Nov, contract 0.2.88): `[{path:"",read:"admin",write:"admin"},{path:"sc",read:"owner",write:"owner"},{path:"sc/{self}",read:"interact",write:"interact"},{path:"cd",read:"owner",write:"owner"},{path:"cd/{self}",read:"interact",write:"interact"},{path:"scmeta",read:"interact",write:"admin"},{path:"scpre",read:"interact",write:"admin"}]`, plus `user: {scopes: ["profile"]}`. Probed at `interact`: people, board, queue, cd read empty; sc/<other id> and scmeta writes refused; scmeta/week readable.
+
+## RP meter and earlier weeks (Dean, 14 Nov 2026; Kev 13–14 Nov, thread 7e0675ca)
+
+Built on live version 16 (Q's 14 Nov earlier-weeks work was live but not in the repo; this file now carries both). Owner view only; the non-owner scorecard view is byte-for-byte unchanged and still reads only `sc/<uid>`, `cd/<uid>`, `scmeta/week`, `scpre/<slug>`.
+
+**RP meter** (display only, nothing written). Zones for RPs in a day: under 15 Below the floor; 15 Floor (yellow, blending to green by 20); 20 Dawg (green, "the standard for a dawg"); 25 Operational excellence (gold, star); 30+ Best day (deep gold, flame). Needle = the latest weekday in `board/current` `recruiters[]`/`leadership[]` `.rp_by_day` (this week, from `week.mon_start`); the marker inside the arc and the text line = this week's daily average, plus `rp_days_at_15` and `this.rps`. Mon–Fri strip below, each bar coloured by zone; dials per day under each bar from `phones/current` (`dayKeys` + `people[].days`, matched by first name) when present. Full gauge at the top of the open folder's card (this week only); a mini gauge with today's number and zone in a new "RP meter" column on every leaderboard row. No `rp_by_day` → "No RPs logged yet", never a zero needle. Shown in screen-share (RPs are already on the leaderboard there).
+
+**New card fields** on `people/{slug}/cards/{weekOf}` (Kev writes them from the page; whole-doc `set`, same 700 ms save as the live card):
+
+| Field | Shape | Notes |
+|---|---|---|
+| `numbers` | `{rps, rp_days, resumes, ptcs, ftis, dials, entered_by: "kev"}` | "Numbers for this week" form on a closed week with no Crelate scorecard row. The Numbers and trend tab (table, four-week average, five-week chart) uses it for any week `scorecards` has no row for, marked "entered by Kev". Removed when every box is cleared. |
+| `items` | `[{text, added (ISO)}]` | Action items on each "Week of" tile, appended with "Add an item" (Enter works). Kev only; hidden in screen-share. |
+| `pip_start` | `YYYY-MM-DD` | On the card where the PIP run begins; default that week's Monday. Editable on the PIP strip. |
+| `ask_need`, `ask_resolve` | text | Dean writes them from the scorecard's candor section. Shown under "From the scorecard" on the card, Kev only, hidden in screen-share. Kev's card saves always carry Dean's latest values for these two, so a save never wipes them. |
+
+**PIP strip** (Earlier weeks, Kev only, hidden in screen-share): the latest run of cards with `pip: true`; the latest `pip_reason` in the run; Started (`pip_start`); Day 30 (start + 30 days, days left); and each week since with the card score against 90%, boxes, and the RP week against 75 (Crelate row, else `numbers.rps`, else this week's board so far).
+
+Every "Week of" tile that has anything on it now opens by default, so notes, needs, advice and action items read on the tile.
+
+Known, unchanged from v16: in screen-share Kev's page still `get`s `cd/<uid>` once when it fills a stamped card (the merge), though candor is never drawn or subscribed there.
