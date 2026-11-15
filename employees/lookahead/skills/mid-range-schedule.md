@@ -39,6 +39,6 @@ The runway is a private artifact, **Runway**, https://claude.ai/artifact/LL1hw8T
 
 1. After every nightly refresh and every time you add or change items from a Radar ticket: `ArtifactData list` the Look Ahead page `items` with an `out_dir` (empty it first), then `node projects/lookahead/runway-block/from-lookahead.mjs <that dir>/items <scratch>/runway.json --audience kev` (the default; Kev's own view shows family titles, no family notes, medical dropped).
 2. `ArtifactData get` `runway/current` on the Runway artifact for its version, then `set` it from `<scratch>/runway.json` pinned with `if_version` (omit the pin only if it does not exist). Set `owner` to `Hawk` in the file first if the converter did not.
-3. **Command Center card.** The 12-week plan card in the Family wing reads `meta/runway` on the Command Center artifact, https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW. Every night also convert with `--weeks 12 --audience kev` and `set` that file there (`ArtifactData get` first for the version, pin with `if_version`). Same rules: titles, dates, kind, status and owner only. If it is older than a day the card shows a warning.
+3. The Command Center's 12-week card is fed by the nightly lookahead-mirror (`meta/lookahead`, `plan`), not by this page; do not write `meta/runway`.
 4. The Sunday push to Jenny uses `--audience jenny` (family items show as "Family") and renders a PNG; it does not touch `runway/current`.
 5. Never put pay, health, a discreet client's name or a candidate's name in `runway/current`.

@@ -1,0 +1,10 @@
+- 2026-11-15: Fly fishing self-rated 4/10; owns a 9ft 5wt rod and waders; will buy flies at a shop
+- 2026-11-15: Shooting self-rated 6/10; has shot clays only, has never bird hunted
+- 2026-11-15: Golf: 14 handicap
+- 2026-11-15: Chess: brand new
+- 2026-11-15: Needs hunter education before an Idaho hunting license (born after 1975): IDFG instructor-led $9.75 at register-ed.com or online $38 at hunter-ed.com/idaho (read 2026-11-15)
+- 2026-11-15: Firearms: owns a 12-gauge and two handguns (no further detail)
+- 2026-11-15: Vehicles: a Tundra and an LX 470, both fine for rough or snowy river roads; Tundra is the default pick
+- 2026-11-15: Nonresident for licenses until about 2027-05-08; daily fishing license $22.75 (IDFG, read 2026-11-15)
+- 2026-11-15: Lives in west Boise (83713); church Sunday morning at Main Street, so trips start late morning or midday
+- 2026-11-15: First trip brief: South Fork Boise below Anderson Ranch Dam, 2026-11-15, flow 304 cfs steady; backup Boise River in town
