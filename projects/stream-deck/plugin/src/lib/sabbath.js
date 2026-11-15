@@ -70,9 +70,9 @@ export function sabbathWindow(nowMs, place = DEFAULT_PLACE) {
 // The deck's Sabbath layout runs from Friday sunset until a Sunday cut-off (Kev, 14 Nov 2026: "from Fri night to Sun night").
 // The REST text on the strip still says "until sundown Sat" until Saturday sunset, then just "REST".
 
-export const DEFAULT_SUNDAY_CUTOFF = "20:00"; // 8 PM local; a setting, and an open question for Kev
+export const DEFAULT_SUNDAY_CUTOFF = "23:00"; // 11 PM local (Kev, 15 Nov 2026); a setting
 
-// "20:00", "8:30pm" or "sundown" (= end at Saturday sunset, no Sunday tail). Anything else falls back to the default.
+// "20:00", "8:30pm" or "sundown" (= end at Saturday sunset, no Sunday tail). Anything else falls back to the default (11 PM).
 export function parseCutoff(input) {
 	const s = String(input ?? "").trim().toLowerCase();
 	if (s === "sundown" || s === "saturday" || s === "sat") return { sundown: true, h: 0, min: 0 };

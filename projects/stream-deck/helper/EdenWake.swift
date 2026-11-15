@@ -2,7 +2,9 @@
 //
 // It watches the screen saver, the lock screen and display sleep. While any of them is on it writes
 //     ~/.edendeck/screen.json   {"state":"cross","at":"..."}
-// and when all of them are off it writes {"state":"awake",...} and plays the Mando chime once.
+// and when all of them are off it writes {"state":"awake",...}.
+// The Mando chime plays ONLY when Kev logs in from the lock screen (com.apple.screenIsUnlocked). A saver that stops,
+// a display that wakes, a system wake or a scheduled wake (the 4:44) never chimes: nobody has logged in.
 // The Eden Deck plugin watches that file and switches the Stream Deck + (Cross layout / back to Eden).
 // This program opens no pages, apps or windows. It never reads the screen or any keystroke.
 //
@@ -10,7 +12,7 @@
 //     mkdir -p ~/.edendeck/bin && swiftc -O -o ~/.edendeck/bin/EdenWake EdenWake.swift
 // Test without locking the Mac:
 //     ~/.edendeck/bin/EdenWake cross      (deck shows the Cross)
-//     ~/.edendeck/bin/EdenWake awake      (deck returns, chime plays; add --no-chime to skip it)
+//     ~/.edendeck/bin/EdenWake awake      (deck returns, silent; add --chime to hear the chime)
 // Run by hand (normally the LaunchAgent does this):
 //     ~/.edendeck/bin/EdenWake
 //
@@ -58,6 +60,7 @@ final class Watcher {
     var displayAsleep = false
     var published = ""            // what the state file says right now: "cross" or "awake"
     var pending: DispatchWorkItem?
+    var chimeUntil: Date? = nil   // set by a real login (screenIsUnlocked); the chime is due until then
 
     func start() {
         // Is the screen already locked (helper started late)?
@@ -76,8 +79,8 @@ final class Watcher {
         }
         watch("com.apple.screensaver.didstart") { $0.saver = true }
         watch("com.apple.screensaver.didstop") { $0.saver = false }
-        watch("com.apple.screenIsLocked") { $0.locked = true }
-        watch("com.apple.screenIsUnlocked") { $0.locked = false }
+        watch("com.apple.screenIsLocked") { $0.locked = true; $0.chimeUntil = nil }
+        watch("com.apple.screenIsUnlocked") { $0.locked = false; $0.chimeUntil = Date().addingTimeInterval(60) }
 
         // Display sleep and wake (and system sleep, in case the Mac sleeps anyway).
         let workspace = NSWorkspace.shared.notificationCenter
@@ -96,7 +99,7 @@ final class Watcher {
     }
 
     // Several notifications arrive together on a wake (saver stops, screen unlocks, display wakes).
-    // Wait half a second so we decide once, and chime once.
+    // Wait half a second so we decide once. The chime is tied to the login, not to this decision.
     func changed() {
         pending?.cancel()
         let work = DispatchWorkItem { [weak self] in self?.evaluate() }
@@ -106,19 +109,23 @@ final class Watcher {
 
     func evaluate() {
         let state = (saver || locked || displayAsleep) ? "cross" : "awake"
-        if state == published { return }
-        let wasCross = (published == "cross")
-        published = state
-        writeState(state)
-        if state == "awake" && wasCross { playChime() }
+        if state != published {
+            published = state
+            writeState(state)
+        }
+        // Chime once per login, and only when the Mac is really awake and unlocked.
+        if state == "awake", let until = chimeUntil {
+            chimeUntil = nil
+            if until > Date() { playChime() }
+        }
     }
 }
 
-// ---- command line: `EdenWake cross` / `EdenWake awake [--no-chime]` write once and exit (for testing) ----
+// ---- command line: `EdenWake cross` / `EdenWake awake [--chime]` write once and exit (for testing) ----
 let args = Array(CommandLine.arguments.dropFirst())
 if let first = args.first, first == "cross" || first == "awake" {
     writeState(first)
-    if first == "awake" && !args.contains("--no-chime") { playChime(); Thread.sleep(forTimeInterval: 1.0) }
+    if first == "awake" && args.contains("--chime") { playChime(); Thread.sleep(forTimeInterval: 1.0) }
     exit(0)
 }
 

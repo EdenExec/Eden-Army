@@ -16,15 +16,15 @@ const BOISE = { lat: 43.615, lon: -116.202, tz: "America/Boise" };
 const at = (y, m, d, h, min = 0) => zonedToUtc(y, m, d, h, min, 0, BOISE.tz); // Boise wall clock -> UTC ms
 const mode = (t, extra = {}) => desiredMode({ now: t, place: BOISE, ...extra });
 
-test("cutoff: parses 24 hour, am/pm, sundown; junk falls back to 8 PM", () => {
+test("cutoff: parses 24 hour, am/pm, sundown; junk falls back to 11 PM", () => {
 	assert.deepEqual(parseCutoff("20:00"), { sundown: false, h: 20, min: 0 });
 	assert.deepEqual(parseCutoff("8:30 pm"), { sundown: false, h: 20, min: 30 });
 	assert.deepEqual(parseCutoff("12am"), { sundown: false, h: 0, min: 0 });
 	assert.equal(parseCutoff("Sundown").sundown, true);
-	for (const bad of ["", "banana", "25:00", "13pm", undefined]) assert.deepEqual(parseCutoff(bad), { sundown: false, h: 20, min: 0 });
+	for (const bad of ["", "banana", "25:00", "13pm", undefined]) assert.deepEqual(parseCutoff(bad), { sundown: false, h: 23, min: 0 });
 });
 
-test("layout window: Friday sunset to Sunday 8 PM Boise (13 to 15 Nov 2026)", () => {
+test("layout window: Friday sunset to Sunday 11 PM Boise (13 to 15 Nov 2026)", () => {
 	assert.equal(sabbathLayoutWindow(at(2026, 11, 13, 12), BOISE).active, false); // Friday noon
 	assert.equal(sabbathLayoutWindow(at(2026, 11, 13, 17, 10), BOISE).active, false); // just before sunset (about 5:21)
 	assert.equal(sabbathLayoutWindow(at(2026, 11, 13, 17, 35), BOISE).active, true);
@@ -32,8 +32,8 @@ test("layout window: Friday sunset to Sunday 8 PM Boise (13 to 15 Nov 2026)", ()
 	const sat = sabbathLayoutWindow(at(2026, 11, 14, 19), BOISE); // Saturday 7 PM, after sunset
 	assert.equal(sat.active, true);
 	assert.equal(sat.proper, false);
-	assert.equal(sabbathLayoutWindow(at(2026, 11, 15, 19, 59), BOISE).active, true); // Sunday 7:59 PM
-	assert.equal(sabbathLayoutWindow(at(2026, 11, 15, 20, 1), BOISE).active, false); // Sunday 8:01 PM
+	assert.equal(sabbathLayoutWindow(at(2026, 11, 15, 22, 59), BOISE).active, true); // Sunday 10:59 PM
+	assert.equal(sabbathLayoutWindow(at(2026, 11, 15, 23, 1), BOISE).active, false); // Sunday 11:01 PM
 	assert.equal(sabbathLayoutWindow(at(2026, 11, 16, 9), BOISE).active, false); // Monday
 	assert.equal(sabbathLayoutWindow(at(2026, 11, 12, 20), BOISE).active, false); // Thursday
 });
@@ -50,7 +50,7 @@ test("layout window: the next window is reported when not active, and daylight s
 	assert.equal(w.active, false);
 	assert.ok(w.start > at(2026, 11, 20, 16) && w.start < at(2026, 11, 20, 18));
 	assert.equal(sabbathLayoutWindow(at(2026, 3, 8, 12), BOISE).active, true); // Sunday 8 Mar 2026, clocks changed that day
-	assert.equal(sabbathLayoutWindow(at(2026, 3, 8, 21), BOISE).active, false);
+	assert.equal(sabbathLayoutWindow(at(2026, 3, 8, 23, 30), BOISE).active, false);
 });
 
 test("mode: Cross wins, then Sabbath, then Eden", () => {
@@ -58,8 +58,9 @@ test("mode: Cross wins, then Sabbath, then Eden", () => {
 	assert.equal(mode(at(2026, 11, 11, 10), { screen: "cross" }), "cross");
 	assert.equal(mode(at(2026, 11, 14, 12)), "rest");
 	assert.equal(mode(at(2026, 11, 14, 12), { screen: "cross" }), "cross");
-	assert.equal(mode(at(2026, 11, 15, 21)), "eden");
-	assert.equal(mode(at(2026, 11, 15, 21), { cutoff: "11pm" }), "rest");
+	assert.equal(mode(at(2026, 11, 15, 21)), "rest");
+	assert.equal(mode(at(2026, 11, 15, 21), { cutoff: "8pm" }), "eden");
+	assert.equal(mode(at(2026, 11, 15, 23, 30)), "eden");
 });
 
 test("mode: state file parsing never traps the deck on the Cross", () => {
