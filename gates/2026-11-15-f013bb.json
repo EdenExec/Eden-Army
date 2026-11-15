@@ -1,0 +1,219 @@
+{
+  "id": "2026-11-15-f013bb",
+  "subject": "Carmel RPO bridge agreement additions (term sheet)",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "open",
+  "items": [
+    {
+      "label": "Option B monthly retainer",
+      "claimed": 7500,
+      "unit": "usd",
+      "source": "deliverables/rpo-overview/carmel-rpo-proposal.html, page 03 Terms table, 'Monthly retainer' row, Option B column. Term sheet s.5 must match.",
+      "recomputed": 7500,
+      "ok": true
+    },
+    {
+      "label": "Option B placement fee rate",
+      "claimed": 20,
+      "unit": "pct",
+      "source": "Proposal page 03, 'Placement fee % of first-year base salary' row, Option B. Term sheet s.5 Eden-sourced row must match.",
+      "recomputed": 20,
+      "ok": true
+    },
+    {
+      "label": "Retainer credit share",
+      "claimed": 100,
+      "unit": "pct",
+      "source": "Proposal page 03, 'credited ...% against hire fees' under Monthly retainer. Term sheet s.6.",
+      "recomputed": 100,
+      "ok": true
+    },
+    {
+      "label": "Retainer payments inside the Bridge Term",
+      "claimed": 3,
+      "unit": "count",
+      "source": "Term sheet s.5 retainer row: count the due dates that fall on or before the End Date in s.2.",
+      "recomputed": 3,
+      "ok": true
+    },
+    {
+      "label": "Total retainer over the Bridge Term",
+      "claimed": 22500,
+      "unit": "usd",
+      "source": "Option B monthly retainer (proposal p.03) times the number of retainer due dates on or before the End Date (term sheet s.2 and s.5).",
+      "recomputed": 22500,
+      "ok": true
+    },
+    {
+      "label": "Bridge Term calendar days, Start Date to End Date inclusive",
+      "claimed": 105,
+      "unit": "days",
+      "source": "Term sheet s.2 Start Date and End Date rows; count both ends.",
+      "recomputed": 105,
+      "ok": true
+    },
+    {
+      "label": "Lifted Week days",
+      "claimed": 14,
+      "unit": "days",
+      "source": "Term sheet s.2 Lifted Weeks row; count each listed range inclusive.",
+      "recomputed": 14,
+      "ok": true
+    },
+    {
+      "label": "Program Days in the Bridge Term",
+      "claimed": 91,
+      "unit": "days",
+      "source": "Term sheet s.1 Program Day definition applied from Start Date to End Date (s.2); End Date row states which Program Day it is, check it.",
+      "recomputed": 91,
+      "ok": true
+    },
+    {
+      "label": "Day 45 Review: calendar days after Start Date",
+      "claimed": 58,
+      "unit": "days",
+      "source": "Term sheet s.2: find Program Day 45 (Day 1 = Start Date, Lifted Weeks not counted); report calendar days from Start Date to that date. Check the weekday and date shown in s.2.",
+      "recomputed": 58,
+      "ok": true
+    },
+    {
+      "label": "Day 85 Review: calendar days after Start Date",
+      "claimed": 98,
+      "unit": "days",
+      "source": "Same rule as Day 45, for Program Day 85. Check the weekday and date shown in s.2.",
+      "recomputed": 98,
+      "ok": true
+    },
+    {
+      "label": "Example fee, $150,000 hire at Option B before credit",
+      "claimed": 30000,
+      "unit": "usd",
+      "source": "Option B rate (proposal p.03) on a $150,000 First-Year Base Salary; compare proposal example row and term sheet s.5.",
+      "recomputed": 30000,
+      "ok": true
+    },
+    {
+      "label": "Example invoice, $150,000 hire after full bridge credit",
+      "claimed": 7500,
+      "unit": "usd",
+      "source": "Term sheet s.5 example: the $150,000 example fee less the total bridge retainer credit (s.6, full credit).",
+      "recomputed": 7500,
+      "ok": true
+    },
+    {
+      "label": "Example fee, $200,000 hire at Option B before credit",
+      "claimed": 40000,
+      "unit": "usd",
+      "source": "Option B rate on a $200,000 First-Year Base Salary; compare proposal example row and term sheet s.5.",
+      "recomputed": 40000,
+      "ok": true
+    },
+    {
+      "label": "Referral screening fee rate",
+      "claimed": 6,
+      "unit": "pct",
+      "source": "Proposal page 03, 'Referral screening' row. Term sheet s.5 referral row; the Carmel-applicant row is a bracketed proposal by Docket at the same rate, Kev to confirm.",
+      "recomputed": 6,
+      "ok": true
+    },
+    {
+      "label": "Third-party placement all-in fee cap",
+      "claimed": 20,
+      "unit": "pct",
+      "source": "Kev's call notes (scratchpad/carmel/kev-ask-2026-11-13.md, Agency policy bullet) and the task brief; term sheet s.7. Management fee sits inside it (blank, Kev to set).",
+      "recomputed": 20,
+      "ok": true
+    },
+    {
+      "label": "Replacement guarantee length",
+      "claimed": 120,
+      "unit": "days",
+      "source": "Proposal page 03 'Replacement guarantee' row; term sheet s.8.",
+      "recomputed": 120,
+      "ok": true
+    },
+    {
+      "label": "Guarantee notice window",
+      "claimed": 10,
+      "unit": "count",
+      "source": "Term sheet s.8 Conditions, in business days. NEW: proposal is silent; the 2025 Carmel & EES engaged agreement (Drive) used a different window."
+    },
+    {
+      "label": "Candidate ownership tail",
+      "claimed": 12,
+      "unit": "count",
+      "source": "Months. Proposal page 03 Safeguards ('within one year') and task brief; term sheet s.9."
+    },
+    {
+      "label": "Active-candidate lookback",
+      "claimed": 6,
+      "unit": "count",
+      "source": "Months. NEW, term sheet s.9 'Already in Carmel's process'."
+    },
+    {
+      "label": "Carmel duplicate-claim window",
+      "claimed": 2,
+      "unit": "count",
+      "source": "Business days after a Submittal. NEW, term sheet s.9."
+    },
+    {
+      "label": "Unused credit life after agreement ends",
+      "claimed": 90,
+      "unit": "days",
+      "source": "Proposal page 03 'How the credit works'; term sheet s.6."
+    },
+    {
+      "label": "Hire fee due after Start",
+      "claimed": 30,
+      "unit": "days",
+      "source": "Proposal page 03 Payment row; term sheet s.5. Cross-check Carmel invoice 62048 terms (Drive)."
+    },
+    {
+      "label": "Termination notice",
+      "claimed": 30,
+      "unit": "days",
+      "source": "Proposal page 03 Term; term sheet s.2."
+    },
+    {
+      "label": "Applicant refresh frequency",
+      "claimed": 2,
+      "unit": "count",
+      "source": "Times per week. NEW, term sheet s.4 Applicants."
+    },
+    {
+      "label": "Security incident notice",
+      "claimed": 72,
+      "unit": "count",
+      "source": "Hours. NEW, term sheet s.10."
+    },
+    {
+      "label": "Data return or deletion window",
+      "claimed": 10,
+      "unit": "count",
+      "source": "Business days after the agreement ends. NEW, term sheet s.10."
+    },
+    {
+      "label": "Hiring-manager feedback standard",
+      "claimed": 2,
+      "unit": "count",
+      "source": "Business days. Proposal page 03 Service standards; term sheet s.4 and s.11."
+    },
+    {
+      "label": "First candidates standard",
+      "claimed": 10,
+      "unit": "count",
+      "source": "Business days, now counted from intake. Proposal page 03 Service standards ('first candidates within ten', start point unstated); term sheet s.11."
+    },
+    {
+      "label": "Old EES agreement worked example: 22.5% of $165,000",
+      "claimed": 37125,
+      "unit": "usd",
+      "source": "Drive doc 'Engaged Fee Search Agreement _ Carmel Partners & EES', Schedule A example. Recompute; the doc's printed figure is suspected wrong (template fix, not in the term sheet)."
+    }
+  ],
+  "createdAt": "2026-11-15T00:34:05.195Z",
+  "doc": "/tmp/claude-0/-home-user-Agent-Builder/fd7334b6-e351-59ff-b6a1-40fa39714868/scratchpad/carmel/out/agreement-additions.md",
+  "ask": "Kev: confirm the open items before the term sheet goes to Brandy",
+  "checkedBy": "tally"
+}
