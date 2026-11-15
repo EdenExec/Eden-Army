@@ -204,6 +204,7 @@ describe("write plan", () => {
     assert.equal((planWrites(docs, ex(past), now)[0]!.data as { snoozeUntil?: string }).snoozeUntil, undefined);
     assert.equal(planWrites({ "alerts/sync-a": { id: "sync-a", title: "old", snoozeUntil: later } }, ex(later), now).length, 0);   // nothing else changed: no write
     assert.equal(DESKS.lookahead, "family"); assert.ok(SENSITIVE_AGENTS.has("lookahead"));
+    assert.equal(DESKS.gordo, "family"); assert.ok(SENSITIVE_AGENTS.has("gordo"));   // Gordo, hobbies guide (Kev, 15 Nov 2026): KDTW wing
   });
   test("batches hold at most 50", () => {
     assert.deepEqual(chunk(Array.from({ length: 120 }, (_, i) => i)).map((c) => c.length), [50, 50, 20]);
