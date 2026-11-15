@@ -154,3 +154,16 @@ export function interpretMenuResult(out) {
 	if (t === "error:no-menu-item") return { ok: false, reason: "No window and no menu item found" };
 	return { ok: false, reason: explainOsaError(t) };
 }
+
+// Where an app may live, for "open it by path" when `open -a <name>` cannot find it by name.
+// Chrome and Safari web apps (the installed Gemini, Duet) live in ~/Applications; Chrome's sit in "Chrome Apps.localized".
+export function appPathCandidates(name, home) {
+	const n = safeAppName(name);
+	if (!n) return [];
+	const file = n.endsWith(".app") ? n : `${n}.app`;
+	const h = typeof home === "string" && home ? home.replace(/\/+$/, "") : "";
+	return [
+		`/Applications/${file}`,
+		...(h ? [`${h}/Applications/${file}`, `${h}/Applications/Chrome Apps.localized/${file}`] : []),
+	];
+}

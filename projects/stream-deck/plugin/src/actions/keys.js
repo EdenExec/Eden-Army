@@ -1,6 +1,6 @@
 import streamDeck, { SingletonAction } from "@elgato/streamdeck";
 import { hub } from "../hub.js";
-import { keyFace, svgDataUri } from "../lib/keyface.js";
+import { keyFace, glyphFace, crossKeyFace, svgDataUri } from "../lib/keyface.js";
 import { safeWebUrl, safeAppName, safeMenuTitle, defaultMenuTitle } from "../lib/keys.js";
 import { sys } from "../lib/system.js";
 
@@ -44,6 +44,7 @@ class FaceKey extends SingletonAction {
 export class OpenLinkKey extends FaceKey {
 	manifestId = `${UUID}.openlink`;
 	face(s) {
+		if (s.glyph) return glyphFace({ glyph: s.glyph, label: s.label || "Link" });
 		return keyFace({ label: s.label || "Link" });
 	}
 	async onKeyDown(ev) {
@@ -57,7 +58,9 @@ export class OpenLinkKey extends FaceKey {
 export class OpenAppKey extends FaceKey {
 	manifestId = `${UUID}.openapp`;
 	face(s) {
-		return keyFace({ label: s.label || safeAppName(s.app ?? "") || "App" });
+		const label = s.label || safeAppName(s.app ?? "") || "App";
+		if (s.glyph) return glyphFace({ glyph: s.glyph, label });
+		return keyFace({ label });
 	}
 	async onKeyDown(ev) {
 		const name = safeAppName(ev.payload.settings.app ?? "");
@@ -97,5 +100,13 @@ export class DesktopKey extends FaceKey {
 		// Was silent before: Control+number through System Events needs Accessibility permission and fails without a word.
 		// Now the key shows the alert triangle. For a reliable desktop key use Stream Deck's own System > Hotkey instead.
 		await sys.controlNumber(n).catch(() => ev.action.showAlert());
+	}
+}
+
+// CROSS (v7): the Cross key of the Sabbath and screen-saver layouts. It only shows the Cross; pressing it does nothing.
+export class CrossKey extends SingletonAction {
+	manifestId = `${UUID}.cross`;
+	onWillAppear(ev) {
+		return quiet(ev.action.setImage(svgDataUri(crossKeyFace({ tone: "ready" }))));
 	}
 }

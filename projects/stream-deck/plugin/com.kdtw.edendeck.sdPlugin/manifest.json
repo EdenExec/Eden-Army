@@ -2,9 +2,9 @@
   "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
   "SDKVersion": 3,
   "Name": "Eden Deck",
-  "Version": "0.1.0.0",
+  "Version": "0.2.0.0",
   "Author": "KDTW Group",
-  "Description": "Private plugin: next meeting and Join key, focus timer, desktop and volume dials, and simple keys. Reads a private calendar address you paste into settings.",
+  "Description": "Private plugin: next meeting and Join key, focus timer, desktop and volume dials, simple keys, and the Sabbath and Cross layouts. Reads a private calendar address you paste into settings.",
   "Category": "Eden Deck",
   "CategoryIcon": "imgs/category",
   "Icon": "imgs/plugin",
@@ -178,6 +178,33 @@
         }
       ],
       "PropertyInspectorPath": "ui/desktop-key.html"
+    },
+    {
+      "Name": "Cross",
+      "UUID": "com.kdtw.edendeck.cross",
+      "Icon": "imgs/actions/cross",
+      "Tooltip": "The Cross. Shows only the Cross; used on the Sabbath and screen saver layouts.",
+      "Controllers": [
+        "Keypad"
+      ],
+      "States": [
+        {
+          "Image": "imgs/key",
+          "ShowTitle": false
+        }
+      ]
+    }
+  ],
+  "Profiles": [
+    {
+      "Name": "Eden Rest",
+      "DeviceType": 7,
+      "DontAutoSwitchWhenInstalled": true
+    },
+    {
+      "Name": "Eden Cross",
+      "DeviceType": 7,
+      "DontAutoSwitchWhenInstalled": true
     }
   ]
 }

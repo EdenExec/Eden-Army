@@ -15,7 +15,7 @@ const browser = await chromium.launch({ executablePath: exe, args: ["--no-sandbo
 const page = await browser.newPage({ viewport: { width: 1700, height: 900 }, deviceScaleFactor: 1 });
 await page.goto(`file://${root}index.html`);
 await page.screenshot({ path: `${root}all-states.png`, fullPage: true });
-for (const id of ["workday", "meeting-12min", "in-call", "sabbath"]) {
+for (const id of ["workday", "meeting-12min", "in-call", "sabbath", "sabbath-night"]) {
 	await page.locator(`#${id}`).screenshot({ path: `${root}${id}.png` });
 }
 await browser.close();

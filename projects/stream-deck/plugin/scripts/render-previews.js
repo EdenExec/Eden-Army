@@ -15,7 +15,8 @@ const states = [
 	{ id: "workday", title: "Workday, 9:00 AM", now: BOISE(12, 9), volume: { level: 60, muted: false } },
 	{ id: "meeting-12min", title: "Meeting in 12 minutes", now: BOISE(12, 10, 18), volume: { level: 60, muted: false } },
 	{ id: "in-call", title: "In a call, focus timer running", now: BOISE(12, 10, 52), volume: { level: 36, muted: false }, timer: 18 },
-	{ id: "sabbath", title: "Sabbath (Saturday noon)", now: Date.UTC(2026, 10, 14, 19), volume: { level: 40, muted: false } },
+	{ id: "sabbath", title: "Sabbath (Saturday noon): REST, until sundown Sat, clock, volume", now: Date.UTC(2026, 10, 14, 19), volume: { level: 40, muted: false } },
+	{ id: "sabbath-night", title: "Sabbath after Saturday sunset (7:41 PM): REST alone", now: Date.UTC(2026, 10, 15, 2, 41), volume: { level: 40, muted: false } },
 ];
 
 mkdirSync(new URL("../preview/", import.meta.url), { recursive: true });

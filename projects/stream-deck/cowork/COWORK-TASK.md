@@ -1,4 +1,45 @@
-# Cowork task: Stream Deck kit v6 (13 November 2026)
+# Cowork task: Stream Deck kit v7 (15 November 2026)
+
+## v7 run (15 Nov): Sabbath layout, Cross on the screen saver, chime on wake
+
+**Read first:** `WHATS-NEW-v7.md`, then the section "Sabbath mode, Cross and wake" in `setup.md`. This is an update. Eden, Zoom, Google Calendar, Music and Mando stay as they are.
+
+**Marking.** Steps marked **[KEV AT THE MAC]** need Kev himself: a password, a macOS permission, an install prompt or a Terminal command. Do everything else, then stop at each marked step and wait. Never type a password. Never change a System Settings permission or setting yourself.
+
+1. **Back up.** Export every Stream Deck + profile into `exports/` with `-before-15nov` added to each name.
+2. **Update the plugin.** Open `plugin/com.kdtw.edendeck.streamDeckPlugin` (Eden Deck 0.2.0). **[KEV AT THE MAC]** Click Install / Replace if the app asks. Confirm Eden Deck now lists a **Cross** key.
+3. **Install the two bundled profiles.** Stream Deck asks to install **Eden Rest** and **Eden Cross** the first time the plugin switches to one (or import the two `.streamDeckProfile` files from the plugin folder). **[KEV AT THE MAC]** Click Install.
+   - Check **Eden Rest**: top row Barny's Workshop, Music, Gemini, Cross (top right); all other keys blank; dials Day, Desktop, Focus, Volume.
+   - Check **Eden Cross**: Cross top right only, no dials.
+   - Do not give either an automatic app assignment. Do not make either the default. Eden stays the default.
+   - If Stream Deck refuses the files or the layout is wrong, build both by hand (exact names **Eden Rest** and **Eden Cross**, keys as above, using the Eden Deck Open link, Open app, Cross and dial actions with icons from `icons/`), export them, and copy the exports over the same-named files in `~/Library/Application Support/com.elgato.StreamDeck/Plugins/com.kdtw.edendeck.sdPlugin/`. Then quit and reopen Stream Deck. Report which route worked.
+4. **Gemini key.** Click the Gemini key in Eden Rest and press it. If it does not open the installed Gemini web app, find the app's exact name (Finder: Applications or ~/Applications, also Chrome Apps.localized) and type it in "App name". Report the name.
+5. **Sunday cut-off.** Leave "Sabbath ends Sunday at" blank (8 PM Boise). Report that it shows in the panel.
+6. **Test the Sabbath layout.** The plugin switches by the clock, Friday sunset to Sunday 8 PM Boise, so outside that window you will not see it by itself. To look at it, pick **Eden Rest** by hand in the Stream Deck profile list. Check the strip: REST (with "until sundown Sat" only until Saturday sunset), a plain clock across dials 2 and 3, VOLUME on dial 4. Press Barny's Workshop (opens the artifact), Music (opens Music) and Gemini; turn the Volume dial. Take a screenshot. Then switch back to Eden by hand.
+7. **Screen saver images.** Copy `screensaver/Sabbath-Cross/` to `~/Pictures/Sabbath-Cross`. **[KEV AT THE MAC]** System Settings, Screen Saver, choose the folder `Sabbath-Cross`, style Classic (no Ken Burns, no Shifting Tiles). Cowork must not click inside System Settings.
+8. **Energy settings.** **[KEV AT THE MAC]** System Settings, Lock Screen and Battery/Energy: keep the Mac awake (turn on "Prevent automatic sleeping when the display is off" or the desktop equivalent). The screen saver and display-off are fine. Kev decides the times and whether a password is required after the saver.
+9. **Build the helper.** **[KEV AT THE MAC]** In Terminal, from the kit folder:
+   ```
+   mkdir -p ~/.edendeck/bin
+   swiftc -O -o ~/.edendeck/bin/EdenWake helper/EdenWake.swift
+   ```
+   If macOS offers to install the Command Line Tools, Kev clicks Install and repeats. Confirm `~/Music/Stream Deck/start-mando.mp3` exists (v6 put it there); if not, copy `morning/start-mando.mp3` there.
+10. **Test the helper by hand.** Run `~/.edendeck/bin/EdenWake cross`: the deck must show Eden Cross within a few seconds. Run `~/.edendeck/bin/EdenWake awake`: the Mando chime plays once and the deck returns to Eden. Check `cat ~/.edendeck/screen.json`. Report what you saw and how long it took.
+11. **Install the LaunchAgent.** **[KEV AT THE MAC]**
+    ```
+    cp helper/com.kdtw.edenwake.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.kdtw.edenwake.plist
+    ```
+    Allow any macOS prompt (login item or background item notice). Check `/tmp/edenwake.log` shows "state awake".
+12. **Real test with Kev.** **[KEV AT THE MAC]** Start the screen saver (hot corner). Expect: the Cross alone, top right. Wake it and sign in (Kev types the password). Expect: the Mando chime once, the deck back on Eden, and no pages opened. Repeat with display sleep if Kev uses it. Report anything that stays on the Cross, or a double chime.
+13. **Leave alone:** the Start key on Eden page 2, the Mando profile, the Mando Morning applet, the 4:45 LaunchAgent and the 4:44 pmset wake. Do not remove them. Ask Kev one question and write his answer in `report.md`: keep the 4:45 morning job? Also record his answers to: the Sunday cut-off time, and the Gemini app name.
+14. **Report.** Add a "v7 run" section to `report.md`: what worked, what did not, screenshots of Eden Rest and Eden Cross, and the profile-install route used (bundled or hand-built). Export Eden Rest and Eden Cross to `exports/` with `-after-15nov` added to each name.
+
+Rules: change only the Eden Deck plugin, the Eden Rest and Eden Cross profiles and the helper files. Never type a password, never change System Settings, never touch other profiles, apps or files.
+
+---
+
+# Earlier runs (kept for reference; the v6 run below is already done)
 
 ## v6 run (13 Nov): Start key, Bible key, Music page, 4:45am Mando mode
 

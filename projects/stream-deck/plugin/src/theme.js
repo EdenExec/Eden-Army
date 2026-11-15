@@ -30,6 +30,7 @@ export const LABELS = {
 	inCall: "IN CALL ENDS",
 	rest: "REST",
 	restTitle: "Until sundown Saturday",
+	restSub: "until sundown Sat", // under REST on the strip until Saturday sunset; after it the strip says REST alone
 	sabbathSoon: "SABBATH",
 	sabbathSoonTitle: "Rest begins at",
 	noMeeting: "NEXT",
@@ -53,6 +54,8 @@ export const SIZES = {
 	margin: 18,
 	titleMaxChars: 22,
 	restTitle: 18,
+	restWord: 26, // REST on the Sabbath strip
+	clock: 44, // the Sabbath clock
 };
 
 // Timing rules, in minutes.
@@ -69,4 +72,5 @@ export const RULES = {
 	focusMaxMin: 120,
 	focusDefaultMin: 25,
 	volumeStep: 4,
+	reassertRestSeconds: 3, // Sabbath: how often to look at the front app
 };

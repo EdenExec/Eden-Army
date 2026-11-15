@@ -1,4 +1,4 @@
-import { zonedParts } from "./tz.js";
+import { zonedParts, zonedToUtc } from "./tz.js";
 
 export const DEFAULT_PLACE = { lat: 43.615, lon: -116.202, tz: "America/Boise" }; // Boise
 
@@ -62,6 +62,51 @@ export function sabbathWindow(nowMs, place = DEFAULT_PLACE) {
 		if (start === null || end === null) continue;
 		if (nowMs >= start && nowMs < end) return { active: true, start, end };
 		if (start > nowMs && !next) next = { active: false, start, end };
+	}
+	return next;
+}
+
+// ---- Sabbath layout (v7) ----
+// The deck's Sabbath layout runs from Friday sunset until a Sunday cut-off (Kev, 14 Nov 2026: "from Fri night to Sun night").
+// The REST text on the strip still says "until sundown Sat" until Saturday sunset, then just "REST".
+
+export const DEFAULT_SUNDAY_CUTOFF = "20:00"; // 8 PM local; a setting, and an open question for Kev
+
+// "20:00", "8:30pm" or "sundown" (= end at Saturday sunset, no Sunday tail). Anything else falls back to the default.
+export function parseCutoff(input) {
+	const s = String(input ?? "").trim().toLowerCase();
+	if (s === "sundown" || s === "saturday" || s === "sat") return { sundown: true, h: 0, min: 0 };
+	const m = /^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/.exec(s);
+	if (m) {
+		let h = Number(m[1]);
+		const min = m[2] ? Number(m[2]) : 0;
+		if (m[3]) {
+			if (h < 1 || h > 12) return parseCutoff(DEFAULT_SUNDAY_CUTOFF);
+			h = (h % 12) + (m[3] === "pm" ? 12 : 0);
+		}
+		if (h >= 0 && h <= 23 && min >= 0 && min <= 59) return { sundown: false, h, min };
+	}
+	return parseCutoff(DEFAULT_SUNDAY_CUTOFF);
+}
+
+// Returns { active, proper, start, properEnd, end } for the Sabbath layout: Friday sunset to the Sunday cut-off.
+// While active these are the current window; otherwise the next one. `proper` is true from Friday sunset to Saturday sunset.
+export function sabbathLayoutWindow(nowMs, place = DEFAULT_PLACE, cutoff = DEFAULT_SUNDAY_CUTOFF) {
+	const { lat, lon, tz } = place;
+	const cut = parseCutoff(cutoff);
+	const today = zonedParts(nowMs, tz);
+	let next = null;
+	for (let i = -3; i <= 8; i++) {
+		const fri = addDays(today.y, today.m, today.d, i);
+		if (fri.weekday !== 5) continue;
+		const sat = addDays(fri.y, fri.m, fri.d, 1);
+		const sun = addDays(fri.y, fri.m, fri.d, 2);
+		const start = sunsetUtc(fri.y, fri.m, fri.d, lat, lon);
+		const properEnd = sunsetUtc(sat.y, sat.m, sat.d, lat, lon);
+		if (start === null || properEnd === null) continue;
+		const end = cut.sundown ? properEnd : Math.max(properEnd, zonedToUtc(sun.y, sun.m, sun.d, cut.h, cut.min, 0, tz));
+		if (nowMs >= start && nowMs < end) return { active: true, proper: nowMs < properEnd, start, properEnd, end };
+		if (start > nowMs && !next) next = { active: false, proper: false, start, properEnd, end };
 	}
 	return next;
 }

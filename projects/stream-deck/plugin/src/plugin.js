@@ -1,9 +1,9 @@
 import streamDeck from "@elgato/streamdeck";
 import { hub } from "./hub.js";
 import { DayDial, DesktopDial, FocusDial, VolumeDial } from "./actions/dials.js";
-import { JoinKey, OpenLinkKey, OpenAppKey, DesktopKey } from "./actions/keys.js";
+import { JoinKey, OpenLinkKey, OpenAppKey, DesktopKey, CrossKey } from "./actions/keys.js";
 
-for (const A of [DayDial, DesktopDial, FocusDial, VolumeDial, JoinKey, OpenLinkKey, OpenAppKey, DesktopKey]) {
+for (const A of [DayDial, DesktopDial, FocusDial, VolumeDial, JoinKey, OpenLinkKey, OpenAppKey, DesktopKey, CrossKey]) {
 	streamDeck.actions.registerAction(new A());
 }
 

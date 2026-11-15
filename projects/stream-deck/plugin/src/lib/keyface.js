@@ -28,3 +28,48 @@ export function joinKeyFace(join) {
 }
 
 export const svgDataUri = (svg) => `data:image/svg+xml;charset=utf8,${encodeURIComponent(svg)}`;
+
+// The Cross (v7): one thin vertical stroke and one shorter crossbar, a third of the way down. No word, no ornament.
+// Drawn on the same 144 x 144 key as every other face. tone: "ready" (charcoal key) or "rest" (panel, softer cream).
+export function crossGlyph(stroke, cx = 72, top = 34, len = 76) {
+	const bar = Math.round(len * 0.34);
+	const half = Math.round(len * 0.24);
+	return (
+		`<g fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round">` +
+		`<path d="M${cx} ${top}V${top + len}"/><path d="M${cx - half} ${top + bar}H${cx + half}"/></g>`
+	);
+}
+
+export function crossKeyFace({ tone = "ready" } = {}) {
+	const bg = tone === "rest" ? C.panel : C.key;
+	const stroke = tone === "rest" ? C.restText : C.cream;
+	return (
+		`<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">` +
+		`<rect width="144" height="144" fill="${C.panel}"/><rect x="4" y="4" width="136" height="136" rx="14" fill="${bg}"/>` +
+		crossGlyph(stroke) +
+		`</svg>`
+	);
+}
+
+// ---- glyph keys for the Sabbath layout (v7): one or two strokes and one word, as in design/v3 ----
+export const GLYPHS = {
+	music: '<circle cx="64" cy="70" r="8"/><path d="M72 70V36l16 8"/>',
+	// a plain hammer: handle and head
+	workshop: '<path d="M58 82L82 48"/><path d="M72 40l22 15"/>',
+	// the zodiac sign for twins: two upright strokes joined by two soft arcs
+	gemini: '<path d="M54 42q18 10 36 0"/><path d="M54 78q18-10 36 0"/><path d="M63 48v24M81 48v24"/>',
+};
+
+export function glyphFace({ glyph, label = "", tone = "ready" }) {
+	const g = GLYPHS[glyph];
+	if (!g) return keyFace({ label });
+	const bg = tone === "rest" ? C.panel : C.key;
+	const ink = tone === "rest" ? C.restText : C.cream;
+	return (
+		`<svg xmlns="http://www.w3.org/2000/svg" width="144" height="144" viewBox="0 0 144 144">` +
+		`<rect width="144" height="144" fill="${C.panel}"/><rect x="4" y="4" width="136" height="136" rx="14" fill="${bg}"/>` +
+		`<g fill="none" stroke="${ink}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${g}</g>` +
+		`<text x="72" y="116" font-family="${esc(FONT)}" font-size="17" font-weight="600" fill="${ink}" text-anchor="middle" letter-spacing="1.8">${esc(label.toUpperCase())}</text>` +
+		`</svg>`
+	);
+}
