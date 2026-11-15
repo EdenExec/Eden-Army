@@ -914,6 +914,9 @@ return { TITLE_WORDS: TITLE_WORDS, STATUS_WORDS: STATUS_WORDS, NEED_WORDS: NEED_
       S.look = { schema: 1, asOf: iso(5 * HOUR), url: 'https://claude.ai/artifact/', week: { start: Game.addDays(td, -Game.dayOfWeek(td)), work: 'Two client calls, one hire decision (example)', family: 'Soccer Saturday (example)', one: 'Settle the Boise move date (example)' },
         next: [li('x1', 'Family dinner', 'event', ad(1), { time: '6:30pm', owner: 'Kev & Ally' }), li('x2', 'Boise', 'travel', ad(8), { end: ad(10), owner: 'Kev' }), li('x3', 'Move to Boise', 'milestone', ad(12), { owner: 'Kev & Ally', status: 'open' })],
         decisions: [li('x4', 'Pick the move date', 'decision', ad(3), { owner: 'Kev', status: 'open' })], counts: { items: 4, open: 2 } };
+      (function () { var sun = Game.addDays(td, -Game.dayOfWeek(td)), x1 = S.look.next[0], x2 = S.look.next[1], x3 = S.look.next[2], x4 = S.look.decisions[0], x5 = li('x5', 'Team offsite', 'milestone', Game.addDays(sun, 38), { owner: 'Kev' }), x6 = li('x6', 'Christmas break', 'travel', Game.addDays(sun, 40), { end: Game.addDays(sun, 48), lane: 'family' });
+        S.look.plan = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function (i) { var a = Game.addDays(sun, i * 7), b = Game.addDays(a, 6), it = [x1, x2, x3, x4, x5, x6].filter(function (x) { return x.start <= b && (x.end || x.start) >= a; });
+          return { start: a, one: i === 0 ? S.look.week.one : '', work: i === 0 ? S.look.week.work : '', family: i === 0 ? S.look.week.family : '', big: it.filter(function (x) { return x.kind !== 'event' || (x.end && x.end > x.start); }), items: it }; }); })();
     })();
     S.seen = { 'open-hub': { at: iso(DAY) }, 'open-eden-daily': { at: iso(5 * HOUR) } };
     S.tools = { nightly: { id: 'nightly', name: 'CloudTalk nightly lead load', noTrigger: true, owner: 'q' } };
