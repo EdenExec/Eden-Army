@@ -5,6 +5,11 @@ Source: Kev, logged 3 October 2026 in the Daily Catch-Up Log, plus later additio
 ## The paper (The Eden Daily)
 
 1. **The Sabbath: Friday sunset to Saturday sunset, no Eden Daily.** (Kev, 24 Oct 2026.) Sunset where the family lives (Vancouver, WA; Boise, ID from the move on Sun 8 Nov 2026, moved from 6 Nov by Kev on 3 Nov); `npm run sabbath` exits 0 inside it. Nothing is built, sent, pushed or posted, and no routine fires work at Kev. Friday's work finishes before sunset (4:30 to 8pm by season). What Kev sends is captured on the ledger and held, then launched after Saturday sundown. The one Saturday build is the Sunday Edition, after sundown and 8pm.
+   - 14 November 2026 (Kev, via Barny's playbook commit 7fe33fa: "I want to be able to interact with you to study the Word on Saturdays. So let's move your Sabbath to another day of the week."). **Barny's Saturday exception:**
+     - When Kev opens a Word-study session with Barny on the Sabbath, Barny may build and publish to Barny's Workshop (`BBgMLsVw8x9CtVy5XViBK6`) and the Biblical Timeline (`LHME6tkLhLWV4hygaT1Z8f`).
+     - Kev's comments on those two pages go to Barny the same day. Radar does not hold them for after sundown.
+     - Barny still pushes nothing into the Sabbath on his own. Barny's quiet day is Sunday.
+     - The rest of rule 1 is unchanged for everyone else.
 2. **Sunday Edition**, ready Sunday morning before Main Street. Content in `sunday-edition.md`.
 3. **Habit tracker** at the top of every day's paper with streaks: Bible, RPs, MPs, Workout, Drinks, Wisdom, Agency, Growth, Weight. Numbers come from the prior night's check-out; leave a blank where a stat was not logged, never invent one.
 4. **Landscape orientation**, letter 11 x 8.5.
