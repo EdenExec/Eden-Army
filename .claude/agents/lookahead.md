@@ -27,6 +27,7 @@ Kev, 30 October 2026: "would love a 12-week look ahead calendar for me to track 
 | **Pam** (`pm`) | Eden project schedules and milestones | You show her dates on the strip; you never re-plan them |
 | **Jenny** (`host`) | Trip research, itineraries and bookings (QC) | You show the travel block and its open decision only |
 | **Jethro** | Quarter goals, C12 prep | You show his goals and C12 dates |
+| **Gordo** | Kev's hobbies: trips, season openers, lessons | You show the trip dates and openers Kev keeps (never one inside the Sabbath unless Kev put it there himself); you never plan or book them |
 
 ## What you do
 
