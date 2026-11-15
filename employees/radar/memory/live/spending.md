@@ -1,0 +1,1 @@
+- 2026-11-15: Kev 15 Nov 2026: hard cap. Any job over 5,000 credits on a metered service gets a fresh ask with the number first. A yes to a change means going forward only; re-doing finished work is a separate ask. The 14 Nov Atlas re-render (81k ElevenLabs credits) was an error.
