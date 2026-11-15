@@ -158,10 +158,11 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:400}
 .sl{flex:0 0 100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always}
 .cell{width:100%;height:100%;container-type:size;display:grid;place-items:center}
 .st{position:relative;width:min(100cqw,calc(100cqh*16/9));aspect-ratio:16/9;container-type:inline-size;background:transparent;overflow:hidden;color:var(--fg)}
-/* small Eden globe, bottom right */
-.st::before{content:"";position:absolute;right:4.4cqw;bottom:1.9cqw;width:2.6cqw;height:2.6cqw;background:var(--globe) no-repeat center/contain;opacity:.42;pointer-events:none}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st::before,:root:not([data-theme="light"]) #homeview::before,:root:not([data-theme="light"]) #gridview::before{filter:invert(1);opacity:.36}}
-:root[data-theme="dark"] .st::before,:root[data-theme="dark"] #homeview::before,:root[data-theme="dark"] #gridview::before{filter:invert(1);opacity:.36}
+/* Eden globe: big and faint, set into the background, bottom right, partly off the frame (Kev, 15 Nov: "make the Eden logo bigger just more hidden in the background") */
+.st::before{content:"";position:absolute;right:-7cqw;bottom:-15cqw;width:50cqw;height:50cqw;background:var(--globe) no-repeat center/contain;opacity:.045;pointer-events:none;z-index:0}
+.st:has(.jmap)::before{display:none} /* map slides keep the map as the background */
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .st::before,:root:not([data-theme="light"]) #homeview::before,:root:not([data-theme="light"]) #gridview::before{filter:invert(1);opacity:.06}}
+:root[data-theme="dark"] .st::before,:root[data-theme="dark"] #homeview::before,:root[data-theme="dark"] #gridview::before{filter:invert(1);opacity:.06}
 /* registration marks on the stage frame */
 .st::after{content:"";position:absolute;inset:1.3cqw;pointer-events:none;z-index:0;--rl:2.2cqw;
   background:linear-gradient(var(--mark),var(--mark)) left top/var(--rl) 1px no-repeat,linear-gradient(var(--mark),var(--mark)) left top/1px var(--rl) no-repeat,
@@ -246,7 +247,7 @@ body{padding:0;overflow:hidden;-webkit-text-size-adjust:100%;font-weight:400}
 /* home and topic tiles */
 #homeview,#gridview{overflow-y:auto;padding:max(18px,2.6vw)}
 #homeview{display:flex;flex-direction:column}
-#homeview::before,#gridview::before{content:"";position:fixed;right:max(18px,1.6vw);bottom:max(16px,1.5vw);width:clamp(28px,2.6vw,52px);height:clamp(28px,2.6vw,52px);background:var(--globe) no-repeat center/contain;opacity:.42;pointer-events:none}
+#homeview::before,#gridview::before{content:"";position:fixed;right:-6vw;bottom:-14vw;width:46vw;height:46vw;background:var(--globe) no-repeat center/contain;opacity:.045;pointer-events:none}
 #homeview>*,#gridview>*{position:relative}
 #homeview{padding:max(26px,3.4vw) max(26px,4.6vw)}
 #gridview{padding:max(22px,2.8vw) max(26px,4.6vw)}
@@ -351,7 +352,7 @@ a.mis:hover .mio,a.mis:focus-visible .mio{color:var(--fg)}
 .jmap.soft.dim{opacity:.3}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .jmap{filter:invert(1);opacity:1}:root:not([data-theme="light"]) .jmap.soft{opacity:.5}:root:not([data-theme="light"]) .jmap.dim{opacity:.45}}
 :root[data-theme="dark"] .jmap{filter:invert(1);opacity:1}:root[data-theme="dark"] .jmap.soft{opacity:.5}:root[data-theme="dark"] .jmap.dim{opacity:.45}
-/* globe sits small, bottom right, on every slide (see .st::before) */
+/* globe sits large and faint, bottom right, on every non-map slide (see .st::before) */
 .jpin{position:absolute;z-index:0;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--fg)}
 .jpin b{font-size:5cqw;font-weight:600;line-height:.9;letter-spacing:-.03em}
 .jpin span{font-family:var(--mono);font-size:1.1cqw;font-weight:500;letter-spacing:.16em;text-transform:uppercase;margin-top:.6cqw;max-width:12cqw;text-align:center;line-height:1.25}
