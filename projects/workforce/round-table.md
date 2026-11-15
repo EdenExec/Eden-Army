@@ -93,3 +93,19 @@ Built on live version 16 (Q's 14 Nov earlier-weeks work was live but not in the 
 Every "Week of" tile that has anything on it now opens by default, so notes, needs, advice and action items read on the tile.
 
 Known, unchanged from v16: in screen-share Kev's page still `get`s `cd/<uid>` once when it fills a stamped card (the merge), though candor is never drawn or subscribed there.
+
+## Meter copy and scorecard consolidation (Dean, 15 Nov 2026, t-202611140115-rpmm)
+
+Kev: coaching notes landed in individual scorecard artifacts; he wants everything reviewed from one spot, and the CloudTalk/Crelate day-by-day RPM-style meter during scorecards. The meter already exists (section above); today's edit in `draft/round-table.html` adds "Every RP past 20 is very incentivizing." to the dawg-zone line (source only, not republished). Zones: under 15 below, 15 yellow trending green, 20 green (dawg standard), 25 operational excellence, 30 best day.
+
+**Consolidation plan (all steps are QC items; nothing done):**
+
+| # | Step | Class |
+|---|---|---|
+| 1 | Read each per-person desk (Max, Evan, Noah, Andrew, Bridger, Nick, Kev; URLs in `scorecard-desk/README.md`) with `Artifact read` and `ArtifactData list` on `weeks` and `candor`; list any `coach_notes`, `needs`, `advice` or free text Kev typed there | read only |
+| 2 | Map each to `people/{slug}/cards/{weekOf}` (coach_notes, needs, advice); build the write file with `compile.py` rules, never overwrite a non-empty field, pin `if_version` | write_external QC, exact docs and fields listed |
+| 3 | Publish `draft/round-table.html` (meter copy plus any pending fixes). Not between Thu 5 PM and Sun 5 PM PT | publish QC |
+| 4 | Kev confirms the cards hold everything; then unshare or delete the old per-person desks (Drive/Claude move is Kev's) | delete QC |
+| 5 | Folder tidy: the Round Table folder per person (`people/{slug}`) holds the card, scorecard and coach notes; no separate artifact per person | Kev |
+
+Blocker this session: no Claude artifact or Drive connector available, so steps 1 to 4 are prepared, not run. Recommendation: approve step 1 first (read only).
