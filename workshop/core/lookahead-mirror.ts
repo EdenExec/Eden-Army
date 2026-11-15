@@ -6,11 +6,18 @@
 export type LaItem = { title?: string; kind?: string; lane?: string; start?: string; end?: string; time?: string; owner?: string; status?: string; hidden?: boolean };
 export type LaWeek = { work?: string; family?: string; one?: string };
 export type MirrorItem = { id: string; title: string; kind: string; lane: string; start: string; end: string; time: string; owner: string; status: string };
+export type PlanWeek = { start: string; one: string; work: string; family: string; big: MirrorItem[]; items: MirrorItem[] };
 export type Mirror = {
   schema: 1; asOf: string; url: string;
   week: { start: string; work: string; family: string; one: string };
   next: MirrorItem[]; decisions: MirrorItem[]; counts: { items: number; open: number };
+  /** Kev, 15 Nov: "a clean dumbed down 12-week plan in here + expandable". Twelve Sunday-to-Saturday weeks from this one. */
+  plan: PlanWeek[];
 };
+/** Health details never reach a surface: an item that reads like an appointment stays on the Look Ahead page. */
+export const MEDICAL = /doctor|dentist|dental|medical|physical|therapy|therap|clinic|surgery|appointment|ortho|pediatric/i;
+/** The glance: trips, milestones, decisions and anything longer than a day (Marlowe's runway strip rule). */
+export const isBig = (x: MirrorItem) => x.kind === "travel" || x.kind === "milestone" || x.kind === "decision" || (!!x.end && x.end > x.start);
 
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
@@ -18,19 +25,24 @@ const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T12:00:00Z`) 
 export const sundayOf = (d: string) => addDays(d, -new Date(`${d}T12:00:00Z`).getUTCDay());
 const txt = (v: unknown, max: number) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, max);
 
-export function buildMirror(items: Record<string, LaItem>, weeks: Record<string, LaWeek>, today: string, opts: { now?: Date; url: string; days?: number }): Mirror {
+export function buildMirror(items: Record<string, LaItem>, weeks: Record<string, LaWeek>, today: string, opts: { now?: Date; url: string; days?: number; weeks?: number }): Mirror {
   if (!ISO.test(today)) throw new Error(`today "${today}" must be YYYY-MM-DD`);
   const horizon = addDays(today, opts.days ?? 21);
   const all: MirrorItem[] = Object.entries(items)
-    .filter(([, x]) => !x.hidden && ISO.test(x.start ?? ""))
+    .filter(([, x]) => !x.hidden && ISO.test(x.start ?? "") && !MEDICAL.test(String(x.title ?? "")))
     .map(([id, x]) => ({ id, title: txt(x.title, 80) || "(untitled)", kind: txt(x.kind, 12) || "event", lane: txt(x.lane, 8) || "both", start: x.start!, end: ISO.test(x.end ?? "") ? x.end! : "", time: txt(x.time, 20), owner: txt(x.owner, 24), status: txt(x.status, 8) || "set" }))
     .sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
   const next = all.filter((x) => x.start <= horizon && (x.end || x.start) >= today && x.status !== "done").slice(0, 12);
   const decisions = all.filter((x) => x.kind === "decision" && x.status === "open").slice(0, 6);
   const sun = sundayOf(today), w = weeks[sun] ?? {};
+  const plan: PlanWeek[] = Array.from({ length: opts.weeks ?? 12 }, (_, i) => {
+    const a = addDays(sun, i * 7), b = addDays(a, 6), f = weeks[a] ?? {};
+    const inWeek = all.filter((x) => x.start <= b && (x.end || x.start) >= a && (x.end || x.start) >= today);
+    return { start: a, one: txt(f.one, 120), work: txt(f.work, 120), family: txt(f.family, 120), big: inWeek.filter(isBig).slice(0, 4), items: inWeek.slice(0, 10) };
+  });
   return {
     schema: 1, asOf: (opts.now ?? new Date()).toISOString(), url: opts.url,
     week: { start: sun, work: txt(w.work, 160), family: txt(w.family, 160), one: txt(w.one, 160) },
-    next, decisions, counts: { items: all.length, open: all.filter((x) => x.status === "open").length },
+    next, decisions, counts: { items: all.length, open: all.filter((x) => x.status === "open").length }, plan,
   };
 }

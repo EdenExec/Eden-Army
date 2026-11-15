@@ -1,5 +1,5 @@
 // Turns a dump of the Look Ahead page's `items` collection into the runway JSON (schema: see sample.json).
-// Usage: node from-lookahead.mjs <dir with the items/*.json files> <out.json> [--asof YYYY-MM-DD] [--audience kev|jenny]
+// Usage: node from-lookahead.mjs <dir with the items/*.json files> <out.json> [--asof YYYY-MM-DD] [--audience kev|jenny] [--weeks 8|12]
 // The dump comes from ArtifactData list on https://claude.ai/artifact/W6m2KGscEaeG7i2Q2w3CHU, collection items, with out_dir.
 // Family items carry their title and date only (no notes). Medical items are dropped. Audience "jenny" shows family items as "Family".
 import fs from "node:fs";
@@ -10,6 +10,7 @@ const flag = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] 
 const [dir, out] = args.filter((a, i) => !a.startsWith("--") && !(i > 0 && args[i - 1].startsWith("--")));
 if (!dir || !out) { console.error("usage: node from-lookahead.mjs <items dir> <out.json> [--asof YYYY-MM-DD] [--audience kev|jenny]"); process.exit(2); }
 const audience = flag("--audience", "kev");
+const WEEKS = Math.min(12, Math.max(6, parseInt(flag("--weeks", "8"), 10) || 8));
 
 const pad = (n) => String(n).padStart(2, "0");
 const iso = (d) => `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
@@ -20,7 +21,7 @@ const addDays = (d, n) => new Date(d.getTime() + n * 864e5);
 
 const a = parse(asOf);
 const startD = addDays(a, -a.getUTCDay());
-const endD = addDays(startD, 8 * 7 - 1);
+const endD = addDays(startD, WEEKS * 7 - 1);
 const MEDICAL = /doctor|dentist|dental|medical|physical|therapy|clinic|surgery|appointment/i;
 
 const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
@@ -62,11 +63,11 @@ const doc = {
   asOf,
   generatedAt: new Date().toISOString(),
   owner: "Kev",
-  weeks: 8,
+  weeks: WEEKS,
   startSunday: iso(startD),
   horizons: { w2: h(13), w4: h(27), w6: h(41) },
   events,
   openDecisions,
 };
 fs.writeFileSync(out, JSON.stringify(doc, null, 1));
-console.log(`wrote ${out}: ${events.length} events, ${openDecisions.length} decisions, ${skipped} skipped, audience ${audience}, ${doc.startSunday} to ${h(55)}`);
+console.log(`wrote ${out}: ${events.length} events, ${openDecisions.length} decisions, ${skipped} skipped, audience ${audience}, ${doc.startSunday} to ${h(WEEKS * 7 - 1)}`);
