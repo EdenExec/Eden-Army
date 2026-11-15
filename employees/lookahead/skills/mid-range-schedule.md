@@ -32,3 +32,12 @@ Changes since last week go first ("New: ...", "Moved: ...", "Dropped: ..."), the
 - Never claim an item is firm unless Kev or a calendar said so.
 - If the runway has nothing new, still push it with "No changes".
 - Keep the Sabbath: no due dates set inside it.
+
+## 4. The live Runway page (Kev, 15 Nov 2026: "I need this in my life and more easily accessible on the Command Center")
+
+The runway is a private artifact, **Runway**, https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv, with a Runway button at the top of the Command Center and first in its Tools row. It reads one database document, `runway/current`, and redraws when it changes. Keep it current:
+
+1. After every nightly refresh and every time you add or change items from a Radar ticket: `ArtifactData list` the Look Ahead page `items` with an `out_dir` (empty it first), then `node projects/lookahead/runway-block/from-lookahead.mjs <that dir>/items <scratch>/runway.json --audience kev` (the default; Kev's own view shows family titles, no family notes, medical dropped).
+2. `ArtifactData get` `runway/current` on the Runway artifact for its version, then `set` it from `<scratch>/runway.json` pinned with `if_version` (omit the pin only if it does not exist). Set `owner` to `Hawk` in the file first if the converter did not.
+3. The Sunday push to Jenny uses `--audience jenny` (family items show as "Family") and renders a PNG; it does not touch `runway/current`.
+4. Never put pay, health, a discreet client's name or a candidate's name in `runway/current`.

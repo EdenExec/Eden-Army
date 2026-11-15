@@ -455,7 +455,7 @@
   }
   function renderTools() {
     var box = $('#tools'); box.textContent = ''; box.appendChild(h('span', { class: 'eyebrow', text: 'Tools' }));
-    toolsFor(['hub', 'eden-daily', 'day-board', 'workshop', 'eden-desk', 'ledger', 'cash-pulse', 'quickbooks', 'gusto'].filter(function (id) { return !(S.share && id === 'cash-pulse'); })).forEach(function (x) { box.appendChild(toolLink(x, '')); });
+    toolsFor(['runway', 'hub', 'eden-daily', 'day-board', 'workshop', 'eden-desk', 'ledger', 'cash-pulse', 'quickbooks', 'gusto'].filter(function (id) { return !(S.share && id === 'cash-pulse'); })).forEach(function (x) { box.appendChild(toolLink(x, '')); });
   }
   /* every blink on the floor shares one clock, so lights flash in unison instead of twinkling */
   function phaseLock() { var tt = performance.now() / 1000; document.querySelectorAll('.led').forEach(function (l) { l.style.setProperty('--ph', '-' + (tt % 15).toFixed(3) + 's'); }); }
