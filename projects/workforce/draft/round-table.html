@@ -15,6 +15,8 @@
   --bd:#141412; --bd-fg:#F3F0E8; --bd-mute:#A59F92; --bd-line:#34322C;
   --lift:0 1px 0 rgba(20,20,18,.05),0 3px 8px rgba(20,20,18,.06);
   --g:#2E8A55; --a:#A8730F; --r:#B03A2E;
+  /* RP meter zones (Kev, 14 Nov): below 15, floor 15, dawg 20, operational excellence 25, best day 30. Bands are 3:1+ on paper; -fg is text on a solid band */
+  --z-below:#B03A2E; --z-floor:#B88A00; --z-dawg:#2E8A55; --z-exc:#A87508; --z-best:#8A4F00; --z-exc-fg:#141412; --z-best-fg:#FCFBF7;
   --sans:'Montserrat','Helvetica Neue',Arial,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   color-scheme:light;
 }
@@ -23,13 +25,15 @@
   --wall:#8E897D; --lamp:#221F18; --lens:#2D2B26;
   --bd:#0A0A09; --bd-fg:#F3F0E8; --bd-mute:#A59F92; --bd-line:#2D2B26;
   --lift:0 1px 0 rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.35);
-  --g:#5FCF8A; --a:#E7B04C; --r:#F07462; color-scheme:dark}}
+  --g:#5FCF8A; --a:#E7B04C; --r:#F07462;
+  --z-below:#F07462; --z-floor:#E9C341; --z-dawg:#5FCF8A; --z-exc:#F2B83A; --z-best:#FFD36B; --z-exc-fg:#141412; --z-best-fg:#141412; color-scheme:dark}}
 :root[data-theme="dark"]{
   --floor:#121210; --paper:#1B1A17; --ink:#EEEBE3; --mute:#A8A397; --line:#33312B; --soft:#201F1B;
   --wall:#8E897D; --lamp:#221F18; --lens:#2D2B26;
   --bd:#0A0A09; --bd-fg:#F3F0E8; --bd-mute:#A59F92; --bd-line:#2D2B26;
   --lift:0 1px 0 rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.35);
-  --g:#5FCF8A; --a:#E7B04C; --r:#F07462; color-scheme:dark}
+  --g:#5FCF8A; --a:#E7B04C; --r:#F07462;
+  --z-below:#F07462; --z-floor:#E9C341; --z-dawg:#5FCF8A; --z-exc:#F2B83A; --z-best:#FFD36B; --z-exc-fg:#141412; --z-best-fg:#141412; color-scheme:dark}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -168,6 +172,69 @@ svg.trend .col.part{fill:none;stroke:var(--ink);stroke-dasharray:3 2}
 .spark i.under{background:var(--a)}
 .spark b{font:600 11px/1 var(--mono)}
 .spark small{font:500 9.5px/1 var(--mono);color:var(--mute);white-space:nowrap}
+/* earlier weeks (Kev, 14 Nov): week picker, PIP watch, and the edit button on each "Week of" tile */
+.wkpick button{min-height:34px;padding:0 10px}
+.pipwatch{border:1.5px solid var(--r);background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.pipwatch b{font:500 10.5px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--r)}
+.past .pb .act{grid-column:1/-1}
+.wkbtn{font:500 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ink);background:var(--paper);color:var(--ink);min-height:40px;padding:0 14px;cursor:pointer}
+.wkbtn:hover{background:var(--ink);color:var(--paper)}
+/* RP meter (Kev, 14 Nov 2026): RPs a day against 15 floor, 20 dawg, 25 operational excellence, 30 best day */
+.rpm{border:1px solid var(--line);background:var(--paper);padding:12px 14px;display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:10px 22px;align-items:center}
+.rpm.z-exc,.rpm.z-best{border:1.5px solid var(--z-exc);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--z-exc) 35%,transparent)}
+.rpm.z-best{border-color:var(--z-best)}
+.rpm svg{width:100%;height:auto;display:block}
+.rpm svg text{font:500 10px var(--mono);fill:var(--mute);letter-spacing:.06em}
+.rpm svg text.tl{fill:var(--ink)}
+.rpm svg .hub{fill:var(--ink)} .rpm svg .ndl{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.rpm svg .avg{fill:var(--mute)} .rpm svg .tick{stroke:var(--paper);stroke-width:2}
+.rpm svg .band{stroke:var(--paper);stroke-width:1}
+.rpm svg .glow{fill:none;stroke-width:3}
+.rpm .side{display:flex;flex-direction:column;gap:8px;min-width:0}
+.rpm .now{display:flex;align-items:baseline;gap:6px 10px;flex-wrap:wrap}
+.rpm .now b{font:800 40px/1 var(--sans);font-variant-numeric:tabular-nums}
+.rpm .now>span:not(.zp){font:500 10.5px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.rpm .say{margin:0;font-size:13px;max-width:46ch}
+.rpm .wk{font:500 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--mute)}
+.rpm.none{grid-template-columns:1fr;color:var(--mute)}
+.zp{display:inline-flex;align-items:center;gap:6px;font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border:1.5px solid var(--zc,var(--line));background:color-mix(in srgb,var(--zc,var(--line)) 16%,var(--paper));color:var(--ink);white-space:nowrap}
+.zp svg{width:13px;height:13px;flex:none;fill:currentColor}
+.zp.z-exc{background:var(--z-exc);border-color:var(--z-exc);color:var(--z-exc-fg)}
+.zp.z-best{background:var(--z-best);border-color:var(--z-best);color:var(--z-best-fg)}
+.z-below{--zc:var(--z-below)} .z-floor{--zc:var(--z-floor)} .z-dawg{--zc:var(--z-dawg)} .z-exc{--zc:var(--z-exc)} .z-best{--zc:var(--z-best)}
+.rpdays{grid-column:1/-1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;position:relative;padding-top:4px}
+.rpdays .d{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.rpdays .col{position:relative;height:84px;width:100%;max-width:56px;border-bottom:1px solid var(--mute)}
+.rpdays .col i{position:absolute;left:18%;right:18%;bottom:0;display:block;background:var(--zc)}
+.rpdays .col i.none{background:transparent;border:1px dashed var(--line);height:100%}
+.rpdays .col u{position:absolute;left:0;right:0;border-top:1px dashed var(--mute);opacity:.7}
+.rpdays .col em{position:absolute;left:0;right:0;text-align:center;font:700 12px/1 var(--mono);font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+.rpdays small{font:500 10px/1.2 var(--mono);color:var(--mute);letter-spacing:.04em;text-align:center;white-space:nowrap}
+.rpdays small b{color:var(--ink);font-weight:500}
+@media (max-width:620px){.rpm{grid-template-columns:1fr}.rpm .now b{font-size:34px}}
+.rpmini{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.rpmini svg{width:34px;height:20px;flex:none}
+.rpmini svg.ic{width:12px;height:12px;fill:currentColor}
+.rpmini svg .ndl{stroke:var(--ink);stroke-width:2.2;stroke-linecap:round}
+.rpmini b{font:700 12px var(--mono);font-variant-numeric:tabular-nums}
+.rpmini span{font:500 9.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.rpmini.z-exc span,.rpmini.z-best span{color:var(--ink);font-weight:700}
+.golf td.rpm-c{white-space:nowrap}
+/* earlier weeks (Kev, 14 Nov): numbers for a closed week, action items on each tile, PIP strip, the recruiter's own asks */
+.numsform{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.numsform input{min-height:40px;font:500 14px var(--mono)}
+.items{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:13.5px}
+.items small{font:500 10px var(--mono);color:var(--mute);margin-left:6px}
+.additem{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:6px}
+.additem input{flex:1 1 180px;min-width:0;font:400 14px var(--sans);color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:8px;min-height:40px}
+.additem input:focus{outline:2px solid var(--ink);outline-offset:0}
+.pipstrip{border:1.5px solid var(--r);background:var(--paper);padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pipstrip>b{font:500 10.5px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--r)}
+.pipstrip .row input[type=date]{font:500 13px var(--mono);color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:6px 8px;min-height:38px}
+.pipstrip .ok{color:var(--g)} .pipstrip .bad{color:var(--r)}
+.asks{border:1px dashed var(--ink);background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.asks b{font:500 10.5px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.asks dl{margin:0;display:grid;gap:8px}
 @media (max-width:480px){.grid5 td.lab{min-width:0;font-size:12.5px}.grid5 th,.grid5 td{padding:5px 2px}.grid5 th.lab{white-space:normal}.livecard .bx{width:30px;height:30px}.must td.tick{width:38px}.grid5 td.num{white-space:nowrap;font-size:11px}}
 .bx{width:30px;height:30px;border:1.5px solid var(--ink);background:var(--paper);cursor:pointer;font:700 14px/1 var(--sans);color:var(--ink);padding:0;display:inline-flex;align-items:center;justify-content:center}
 .bx[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
@@ -641,7 +708,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   ];
   var LIGHTS = { green: 'On pace', amber: 'Watch', red: 'Act', grey: 'No data', none: 'No light yet' };
 
-  var S = { phones: null, board: null, boardSrc: 'none', wip: [], det: { lb: true, jo: true, jorest: false, wip: true }, lbSort: 'rps', live: false, db: null, example: true, share: false, people: [], peopleLoaded: false, open: null, tab: 'score', data: {}, loaded: {}, unsubs: [], status: 'example data' };
+  var S = { phones: null, board: null, boardSrc: 'none', wip: [], det: { lb: true, jo: true, jorest: false, wip: true }, lbSort: 'rps', live: false, db: null, example: true, share: false, people: [], peopleLoaded: false, open: null, tab: 'score', side: {}, data: {}, loaded: {}, unsubs: [], status: 'example data' };
   try { S.share = sessionStorage.getItem('rt-share') === '1'; } catch (e) {}
 
   /* ---------------- example data: invented, relative to today ---------------- */
@@ -819,7 +886,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     started = started.slice().sort(function (a, b) { return (lbValue(b, k) - lbValue(a, k)) || ((per(b).rps || 0) - (per(a).rps || 0)); });
     var showRev = !S.share;
     var cols = lbCols().map(function (x) { return [x[0], x[1]]; });
-    var thead = h('tr', null, h('th', { class: 'nm', text: 'Recruiter' }));
+    var thead = h('tr', null, h('th', { class: 'nm', text: 'Recruiter' }), h('th', { text: 'RP meter', title: 'RPs on the latest day logged, against 15 floor, 20 dawg, 25 excellence, 30 best' }));
     cols.forEach(function (c) { thead.appendChild(h('th', Object.assign({ class: 'n' }, k === c[0] ? { 'aria-sort': 'descending' } : {}), h('button', { class: 'srt', type: 'button', 'data-sort': c[0], title: 'Rank by ' + c[1], text: c[1] }))); });
     if (showRev) {
       thead.appendChild(h('th', Object.assign({ class: 'n' }, k === 'revenue' ? { 'aria-sort': 'descending' } : {}), h('button', { class: 'srt', type: 'button', 'data-sort': 'revenue', title: 'Rank by revenue this quarter', text: 'Billed QTD' })));
@@ -846,6 +913,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     function row(p, pos, cls, sub) {
       var tr = h('tr', { class: cls || '' }), nm = h('td', { class: 'nm' }, pos ? h('span', { class: 'pos', text: pos }) : null, p.name, sub ? h('small', { text: sub }) : null);
       tr.appendChild(nm);
+      tr.appendChild(h('td', { class: 'rpm-c' }, rpMini(p)));
       cols.forEach(function (c) { tr.appendChild(numCell(p, c)); });
       if (showRev) {
         tr.appendChild(h('td', { class: 'n' + (isNum(p.revenue_qtd) ? '' : ' na'), text: isNum(p.revenue_qtd) ? usd(p.revenue_qtd) : 'not synced' }));
@@ -861,7 +929,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     });
     notYet.forEach(function (p) { var tr = row(p, '', 'lead', p.status === 'starts' ? 'Starts ' + nice(p.start) : 'No Crelate user yet'); tb.appendChild(tr); });
     // totals for the recruiters
-    var us = h('tr', { class: 'us' }, h('td', { class: 'nm', text: 'Us' }));
+    var us = h('tr', { class: 'us' }, h('td', { class: 'nm', text: 'Us' }), h('td'));
     cols.forEach(function (c) { if (c[0] === 'dials') { us.appendChild(S.lbView === 'trend' ? trendCell(teamDials('this'), teamDials('last')) : h('td', { class: 'n', text: int(teamDials(S.lbView === 'last' ? 'last' : 'this')) })); return; } us.appendChild(S.lbView === 'trend' ? trendCell(B.team.this[c[0]], (B.team.last_same || {})[c[0]]) : h('td', { class: 'n', text: int(((S.lbView === 'last' ? B.team.last_full : B.team.this) || {})[c[0]]) })); });
     if (showRev) { us.appendChild(h('td', { class: 'n na', text: 'not synced' })); us.appendChild(h('td', { class: 'n na', text: 'not synced' })); }
     if (S.lbView !== 'last') us.appendChild(h('td', { class: 'dir', text: delta(B.team.this.rps, B.team.last_same.rps) }));
@@ -1126,7 +1194,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   function sectionNote(text) { return h('p', { class: 'stamp', text: text }); }
 
   function tScore(p) {
-    var rowsAll = sortedRows(S.data.scorecards), el = h('div', { class: 'panel', role: 'tabpanel' });
+    var rowsAll = sortedRows(withKevNumbers(S.data.scorecards, S.data.cards)), el = h('div', { class: 'panel', role: 'tabpanel' });
     if (!S.loaded.scorecards && S.live) { el.appendChild(h('div', { class: 'empty', text: 'Loading the scorecard…' })); return el; }
     if (!rowsAll.length) {
       el.appendChild(h('div', { class: 'empty', text: p.group === 'incoming' ? 'Not started. The speed measures begin on the first Friday scorecard: days to a first 75-RP week, first PTC, first submittal, first FTI.' : 'No scorecard rows yet. Dean writes a row after each Friday Crelate pull. A call that was not logged does not count.' }));
@@ -1135,7 +1203,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     var last5 = rowsAll.slice(-5), cur = last5[last5.length - 1], prior = rowsAll.slice(0, -1), prev = prior[prior.length - 1];
     var avg4 = prior.filter(function (r) { return !r.partial; }).slice(-4);
     el.appendChild(h('div', { class: 'row' }, h('h3', { text: 'Week of ' + nice(cur.week_of || cur.id) }), cur.partial ? h('span', { class: 'chip warn', text: 'Partial week' }) : null,
-      h('span', { class: 'stamp', text: (cur.source || 'Source not stated') + (/crelate/i.test(cur.source || '') ? '' : ' · per Crelate') }), p.light ? lightWord(p.light) : null));
+      h('span', { class: 'stamp', text: (cur.source || 'Source not stated') + (cur.kev_numbers || /crelate/i.test(cur.source || '') ? '' : ' · per Crelate') }), p.light ? lightWord(p.light) : null));
     var heads = h('div', { class: 'heads' });
     var pct = isNum(cur.rps) ? Math.min(100, cur.rps / STD_RPS * 100) : 0;
     heads.appendChild(h('div', { class: 'tile' }, h('div', { class: 'eyebrow', text: 'RPs against the week' }), h('div', { class: 'big' }, fmt(cur.rps), h('small', { text: ' / ' + STD_RPS })),
@@ -1145,18 +1213,18 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
       h('span', { class: 'stamp', text: isNum(cur.boxes) ? (cur.boxes >= WIN_BOXES ? 'At or above the win line of ' + WIN_BOXES : 'Below the win line of ' + WIN_BOXES) : (cur.box_card_in ? 'Card in' : 'Card not in') })));
     el.appendChild(heads);
     var tb = h('tbody');
-    MEASURES.forEach(function (m) {
+    MEASURES.concat(rowsAll.some(function (r) { return isNum(r.dials); }) ? [['dials', 'Dials', 'CloudTalk, or entered by Kev']] : []).forEach(function (m) {
       var a = avg(avg4, m[0]), v = cur[m[0]], dir = direction(v, a);
       tb.appendChild(h('tr', null, h('td', null, m[1], m[2] ? h('small', { text: m[2] }) : null), h('td', { class: 'num', text: fmt(v) }), h('td', { class: 'num' + (prev && isNum(prev[m[0]]) ? '' : ' na'), text: prev ? fmt(prev[m[0]]) : '–' }),
         h('td', { class: 'num' + (a == null ? ' na' : ''), text: fmt(a) }), h('td', { class: 'dir', text: dir })));
     });
     el.appendChild(h('div', { class: 'scroll' }, h('table', null, h('thead', null, h('tr', null, h('th', { text: 'Measure' }), h('th', { class: 'num', text: 'This week' }), h('th', { class: 'num', text: 'Last week' }), h('th', { class: 'num', text: '4-week avg' }), h('th', { text: 'Trend' }))), tb)));
-    el.appendChild(sectionNote('Four-week average uses the prior complete weeks only (' + avg4.length + ' on file). Trend compares this week with that average; within 5 percent reads Level.' + (cur.pillar ? ' Pillar chosen on the card: ' + cur.pillar + '.' : '')));
+    el.appendChild(sectionNote((rowsAll.some(function (r) { return r.kev_numbers; }) ? 'Weeks Crelate has no row for use the numbers you entered on that week\u2019s card. ' : '') + 'Four-week average uses the prior complete weeks only (' + avg4.length + ' on file). Trend compares this week with that average; within 5 percent reads Level.' + (cur.pillar ? ' Pillar chosen on the card: ' + cur.pillar + '.' : '')));
     el.appendChild(h('h3', { text: 'Five-week trend, RPs' }));
     el.appendChild(trend(last5));
     var tb2 = h('tbody');
     last5.slice().reverse().forEach(function (r) {
-      tb2.appendChild(h('tr', null, h('td', null, nice(r.week_of || r.id), r.partial ? h('small', { text: 'partial' }) : null), h('td', { class: 'num', text: fmt(r.rps) }), h('td', { class: 'num', text: fmt(r.rp_days) }), h('td', { class: 'num', text: fmt(r.ptcs) }), h('td', { class: 'num', text: fmt(r.subs) }), h('td', { class: 'num', text: fmt(r.ftis) })));
+      tb2.appendChild(h('tr', null, h('td', null, nice(r.week_of || r.id), r.partial ? h('small', { text: 'partial' }) : null, r.kev_numbers ? h('small', { text: 'entered by Kev' }) : null), h('td', { class: 'num', text: fmt(r.rps) }), h('td', { class: 'num', text: fmt(r.rp_days) }), h('td', { class: 'num', text: fmt(r.ptcs) }), h('td', { class: 'num', text: fmt(r.subs) }), h('td', { class: 'num', text: fmt(r.ftis) })));
     });
     el.appendChild(h('div', { class: 'scroll' }, h('table', null, h('thead', null, h('tr', null, h('th', { text: 'Week of' }), h('th', { class: 'num', text: 'RPs' }), h('th', { class: 'num', text: '15-RP days' }), h('th', { class: 'num', text: 'PTCs' }), h('th', { class: 'num', text: 'Subs' }), h('th', { class: 'num', text: 'FTIs' }))), tb2)));
     return el;
@@ -1178,6 +1246,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   function blankCard(wk) { var a = function (n) { var x = []; for (var i = 0; i < n; i++) x.push(false); return x; }; return { week_of: wk, d: a(35), w: a(WEEKLY.length), cv: a(21) }; }
   function cardFor(wk) {
     if (S.edit && S.edit.week_of === wk && S.edit.slug === S.open) return S.edit.card;
+    if (S.side && S.side[wk]) { var sc = S.side[wk]; delete S.side[wk]; S.edit = { slug: S.open, week_of: wk, card: sc }; return sc; }
     var doc = (S.data.cards || []).filter(function (c) { return c.id === wk; })[0], c = Object.assign(blankCard(wk), doc ? JSON.parse(JSON.stringify(doc)) : {});
     delete c.id; S.edit = { slug: S.open, week_of: wk, card: c }; return c;
   }
@@ -1185,17 +1254,47 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   /* cards before the week of 19 Oct were 42 boxes (no 'Push your job orders forward'), so they score out of 42 */
   function cardTotal(c) { return String(c.week_of || c.id || '9') < '2026-10-19' ? 42 : CARD_BOXES; }
   function cardScore(c) { return isNum(c.kev_score) ? c.kev_score : Math.round(boxes(c) / cardTotal(c) * 100); }
-  var saveT = null, saveState = '';
-  function saveCard(now) {
-    if (!S.edit) return; var e = S.edit; clearTimeout(saveT);
+  var saveT = null, saveState = '', saveGo = null;
+  /* send a save still waiting on its 700ms pause (before switching week or folder, so nothing typed is lost) */
+  function flushCard() { if (saveGo) { clearTimeout(saveT); var g = saveGo; saveGo = null; g(); } }
+  function saveCard(now, ex) {
+    var e = ex || S.edit; if (!e || !e.card) return;
+    if (saveGo && saveGo.e !== e) flushCard(); else clearTimeout(saveT);
     var go = function () {
       if (!S.live || !S.db) { saveState = 'Example: not saved'; paintSaved(); return; }
+      var live = e.slug === S.open ? cardDoc(e.week_of) : null;   // Dean writes ask_need / ask_resolve onto the card: keep his latest
+      if (live) DEAN_KEYS.forEach(function (k) { if (live[k] != null) e.card[k] = live[k]; });
       var doc = Object.assign({}, e.card, { week_of: e.week_of, boxes: boxes(e.card), score: cardScore(e.card), updated: new Date().toISOString(), updated_by: 'kev' });
       saveState = 'Saving…'; paintSaved();
       S.db.doc('people/' + e.slug + '/cards/' + e.week_of).set(doc).then(function () { saveState = 'Saved ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); paintSaved(); }, function () { saveState = 'Did not save. Check your connection and tap again.'; paintSaved(); });
     };
-    if (now) go(); else saveT = setTimeout(go, 700);
+    go.e = e;
+    if (now) { saveGo = null; go(); } else { saveGo = go; saveT = setTimeout(function () { saveGo = null; go(); }, 700); }
   }
+  /* earlier weeks (Kev, 14 Nov 2026): any closed week can be opened in the card above and filled in or corrected (boxes, score, notes),
+     and each week's notes, action items and PIP roll up under its "Week of" tile. */
+  var NOTE_KEYS = ['lived_out', 'autopsy', 'wins', 'next_week', 'coach_notes', 'needs', 'advice', 'actions', 'pip_reason'];
+  function hasData(c) { return !!c && (boxes(c) > 0 || isNum(c.kev_score) || !!c.pip || !!c.numbers || (Array.isArray(c.items) && c.items.length > 0) || NOTE_KEYS.some(function (k) { return c[k] && String(c[k]).trim(); })); }
+  function pastWeeks(list, nowWk) {
+    var set = {}, d = new Date(nowWk + 'T12:00:00');
+    for (var i = 1; i <= 8; i++) { var x = new Date(d); x.setDate(d.getDate() - 7 * i); set[ymd(x)] = true; }
+    (list || []).forEach(function (c) { if (/^\d{4}-\d{2}-\d{2}$/.test(String(c.id)) && c.id < nowWk) set[c.id] = true; });
+    return Object.keys(set).sort();
+  }
+  function weekPicker(list, nowWk, wk) {
+    var g = h('div', { class: 'lbv wkpick', role: 'group', 'aria-label': 'Which week' });
+    pastWeeks(list, nowWk).slice(-6).concat([nowWk]).forEach(function (w) { g.appendChild(h('button', { type: 'button', 'data-cw': w === nowWk ? '' : w, 'aria-pressed': String(w === wk), text: w === nowWk ? 'This week' : nice(w) })); });
+    return g;
+  }
+  /* PIP watch: the latest run of weeks with "Needs a PIP" ticked, up to the given week, and the card scores since it began */
+  function pipWatch(list, wk) {
+    var cs = sortedRows(list).filter(function (c) { return String(c.id) <= wk; }), last = -1;
+    cs.forEach(function (c, i) { if (c.pip) last = i; });
+    if (last < 0) return null;
+    var first = last; while (first > 0 && cs[first - 1].pip) first--;
+    return { start: cs[first].id, reason: cs.slice(first, last + 1).map(function (c) { return String(c.pip_reason || '').trim(); }).filter(Boolean).pop() || '', trail: cs.slice(first).map(function (c) { return nice(c.id) + ' ' + (hasData(c) ? cardScore(c) + '%' : 'no card'); }).join(' · ') };
+  }
+  function pipLine(pw) { return 'On a PIP since the week of ' + nice(pw.start) + (pw.reason ? ' (' + pw.reason.split('\n')[0] + ')' : '') + '. Card scores since: ' + pw.trail + '. Check last week’s action items against it.'; }
   function paintSaved() { var el = document.getElementById('card-saved'); if (el) el.textContent = saveState; }
   function boardRow(slug) { var b = S.board || {}; return (b.recruiters || []).concat(b.leadership || []).filter(function (r) { return r.slug === slug; })[0] || null; }
   /* what to watch: this week's Crelate pace against last week to the same point, the standard, and last week's card */
@@ -1214,15 +1313,198 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     if (prevCard && (isNum(prevCard.kev_score) || boxes(prevCard) > 0) && cardScore(prevCard) < 90 && any && sc < 90) out.push('Two weeks in a row under 90%: time for a PIP conversation?');
     return out;
   }
+  /* ---------------- RP meter (Kev, 14 Nov 2026) ----------------
+     RPs a day: under 15 is below the floor; 15 is the floor (yellow); 15 to 20 runs from yellow to green; 20 is green, the standard for a dawg;
+     25 is operational excellence; 30 is the best day there is. Reads board/current recruiters[] and leadership[] (rp_by_day, this.rps,
+     rp_days_at_15) and phones/current (dials per day, by dayKeys). Display only; nothing here is written. No data reads "No RPs logged yet". */
+  var RPM_MAX = 35, ZONES = [
+    { id: 'below', from: 0, label: 'Below the floor', short: 'Below' }, { id: 'floor', from: 15, label: 'Floor', short: 'Floor' }, { id: 'dawg', from: 20, label: 'Dawg', short: 'Dawg' },
+    { id: 'exc', from: 25, label: 'Operational excellence', short: 'Excellence' }, { id: 'best', from: 30, label: 'Best day', short: 'Best day' }];
+  function rpZone(v) { var z = ZONES[0]; ZONES.forEach(function (x) { if (v >= x.from) z = x; }); return z; }
+  /* the CSS colour for a value: 15 to 20 blends the floor's yellow into the dawg's green */
+  function zoneFill(v) {
+    var z = rpZone(v);
+    if (z.id === 'floor') return 'color-mix(in srgb, var(--z-dawg) ' + Math.round(Math.max(0, Math.min(1, (v - 15) / 5)) * 100) + '%, var(--z-floor))';
+    return 'var(--z-' + z.id + ')';
+  }
+  function zoneSay(v) {
+    var z = rpZone(v).id;
+    if (z === 'below') return (15 - v) + ' more to the floor of 15.';
+    if (z === 'floor') return (v === 15 ? 'On the floor. ' : '') + (20 - v) + ' more is the dawg standard.';
+    if (z === 'dawg') return 'The standard for a dawg. ' + (25 - v) + ' more is operational excellence.';
+    if (z === 'exc') return 'Operational excellence. ' + (30 - v) + ' more is the best day there is.';
+    return 'The best day there is.';
+  }
+  var ICON = { star: 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z', flame: 'M12 1.5c.8 3.6 5.5 5.8 5.5 11a5.5 5.5 0 0 1-11 0c0-2.5 1.3-4 2.5-5.3.2 1.8 1 3 2.2 3.5C10.6 7.9 10.3 4.5 12 1.5zM12 21a3 3 0 0 0 3-3c0-1.8-1.6-2.7-2.2-4.4-.9 1.4-3.8 2.4-3.8 4.4a3 3 0 0 0 3 3z' };
+  function svgEl(tag, a) { var e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function icon(name) { var s = svgEl('svg', { viewBox: '0 0 24 24', class: 'ic', 'aria-hidden': 'true', focusable: 'false' }); s.appendChild(svgEl('path', { d: ICON[name], 'fill-rule': 'evenodd' })); return s; }
+  function zonePill(v) { var z = rpZone(v); return h('span', { class: 'zp z-' + z.id }, z.id === 'exc' ? icon('star') : z.id === 'best' ? icon('flame') : null, z.label); }
+  function todayPT() { return ymd(new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }))); }
+  function dayName(k) { return new Date(k + 'T12:00:00Z').toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }); }
+  function addDays(k, n) { var d = new Date(k + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+  function mondayOf(k) { var d = new Date(k + 'T12:00:00Z'); return addDays(k, -((d.getUTCDay() + 6) % 7)); }
+  /* this week's weekdays with RPs logged (Monday to Friday, the board's Pacific dates) */
+  function rpDays(r) {
+    var by = (r && r.rp_by_day) || {}, B = S.board || {}, mon = B.week && B.week.mon_start;
+    return Object.keys(by).filter(function (k) { if (!/^\d{4}-\d{2}-\d{2}$/.test(k) || !isNum(by[k])) return false; var d = new Date(k + 'T12:00:00Z').getUTCDay(); return d >= 1 && d <= 5 && (!mon || k >= mon); })
+      .sort().map(function (k) { return { date: k, rps: by[k] }; });
+  }
+  function rpStat(r) {
+    var ds = rpDays(r); if (!ds.length) return null;
+    var tot = ds.reduce(function (a, d) { return a + d.rps; }, 0);
+    return { days: ds, today: ds[ds.length - 1], avg: Math.round(tot / ds.length * 10) / 10, at15: isNum(r.rp_days_at_15) ? r.rp_days_at_15 : ds.filter(function (d) { return d.rps >= 15; }).length, week: r.this && isNum(r.this.rps) ? r.this.rps : tot };
+  }
+  function dialsOn(r, date) { var x = r ? phoneOf(r) : null, keys = S.phones && S.phones.dayKeys; if (!x || !Array.isArray(keys) || !Array.isArray(x.days)) return null; var i = keys.indexOf(date); return i >= 0 && isNum(x.days[i]) ? x.days[i] : null; }
+  function gpt(v, rad, cx, cy) { var a = Math.PI * (1 - Math.max(0, Math.min(RPM_MAX, v)) / RPM_MAX); return [cx + rad * Math.cos(a), cy - rad * Math.sin(a)]; }
+  function arcPath(v1, v2, ro, ri, cx, cy) {
+    var f = function (p) { return p[0].toFixed(2) + ' ' + p[1].toFixed(2); };
+    return 'M' + f(gpt(v1, ro, cx, cy)) + ' A' + ro + ' ' + ro + ' 0 0 1 ' + f(gpt(v2, ro, cx, cy)) + ' L' + f(gpt(v2, ri, cx, cy)) + ' A' + ri + ' ' + ri + ' 0 0 0 ' + f(gpt(v1, ri, cx, cy)) + ' Z';
+  }
+  function gaugeBands(svg, ro, ri, cx, cy, cls) {
+    var segs = [[0, 15, 'var(--z-below)']];
+    for (var i = 0; i < 5; i++) segs.push([15 + i, 16 + i, 'color-mix(in srgb, var(--z-dawg) ' + (i * 25) + '%, var(--z-floor))']);
+    segs.push([20, 25, 'var(--z-dawg)'], [25, 30, 'var(--z-exc)'], [30, RPM_MAX, 'var(--z-best)']);
+    segs.forEach(function (s) { svg.appendChild(svgEl('path', { d: arcPath(s[0], s[1], ro, ri, cx, cy), class: cls || '', style: 'fill:' + s[2] })); });
+  }
+  /* the full meter, top of the open folder's card: gauge, today's number and zone, the week's average, and Monday to Friday */
+  function rpGauge(r) {
+    var st = rpStat(r);
+    if (!st) return h('div', { class: 'rpm none', id: 'rpm' }, h('div', { class: 'eyebrow', text: 'RP meter · RPs a day' }), h('p', { class: 'say', text: 'No RPs logged yet this week. The meter starts with the first Crelate pull that has a day on it.' }));
+    var v = st.today.rps, z = rpZone(v), cx = 180, cy = 150, ro = 112, ri = 84, label = v + ' RPs on ' + dayName(st.today.date) + ': ' + z.label + '. This week averages ' + fmt(st.avg) + ' a day, ' + rpZone(st.avg).label + '.';
+    var svg = svgEl('svg', { viewBox: '0 0 360 170', role: 'img', 'aria-label': 'RP meter. ' + label });
+    gaugeBands(svg, ro, ri, cx, cy, 'band');
+    if (z.id === 'exc' || z.id === 'best') svg.appendChild(svgEl('path', { d: arcPath(z.from, z.id === 'best' ? RPM_MAX : 30, ro + 6, ro + 2, cx, cy), style: 'fill:var(--z-' + z.id + ')' }));
+    [[15, 'FLOOR', 'end'], [20, 'DAWG', 'start'], [25, 'EXCELLENCE', 'start'], [30, 'BEST', 'start']].forEach(function (t) {
+      var a = gpt(t[0], ro + 1, cx, cy), b = gpt(t[0], ri - 1, cx, cy), l = gpt(t[0], ro + 13, cx, cy);
+      svg.appendChild(svgEl('line', { x1: a[0].toFixed(1), y1: a[1].toFixed(1), x2: b[0].toFixed(1), y2: b[1].toFixed(1), class: 'tick' }));
+      var tx = svgEl('text', { x: l[0].toFixed(1), y: l[1].toFixed(1), 'text-anchor': t[2], class: 'tl' }); tx.textContent = t[0] + ' ' + t[1]; svg.appendChild(tx);
+    });
+    [[0, '0', cx - ro + 14], [RPM_MAX, '35+', cx + ro - 14]].forEach(function (t) { var tx = svgEl('text', { x: t[2], y: cy + 16, 'text-anchor': 'middle' }); tx.textContent = t[1]; svg.appendChild(tx); });
+    // week average: a small marker inside the arc, pointing out at the average
+    var aa = Math.PI * (1 - Math.min(RPM_MAX, st.avg) / RPM_MAX), ux = Math.cos(aa), uy = -Math.sin(aa), tip = [cx + (ri - 3) * ux, cy + (ri - 3) * uy], base = [cx + (ri - 14) * ux, cy + (ri - 14) * uy];
+    svg.appendChild(svgEl('polygon', { class: 'avg', points: [tip, [base[0] - 5 * uy, base[1] + 5 * ux], [base[0] + 5 * uy, base[1] - 5 * ux]].map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ') }));
+    var nd = gpt(v, ri + 10, cx, cy);
+    svg.appendChild(svgEl('line', { x1: cx, y1: cy, x2: nd[0].toFixed(1), y2: nd[1].toFixed(1), class: 'ndl' }));
+    svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: 7, class: 'hub' }));
+    var side = h('div', { class: 'side' },
+      h('div', { class: 'eyebrow', text: 'RP meter · ' + dayName(st.today.date) + (st.today.date === todayPT() ? ' · today' : ' · latest day logged') }),
+      h('div', { class: 'now' }, h('b', { text: String(v) }), h('span', { text: 'RPs' }), zonePill(v)),
+      h('p', { class: 'say', text: zoneSay(v) }),
+      h('div', { class: 'wk', text: '▲ Week average ' + fmt(st.avg) + ' a day (' + rpZone(st.avg).label.toLowerCase() + ') · ' + st.days.length + ' day' + (st.days.length === 1 ? '' : 's') + ' logged · ' + st.at15 + ' at 15+ · ' + int(st.week) + ' this week' }));
+    var box = h('div', { class: 'rpm z-' + z.id, id: 'rpm' }, svg, side);
+    // Monday to Friday, each bar coloured by its zone, dials under it when CloudTalk has the day
+    var B = S.board || {}, mon = (B.week && B.week.mon_start) || mondayOf(st.days[0].date), by = r.rp_by_day || {}, strip = h('div', { class: 'rpdays' }), said = [];
+    DAYS.forEach(function (dn, i) {
+      var k = addDays(mon, i), x = isNum(by[k]) ? by[k] : null, dl = dialsOn(r, k), col = h('div', { class: 'col' });
+      col.appendChild(h('u', { style: 'bottom:' + (15 / RPM_MAX * 100).toFixed(1) + '%' })); col.appendChild(h('u', { style: 'bottom:' + (20 / RPM_MAX * 100).toFixed(1) + '%' }));
+      if (x != null) { var ht = Math.max(2, Math.min(RPM_MAX, x) / RPM_MAX * 100); col.appendChild(h('i', { style: 'height:' + ht.toFixed(1) + '%;--zc:' + zoneFill(x) })); col.appendChild(h('em', { style: 'bottom:calc(' + ht.toFixed(1) + '% + 3px)', text: String(x) })); }
+      else { col.appendChild(h('i', { class: 'none' })); col.appendChild(h('em', { style: 'bottom:4px', text: '–' })); }
+      said.push(dn + ' ' + (x == null ? 'none logged' : x + ' RPs, ' + rpZone(x).label) + (dl != null ? ', ' + dl + ' dials' : ''));
+      strip.appendChild(h('div', { class: 'd' }, col, h('small', { text: dn }), dl != null ? h('small', null, h('b', { text: int(dl) }), ' dials') : null));
+    });
+    strip.setAttribute('role', 'img'); strip.setAttribute('aria-label', 'RPs by day this week: ' + said.join('; ') + '. Dashed lines at 15 and 20.');
+    box.appendChild(strip);
+    return box;
+  }
+  /* the compact meter in each leaderboard row: a small gauge, today's RPs and the zone */
+  function rpMini(r) {
+    var st = rpStat(r);
+    if (!st) return h('span', { class: 'rpmini', title: 'No RPs logged yet this week' }, h('span', { text: 'No RPs yet' }));
+    var v = st.today.rps, z = rpZone(v), svg = svgEl('svg', { viewBox: '0 0 34 20', 'aria-hidden': 'true', focusable: 'false' });
+    gaugeBands(svg, 16, 9, 17, 18);
+    var nd = gpt(v, 15, 17, 18); svg.appendChild(svgEl('line', { x1: 17, y1: 18, x2: nd[0].toFixed(1), y2: nd[1].toFixed(1), class: 'ndl' }));
+    return h('span', { class: 'rpmini z-' + z.id, role: 'img', 'aria-label': v + ' RPs ' + (st.today.date === todayPT() ? 'today' : 'on ' + dayName(st.today.date)) + ', ' + z.label + '; week average ' + fmt(st.avg), title: dayName(st.today.date) + ' · week average ' + fmt(st.avg) + ' a day' },
+      svg, h('b', { text: String(v) }), h('span', { text: z.short }), z.id === 'exc' ? icon('star') : z.id === 'best' ? icon('flame') : null);
+  }
+
+  /* ---------------- earlier weeks, continued (Kev, 14 Nov 2026, thread 7e0675ca) ----------------
+     numbers   a closed week with no Crelate row gets Kev's own: card.numbers {rps, rp_days, resumes, ptcs, ftis, dials, entered_by: "kev"}
+     items     action items on each "Week of" tile: card.items [{text, added (ISO)}], appended with "Add an item"
+     pip_start the PIP's start date on the card where the PIP run begins (default that week's Monday)
+     ask_need, ask_resolve   the recruiter's own asks, written by Dean from the candor section; Kev only, never in screen-share */
+  var NUM_KEYS = [['rps', 'RPs'], ['rp_days', 'Days at 15 RPs'], ['resumes', 'Resumes'], ['ptcs', 'PTCs'], ['ftis', 'FTIs'], ['dials', 'Dials']];
+  var DEAN_KEYS = ['ask_need', 'ask_resolve'];
+  function scRow(wk) { return (S.data.scorecards || []).filter(function (x) { return (x.week_of || x.id) === wk; })[0] || null; }
+  function cardDoc(wk) { return (S.data.cards || []).filter(function (x) { return x.id === wk; })[0] || null; }
+  /* the one in-page copy of a week's card: the card open above, else a side copy kept until the folder closes */
+  function cardView(wk) { if (S.edit && S.edit.slug === S.open && S.edit.week_of === wk) return S.edit.card; return S.side[wk] || cardDoc(wk); }
+  function editable(wk) {
+    if (S.edit && S.edit.slug === S.open && S.edit.week_of === wk) return S.edit.card;
+    if (!S.side[wk]) { var doc = cardDoc(wk), c = Object.assign(blankCard(wk), doc ? JSON.parse(JSON.stringify(doc)) : {}); delete c.id; S.side[wk] = c; }
+    return S.side[wk];
+  }
+  function saveWeek(wk, now) { if (S.edit && S.edit.slug === S.open && S.edit.week_of === wk) saveCard(now); else saveCard(now, { slug: S.open, week_of: wk, card: S.side[wk] }); }
+  function withKevNumbers(rowsIn, cards) {
+    var have = {}; (rowsIn || []).forEach(function (r) { have[r.week_of || r.id] = true; });
+    return (rowsIn || []).concat((cards || []).filter(function (c) { return c.numbers && typeof c.numbers === 'object' && /^\d{4}-\d{2}-\d{2}$/.test(String(c.id)) && !have[c.id]; }).map(function (c) {
+      var r = { id: c.id, week_of: c.id, source: 'Entered by Kev on the card', kev_numbers: true };
+      NUM_KEYS.forEach(function (k) { if (isNum(c.numbers[k[0]])) r[k[0]] = c.numbers[k[0]]; });
+      return r;
+    }));
+  }
+  function pastNumbers(c, wk) {
+    var row = scRow(wk), n = c.numbers || {};
+    if (row && isNum(row.rps) && !c.numbers) return h('div', { class: 'empty', text: 'Crelate numbers for this week are on file (' + row.rps + ' RPs). They are on the Numbers and trend tab.' });
+    var g = h('div', { class: 'numsform' });
+    NUM_KEYS.forEach(function (k) { g.appendChild(h('label', { class: 'fld' }, h('span', { text: k[1] }), h('input', { type: 'number', min: '0', max: k[0] === 'rp_days' ? '5' : null, step: '1', inputmode: 'numeric', 'data-n': k[0], id: 'n-' + k[0], value: isNum(n[k[0]]) ? String(n[k[0]]) : '' }))); });
+    return h('div', { class: 'coach', id: 'numsform' }, h('div', { class: 'eyebrow', text: 'Numbers for this week · ' + (row ? 'Crelate has a row too; the tab uses Crelate' : 'closed without numbers') }), g,
+      sectionNote('Saves as you type. The Numbers and trend tab uses these for any week Crelate has no row for.'));
+  }
+  function asksBlock(wk, c) {
+    if (S.share) return null;
+    var doc = cardDoc(wk) || {}, need = doc.ask_need || c.ask_need, res = doc.ask_resolve || c.ask_resolve;
+    if (!need && !res) return null;
+    var dl = h('dl', { class: 'note' });
+    if (need) dl.appendChild(h('div', null, h('dt', { text: 'What they need from leadership' }), h('dd', { text: need })));
+    if (res) dl.appendChild(h('div', null, h('dt', { text: 'What they want resolved' }), h('dd', { text: res })));
+    return h('div', { class: 'asks', id: 'asks' }, h('b', { text: 'From the scorecard · their asks · Kev only' }), dl);
+  }
+  function addItem(w) {
+    var inp = document.querySelector('.livecard input[data-item="' + w + '"]'); if (!inp || !S.open) return;
+    var t = inp.value.trim(); if (!t) { inp.focus(); return; }
+    var c = editable(w); c.items = (Array.isArray(c.items) ? c.items.slice() : []).concat([{ text: t.slice(0, 500), added: new Date().toISOString() }]);
+    inp.value = ''; saveWeek(w, true); render();
+    var again = document.querySelector('.livecard input[data-item="' + w + '"]'); if (again) again.focus();
+  }
+  function rpWeek(w, nowWk) {
+    var row = scRow(w); if (row && isNum(row.rps)) return { v: row.rps, src: '' };
+    var c = cardView(w); if (c && c.numbers && isNum(c.numbers.rps)) return { v: c.numbers.rps, src: 'Kev' };
+    if (w === nowWk) { var r = boardRow(S.open); if (r && r.this && isNum(r.this.rps)) return { v: r.this.rps, src: 'so far' }; }
+    return null;
+  }
+  /* PIP strip: from the week the PIP run begins: why, the start date (editable), day 30, and every week since against the standards */
+  function pipStrip(list, nowWk) {
+    var pw = pipWatch(list, nowWk); if (!pw) return null;
+    var sc0 = cardView(pw.start) || {}, sd = /^\d{4}-\d{2}-\d{2}$/.test(String(sc0.pip_start || '')) ? sc0.pip_start : pw.start, d30 = addDays(sd, 30), left = -daysFrom(d30);
+    var box = h('div', { class: 'pipstrip', id: 'pipstrip' }, h('b', { text: 'PIP · Kev only' }));
+    if (pw.reason) box.appendChild(h('p', { class: 'sub', style: 'color:var(--ink)', text: pw.reason }));
+    box.appendChild(h('div', { class: 'row' }, h('label', { class: 'row' }, h('span', { class: 'stamp', text: 'Started' }), h('input', { type: 'date', 'data-pipstart': pw.start, value: sd, 'aria-label': 'PIP start date' })),
+      h('span', { class: 'chip' + (left < 0 ? ' bad' : left <= 7 ? ' warn' : ''), text: 'Day 30 · ' + dayName(d30) + (left > 0 ? ' · ' + left + ' days left' : left === 0 ? ' · today' : ' · ' + (-left) + ' days ago') })));
+    var tb = h('tbody'), w = mondayOf(sd);
+    for (var guard = 0; w <= nowWk && guard < 30; guard++, w = addDays(w, 7)) {
+      var c = cardView(w), has = hasData(c), v = has ? cardScore(c) : null, rp = rpWeek(w, nowWk);
+      tb.appendChild(h('tr', null, h('td', null, nice(w), w === nowWk ? h('small', { text: 'this week' }) : null),
+        h('td', { class: 'num ' + (v == null ? 'na' : v >= 90 ? 'ok' : 'bad'), text: v == null ? 'no card' : v + '% · ' + (v >= 90 ? 'met' : 'under') }),
+        h('td', { class: 'num' + (has ? '' : ' na'), text: has ? boxes(c) + ' / ' + cardTotal(c) : '–' }),
+        h('td', { class: 'num ' + (!rp ? 'na' : rp.v >= STD_RPS ? 'ok' : 'bad'), text: !rp ? 'no numbers' : rp.v + ' · ' + (rp.v >= STD_RPS ? 'met' : 'under') + (rp.src ? ' (' + rp.src + ')' : '') })));
+    }
+    box.appendChild(h('div', { class: 'scroll' }, h('table', null, h('thead', null, h('tr', null, h('th', { text: 'Week of' }), h('th', { class: 'num', text: 'Card vs 90%' }), h('th', { class: 'num', text: 'Boxes' }), h('th', { class: 'num', text: 'RPs vs ' + STD_RPS }))), tb)));
+    return box;
+  }
   function tCard(p) {
-    var el = h('div', { class: 'panel livecard', role: 'tabpanel' }), wk = weekOfNow();
+    var el = h('div', { class: 'panel livecard', role: 'tabpanel' }), nowWk = weekOfNow(), wk = S.cardWeek && S.cardWeek < nowWk ? S.cardWeek : nowWk, past = wk < nowWk;
     if (!S.loaded.cards && S.live) { el.appendChild(h('div', { class: 'empty', text: 'Loading the card…' })); return el; }
     var c = cardFor(wk), list = sortedRows(S.data.cards), prev = list.filter(function (x) { return x.id < wk; }).slice(-1)[0] || null, r = boardRow(p.id);
     var ro = !S.live && !S.example ? true : false;
-    el.appendChild(h('div', { class: 'card-h' }, h('h3', { text: 'Week of ' + nice(wk) }), h('span', { class: 'stamp', text: S.board && S.board.as_of ? 'Crelate as of ' + S.board.as_of : 'Crelate not pulled yet' }), h('span', { class: 'saved', id: 'card-saved', text: saveState })));
+    el.appendChild(h('div', { class: 'card-h' }, h('h3', { text: 'Week of ' + nice(wk) }), past ? h('span', { class: 'chip warn', text: 'Closed week · Kev editing' }) : h('span', { class: 'stamp', text: S.board && S.board.as_of ? 'Crelate as of ' + S.board.as_of : 'Crelate not pulled yet' }), h('span', { class: 'saved', id: 'card-saved', text: saveState })));
+    if (!past) el.appendChild(rpGauge(r));
+    el.appendChild(weekPicker(list, nowWk, wk));
+    if (past) el.appendChild(h('p', { class: 'stamp', text: 'This week has closed. Tick the boxes, set the score and add notes or action items here; each saves to the week of ' + nice(wk) + ' as you go. The recruiter never sees this page.' }));
     el.appendChild(fromScorecard(p, wk));
-    // Crelate strip
-    if (r) {
+    var ak = asksBlock(wk, c); if (ak) el.appendChild(ak);
+    // Crelate strip (this week only; past weeks' numbers are on the Numbers and trend tab)
+    if (past) el.appendChild(pastNumbers(c, wk));
+    else if (r) {
       var t = r.this || {}, l = r.last_full || {}, ls = r.last_same || {}, tb = h('tbody'), byDay = r.rp_by_day || {}, dk = Object.keys(byDay).sort();
       var dayCells = DAYS.map(function (d, i) { var k = dk.filter(function (x) { return new Date(x + 'T12:00:00Z').getUTCDay() === i + 1; })[0], v = k ? byDay[k] : null; return h('td', { class: 'num' + (isNum(v) && v >= STD_DAY ? ' strong' : ''), text: isNum(v) ? String(v) : '–' }); });
       var tr = h('tr', null, h('td', { class: 'lab', text: 'RPs by day' })); dayCells.forEach(function (x) { tr.appendChild(x); }); tb.appendChild(tr);
@@ -1236,9 +1518,11 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
       el.appendChild(h('div', { class: 'scroll' }, h('table', { class: 'grid5' }, h('thead', null, h('tr', null, h('th', { class: 'lab', text: 'Week over week' }), h('th', { text: 'This week' }), h('th', { text: 'Last wk, same point' }), h('th', { text: 'Last wk, full' }), h('th', { text: '' }))), mt)));
     } else el.appendChild(h('div', { class: 'empty', text: 'No Crelate row for this person on the board yet.' }));
     // what to watch
-    var wl = watchList(p, c, prev), wb = h('div', { class: 'watch' + (wl.length ? '' : ' ok') }, h('b', { text: wl.length ? 'Watch' : 'Nothing to watch yet' }));
+    var wl = past ? [] : watchList(p, c, prev), pw = S.share ? null : pipWatch(list, past ? wk : nowWk);
+    if (pw) wl.unshift(pipLine(pw));
+    var wb =h('div', { class: 'watch' + (wl.length ? '' : ' ok') }, h('b', { text: wl.length ? 'Watch' : 'Nothing to watch yet' }));
     if (wl.length) { var ul = h('ul'); wl.forEach(function (x) { ul.appendChild(h('li', { text: x })); }); wb.appendChild(ul); }
-    el.appendChild(wb);
+    if (wl.length || !past) el.appendChild(wb);
     // daily 35
     var dt = h('tbody');
     DAILY.forEach(function (m, i) {
@@ -1265,7 +1549,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
       h('div', { class: 'scroll' }, h('table', { class: 'grid5' }, h('thead', null, h('tr', null, h('th', { class: 'lab', text: 'Core values' }), h('th', { text: 'Lived it' }), h('th', { text: 'Fell short' }), h('th', { text: 'Next wk' }))), vt))));
     // score
     var bx = boxes(c), sc = cardScore(c);
-    el.appendChild(h('div', { class: 'card-h' }, h('span', { class: 'score' }, String(bx), h('small', { text: '/ ' + CARD_BOXES + ' boxes' })), h('span', { class: 'score' }, sc + '%', h('small', { text: isNum(c.kev_score) ? 'your score' : 'win at 90%' })), sc >= 90 ? h('span', { class: 'chip ok', text: 'Win' }) : (bx || isNum(c.kev_score) ? h('span', { class: 'chip warn', text: 'Under 90%' }) : null),
+    el.appendChild(h('div', { class: 'card-h' }, h('span', { class: 'score' }, String(bx), h('small', { text: '/ ' + cardTotal(c) + ' boxes' })), h('span', { class: 'score' }, sc + '%', h('small', { text: isNum(c.kev_score) ? 'your score' : 'win at 90%' })), sc >= 90 ? h('span', { class: 'chip ok', text: 'Win' }) : (bx || isNum(c.kev_score) ? h('span', { class: 'chip warn', text: 'Under 90%' }) : null),
       prev ? h('span', { class: 'stamp', text: 'Last week: ' + cardScore(prev) + '%' + (isNum(prev.kev_score) ? ' (your score)' : '') }) : null));
     // the recruiter's side
     var fld = function (key, label, ph) { return h('label', { class: 'fld' }, h('span', { text: label }), h('textarea', { 'data-f': key, id: 'f-' + key, placeholder: ph || '', text: c[key] || '' })); };
@@ -1274,7 +1558,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     // Kev's side
     if (!S.share) {
       var co = h('div', { class: 'coach' }, h('div', { class: 'eyebrow', text: 'Coach · Kev only, never sent to the recruiter' }));
-      co.appendChild(h('div', { class: 'two' }, fld('coach_notes', 'Coaching notes'), fld('needs', 'Needs'), fld('advice', 'Advice'),
+      co.appendChild(h('div', { class: 'two' }, fld('coach_notes', 'Coaching notes'), fld('needs', 'Needs'), fld('advice', 'Advice'), fld('actions', 'Action items to check next week', 'One per line'),
         h('label', { class: 'fld' }, h('span', { text: 'Your score (%), overrides the box count' }), h('input', { type: 'number', min: '0', max: '100', step: '1', 'data-f': 'kev_score', id: 'f-kev_score', value: isNum(c.kev_score) ? String(c.kev_score) : '' }))));
       var pipOn = !!c.pip;
       co.appendChild(h('div', { class: 'pip' + (pipOn ? ' on' : '') }, h('button', { class: 'bx short', type: 'button', 'data-k': 'pip', 'aria-pressed': String(pipOn), 'aria-label': 'Needs a PIP', text: pipOn ? '\u2713' : '' }), h('b', { text: 'Needs a PIP' }),
@@ -1284,23 +1568,40 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
       el.appendChild(co);
     }
     el.appendChild(sectionNote('Every box and note saves as you go. Crelate refreshes at 9:55am PT on Fridays; the cards come to you as a PDF at the end of the day.'));
-    el.appendChild(pastCards(list.filter(function (x) { return x.id < wk; })));
+    el.appendChild(pastCards(list, nowWk, wk));
     return el;
   }
-  /* earlier cards: the score trend week over week, then each past card's notes (Kev's coaching notes hidden on screen-share) */
-  function pastCards(past) {
-    var box = h('div', { class: 'past' }, h('h3', { text: 'Earlier cards' }));
-    if (!past.length) { box.appendChild(h('div', { class: 'empty', text: 'No earlier cards yet. Each Friday\u2019s card lands here once the week turns.' })); return box; }
-    var sp = h('div', { class: 'spark', role: 'img', 'aria-label': 'Card score by week: ' + past.map(function (c) { return nice(c.id) + ' ' + cardScore(c) + '%'; }).join(', ') });
-    past.slice(-8).forEach(function (c) { var v = cardScore(c); sp.appendChild(h('div', null, h('b', { text: v + '%' }), h('i', { class: v < 90 ? 'under' : '', style: 'height:' + Math.max(3, Math.round(v * .5)) + 'px' }), h('small', { text: nice(c.id) }))); });
-    box.appendChild(sp);
-    past.slice().reverse().forEach(function (c, n) {
-      var v = cardScore(c), d = h('details', n === 0 ? { open: true } : null);
-      d.appendChild(h('summary', null, h('span', null, 'Week of ' + nice(c.id)), h('span', null, h('b', { text: v + '%' }), ' \u00b7 ' + boxes(c) + ' / ' + cardTotal(c) + ' boxes' + (isNum(c.kev_score) ? ' \u00b7 your score' : '') + (isNum(c.burnout) && !S.share ? ' \u00b7 burn-out ' + c.burnout : '') + (v < 90 ? ' \u00b7 under 90%' : ' \u00b7 win'))));
+  /* earlier weeks: the PIP watch, the score trend, then one "Week of" tile per week (the last eight, plus any older card) with its
+     action items, notes and coaching, and a button that opens the week in the card above to fill in or correct it.
+     Kev's coaching, needs, advice, action items and PIP stay hidden on screen-share. */
+  function pastCards(list, nowWk, wk) {
+    var box = h('div', { class: 'past' }, h('h3', { text: 'Earlier weeks' })), byId = {};
+    (list || []).forEach(function (c) { byId[c.id] = c; });
+    var weeks = pastWeeks(list, nowWk), filled = weeks.filter(function (w) { return hasData(byId[w]); });
+    if (!S.share) { var ps = pipStrip(list, nowWk); if (ps) box.appendChild(ps); }
+    if (filled.length) {
+      var sp = h('div', { class: 'spark', role: 'img', 'aria-label': 'Card score by week: ' + filled.map(function (w) { return nice(w) + ' ' + cardScore(byId[w]) + '%'; }).join(', ') });
+      filled.slice(-8).forEach(function (w) { var v = cardScore(byId[w]); sp.appendChild(h('div', null, h('b', { text: v + '%' }), h('i', { class: v < 90 ? 'under' : '', style: 'height:' + Math.max(3, Math.round(v * .5)) + 'px' }), h('small', { text: nice(w) }))); });
+      box.appendChild(sp);
+    }
+    box.appendChild(sectionNote('Open a week to read its action items and notes. "Edit this week" loads it in the card above, so you can tick boxes, set your score or add notes after the week has closed.'));
+    weeks.slice().reverse().forEach(function (w, n) {
+      var c = cardView(w) || byId[w], has = hasData(c), v = has ? cardScore(c) : null, d = h('details', n === 0 || w === wk || has ? { open: true } : null);
+      d.appendChild(h('summary', null, h('span', null, 'Week of ' + nice(w) + (w === wk ? ' \u00b7 open above' : '')),
+        h('span', null, h('b', { text: has ? v + '%' : '\u2013' }), has ? ' \u00b7 ' + boxes(c) + ' / ' + cardTotal(c) + ' boxes' + (isNum(c.kev_score) ? ' \u00b7 your score' : '') + (isNum(c.burnout) && !S.share ? ' \u00b7 burn-out ' + c.burnout : '') + (c.pip && !S.share ? ' \u00b7 PIP' : '') + (v < 90 ? ' \u00b7 under 90%' : ' \u00b7 win') : ' \u00b7 nothing filled in')));
       var pb = h('div', { class: 'pb' }), any = false;
-      [['lived_out', 'Where I lived it out'], ['autopsy', 'Autopsy'], ['wins', 'Wins and blockers'], ['next_week', 'Next week I will']].forEach(function (f) { if (c[f[0]]) { any = true; pb.appendChild(h('div', null, h('span', { text: f[1] }), h('p', { text: c[f[0]] }))); } });
-      if (!S.share) [['coach_notes', 'Coaching notes'], ['needs', 'Needs'], ['advice', 'Advice'], ['pip_reason', 'PIP: why']].forEach(function (f) { if (c[f[0]]) { any = true; pb.appendChild(h('div', { class: 'k' }, h('span', { text: f[1] + ' \u00b7 Kev only' }), h('p', { text: c[f[0]] }))); } });
-      if (!any) pb.appendChild(h('p', { class: 'stamp', text: 'No notes on this card.' }));
+      function add(key, label, kev) { if (!c || !c[key] || !String(c[key]).trim()) return; if (kev && S.share) return; any = true; pb.appendChild(h('div', kev ? { class: 'k' } : null, h('span', { text: label + (kev ? ' \u00b7 Kev only' : '') }), h('p', { text: c[key] }))); }
+      add('next_week', 'Action items \u00b7 next week I will'); add('actions', 'Action items \u00b7 from Kev', true);
+      add('wins', 'Wins and blockers'); add('lived_out', 'Where I lived it out'); add('autopsy', 'Autopsy');
+      add('coach_notes', 'Coaching notes', true); add('needs', 'Needs', true); add('advice', 'Advice', true); add('pip_reason', 'PIP: why', true);
+      if (!any) pb.appendChild(h('p', { class: 'stamp', text: has ? 'No notes on this card.' : 'Nothing was filled in for this week.' }));
+      if (!S.share) {
+        var its = ((c && c.items) || []).filter(function (x) { return x && x.text; }), blk = h('div', { class: 'k' }, h('span', { text: 'Action items \u00b7 Kev only' }));
+        if (its.length) { var ul = h('ul', { class: 'items' }); its.forEach(function (x) { ul.appendChild(h('li', null, String(x.text), x.added ? h('small', { text: 'added ' + nice(String(x.added).slice(0, 10)) }) : null)); }); blk.appendChild(ul); }
+        blk.appendChild(h('div', { class: 'additem' }, h('input', { type: 'text', maxlength: '500', 'data-item': w, 'aria-label': 'New action item for the week of ' + nice(w), placeholder: 'An action item for the week of ' + nice(w) }), h('button', { class: 'wkbtn', type: 'button', 'data-additem': w, text: 'Add an item' })));
+        pb.appendChild(blk);
+      }
+      if (w !== wk) pb.appendChild(h('div', { class: 'act' }, h('button', { class: 'wkbtn', type: 'button', 'data-cw': w, text: has ? 'Edit this week' : 'Fill in this week' })));
       d.appendChild(pb); box.appendChild(d);
     });
     return box;
@@ -1319,6 +1620,23 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
     else S.edit.card[key] = v;
     saveCard(false);
   });
+  /* numbers for a closed week, the PIP start date, and "Add an item" (Kev, 14 Nov) */
+  document.addEventListener('input', function (e) {
+    var f = e.target.closest && e.target.closest('.livecard [data-n]'); if (!f || !S.edit) return;
+    var k = f.getAttribute('data-n'), v = f.value, c = S.edit.card, n = Object.assign({}, c.numbers || {});
+    var x = v === '' ? null : Math.max(0, Math.min(k === 'rp_days' ? 5 : 100000, Math.round(+v)));
+    if (x == null || !isFinite(x)) delete n[k]; else n[k] = x;
+    if (NUM_KEYS.some(function (q) { return isNum(n[q[0]]); })) { n.entered_by = 'kev'; c.numbers = n; } else delete c.numbers;
+    saveCard(false);
+  });
+  document.addEventListener('change', function (e) {
+    var f = e.target.closest && e.target.closest('.livecard input[data-pipstart]'); if (!f || !S.open) return;
+    var wk = f.getAttribute('data-pipstart'), c = editable(wk);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(f.value)) c.pip_start = f.value; else delete c.pip_start;
+    saveWeek(wk, true); render(); var back = document.querySelector('.livecard input[data-pipstart]'); if (back) back.focus();
+  });
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('.livecard [data-additem]'); if (b) addItem(b.getAttribute('data-additem')); });
+  document.addEventListener('keydown', function (e) { var f = e.key === 'Enter' && e.target.closest && e.target.closest('.livecard input[data-item]'); if (f) { e.preventDefault(); addItem(f.getAttribute('data-item')); } });
   document.addEventListener('change', function (e) { var f = e.target.closest && e.target.closest('.livecard [data-f]'); if (f && (f.getAttribute('data-f') === 'kev_score' || f.getAttribute('data-f') === 'burnout')) { saveCard(true); render(); } });
   function trend(list) {
     var ns = 'http://www.w3.org/2000/svg', W = 520, H = 190, top = 24, bot = 150, max = Math.max(STD_RPS * 1.2, Math.max.apply(null, list.map(function (r) { return isNum(r.rps) ? r.rps : 0; })) * 1.1);
@@ -1475,11 +1793,13 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   function unsubAll() { S.unsubs.forEach(function (u) { try { u(); } catch (e) {} }); S.unsubs = []; }
   function sections() { return S.share ? ['scorecards', 'cards', 'goals', 'deliverables'] : ['scorecards', 'cards', 'coaching', 'money', 'goals', 'deliverables']; }
   function closeFolder() {
-    unsubAll(); S.open = null; S.data = {}; S.loaded = {}; S.tab = 'card';
+    flushCard(); S.cardWeek = null;
+    unsubAll(); S.open = null; S.data = {}; S.loaded = {}; S.tab = 'card'; S.side = {};
     try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
   }
   function openFolder(slug) {
-    unsubAll(); S.open = slug; S.tab = 'card'; S.data = {}; S.loaded = {}; S.edit = null;
+    flushCard(); S.cardWeek = null;
+    unsubAll(); S.open = slug; S.tab = 'card'; S.data = {}; S.loaded = {}; S.edit = null; S.side = {};
     try { history.replaceState(null, '', '#' + slug); } catch (e) {}
     var keys = sections();
     if (S.live) {
@@ -1500,6 +1820,7 @@ return {start:function(use){run(use).catch(function(e){try{banner('Something wen
   document.addEventListener('click', function (e) {
     var f = e.target.closest('.folder[data-slug]'); if (f) { openFolder(f.getAttribute('data-slug')); return; }
     var so = e.target.closest('.srt[data-sort]'); if (so) { S.lbSort = so.getAttribute('data-sort'); render(); return; }
+    var cw = e.target.closest('[data-cw]'); if (cw && S.open) { flushCard(); S.cardWeek = cw.getAttribute('data-cw') || null; S.tab = 'card'; render(); var top = document.querySelector('.livecard'); if (top) top.scrollIntoView({ block: 'start' }); return; }
     var lv = e.target.closest('.lbv [data-lbv]'); if (lv) { S.lbView = lv.getAttribute('data-lbv'); render('.lbv [data-lbv="' + S.lbView + '"]'); return; }
     if (e.target.closest('#back')) { closeFolder(); render(); window.scrollTo(0, 0); return; }
     var t = e.target.closest('.tab[data-tab]'); if (t) { S.tab = t.getAttribute('data-tab'); render('#tab-' + S.tab); }

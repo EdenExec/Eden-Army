@@ -76,6 +76,10 @@ def main():
             upd[key] = merged
     if c.get("burnout") is not None and card.get("burnout") is None:
         upd["burnout"] = c["burnout"]
+    for src_key, card_key in (("need", "ask_need"), ("resolve", "ask_resolve")):
+        v = (c.get(src_key) or "").strip()
+        if v and v != (card.get(card_key) or "").strip():
+            upd[card_key] = v
 
     for key, n in (("d", 35), ("w", 8), ("cv", 21)):
         src = (a.get(key) or [])[:n]
