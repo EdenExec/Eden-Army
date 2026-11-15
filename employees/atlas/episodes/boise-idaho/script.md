@@ -5,7 +5,7 @@ KID: So who wins?
 GUIDE: On March 2nd a new territorial secretary arrives, a man named C. Dewitt Smith. He has money, and he has the power to call federal troops. One afternoon he goes for a ride. He comes back the next day with soldiers, picks up the seal and as many papers as he can carry, and heads south. Lewiston throws the rest of the papers in the town jail.
 KID: They jailed the paperwork.
 GUIDE: They jailed the paperwork. Smith rode into Boise on April 14th, 1865. And that's how the city you're driving to became the capital of Idaho. Not by a grand plan. By gold, by votes, and by a man who went for a ride.
-KID: Okay, I'm hooked. Here's where I am. I'm moving my family and my business to Boise, and right now what I know is a blue football field and potatoes. Get me up to speed.
+KID: ...okay... I'm hooked. Here's where I am. I'm moving my family and my business to Boise, and right now what I know is a blue football field and potatoes. Get me up to speed.
 GUIDE: That's the plan. Where Idaho came from, why Boise grew, who lives there, where the money is, especially in construction, and what to watch for the next twenty-five years. And G, you're in the truck too, so listen for a few things just for you.
 ---
 KID: Start at the very beginning. What's the land like?
@@ -34,7 +34,7 @@ GUIDE: Picture it at night. More than thirty miners' fires visible from Idaho Ci
 KID: And where's Boise in all this?
 GUIDE: Boise was the supply town. On July 4th, 1863, in the middle of the Civil War, the Union Army built a new Fort Boise, about fifty miles upriver from the old one, right where the Oregon Trail crossed the roads up to the mines. The town grew around the fort, and the army stayed forty-nine years. Where the name comes from, nobody's sure. The favorite story is French-speaking trappers crying "les bois," the woods, at the trees along the river. Nice story. Not proven.
 KID: So that's the setup for the capital heist.
-GUIDE: Right. Congress created Idaho Territory in March 1863, and at first it was enormous: today's Idaho, Montana and most of Wyoming. The first governor set up in Lewiston, in the north, because that's where the people had been. But gold pulled everyone south. By the second legislature in 1864, the south outnumbered the north almost nineteen thousand to under three thousand.
+GUIDE: ...right... Congress created Idaho Territory in March 1863, and at first it was enormous: today's Idaho, Montana and most of Wyoming. The first governor set up in Lewiston, in the north, because that's where the people had been. But gold pulled everyone south. By the second legislature in 1864, the south outnumbered the north almost nineteen thousand to under three thousand.
 KID: So the south just outvoted them.
 GUIDE: The north tried to have Congress carve off a new northern territory. The south blocked that and made Boise the capital, dated December 24th, 1864. Then came the lawsuit, the duck-hunting governor, the armed guard and Smith's ride. The territorial supreme court later upheld the move. Some reference books say 1866; I'm going with the date from the state historical society.
 KID: And statehood?
@@ -49,7 +49,7 @@ GUIDE: Then the Reclamation Act of 1902 brought in the federal government. Upriv
 KID: Why does a 1915 dam matter to someone buying a house this year?
 GUIDE: Because the valley's farms, and now its subdivisions, still run on water rights from the 1800s and early 1900s. The water in your tap and the water in the farmer's ditch come out of the same mountain snow. We'll come back to that when we talk about the future.
 ---
-KID: Okay, the Basques. Everybody says Boise is Basque. Why Boise?
+KID: ...okay... The Basques. Everybody says Boise is Basque. Why Boise?
 GUIDE: Silver. Basque immigrants were drawn to the silver mines at Silver City. The ones who didn't mine ran sheep and cattle and sold lamb and beef to the miners. Later, from the 1940s to about 1970, a ranchers' association recruited sheepherders straight from Spain.
 KID: How many Basques are there now?
 GUIDE: Honest answer: the counts don't agree, because the census never separated Basques cleanly. Thousands, and one of the largest Basque communities in the country. What's not in doubt is how central they are. Boise has been a sister city to Gernika since 1990. A former Boise mayor, Dave Bieter, speaks Basque.
@@ -78,7 +78,7 @@ GUIDE: The second is about buildings. Starting in the late 1960s, city leaders w
 KID: How did it turn around?
 GUIDE: Citizens pushed back. Preservation Idaho formed in the early seventies to stop the demolitions, and public forums drew more than sixteen hundred people. In the 1983 and 1985 elections, voters chose leaders who opposed the downtown mall and backed a suburban one instead. That became Boise Towne Square, which started construction in late 1986, out in west Boise.
 KID: So the big mall on my side of town exists because of a fight over downtown.
-GUIDE: Exactly. And the very same years produced one of Boise's best decisions. In 1962 the city's plan called for a continuous public green belt along the river. Three donated parcels started it in 1967, and a 1971 rule pushed new buildings and parking seventy feet back from the water. Today the Greenbelt runs more than twenty miles. Same city, same era. One bad call, one great one.
+GUIDE: ...exactly... And the very same years produced one of Boise's best decisions. In 1962 the city's plan called for a continuous public green belt along the river. Three donated parcels started it in 1967, and a 1971 rule pushed new buildings and parking seventy feet back from the water. Today the Greenbelt runs more than twenty miles. Same city, same era. One bad call, one great one.
 ---
 KID: Now the boom. Give me the curve.
 GUIDE: Boise was about thirty-four thousand people in 1950, and still about thirty-four thousand in 1960. Then it more than doubled, to about seventy-five thousand by 1970, likely helped by annexation, though that's unconfirmed. Two hundred thirty-six thousand in 2020. And today somewhere between two hundred forty and two hundred fifty-five thousand, depending on who's counting. The Census Bureau and the regional planners use different methods and their latest numbers are about eighteen thousand apart.
@@ -110,7 +110,7 @@ GUIDE: The state sets the base: low, flat taxes and light regulation. The city l
 KID: And locals versus newcomers?
 GUIDE: Every boom produces it. Long-timers feel the traffic and the prices. Newcomers want the things that drew them there. Valley surveys reportedly rank growth, transportation and affordable housing as the top concerns. The advice is old and it works. Listen more than you talk, and don't open with how you did it back in Washington.
 ---
-KID: Okay. The money. Big picture first.
+KID: ...okay... The money. Big picture first.
 GUIDE: Three numbers. Unemployment in the Boise metro was three and a half percent in June. That's tight. The labor force actually shrank, by about seven-tenths of a percent from a year earlier. And Idaho's labor force participation rate, the share of adults working or looking for work, hit sixty-two percent in May, historically low. Fewer people to hire.
 KID: And pay?
 GUIDE: Here's the number that matters for anyone you recruit. Per person, income in the metro is about seventy-nine percent of the national level. Houses cost close to national prices, on incomes that aren't.
@@ -127,7 +127,7 @@ GUIDE: A one-point-one-billion-dollar St. Luke's hospital tower downtown. A Meta
 KID: So where's the talent short? Be specific.
 GUIDE: Evidence first, then Scout's read, and I'll label which is which. In early 2024, the head of the Idaho Associated General Contractors said Micron alone could need four thousand construction workers at peak. A local contractor estimated about two thousand licensed electricians in all of Idaho, about three quarters of them in the valley, with the big projects needing more than twelve hundred at peak. Micron set wage floors, paid journeymen an extra ten dollars an hour, and paid two hundred forty dollars a day to workers living more than a hundred fifty miles away.
 KID: That's early 2024, though.
-GUIDE: Right, and some of it's been overtaken by events. But this year Micron's own CEO named a shortage of workers with critical trade skills as a limit on how fast they can build.
+GUIDE: ...right... And some of it's been overtaken by events. But this year Micron's own CEO named a shortage of workers with critical trade skills as a limit on how fast they can build.
 KID: And Scout's read?
 GUIDE: Scout's judgment, not a sourced fact. The scarcest people are licensed electricians and controls technicians. Then pipefitters, welders and mechanical trades for cleanroom piping. Then superintendents and project managers who've run hundred-million-dollar-plus industrial jobs. Then estimators and preconstruction leads, and then safety, quality and commissioning managers. Commercial real estate, the brokers and developers, is a smaller, more local market, tied to housing and retail.
 KID: Who are the contractors? Who do I call first?

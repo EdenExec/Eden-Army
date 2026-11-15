@@ -1,17 +1,17 @@
 GUIDE: Finn, picture this. A summer day in Boston, about three hundred years ago. There's a pond, almost a mile across. And floating on his back in the middle of it is a boy, holding the string of a kite. The wind is pulling the kite, and the kite is pulling the boy, right across the water.
-KID: Wait. He's kitesurfing? Three hundred years ago?
+KID: ...wait... He's kitesurfing? Three hundred years ago?
 GUIDE: Pretty much. And that boy grew up to fly a kite in a thunderstorm, help start a country, and end up on the hundred-dollar bill. G, you're with us today. Ask your dad if he's got a hundred-dollar bill, or look one up. That face on it is our boy.
 KID: G says it's Benjamin Franklin.
 GUIDE: It is. This is part one of three. Today, Ben the kid. Next time, Ben the inventor, and the lightning. And last, Ben and the birth of a country.
 ---
-KID: Okay, so who was he? Rich family?
+KID: ...okay... So who was he? Rich family?
 GUIDE: Not at all. Ben was born in Boston on January seventeenth, seventeen-oh-six. His father, Josiah, made candles and soap. And Ben was the fifteenth of seventeen children.
 KID: Seventeen kids? G, imagine that dinner table.
 GUIDE: Ben wrote that he remembered thirteen of them sitting at the table at one time. And there wasn't money for much school. Ben's schooling ended when he was about ten. After that, he taught himself, from books. Every penny he got, he spent on books.
 KID: He just taught himself? Everything?
 GUIDE: Reading, writing, math, science. He'd borrow books and stay up late to finish them so he could give them back in the morning. Remember that, because it's the secret to Ben's whole life. He never stopped learning.
 ---
-KID: Okay, but the swimming. You started with the swimming.
+KID: ...okay... But the swimming. You started with the swimming.
 GUIDE: Ben grew up near the water, and he wrote that he learned early to swim well. He loved it. And he was always trying to make it better. When he was a young boy, he made himself a pair of swim paddles. Two thin pieces of wood, shaped kind of like the board a painter holds paint on. Oval, with a hole for the thumb.
 KID: Paddles for his hands?
 GUIDE: For his hands. G, hold your hands out flat, fingers together. Now pretend there's a wooden board on each one, making them twice as big. Push the water back.
@@ -43,7 +43,7 @@ KID: That's a picture.
 GUIDE: And here's the funny part. He walked past a house where a girl named Deborah Read was standing in the doorway. Ben wrote that she saw him and thought he looked awkward and ridiculous.
 KID: She laughed at him?
 GUIDE: She thought he looked ridiculous. And he admitted he did. But years later, Ben married Deborah Read.
-KID: Ha! That's the best ending.
+KID: ...ha... That's the best ending.
 GUIDE: And here's the part I like best. Ben ate one roll and was full. So he gave the other two to a woman and her child who'd come on the boat with him. He had almost nothing, and he still shared.
 ---
 KID: So he made it in Philadelphia?
@@ -52,7 +52,7 @@ KID: Showing off.
 GUIDE: A little. But people were so impressed, a rich man asked him to teach his sons to swim, and Ben thought about opening a swimming school. Instead, he came home to Philadelphia. And at about twenty years old, he made a plan to become a better person. G, this one's for you.
 KID: Why G?
 GUIDE: Because G already does it. Ben picked thirteen virtues, thirteen good habits, he wanted to build. Things like order, which means everything in its place. Silence, which means don't say things that don't help anyone. Cleanliness. And humility.
-KID: Wait, those are G's winning moves! Silence, cleanliness, humility.
+KID: ...wait... those are G's winning moves! Silence, cleanliness, humility.
 GUIDE: They came from Ben. He made a little book with a page for each virtue and a column for each day of the week. Every time he slipped up, he put a little black dot in the box. He worked on one virtue each week, and the goal was a clean page.
 KID: Did he ever get a clean page?
 GUIDE: Not always. He said he was surprised how full of faults he was. But he also said trying made him a better and happier man than he would have been. And here's a funny bit. His list started with twelve. Then a Quaker friend kindly told him that people thought he was proud.

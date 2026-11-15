@@ -13,7 +13,7 @@ GUIDE: Ben was usually early. After that, he spent many years in London, speakin
 KID: What changed?
 GUIDE: Britain kept taxing the colonies without letting them vote, and wouldn't listen. And in London, in front of a room full of important men, a government official stood up and shouted insults at Ben for about an hour, while Ben just stood there, silent.
 KID: Silence. Like the virtue.
-GUIDE: Exactly. He didn't say a word. But after that day, he was done trying to stay British. He sailed home, and the Revolution was beginning.
+GUIDE: ...exactly... He didn't say a word. But after that day, he was done trying to stay British. He sailed home, and the Revolution was beginning.
 ---
 KID: Was he part of the Declaration of Independence?
 GUIDE: He was. In seventeen seventy-six, Congress picked five men to write it. Thomas Jefferson did most of the writing. Ben and John Adams read it over and made changes. Ben was seventy years old. He signed it, knowing that if America lost the war, the British could hang every man who signed.
@@ -26,7 +26,7 @@ GUIDE: A huge celebrity. And he used it. In seventeen seventy-eight, he got Fran
 KID: So Ben helped win the war without fighting.
 GUIDE: With words, patience and friends. Then in seventeen eighty-three, Ben helped write and sign the Treaty of Paris, where Britain agreed America was free.
 ---
-KID: Okay. So now there's a country. What's the government part?
+KID: ...okay... So now there's a country. What's the government part?
 GUIDE: The first rules for the new country weren't working. The states were squabbling, there was no real leader, and Congress couldn't even collect money. So in the summer of seventeen eighty-seven, leaders from the states met in Philadelphia to write new rules. A constitution.
 KID: Was Ben there?
 GUIDE: He was eighty-one years old, the oldest man in the room. He was sick and in pain, so sometimes he was carried to the meetings in a chair. It was a hot summer, and the arguing got bad. Big states against small states. People threatening to walk out.
@@ -42,7 +42,7 @@ GUIDE: Now the ending, and it's a great one. On the last day, September seventee
 KID: Was it rising or setting?
 GUIDE: That's exactly what Ben said. He told the men near him that all summer, he'd looked at that chair and wondered whether the sun was rising or setting. Then he said, now at last, I have the happiness to know that it is a rising sun, not a setting sun.
 KID: Because the country was just starting.
-GUIDE: Right. And as Ben walked out, a woman named Elizabeth Powel asked him, well, Doctor, what have we got, a republic or a monarchy? A monarchy is a country with a king. And Ben answered, a republic, if you can keep it.
+GUIDE: ...right... And as Ben walked out, a woman named Elizabeth Powel asked him, well, Doctor, what have we got, a republic or a monarchy? A monarchy is a country with a king. And Ben answered, a republic, if you can keep it.
 KID: If you can keep it. What did he mean?
 GUIDE: He meant that a country where the people choose the leaders only works if the people keep caring. Voting, telling the truth, being fair, working together. The rules are on paper. Keeping them is up to us. That means you too, G, someday.
 KID: G gave a salute.

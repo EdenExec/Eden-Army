@@ -1,15 +1,15 @@
 GUIDE: Finn, before we start, look across the table. G's here with us today. G, is that a chess set in front of you?
 KID: He's nodding. It's still in the box.
 GUIDE: Perfect. Leave it in the box for one more minute. Here's a question for both of you. There's a game with thirty-two pieces and sixty-four squares, and it's about fifteen hundred years old. Kings have played it. Soldiers played it in tents. Kids your age play it in world championships. And here's the strange part. You can lose almost every piece you have and still win.
-KID: Wait. You lose all your pieces and you win? How?
+KID: ...wait... You lose all your pieces and you win? How?
 GUIDE: Because the game was never about taking pieces. It's about trapping one piece. The king. By the end of this drive, you two will know how every piece moves, how to trap a king, and the one question that turns a beginner into a real player. G, now you can open the box.
 ---
-KID: Okay, G's got the board out. It's just a big checkerboard.
+KID: ...okay... G's got the board out. It's just a big checkerboard.
 GUIDE: It is. Eight squares across, eight squares up. Sixty-four squares, light and dark. Now here's the first rule, and almost everybody gets it wrong. Turn the board so there's a light square in the bottom right corner, by your right hand. Light on the right. Say it with me.
 KID: Light on the right.
 GUIDE: Good. G, check your corner. If it's dark, spin the board. Now the pieces. Each side gets sixteen. Eight little ones that all look the same, those are pawns. They go in a wall across the second row, like soldiers standing shoulder to shoulder.
 KID: And the big ones go behind them?
-GUIDE: Right. Start in the corners. The towers go in the corners. Those are rooks. Next to the rooks, the horses. Those are knights. Next to the knights, the pointy ones with a little slit in the top. Bishops. Now you've got two squares left in the middle of the back row.
+GUIDE: ...right... Start in the corners. The towers go in the corners. Those are rooks. Next to the rooks, the horses. Those are knights. Next to the knights, the pointy ones with a little slit in the top. Bishops. Now you've got two squares left in the middle of the back row.
 KID: King and queen. Which one goes where?
 GUIDE: The queen goes on her own color. White queen on the light square, black queen on the dark square. The king takes the last spot, right next to her. G, set up your side and let Finn check it.
 KID: Rooks in the corners, knights, bishops, queen on her color, king. Looks right, G.
@@ -19,19 +19,19 @@ GUIDE: Now the first big idea. Every piece moves its own way, and once you know 
 KID: Like a bulldozer. Straight lines only.
 GUIDE: That's a good picture. The bishop is the opposite. It only moves on diagonals, corner to corner, as far as it wants. And here's a funny thing. A bishop that starts on a light square stays on light squares the whole game. It can never touch a dark one.
 KID: So each side has a light bishop and a dark bishop.
-GUIDE: Exactly. Now put those two together. Straight lines like the rook, diagonals like the bishop. Any direction, any distance. That's the queen. She's the strongest piece on the board.
+GUIDE: ...exactly... Now put those two together. Straight lines like the rook, diagonals like the bishop. Any direction, any distance. That's the queen. She's the strongest piece on the board.
 KID: And the king? He must be even stronger, right? He's the king.
 GUIDE: You'd think so. But the king is slow. He moves one square, in any direction. One step. That's it.
 KID: That's kind of sad. The most important guy, and he moves like a grandpa with a cane.
 GUIDE: Careful, Finn. I resemble that remark. But you're right about one thing. He's the most important and one of the weakest. Keep that in your head, because that's where the whole game comes from.
 ---
-KID: Okay, what about the horse? It looks weird.
+KID: ...okay... What about the horse? It looks weird.
 GUIDE: The knight is the weird one, and it's my favorite. It moves in an L shape. Two squares in one direction, then one square to the side. And it's the only piece that can jump over other pieces.
 KID: It jumps? Like over the pawns?
 GUIDE: Right over them. G, try it. Pick up a knight. Go two squares forward, then one to the side. That's why the knight is the only piece that can move before any pawns get out of the way.
 KID: He did it. It looks like a capital L.
 GUIDE: Here's a trick to remember it. A knight always lands on the other color. If it starts on a light square, it lands on a dark one. Every time.
-KID: Okay, and the little guys? The pawns?
+KID: ...okay... And the little guys? The pawns?
 GUIDE: Pawns are simple and a little tricky at the same time. A pawn moves straight forward, one square. On its very first move, it's allowed to go two. It never goes backward. Not ever.
 KID: Then how does it take anything? If it only goes forward and something's in front of it?
 GUIDE: That's the tricky part. A pawn captures diagonally. One square forward and to the side. So it walks straight but it attacks on a slant, like a soldier holding a spear out to the corner.
@@ -56,13 +56,13 @@ GUIDE: No. That's the funny thing. In chess, the king is never actually captured
 KID: Move it, block it, or take it.
 GUIDE: Move it, block it, take it. Now, checkmate is when the king is in check and none of those three things work. No safe square. No way to block. No way to take the attacker. The king is trapped. Game over.
 KID: So you don't kill the king. You just trap him so he can't get away.
-GUIDE: Right. And the word itself is old. Chess started in India, about fifteen hundred years ago, as a war game with elephants and chariots and foot soldiers. It traveled to Persia, where the king was called the shah. When the king was trapped, players said shah mat. Roughly, the king is helpless. Shah mat became checkmate.
+GUIDE: ...right... And the word itself is old. Chess started in India, about fifteen hundred years ago, as a war game with elephants and chariots and foot soldiers. It traveled to Persia, where the king was called the shah. When the king was trapped, players said shah mat. Roughly, the king is helpless. Shah mat became checkmate.
 KID: So every time somebody says checkmate, they're speaking a fifteen hundred year old language.
 GUIDE: More or less. And here's another surprise. Back then, the queen was one of the weakest pieces. She could only step one square diagonally. About five hundred years ago, in Europe, players gave her the power she has now. The game got faster and a lot more exciting overnight.
 ---
 KID: What if the king isn't in check, but he can't move anywhere? And nobody else can move either?
 GUIDE: That's a great question, and it has a name. Stalemate. If it's your turn, you're not in check, but you don't have a single legal move, the game is a tie. A draw.
-KID: Wait, a tie? Even if you're winning by a ton?
+KID: ...wait... a tie? Even if you're winning by a ton?
 GUIDE: Even if you've got a queen and two rooks and the other side has nothing but a king. If you box that lonely king in without putting him in check, and it's his move, it's a draw. Lots of beginners do it by accident.
 KID: That would make me so mad.
 GUIDE: It makes everybody mad. That's why the drill on the Desk this week is how to checkmate a lone king with your queen and your king. The trick is to squeeze him into a smaller and smaller box, always leaving him one square to step to, until he's on the edge. Then you close the lid.
@@ -73,7 +73,7 @@ GUIDE: Almost. They end up side by side, with the king safer in the corner and t
 KID: And the second special move?
 GUIDE: A funny pawn capture called en passant. It's French for in passing. It only happens in one rare situation, so for now just know the name. If somebody does it to you, it's legal. Ask your dad to show you after the trip.
 ---
-GUIDE: Okay. Third big idea, and this is the one that makes you a real player. Before every move, you ask one question. What does my opponent want?
+GUIDE: ...okay... Third big idea, and this is the one that makes you a real player. Before every move, you ask one question. What does my opponent want?
 KID: That's it? That's the big secret?
 GUIDE: That's it, and almost nobody does it. Most beginners look only at their own plan. They see something cool they want to do, and they do it, and they never notice that their opponent's bishop has been pointing at their queen for three moves.
 KID: That happens to me in every game.
@@ -97,11 +97,11 @@ GUIDE: Neither could most people. He grew up to be world champion. But even Capa
 KID: That's like the autopsy thing my dad does on Fridays.
 GUIDE: It's exactly that. And it's humility, which is one of your winning moves, G. You can't get better at something if you can't admit you got it wrong.
 ---
-GUIDE: Okay, Finn. Time for the wait, but. What's the most important piece in chess?
+GUIDE: ...okay... Finn. Time for the wait, but. What's the most important piece in chess?
 KID: The queen. She's worth nine. She can do everything.
-GUIDE: Wait, but. Is she?
+GUIDE: ...wait... but. Is she?
 KID: Oh. No. The king. If you lose the king you lose the game.
-GUIDE: Right. The queen is the strongest. The king is the most important. They're not the same thing. And here's the trap that catches beginners all the time. Look at the little pawn in front of the bishop on the king's side. For black, that's the square called f seven.
+GUIDE: ...right... The queen is the strongest. The king is the most important. They're not the same thing. And here's the trap that catches beginners all the time. Look at the little pawn in front of the bishop on the king's side. For black, that's the square called f seven.
 KID: Why that one?
 GUIDE: Because at the very start, that pawn is guarded by only one piece. The king. Nothing else protects it. So there's a sneaky four-move trick, sometimes called the scholar's mate, where white brings the queen and a bishop out early, both aimed right at that weak pawn. If black isn't paying attention, the queen takes the pawn with check, the bishop backs her up, and it's checkmate before the game even started.
 KID: Four moves? That's so fast.

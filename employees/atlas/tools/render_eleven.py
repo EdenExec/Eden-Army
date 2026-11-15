@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Render an Atlas episode with ElevenLabs voices.
 
-Usage: ELEVENLABS_API_KEY=... python3 render_eleven.py <episode dir> [--atlas VOICE_ID] [--finn VOICE_ID]
+Usage: ELEVENLABS_API_KEY=... python3 render_eleven.py <episode dir> [--atlas VOICE_ID] [--finn VOICE_ID] [--redo KID|GUIDE|all]
 
 Reads <dir>/script.md (alternating GUIDE: / KID: lines, '---' = segment break),
 renders every line, stitches with ffmpeg (350 ms between turns, 1.5 s at breaks,
 loudnorm), writes <dir>/<slug>-episode.mp3 and <dir>/eleven_usage.json
 (characters used, for Radar's spend log).
-Voice ids come from --atlas / --finn or ELEVEN_VOICE_ATLAS / ELEVEN_VOICE_FINN.
+Voice ids come from --atlas / --finn, then ELEVEN_VOICE_ATLAS / ELEVEN_VOICE_FINN, then the defaults below:
+Atlas is Michael Moody (PerZoH0r6nxBZXCoIPpv); Finn is Adam (s3TPKV1kjDlVtZbl4Ksh, Kev 14 Nov 2026).
+Segments already in eleven_segments/ are reused, so --redo KID re-renders only Finn's lines
+(the cheap way to swap his voice). Lines whose text changed are re-rendered automatically.
 The key is read from the environment only. Never paste it anywhere.
 """
 import json, os, pathlib, subprocess, sys, time, urllib.request
@@ -24,19 +27,20 @@ if not args:
 ep = pathlib.Path(args[0])
 opts = dict(zip(args[1::2], args[2::2]))
 VOICES = {
-    "GUIDE": opts.get("--atlas") or os.environ.get("ELEVEN_VOICE_ATLAS"),
-    "KID": opts.get("--finn") or os.environ.get("ELEVEN_VOICE_FINN"),
+    "GUIDE": opts.get("--atlas") or os.environ.get("ELEVEN_VOICE_ATLAS") or "PerZoH0r6nxBZXCoIPpv",
+    "KID": opts.get("--finn") or os.environ.get("ELEVEN_VOICE_FINN") or "s3TPKV1kjDlVtZbl4Ksh",
 }
 if not all(VOICES.values()):
     sys.exit("Need both voice ids: --atlas and --finn (or ELEVEN_VOICE_ATLAS / ELEVEN_VOICE_FINN).")
 MODEL = os.environ.get("ELEVEN_MODEL", "eleven_multilingual_v2")
 SETTINGS = {
     "GUIDE": {"stability": 0.55, "similarity_boost": 0.8, "style": 0.25, "use_speaker_boost": True},
-    "KID": {"stability": 0.4, "similarity_boost": 0.75, "style": 0.45, "use_speaker_boost": True},
+    # Finn is an adult voice now (Adam, Kev 14 Nov 2026), so his settings are steadier than the old boy voice's.
+    "KID": {"stability": 0.5, "similarity_boost": 0.8, "style": 0.3, "use_speaker_boost": True},
 }
-# An adult co-host (Kev, 8 Nov 2026: Finn replaced) reads steadier than the boy voice was tuned for.
-if os.environ.get("ELEVEN_KID_ADULT"):
-    SETTINGS["KID"] = {"stability": 0.5, "similarity_boost": 0.8, "style": 0.3, "use_speaker_boost": True}
+# ELEVEN_KID_BOY=1 restores the settings tuned for the retired boy voice (Ryan Quin).
+if os.environ.get("ELEVEN_KID_BOY"):
+    SETTINGS["KID"] = {"stability": 0.4, "similarity_boost": 0.75, "style": 0.45, "use_speaker_boost": True}
 
 import ssl
 ctx = ssl.create_default_context(cafile=CA) if os.path.exists(CA) else ssl.create_default_context()
@@ -72,16 +76,27 @@ for raw in (ep / "script.md").read_text().splitlines():
 
 seg = ep / "eleven_segments"
 seg.mkdir(exist_ok=True)
-chars = 0
+redo = opts.get("--redo", "")
+manifest_p = seg / "manifest.json"
+manifest = json.loads(manifest_p.read_text()) if manifest_p.exists() else {}
+chars = rendered = 0
 parts = []
 for i, (role, text) in enumerate(lines):
     if role == "BREAK":
         parts.append(("gap", 1.5))
         continue
     f = seg / f"{i:04d}.mp3"
-    if not f.exists():
+    key = f"{i:04d}"
+    want = {"role": role, "voice": VOICES[role], "text": text}
+    stale = redo in (role, "all") or (key in manifest and manifest[key] != want)
+    if stale or not f.exists():
         tts(text, role, f)
+        manifest[key] = want
+        manifest_p.write_text(json.dumps(manifest))
+        rendered += len(text)
         print(f"{i:04d} {role:5s} {len(text):4d} chars", flush=True)
+    elif key not in manifest:
+        manifest[key] = want  # segment from before the manifest existed: trust it
     chars += len(text)
     parts.append(("file", f))
     parts.append(("gap", 0.35))
@@ -100,5 +115,5 @@ out = ep / f"{slug}-episode-eleven.mp3"
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst),
                 "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-ar", "44100", "-ac", "1", "-b:a", "56k", str(out)], check=True)
 dur = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip()
-(ep / "eleven_usage.json").write_text(json.dumps({"episode": slug, "characters": chars, "model": MODEL, "voices": VOICES, "duration_s": float(dur or 0)}, indent=2))
+(ep / "eleven_usage.json").write_text(json.dumps({"episode": slug, "characters": chars, "rendered_characters": rendered, "model": MODEL, "voices": VOICES, "duration_s": float(dur or 0)}, indent=2))
 print(f"wrote {out.name}  {float(dur or 0)/60:.1f} min  {chars} characters")

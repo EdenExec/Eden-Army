@@ -6,7 +6,7 @@ GUIDE: About ninety-five percent water. The rest is a thin jelly with some cells
 KID: So it's basically a water balloon that swims.
 GUIDE: A water balloon that swims, eats and stings. Let's find out how.
 ---
-KID: Okay, but no brain? How does it know where to go?
+KID: ...okay... But no brain? How does it know where to go?
 GUIDE: Instead of a brain, a jellyfish has something called a nerve net. Picture a fishing net spread out through its whole body, but made of nerves. When one part feels something, the message spreads across the net, and the body reacts.
 KID: So it doesn't think. It just reacts.
 GUIDE: Pretty much. It feels light and dark, it feels which way is up, it feels food touching it. And it swims by squeezing. G, make a fist with your hand open, then close it, then open it. Slowly.
@@ -24,7 +24,7 @@ GUIDE: Yes, and that's the rule I want G to remember. G, if you ever see a jelly
 KID: He gave you a thumbs up.
 GUIDE: Good man. Most jellyfish stings just hurt and itch. But a few kinds are really dangerous, and that's why lifeguards put up warning flags.
 ---
-KID: Okay, the cool ones. Give me the coolest jellyfish.
+KID: ...okay... The cool ones. Give me the coolest jellyfish.
 GUIDE: Let's do a top four. Number one, the biggest. The lion's mane jellyfish. It lives in cold northern oceans, it has a reddish bell like a lion's mane, and its tentacles can stretch about thirty-six meters. That's about a hundred and twenty feet.
 KID: That's longer than a school bus.
 GUIDE: It's about as long as three school buses. That may be longer than a blue whale.
@@ -37,10 +37,10 @@ GUIDE: Number three, the glowing ones. Some jellyfish make their own light in th
 KID: A jellyfish helped win a Nobel Prize. Okay, that's three. What's number four?
 GUIDE: Number four is the one from the riddle. The immortal jellyfish.
 ---
-KID: Wait. Immortal. Like it never dies?
+KID: ...wait... Immortal. Like it never dies?
 GUIDE: Let me explain how jellyfish grow up first, because it's strange. For lots of jellyfish, the baby doesn't start as a jellyfish. It starts as a tiny blob that sticks to a rock, like a little plant, called a polyp. The polyp grows little discs, stacked like a pile of plates. One by one, the plates pop off and swim away. Each one becomes a jellyfish.
 KID: So the jellyfish comes from a thing that looks like a plant on a rock.
-GUIDE: Right. Now the immortal jellyfish. It's tiny, about the size of your little fingernail, G. When it gets hurt, or old, or hungry, it can do something almost no other animal can do. It turns itself back into a polyp. It goes back to being a baby. And then it grows up all over again.
+GUIDE: ...right... Now the immortal jellyfish. It's tiny, about the size of your little fingernail, G. When it gets hurt, or old, or hungry, it can do something almost no other animal can do. It turns itself back into a polyp. It goes back to being a baby. And then it grows up all over again.
 KID: That's like G turning back into a toddler and growing up again.
 GUIDE: Exactly like that. Scientists have watched it happen in the lab. In the ocean, they still get eaten by fish and get sick, so they do die. But they might never have to die of old age.
 KID: That's the weirdest thing I've ever heard.

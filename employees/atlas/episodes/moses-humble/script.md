@@ -17,7 +17,7 @@ GUIDE: God is good at twists. In the book of Acts, the New Testament tells us Mo
 ---
 KID: So when does he get humble?
 GUIDE: Not yet. When Moses was grown, he went out and saw an Egyptian beating one of the Israelite slaves. And Moses got so angry that he looked this way and that way to make sure no one was watching, and he killed the Egyptian, and hid him in the sand.
-KID: Whoa. Moses did that?
+KID: ...whoa... Moses did that?
 GUIDE: He did. The Bible is honest about its heroes. Moses was trying to help, but he did it his own way, in anger, in secret. That's not how God works. And people found out. Pharaoh wanted to kill him. So Moses ran away into the desert, to a land called Midian.
 KID: So the prince became a runaway.
 GUIDE: A runaway. He married a woman named Zipporah, and he worked for her father, Jethro, taking care of sheep. For how long do you think?
@@ -30,15 +30,15 @@ KID: And then the bush.
 GUIDE: Then the bush. Exodus chapter three. God speaks to Moses out of the fire. He says, I've seen my people suffering in Egypt. I've heard them crying. And I'm sending you to Pharaoh, to bring my people out.
 KID: And Moses says, yes, let's go!
 GUIDE: Moses says, who am I? Who am I, that I should go to Pharaoh and bring the people out of Egypt?
-KID: Huh. Forty years ago he'd have said, I got this.
+KID: ...huh... Forty years ago he'd have said, I got this.
 GUIDE: Exactly. That's the change. The young prince thought he could save everybody by himself. The old shepherd knows he can't. And God's answer is beautiful. God doesn't say, don't worry, you're great. God says, I will be with you.
 KID: So it's not about how strong Moses is.
 GUIDE: It's about God being with him. That's what humble people understand. But here's where it gets interesting. Moses kept arguing. In chapter four he says, Lord, I'm not a good speaker. I never have been. I'm slow of speech and slow of tongue.
-KID: Hey! That's like Ben! Ben said he was a bad speaker too.
+KID: ...hey... That's like Ben! Ben said he was a bad speaker too.
 GUIDE: Finn, you're right! Ben wrote that he stumbled over his words and was never a great speaker. Two men who changed the world, both slow talkers. G, that's worth remembering if you ever get nervous talking in front of people.
 KID: So God said, okay, fine?
 GUIDE: Not quite. God said, who made man's mouth? I'll help you speak. And Moses still said, please, Lord, send someone else. And the Bible says God got angry with Moses.
-KID: Wait. I thought Moses was being humble.
+KID: ...wait... I thought Moses was being humble.
 GUIDE: This is the really important part, Finn. Saying who am I is humble. But saying no to God when he's told you he'll help you, that's not humble anymore. That's just being scared, or stubborn. Real humility says, I can't, but God can, so I'll go. God was kind, and let Moses's brother Aaron help him speak. And Moses went.
 ---
 KID: So then the plagues and the Red Sea.
@@ -48,7 +48,7 @@ GUIDE: Moses's father-in-law, Jethro, comes to visit, and he watches all day. An
 KID: And Moses listened?
 GUIDE: Exodus eighteen says, Moses listened to his father-in-law and did everything he said. Now think about that. Moses had talked with God face to face. He'd parted the sea. And he still took advice from his father-in-law.
 KID: That's like a famous coach taking advice from his grandpa.
-GUIDE: Exactly. Proud people can't take advice. Humble people can. Remember Ben? A Quaker friend told him he was proud, and he listened. Same muscle.
+GUIDE: ...exactly... Proud people can't take advice. Humble people can. Remember Ben? A Quaker friend told him he was proud, and he listened. Same muscle.
 ---
 KID: Did people ever get jealous of Moses?
 GUIDE: Lots. Numbers chapter eleven. God puts his Spirit on seventy leaders, and two of them start prophesying in the camp. And Moses's young helper, Joshua, runs up and says, my lord Moses, make them stop!
@@ -58,12 +58,12 @@ KID: He wanted everybody to be special, not just him.
 GUIDE: That's humble. And then chapter twelve, the hardest one. Moses's own big sister Miriam and his brother Aaron start talking against him. They say, has God only spoken through Moses? Hasn't he spoken through us too?
 KID: His own family? What did Moses say?
 GUIDE: Nothing. That's when the Bible says it. Moses was very humble, more than anyone on earth. Moses didn't defend himself. God did. God called the three of them out to the tent, and told Miriam and Aaron that he spoke with Moses directly, mouth to mouth. And Miriam got a terrible skin disease.
-KID: Ooh. Did Moses say, ha, serves you right?
+KID: ...ooh... Did Moses say, ha, serves you right?
 GUIDE: Moses cried out to God. Heal her now, O God, I beg you. He prayed for the sister who had just talked against him. And God healed her.
 KID: That's like Socrates. Don't pay back a wrong with a wrong.
 GUIDE: Finn, that's a great connection. And it's like Jesus, who prayed for the people who hurt him.
 ---
-KID: Wait, but. Was Moses perfect after that?
+KID: ...wait... but. Was Moses perfect after that?
 GUIDE: No. Numbers chapter twenty. The people are thirsty and complaining again, and God tells Moses to speak to a rock, and water will come out. But Moses is angry and tired. He shouts at the people, and he hits the rock twice with his staff. Water comes out. But God tells Moses that because he didn't trust and honor God in front of the people, he won't lead them into the promised land.
 KID: That's kind of harsh.
 GUIDE: It's serious, because Moses was the leader, and everyone was watching. But here's the ending. At the very end of his life, God took Moses up a mountain called Nebo, and showed him the whole promised land, spread out below. And the last chapter of Deuteronomy says there's never been a prophet in Israel like Moses, whom the Lord knew face to face. Exodus says God spoke to Moses face to face, the way a man talks to his friend.
