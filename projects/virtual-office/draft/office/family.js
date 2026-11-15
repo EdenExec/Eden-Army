@@ -1,97 +1,86 @@
-// Command Center · family.js (split from eden-office.html, 30 Oct 2026). Family wing: the look-ahead card (private; closes under Screen share).
+// Command Center · family.js (split from eden-office.html, 30 Oct 2026). Family wing: the 12-week plan card (private; closes under Screen share).
 // Panel files share the page's global scope and load in this order: core.js, floor.js, pulse.js, strip.js, family.js, desks.js, today.js, boot.js. Edit here, not in the html.
 'use strict';
-  /* ---------- Hawk's look-ahead card, inside the Family office wing (Kev, 30 Oct: "should we add our planning scheduler and a widget down here?") ----------
-     Reads meta/lookahead, which Hawk writes: titles, dates and owners only, never a note. Private: hidden whole and unsubscribed under Screen share, like the wing. */
+  /* ---------- The 12-week plan, inside the Family office wing ----------
+     Kev, 15 Nov: "a clean dumbed-down 12-week plan + expandable" in place of the old look-ahead card.
+     Source: meta/runway, Hawk's mirror of the Runway page's data (the same events, decisions and owners Marlowe's Runway shows).
+     Until Hawk writes it, the card falls back to meta/lookahead. One line a week, Sunday to Saturday like the Runway; tap a week to open it.
+     Titles, dates and owners only. Private: hidden whole and unsubscribed under Screen share, like the wing. */
+  var RUNWAY_URL = 'https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv';
+  var laOpen = {};                                       // which weeks Kev opened, kept across the 30-second re-render
   function laDay(d, short2) {
     var x = new Date(d + 'T12:00:00Z'); if (isNaN(x)) return d;
     return x.toLocaleDateString('en-US', short2 ? { month: 'short', day: 'numeric', timeZone: 'UTC' } : { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
   }
-  function laWhen(x, today) {
-    if (x.start === today) return 'Today'; if (x.start === Game.addDays(today, 1) && !(x.end && x.end > x.start)) return 'Tomorrow';
-    if (x.end && x.end > x.start) { var a = laDay(x.start, true), b = laDay(x.end, true); return a.split(' ')[0] === b.split(' ')[0] ? a + '–' + b.split(' ')[1] : a + ' – ' + b; }
-    return laDay(x.start);
+  function laRange(a, b) { var x = laDay(a, true), y = laDay(b, true); return x.split(' ')[0] === y.split(' ')[0] ? x + '–' + y.split(' ')[1] : x + ' – ' + y; }
+  /* one shape for both sources: {id, title, start, end, kind, tent, who, note} */
+  function laItems() {
+    var r = S.runway, out = [], decs = [];
+    if (r && Array.isArray(r.events)) {
+      r.events.forEach(function (e) { if (!e || !e.start) return; out.push({ id: e.id, title: String(e.title || ''), start: e.start, end: e.end && e.end > e.start ? e.end : e.start, kind: e.kind || 'work', tent: e.status === 'tentative', who: e.who || '', note: e.note || '' }); });
+      (r.openDecisions || []).forEach(function (d) { if (d && d.title) decs.push({ title: String(d.title), by: d.decideBy || '' }); });
+      return { items: out, decisions: decs, asOf: r.generatedAt || r.asOf, src: 'runway' };
+    }
+    var l = S.look; if (!l) return null;
+    var seen = {};
+    (Array.isArray(l.decisions) ? l.decisions : []).forEach(function (x) { seen[x.id] = true; decs.push({ title: String(x.title || ''), by: x.start || '' }); });
+    (Array.isArray(l.next) ? l.next : []).forEach(function (x) { if (seen[x.id] || !x.start) return; out.push({ id: x.id, title: String(x.title || '') + (x.time ? ' · ' + x.time : ''), start: x.start, end: x.end && x.end > x.start ? x.end : x.start, kind: x.kind || 'event', tent: x.status === 'tentative', who: x.owner || '', note: '' }); });
+    return { items: out, decisions: decs, asOf: l.asOf, src: 'lookahead' };
   }
-  function laRow(x, today, withTag) {
-    var ti = h('span', { class: 'ti' });
-    if (withTag && x.kind === 'travel') ti.appendChild(h('span', { class: 'tag', text: 'Trip' }));
-    if (withTag && x.kind === 'milestone') ti.appendChild(h('span', { class: 'tag ms', text: 'Milestone' }));
-    ti.appendChild(document.createTextNode(x.title + (x.time ? ' · ' + x.time : '')));
-    return h('li', null, h('span', { class: 'd', text: laWhen(x, today) }), ti, h('span', { class: 'o', text: x.owner || '' }));
-  }
-  /* The 12-week plan (Kev, 15 Nov: "a clean dumbed down 12-week plan in here + expandable"). Marlowe's runway rule for the glance:
-     each week shows only its big thing (a trip, milestone, decision or anything longer than a day). Tap a week for its detail;
-     "Show all 12 weeks" opens every week as a list. Reads meta/lookahead.plan, which Hawk's nightly mirror writes. */
-  function laWeekBody(w, today) {
-    var b = h('div', { class: 'la-wk' });
-    if (w.one) b.appendChild(h('p', { class: 'one', text: w.one }));
-    if (w.work) b.appendChild(h('p', { class: 'ln' }, h('b', { text: 'Work' }), w.work));
-    if (w.family) b.appendChild(h('p', { class: 'ln' }, h('b', { text: 'Family' }), w.family));
-    var it = Array.isArray(w.items) ? w.items : [];
-    if (it.length) { var ul = h('ul'); it.forEach(function (x) { ul.appendChild(laRow(x, today, true)); }); b.appendChild(ul); }
-    else if (!w.one && !w.work && !w.family) b.appendChild(h('p', { class: 'none', text: 'Nothing planned yet.' }));
-    return b;
-  }
-  function laPlan(plan, today) {
-    var wrap = h('div'), strip = h('div', { class: 'la-strip', role: 'list', 'aria-label': 'The next 12 weeks' });
-    var open = typeof S.laWeek === 'number' && S.laWeek < plan.length ? S.laWeek : -1;
-    plan.forEach(function (w, i) {
-      var bigs = Array.isArray(w.big) ? w.big : [], n = Array.isArray(w.items) ? w.items.length : 0;
-      var big = bigs.filter(function (x) { return x.start >= w.start; })[0] || bigs[0], cont = big && big.start < w.start;   // something that starts this week beats a trip carried over
-      var head = big ? (cont ? '\u21B3 ' : '') + big.title : (w.one || '');
-      var cell = h('button', { type: 'button', class: 'wk' + (i === 0 ? ' now' : '') + (big && !cont ? '' : ' quiet'), role: 'listitem', 'aria-expanded': String(open === i), title: 'Week of ' + laDay(w.start, true) + (n ? ' · ' + n + ' planned' : '') },
-        h('span', { class: 'wn', text: (i === 0 ? 'This wk' : 'W' + (i + 1)) + ' · ' + laDay(w.start, true) }),
-        h('span', { class: 'wt', text: head || '\u2014' }),
-        n > 1 || (n === 1 && !big) ? h('span', { class: 'wc', text: (big ? '+' + (n - 1) : String(n)) + ' more' }) : null);
-      if (big && big.kind === 'travel') cell.classList.add('trip');
-      if (big && (big.kind === 'milestone' || big.kind === 'decision')) cell.classList.add('ms');
-      cell.addEventListener('click', function () { S.laWeek = open === i ? -1 : i; S.laAll = false; renderAll(); });
-      strip.appendChild(cell);
-    });
-    wrap.appendChild(strip);
-    if (S.laAll) plan.forEach(function (w, i) { var sec = h('div', { class: 'la-all' }); sec.appendChild(h('h4', { text: (i === 0 ? 'This week' : 'Week ' + (i + 1)) + ' · ' + laDay(w.start, true) })); sec.appendChild(laWeekBody(w, today)); wrap.appendChild(sec); });
-    else if (open >= 0) { var w = plan[open], sec = h('div', { class: 'la-all' }); sec.appendChild(h('h4', { text: (open === 0 ? 'This week' : 'Week ' + (open + 1)) + ' · ' + laDay(w.start, true) })); sec.appendChild(laWeekBody(w, today)); wrap.appendChild(sec); }
-    var tg = h('button', { class: 'mini txt', type: 'button', 'aria-expanded': String(!!S.laAll), text: S.laAll ? 'Fold the 12 weeks' : 'Show all 12 weeks' });
-    tg.addEventListener('click', function () { S.laAll = !S.laAll; S.laWeek = -1; renderAll(); });
-    wrap.appendChild(tg);
-    return wrap;
+  function laTag(x) {
+    if (x.kind === 'travel') return h('span', { class: 'tag', text: 'Trip' });
+    if (x.kind === 'milestone') return h('span', { class: 'tag ms', text: 'Milestone' });
+    if (x.kind === 'deadline') return h('span', { class: 'tag', text: 'Due' });
+    return null;
   }
   function renderLookahead() {
     var box = $('#la'); if (!box) return;
     box.textContent = '';
     if (S.share) { box.hidden = true; return; }
     box.hidden = false;
-    var d = S.look, today = Game.pacificDate(Date.now());
-    box.appendChild(h('div', { class: 'la-h' }, h('span', { class: 'eyebrow', text: '12-week plan · Hawk' }), h('span', { class: 'eyebrow', text: d && d.week && d.week.start ? 'Week of ' + laDay(d.week.start, true) : '' })));
-    if (!d) { box.appendChild(h('p', { class: 'none', text: 'Hawk has not written the look-ahead yet. It shows here after the next nightly run.' })); return; }
-    var w = d.week || {}, wk = h('div');
-    wk.appendChild(h('h4', { text: 'This week' }));
-    if (w.one) wk.appendChild(h('p', { class: 'one', text: w.one }));
-    if (w.work) wk.appendChild(h('p', { class: 'ln' }, h('b', { text: 'Work' }), w.work));
-    if (w.family) wk.appendChild(h('p', { class: 'ln' }, h('b', { text: 'Family' }), w.family));
-    if (!w.one && !w.work && !w.family) wk.appendChild(h('p', { class: 'none', text: 'No focus set for this week yet.' }));
-    box.appendChild(wk);
-    var decs = Array.isArray(d.decisions) ? d.decisions : [], decIds = {}; decs.forEach(function (x) { decIds[x.id] = true; });
-    var plan = Array.isArray(d.plan) ? d.plan.filter(function (w) { return w && w.start; }) : [];
-    if (plan.length) box.appendChild(laPlan(plan, today));
-    else {
-      /* an older mirror (before the 12-week plan, 15 Nov): the next three weeks as a list */
-      var nx = (Array.isArray(d.next) ? d.next : []).filter(function (x) { return !decIds[x.id]; });
-      var cap = S.laAll ? nx.length : 6, nb = h('div'); nb.appendChild(h('h4', { text: 'Next 3 weeks' }));
-      if (nx.length) {
-        var ul = h('ul'); nx.slice(0, cap).forEach(function (x) { ul.appendChild(laRow(x, today, true)); }); nb.appendChild(ul);
-        if (nx.length > 6) { var mb = h('button', { class: 'mini txt', type: 'button', text: S.laAll ? 'Show fewer' : '+' + (nx.length - 6) + ' more' }); mb.addEventListener('click', function () { S.laAll = !S.laAll; renderAll(); }); nb.appendChild(mb); }
-      } else nb.appendChild(h('p', { class: 'none', text: 'Nothing dated in the next three weeks.' }));
-      box.appendChild(nb);
-    }
+    var today = Game.pacificDate(Date.now()), w0 = Game.addDays(today, -Game.dayOfWeek(today)), wEnd = Game.addDays(w0, 83);
+    box.appendChild(h('div', { class: 'la-h' }, h('span', { class: 'eyebrow', text: '12-week plan · Hawk' }), h('span', { class: 'eyebrow', text: laRange(w0, wEnd) })));
+    var d = laItems();
+    if (!d) { box.appendChild(h('p', { class: 'none', text: 'Hawk has not written the plan yet. It shows here after the next nightly run.' })); return; }
+    // decide first: the only thing on the card that asks something of Kev
+    var decs = d.decisions.filter(function (x) { return x.title; }).sort(function (a, b) { return (a.by || '9') < (b.by || '9') ? -1 : 1; });
     if (decs.length) {
-      var db = h('div'); db.appendChild(h('h4', { text: 'Open decisions · decide by' }));
-      var dl = h('ul'); decs.forEach(function (x) { dl.appendChild(h('li', null, h('span', { class: 'd', text: x.start === today ? 'Today' : laDay(x.start) }), h('span', { class: 'ti', text: x.title }), h('span', { class: 'o', text: x.owner || '' }))); }); db.appendChild(dl);
-      box.appendChild(db);
+      var db = h('div', { class: 'dec' }); db.appendChild(h('h4', { text: 'Decide' }));
+      var dl = h('ul'); decs.forEach(function (x) { dl.appendChild(h('li', null, h('span', { class: 'd', text: !x.by ? 'No date' : x.by < today ? 'Overdue' : x.by === today ? 'Today' : 'by ' + laDay(x.by, true) }), h('span', { class: 'ti', text: x.title }), h('span', { class: 'o' }))); });
+      db.appendChild(dl); box.appendChild(db);
     }
-    var old = Date.now() - t(d.asOf) > 36 * HOUR, f = h('div', { class: 'foot2' });
-    if (typeof d.url === 'string' && /^https:\/\//.test(d.url)) f.appendChild(h('a', { class: 'mini', href: d.url, target: '_blank', rel: 'noopener', text: 'Edit in the Look Ahead' }));
-    f.appendChild(h('a', { class: 'mini', href: 'https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv', target: '_blank', rel: 'noopener', text: 'Runway calendar' }));
-    f.appendChild(h('span', { class: 'asof' + (old ? ' warn' : ''), text: 'as of ' + (d.asOf ? ptStamp(d.asOf) : 'unknown') + (old ? ' · older than a day' : '') }));
+    // twelve weeks, one line each
+    var wrap = h('div', { class: 'wk12' }); wrap.appendChild(h('h4', { text: 'Week by week' }));
+    for (var i = 0; i < 12; i++) {
+      var a = Game.addDays(w0, i * 7), b = Game.addDays(a, 6);
+      var its = d.items.filter(function (x) { return x.end >= a && x.start <= b && x.end >= today; }).sort(function (x, y) { return x.start < y.start ? -1 : x.start > y.start ? 1 : 0; });
+      var key = a, isNow = i === 0, open = laOpen[key] != null ? laOpen[key] : false;
+      var det = h('details', { class: 'wk' + (isNow ? ' now' : '') + (its.length ? '' : ' empty') });
+      if (open) det.open = true;
+      var trip = its.some(function (x) { return x.kind === 'travel'; });
+      var sm = its.length ? its.slice(0, 3).map(function (x) { return x.title + (x.tent ? '?' : ''); }).join(' · ') : 'Open week';
+      det.appendChild(h('summary', null, h('span', { class: 'd' }, h('b', { text: 'W' + (i + 1) }), laDay(a, true)), h('span', { class: 'sm', text: (trip ? '✈ ' : '') + sm }), h('span', { class: 'n', text: its.length > 3 ? '+' + (its.length - 3) : its.length ? String(its.length) : '' })));
+      if (its.length) {
+        var ul = h('ul');
+        its.forEach(function (x) {
+          var ti = h('span', { class: 'ti' }), tg = laTag(x); if (tg) ti.appendChild(tg); if (x.tent) ti.appendChild(h('span', { class: 'tag tn', text: 'Maybe' }));
+          ti.appendChild(document.createTextNode(x.title)); if (x.note) ti.appendChild(h('span', { class: 'nt', text: x.note }));
+          ul.appendChild(h('li', null, h('span', { class: 'd', text: x.end > x.start ? laRange(x.start, x.end) : laDay(x.start) }), ti, h('span', { class: 'o', text: x.who || '' })));
+        });
+        det.appendChild(ul);
+      }
+      (function (k, el) { el.addEventListener('toggle', function () { laOpen[k] = el.open; }); })(key, det);
+      wrap.appendChild(det);
+    }
+    box.appendChild(wrap);
+    var old = d.asOf && Date.now() - t(d.asOf) > 36 * HOUR, f = h('div', { class: 'foot2' });
+    var tools = h('span', { class: 'la-tools' });
+    var allOpen = true; for (var j = 0; j < 12; j++) if (!laOpen[Game.addDays(w0, j * 7)]) allOpen = false;
+    var all = h('button', { class: 'mini txt', type: 'button', text: allOpen ? 'Close all weeks' : 'Open all weeks' });
+    all.addEventListener('click', function () { for (var k = 0; k < 12; k++) laOpen[Game.addDays(w0, k * 7)] = !allOpen; renderAll(); });
+    tools.appendChild(all);
+    tools.appendChild(h('a', { class: 'mini', href: RUNWAY_URL, target: '_blank', rel: 'noopener', text: 'Open the Runway' }));
+    f.appendChild(tools);
+    f.appendChild(h('span', { class: 'asof' + (old ? ' warn' : ''), text: (d.src === 'lookahead' ? 'from the old look-ahead · ' : '') + 'as of ' + (d.asOf ? ptStamp(d.asOf) : 'unknown') + (old ? ' · older than a day' : '') }));
     box.appendChild(f);
   }
