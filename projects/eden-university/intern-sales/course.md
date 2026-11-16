@@ -546,6 +546,24 @@ Whether a hand-off is called a PTC is Kev's term and its definition waits for hi
 
 **Source.** `projects/eden-university/stand-up-your-desk/course.md` M10 rules and M15; `projects/eden-university/stand-up-your-desk/gaps.md` C3.
 
+### M28 · The submittal: match, don't sell
+
+| Day | Time | Pillar | Needs |
+|---|---|---|---|
+| Weeks 2 to 4 | 2 hours | 05 Transparency | M20 |
+
+**Goal.** You write a client submittal on Eden's template that matches the candidate to the role's Must Do's with facts and passes the five-point check.
+
+| # | Do this | You should see |
+|---|---|---|
+| 1 | Read `projects/eden-university/modules/submittal-match-not-sell.md`: the worked example (invented) and the selling-versus-matching table. | You can turn a selling line into a fact |
+| 2 | Pull the Must Do's from three open JOs and write three practice submittals on the template from practice resumes. No contact details, no client names saved in the module folder. | Three drafts, one bullet per Must Do |
+| 3 | Run the five-point check on each and fix what fails. You do not send submittals; the recruiter does, after Kev reviews. Nothing is sent. | Ready for review |
+
+**Show me (2 min).** Three drafts, names and contact details cropped out, reviewed by Bridger. Row M28. The Submittal certified checklist is earned when you become a recruiter.
+
+**Source.** Kev, 16 Nov 2026; `employees/_shared/candidate-submittal.md`.
+
 ### M21 · Weeks 2 to 4 check-in and sign-off
 
 | When | Time | Pillar | Checked by | Needs |

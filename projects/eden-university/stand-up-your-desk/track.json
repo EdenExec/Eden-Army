@@ -369,6 +369,21 @@
       "link": "projects/eden-university/stand-up-your-desk/course.md"
     },
     {
+      "title": "The submittal: match, don't sell",
+      "goal": "You write a client submittal on Eden's template that matches the candidate to the role's Must Do's with facts and passes the five-point check.",
+      "steps": [
+        "Read the module and the invented worked example, then the selling-versus-matching table (you should see: you can turn a selling line into a fact)",
+        "Pull the Must Do's from three open JOs and write three practice submittals on the template from practice resumes. No contact details, no client names saved in the module folder (you should see: three drafts, one bullet per Must Do). Interns write them to learn; Bridger reviews; nothing is sent",
+        "Run the five-point check on each draft and fix what fails (you should see: subject line exact, every Must Do matched or flagged, history complete, no other client or pay, ready for Kev's review)"
+      ],
+      "proof": "Three drafts, names and contact details cropped out, reviewed by Nick. Row M28.",
+      "minutes": 120,
+      "link": "projects/eden-university/modules/submittal-match-not-sell.md",
+      "id": "M28",
+      "phase": "first-desk-running",
+      "checker": "nick"
+    },
+    {
       "id": "M22",
       "phase": "full-desk",
       "title": "The 30, 60 and 90-day check-ins",
