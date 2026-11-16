@@ -1,9 +1,10 @@
 {
-  "updated": "2026-11-09T20:44:29Z",
-  "on": "Sync patrol t-202611091221-sho: desk idle since 2026-11-05, no new work done. Last real work is ticket t-202611050500-nwsd (newsletter Workforce block design, projects/newsletter/design/workforce-block.md). Nothing sent, booked, spent or published. Still waiting on Kev items below. Not committed.",
-  "doc": "projects/newsletter/design/workforce-block.md",
-  "ticket": "t-202611050500-nwsd",
+  "updated": "2026-11-16T19:30:00Z",
+  "on": "Ticket t-202611161914-jnvs: drafted (not sent) reply to Brian Skenandore, Vesta Search, re Luis Marin and data center openings. Held for Kev: seat fit and what to share on data center roles. Nothing sent, booked, spent or published. Not committed.",
+  "doc": "employees/host/drafts/2026-11-16-brian-skenandore-luis-marin.md",
+  "ticket": "t-202611161914-jnvs",
   "waitingOnKev": [
+    "Brian Skenandore reply: pick seat-fit option (A/B/C) and data center option (1/2), then paste into Superhuman Drafts",
     "Newsletter: OK to name people on Eden University sign-offs (Dean's pick: yes, name and module only)",
     "Newsletter: team totals or direction only (Dean's pick: totals)",
     "Approve and send the Nick email (attach the .docx first)",
