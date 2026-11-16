@@ -1,0 +1,78 @@
+{
+  "id": "2026-11-16-aa1842",
+  "subject": "Boise lease Suite 170: LL redline 1, early-termination economics",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "open",
+  "items": [
+    {
+      "label": "Total base rent over the term, unchanged from as-received",
+      "claimed": 112749.84,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.1 and s.3. Sum of every monthly rent payment from Rent Commencement to lease end. Lease years run from 1 Mar 2027 (Year 1 = Mar 2027-Feb 2028). Term ends 38 months after 1 Jan 2027 possession."
+    },
+    {
+      "label": "Remaining rent owed from 1 Jan 2029 to lease end with no exit right",
+      "claimed": 44961.58,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.1 and s.3. Sum of monthly rent for every month from January 2029 through the last month of the term (Feb 2030), using the Year 2/Year 3 rate in force each month (lease years from 1 Mar)."
+    },
+    {
+      "label": "Rent paid during a 3-month notice period Jan-Mar 2029",
+      "claimed": 9487.02,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.3. Monthly rent for January, February and March 2029 (lease years from 1 Mar 2027)."
+    },
+    {
+      "label": "Unamortized free rent at a 31 Mar 2029 termination",
+      "claimed": 1759.9,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.1 and struck s.20 (Fin draft clause). Value of the two abated months (2 x Year 1 rent), amortized straight-line over the 38-month term (Jan 2027 = month 1); the unamortized share is the months remaining after March 2029 over 38. Round to cents."
+    },
+    {
+      "label": "Total cost to leave 31 Mar 2029 under the dropped s.20",
+      "claimed": 11246.92,
+      "unit": "usd",
+      "source": "Sum of the two items: rent during the Jan-Mar 2029 notice period, plus unamortized free rent at a 31 Mar 2029 termination."
+    },
+    {
+      "label": "Value of the dropped s.20 if Eden decides to leave on 1 Jan 2029",
+      "claimed": 33714.66,
+      "unit": "usd",
+      "source": "Remaining rent from 1 Jan 2029 to lease end, less total cost to leave 31 Mar 2029 under the dropped s.20."
+    },
+    {
+      "label": "Unamortized free rent at end of term month 24 (Fin estimate check)",
+      "claimed": 2239.87,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) struck s.20 says the reimbursement is 'anticipated not to exceed approximately' a stated sum at month 24. Compute: two abated months' value x (months remaining after term month 24) / 38, Jan 2027 = month 1. Round to cents."
+    },
+    {
+      "label": "Fallback B: rent avoided by a termination effective 30 Jun 2029",
+      "claimed": 25799.68,
+      "unit": "usd",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.3. Sum of monthly rent from July 2029 through the last month of the term (Feb 2030)."
+    },
+    {
+      "label": "Fallback B: termination fee (2 months Year 3 rent plus unamortized free rent at 30 Jun 2029)",
+      "claimed": 7729.85,
+      "unit": "usd",
+      "source": "02-ll-redline-1-review.md fallback B: fee = two months of Year 3 rent plus the two abated months' value x (months remaining after June 2029)/38 (Jan 2027 = month 1), cents rounded. Excludes leasing commissions (amount unknown)."
+    },
+    {
+      "label": "Fallback B: net saving to Eden",
+      "claimed": 18069.83,
+      "unit": "usd",
+      "source": "Fallback B rent avoided less fallback B termination fee."
+    },
+    {
+      "label": "Months of term remaining after term month 30",
+      "claimed": 8,
+      "unit": "count",
+      "source": "LL-Redline-1-Suite170.docx (landlord redline 16 Nov 2026; copy at projects/legal/boise-lease-suite170/03-LL-Redline-1-Suite170.docx) s.1. 38-month term from 1 Jan 2027 possession; count of months after June 2029 through end of term."
+    }
+  ],
+  "createdAt": "2026-11-16T21:36:33.382Z",
+  "doc": "projects/legal/boise-lease-suite170/02-ll-redline-1-review.md",
+  "ask": "Kev: sign once s.20 is deleted clean and s.7 papers the sublease promise, or push for a fee-based exit"
+}
