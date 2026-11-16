@@ -56,7 +56,7 @@ Red-flag review for partner submittals (from Bran's guide): stints under 1.5 to 
 | Day 60 | Candidate; client contact if the recruiter wants | Performance, any early sign of leaving | Referrals; any new roles on the client's team |
 | Day 90 | Candidate and client | Ramp done? Guarantee period clean? | Testimonial, referrals, new job orders |
 
-After day 90 the candidate moves to Ember's warm inventory (no set Riley cadence).
+Each placed candidate's set check-ins stop at day 90 (Kev, 16 Nov). After that the candidate moves to Ember's warm inventory, with no set Riley cadence. Riley calls again only if the recruiter asks.
 
 Rules:
 - Every call is logged in Crelate the same day with the next touch date set.
@@ -94,7 +94,7 @@ Rules:
 | Week 3 | Partner gatekeeper live (Kev, 16 Nov: yes): every partner submittal goes through her, zero bypasses |
 | Week 4 | First day-30 check-in call, logged in Crelate |
 | Day 45 | First scorecard review with Kev |
-| Day 90 | Owns the journey and the check-in cadence for the whole desk |
+| Day 90 | Owns the journey and the check-in cadence for the whole desk. (Each candidate's check-ins end at their day 90; this row is Riley's own day 90 in the role.) |
 
 ## Scorecard (support version, for later)
 
@@ -111,6 +111,16 @@ Bran's 10 Must-Dos were built for a Client Success Manager with his own activity
 | Fee, invoices, contracts | Kev and Nick |
 
 This also fills part of gap IG27 (Pathway C, Client Success, has no track): Riley's pages here can become the first draft of `intern-client-success` in Eden University.
+
+## Training status (checked 16 Nov)
+
+| Item | State |
+|---|---|
+| Day-90 stop | In the job description, the check-in table, the retain stage and now the playbook |
+| Title TBD | Placeholder "[Title TBD]" everywhere; swap in one place (playbook section 1) when Kev decides |
+| Gatekeeper from week 3 | In the job description, the journey table and the 90-day table; playbook adds a week-2 rehearsal (A) |
+| Eden University track | None yet. Riley is not in `projects/eden-university` (gap IG27 covers the same ground). The playbook is her training until a track is cut |
+| Candidate-facing wording | Partner NDA and red/green-light templates not yet checked for her use (Docket) |
 
 ## Decisions
 
