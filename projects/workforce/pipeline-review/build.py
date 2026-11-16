@@ -74,6 +74,8 @@ JOS = load("casey/jos.json")
 INTV = load("casey/interviewing.json")
 MPP = load("casey/mps-ptcs.json")
 NEXT = load("casey/next-week.json")
+_closed_ids = set((load("radar/overrides.json", default={}) or {}).get("jo_closed") or {})
+CLOSED_TITLES = [j.get("title") for j in (load("casey/jo-deck.json", default=[]) or []) if j.get("id") in _closed_ids and j.get("title")]
 BUILT = load("scout/built.json")
 OUT = load("scout/outcomes.json")
 QC = load("qc/qc.json")
@@ -184,6 +186,8 @@ for s in RECS:
     nxt = []
     nw = g(NEXT, "recruiters", s, default={}) or {}
     for j in nw.get("ranked_jos", []):
+        if any(str(j.get("role", "")).startswith(t) for t in CLOSED_TITLES):
+            continue  # JO closed by Kev (overrides jo_closed)
         lp = j.get("live_pipeline", {}) or {}
         nxt.append({"order": j.get("order"), "client": j.get("client", ""), "role": j.get("role", ""),
                     "loc": j.get("location", ""), "seat": j.get("my_seat", ""), "rank": j.get("board_rank"),
@@ -219,6 +223,8 @@ def jo_label(j):
 
 jo_rows = []
 for j in act:
+    if any(str(j.get("role", "")).startswith(t) for t in CLOSED_TITLES):
+        continue  # JO closed by Kev (overrides jo_closed)
     c = j.get("counts", {}) or {}
     jo_rows.append({"n": len(jo_rows), "client": j.get("client", ""), "role": j.get("role", ""),
                     "loc": j.get("location", ""), "owner": j.get("owner"), "status": j.get("status"),
@@ -320,6 +326,8 @@ for fn in files:
     row = {"client": jo.get("client", ""), "role": jo.get("role", ""), "loc": jo.get("location", ""),
            "owner": jo.get("owner"), "rank": jo.get("rank"), "open": jo.get("days_open"),
            "status": jo.get("status"), "lanes": lanes, "total": total}
+    if any(str(row["role"]).startswith(t) for t in CLOSED_TITLES):
+        continue  # JO closed by Kev (overrides jo_closed)
     (depth if total else nocand_list).append(row)
 depth.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 99))
 nocand_list.sort(key=lambda r: (r["rank"] if r["rank"] is not None else 99))

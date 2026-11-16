@@ -1,0 +1,24 @@
+{
+  "backburner": [
+    "Jesse LaMontagne"
+  ],
+  "note": "Kev's calls in the meeting room (13 Nov): people moved to the back burner leave the active lanes and the touch list. 13 Nov: name Baker outright in the internal JO deck (\"just say Baker\"); jo-005 owner is Nick. The partner version (PARTNER=True) keeps client_blind.",
+  "jo": {
+    "jo-005": {
+      "eden_owner": "Nick"
+    },
+    "jo-013": {
+      "eden_owner": "Nick"
+    },
+    "jo-030": {
+      "eden_owner": "Nick"
+    }
+  },
+  "client_names": {
+    "Specialty concrete contractor": "Baker"
+  },
+  "jo_closed": {
+    "jo-012": "Closed 13 Nov: client hired internally (Kev)",
+    "jo-004": "Closed 16 Nov: no longer a need (Kev, on the Florida slide)"
+  }
+}
