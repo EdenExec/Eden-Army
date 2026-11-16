@@ -1,6 +1,6 @@
 # Boise office lease: Suite 170, landlord redline 1
 
-Docket for Kev · 16 November 2026 · numbers gate 2026-11-16-aa1842 (open, Tally checking) · unchanged deal figures from gate 2026-11-11-04e500 (passed 9/9)
+Docket for Kev · 16 November 2026 · numbers gate 2026-11-16-aa1842 (passed 11/11, Tally) · unchanged deal figures from gate 2026-11-11-04e500 (passed 9/9)
 
 **Verdict: FIX FIRST, then sign. Two paperwork fixes, and one light ask. Don't hold the deal over early termination.** All eight of our redlines landed word for word, and nothing else in the lease moved. The owners struck Fin's early-termination clause (s.20). They offered a sublease right instead, but that offer is only in Fin's email; the lease still needs their consent. Without an exit, Eden owes every month to 28 Feb 2030: $112,749.84 from signing, and $44,961.58 still to pay on 1 Jan 2029. There is no personal guarantee and no clawback of the free rent, so Eden Partner Group, LLC is the only thing at risk. **Hold Kev's draft reply to Fin ("Go ahead and finalize").** Sent as is, it signs off a copy with s.20 struck but still in the text, and a sublease promise that isn't in writing.
 
@@ -102,4 +102,4 @@ Push hard on the MUSTs, which are clerical and match what the owners already sai
 - Assignor and sublessor stay liable: *Watkins Family v. Messenger*, 115 Idaho 386 (Ct. App. 1988), secondary summaries only. LIKELY.
 - Fee shifting: Idaho Code 12-120(3), legislature.idaho.gov, read 16 Nov 2026. SETTLED for the text, LIKELY for leases.
 - Effect of a struck but undeleted clause: not researched; the fix (delete it) makes the question moot. UNSURE, and it drives nothing.
-- Every figure: gate 2026-11-16-aa1842 (Docket preparer, Tally checker), open. Unchanged deal figures: gate 2026-11-11-04e500, passed.
+- Every figure: gate 2026-11-16-aa1842 (Docket preparer, Tally checker), passed 11/11 on 16 Nov. Unchanged deal figures: gate 2026-11-11-04e500, passed.
