@@ -2,7 +2,7 @@
   "backburner": [
     "Jesse LaMontagne"
   ],
-  "note": "Kev's calls in the meeting room (13 Nov): people moved to the back burner leave the active lanes and the touch list. 13 Nov: name Baker outright in the internal JO deck (\"just say Baker\"); jo-005 owner is Nick. The partner version (PARTNER=True) keeps client_blind.",
+  "note": "Kev's calls in the meeting room (13 Nov): people moved to the back burner leave the active lanes and the touch list. 13 Nov: name Baker outright in the internal JO deck (\"just say Baker\"); jo-005 owner is Nick. The partner version (PARTNER=True) keeps client_blind. 16 Nov (Kev): name the client on every JO tile in the internal deck; the partner version stays blind.",
   "jo": {
     "jo-005": {
       "eden_owner": "Nick"
@@ -15,7 +15,15 @@
     }
   },
   "client_names": {
-    "Specialty concrete contractor": "Baker"
+    "Specialty concrete contractor": "Baker",
+    "Regional general contractor, South Florida": "Triton Construction",
+    "National general contractor, South Florida high-rise": "PB South",
+    "General contractor, Mid-Atlantic": "VMG",
+    "Large general contractor, Florida": "Moss",
+    "General contractor with self-perform, western US": "Hoffman Construction",
+    "Mission-critical and data center contractor": "Megawatt Construction",
+    "Drywall and interiors subcontractor, Texas": "MK Marlow",
+    "General contractor, healthcare and science/tech": "XL Construction"
   },
   "jo_closed": {
     "jo-012": "Closed 13 Nov: client hired internally (Kev)",
