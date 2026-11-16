@@ -3,6 +3,10 @@ title: "Carmel Partners & Eden Partner Group"
 subtitle: "RPO Bridge Services Agreement (90 days, non-exclusive)"
 ---
 
+# Carmel Partners & Eden Partner Group
+
+### RPO Bridge Services Agreement (90 days, non-exclusive)
+
 **DRAFT FOR KEV'S EDITS, 16 November 2026.** Not yet reviewed by Docket. Items in [brackets] are open. Notes marked **[Kev]** or **[Docket]** are for internal review and come out before this goes to Carmel.
 
 This RPO Bridge Services Agreement (the "**Agreement**") is made between **[Carmel Partners contracting entity, state, type of entity]**, with offices at [address] ("**Carmel**"), and **Eden Partner Group LLC**, a Wyoming limited liability company, with offices at [address] ("**Eden**"). Carmel and Eden are each a "**Party**".
@@ -49,14 +53,23 @@ Carmel is restructuring its HR function and needs recruiting capacity on its ope
 
 4.1 **In scope.**
 
-| Eden does | Out of scope |
-|---|---|
-| Recruiting on Covered Roles, including sourcing once each role's hand-off is done | Employer brand and Carmel's LinkedIn page |
-| Hiring-manager management: intake, calibration and feedback | Job posting and UKG administration |
-| Screening Eden-sourced candidates, Carmel applicants and employee referrals | Onboarding |
-| Submittals on Eden's standard format | Compensation consulting and formal benchmarking |
-| Interview coordination through to offer stage | HR generalist work |
-| Informal compensation checks from Eden's market conversations | Offers, background checks and hiring decisions, which stay with Carmel |
+**Eden does:**
+
+- Recruiting on Covered Roles, including sourcing once each role's hand-off is done
+- Hiring-manager management: intake, calibration and feedback
+- Screening Eden-sourced candidates, Carmel applicants and employee referrals
+- Submittals on Eden's standard format
+- Interview coordination through to offer stage
+- Informal compensation checks from Eden's market conversations
+
+**Out of scope (stays with Carmel):**
+
+- Employer brand and Carmel's LinkedIn page
+- Job posting and UKG administration
+- Onboarding
+- Compensation consulting and formal benchmarking
+- HR generalist work
+- Offers, background checks and hiring decisions
 
 4.2 **Compensation checks are informal.** They are a read of what candidates in the market tell Eden. They are not a benchmark or advice. Eden will not ask candidates about salary history where the law bars it.
 
@@ -180,12 +193,25 @@ Carmel is restructuring its HR function and needs recruiting capacity on its ope
 
 ## Signatures
 
-| Carmel | Eden Partner Group LLC |
-|---|---|
-| Signature: ______________________ | Signature: ______________________ |
-| Name: [ ] | Name: Kevin Williams |
-| Title: [ ] | Title: Founder |
-| Date: [ ] | Date: [ ] |
+**For Carmel**
+
+Signature: ______________________
+
+Name: [ ]
+
+Title: [ ]
+
+Date: [ ]
+
+**For Eden Partner Group LLC**
+
+Signature: ______________________
+
+Name: Kevin Williams
+
+Title: Founder
+
+Date: [ ]
 
 ## Schedule 1: Covered Roles at the Start Date
 
@@ -203,6 +229,4 @@ Carmel is restructuring its HR function and needs recruiting capacity on its ope
 
 To be completed by Carmel's HR lead and Eden at the hand-offs in the first week: each candidate, the role, who sourced them, and the fee that applies (none, a screening fee, or the terms of an earlier Eden Submittal).
 
-| Candidate | Role | Sourced by | Fee that applies |
-|---|---|---|---|
-| | | | |
+Candidate · Role · Sourced by · Fee that applies: [to be completed]
