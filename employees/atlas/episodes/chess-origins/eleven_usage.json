@@ -1,10 +1,11 @@
 {
   "episode": "chess-origins",
-  "characters": 7922,
+  "characters": 7942,
+  "rendered_characters": 7942,
   "model": "eleven_multilingual_v2",
   "voices": {
     "GUIDE": "PerZoH0r6nxBZXCoIPpv",
-    "KID": "tJHJUEHzOkMoPmJJ5jo2"
+    "KID": "s3TPKV1kjDlVtZbl4Ksh"
   },
-  "duration_s": 662.595918
+  "duration_s": 631.510204
 }

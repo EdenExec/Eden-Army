@@ -46,5 +46,5 @@ The day before (from `mcp__Google_Calendar__list_events`, or a ticket), write `p
 ## Rules
 
 - Names, role and status only on the Hub, the board post and the review. No pay, comp, phones, emails or home addresses.
-- **Baker is named (Kev, 5 Nov 2026).** "We can stop calling Baker discreet client, lets name them as Baker." Baker Concrete is written by name on every internal surface (Hub, tickets, briefs to Scout, drafts, team email): `client: "Baker Concrete"`, `client_slug: "baker"`. One client still never sees another client's name. `discreet: true` stays for any client Kev asks to keep unnamed later.
+- **Baker is named; no client is discreet (Kev, 5 and 13 Nov 2026).** "Just say Baker." Baker Concrete and the INL work are written by name on every internal surface (Hub, tickets, briefs to Scout, drafts, team email): `client: "Baker Concrete"`, `client_slug: "baker"`. Never write "Client · discreet" or "discreet client"; `discreet` is false on every row. One client still never sees another client's name, and partner-facing JO descriptions stay blind.
 - Never send, book or publish; nothing at all from Friday sunset to Saturday sunset (the Sabbath).

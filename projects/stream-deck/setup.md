@@ -65,8 +65,103 @@ The deck shows the **default profile** whenever the app in front has no profile 
 
 ## Sabbath page
 
-Switching by the clock (Friday sunset to Saturday sunset) comes with the plugin. Until then you can switch to a profile called **Rest** by hand: put only the Music key and `key-sabbath-rest-288.png` on it.
+Replaced in v7 (15 Nov 2026): see "Sabbath mode, Cross and wake" below. The plugin now switches to a bundled **Eden Rest** profile by the clock.
 
 ## What the plugin adds
 
 The strip with your next meeting and its countdown, the four dials (Day, Desktop, Focus, Volume), the Join key and the automatic Sabbath page. It reads your Kev - Eden calendar through a private read-only address that only lives on your Mac.
+
+## Music page (profile "Music", Kev 13 Nov 2026)
+
+Switches automatically when the Music app is in front. Built-in Stream Deck › Multimedia actions unless noted.
+
+| Key | Action | Icon |
+|---|---|---|
+| Back | Multimedia › Previous Track | `key-music-prev-288.png` |
+| Play/Pause | Multimedia › Play/Pause | `key-music-playpause-288.png` |
+| Next | Multimedia › Next Track | `key-music-next-288.png` |
+| Now playing | System › Hotkey, Cmd+L (Go to Current Song). TEST | `key-music-now-288.png` |
+| Vol – | Multimedia › Volume Down | `key-music-voldown-288.png` |
+| Vol + | Multimedia › Volume Up | `key-music-volup-288.png` |
+| Mute | Multimedia › Mute | `key-music-mute-288.png` |
+| Eden | Stream Deck › Switch Profile › Eden | `key-music-eden-288.png` |
+
+Shuffle (`key-music-shuffle-288.png`) is optional: Music has no built-in shortcut, so Kev adds one under App Shortcuts first. Dials copy Eden's (Volume on dial 4).
+The Start (`key-start-288.png`) and WORD (`key-word-288.png`) keys sit on Eden page 2; the Mando profile is in `docs/streamdeck/morning-button.md`.
+
+## Sabbath mode, Cross and wake (v7, Q, 15 Nov 2026)
+
+Kev's asks of 14 Nov: on the Sabbath only the Cross, Barny's Workshop, Music and Gemini; a clock and REST on the strip; the Cross and nothing else whenever the Mac is on the screen saver, locked or waking; the Mando chime when he logs in, and Eden back whenever the Mac is awake and unlocked. **Marked steps are Kev's** (passwords, macOS permissions, installs). Nothing here changes a System Setting by itself.
+
+### What the deck does
+
+| When | Keys | Strip |
+|---|---|---|
+| Normal (Eden) | as in this sheet | meeting, focus, volume |
+| **Sabbath**: Friday sunset to Sunday 11 PM Boise (setting) | Barny's Workshop, Music, Gemini, **Cross top right**; every other key blank | REST (with "until sundown Sat" until Saturday sunset), a plain clock across dials 2 and 3, volume on dial 4 |
+| **Screen saver, locked or display off** (any day) | **Cross top right**, nothing else | blank |
+| Awake and unlocked | Deck returns to Eden (Eden Rest on the Sabbath). **The Mando chime plays only when Kev logs in from the lock screen**; a saver that stops, a display wake, a system wake or the scheduled 4:44 wake never chimes. No pages open. | |
+
+The Cross wins over everything: a locked Mac on the Sabbath shows the Cross alone, and on unlock goes to the Sabbath layout, not Eden.
+
+### Step 1. Install the plugin (Kev opens it; Cowork can do the rest)
+
+1. Open `plugin/com.kdtw.edendeck.streamDeckPlugin` and replace the installed Eden Deck (v0.2.0). **Kev:** click Install if the app asks.
+2. The plugin carries two profiles, **Eden Rest** and **Eden Cross**. Stream Deck asks to install them the first time the plugin switches to one. **Kev:** click Install. Or test now: in the Stream Deck app, Profiles, Import, the two `.streamDeckProfile` files from the plugin folder.
+3. Check Eden Rest: top row Barny's, Music, Gemini, Cross; dials Day, Desktop, Focus, Volume; all else blank. Check Eden Cross: Cross top right only, no dials.
+4. **Gemini name.** The key opens the app named `Gemini` (it looks in the system, then /Applications, ~/Applications and ~/Applications/Chrome Apps.localized). Kev confirmed the app is titled "Gemini" (15 Nov). If it ever differs, click the key in Eden Rest and type the exact name in "App name".
+5. **Sunday cut-off.** Click any Eden Deck dial; the panel has "Sabbath ends Sunday at" (blank means 11 PM Boise, Kev's answer of 15 Nov; type `sundown` for Saturday sunset).
+6. Do **not** put an app assignment on Eden Rest or Eden Cross. The plugin switches them. Keep Music's own Music profile: pressing Music on the Sabbath brings up its play and volume keys, and leaving Music puts Rest back (checked every 3 seconds). TEST.
+
+If Stream Deck will not import the two profile files (their format is Elgato's own and I could not test it here), build them by hand: a profile named exactly **Eden Rest** and one named **Eden Cross**, with the keys in the table above (use the Eden Deck actions Open link, Open app, Cross, and the four dials), export each, and copy the export over the file of the same name inside the plugin folder (`~/Library/Application Support/com.elgato.StreamDeck/Plugins/com.kdtw.edendeck.sdPlugin/`), then `streamdeck restart com.kdtw.edendeck` or quit and reopen Stream Deck.
+
+### Step 2. Icons
+
+In `icons/`: `key-cross-144.png` and `-288.png` (and `key-cross-dim-*`), `key-barnys-workshop-*`, `key-gemini-*`, plus the existing `key-music-288.png`. The plugin draws these faces itself on Eden Rest; the PNGs are for hand-built profiles.
+
+### Step 3. Screen saver (Kev)
+
+Folder `screensaver/Sabbath-Cross/` has two flat images: a near-black field with one thin cream cross in the middle (3840 x 2160 and 5120 x 2880). No app needed.
+
+1. Copy the folder to `~/Pictures/Sabbath-Cross` (Finder).
+2. **Kev:** System Settings, Screen Saver. Scroll to the pictures section, choose **Other / Choose Folder**, and pick `Sabbath-Cross`.
+3. Choose the style **Classic** or a plain slideshow with no motion. Do not use Ken Burns or Shifting Tiles: they move the Cross off centre.
+4. Optional: also set it as the wallpaper for a quiet desktop (Wallpaper, Add Folder or Photo).
+5. A `.saver` file would show the Cross with no picture-folder quirks, but it needs Xcode on a Mac; not built.
+
+### Step 4. Keep the Mac awake (Kev)
+
+The deck must stay alive and the helper must keep running, so the Mac must not go to sleep. The screen saver and display-off are fine. **Kev:** System Settings, Lock Screen: set "Start Screen Saver when inactive" and "Turn display off" to the times you like. System Settings, Battery (or Energy on a desktop Mac): turn on **Prevent automatic sleeping when the display is off**; on a laptop also "Wake for network access". A Mac mini or iMac stays awake with the display off by default. I never change these.
+
+Wanted: **Require password** after the saver starts. With it, the deck stays on the Cross until the password is typed, then the chime plays. Without it, the saver just stops: the deck returns to Eden with no chime, because nobody logged in.
+
+### Step 5. The helper (Kev builds once, Cowork can then run the test)
+
+It watches `com.apple.screensaver.didstart / didstop` and `com.apple.screenIsLocked / screenIsUnlocked`, plus display sleep and wake. While any is on it writes `{"state":"cross"}` to `~/.edendeck/screen.json`; when all are off it writes `{"state":"awake"}` and plays `~/Music/Stream Deck/start-mando.mp3` once (the file v6 already put there). It opens no pages.
+
+Why a state file and not a port or a second profile trick: the plugin is the only thing allowed to switch profiles (Stream Deck lets only a plugin do it), so the helper only has to say what the screen is doing. A file needs no network port, no permission, survives a plugin restart (the plugin reads it on start) and is easy to test by hand. A broken or missing file counts as "awake", so the deck can never be stuck on the Cross.
+
+1. **Kev (Terminal, needs Xcode Command Line Tools; macOS offers to install them the first time):**
+   ```
+   mkdir -p ~/.edendeck/bin
+   swiftc -O -o ~/.edendeck/bin/EdenWake helper/EdenWake.swift
+   ```
+   If no compiler: `xcode-select --install`, then repeat.
+2. Test without locking: `~/.edendeck/bin/EdenWake cross` (the deck shows the Cross), then `~/.edendeck/bin/EdenWake awake` (the deck returns to Eden, silently; add `--chime` to hear the chime).
+3. **Kev:** install the LaunchAgent, which starts the helper at every login:
+   ```
+   cp helper/com.kdtw.edenwake.plist ~/Library/LaunchAgents/
+   launchctl load ~/Library/LaunchAgents/com.kdtw.edenwake.plist
+   ```
+   Log (state names only): `/tmp/edenwake.log`. Remove: `launchctl unload ~/Library/LaunchAgents/com.kdtw.edenwake.plist`.
+4. Test for real: start the screen saver (hot corner or wait). The deck shows the Cross alone. Move the mouse, enter the password: chime, Eden returns. Then start the saver again and just move the mouse (no password needed): Eden returns, no chime. TEST that the Stream Deck still draws while the Mac is locked; if it goes black the deck follows the Mac's display and that is fine.
+
+### The Start key and the 4:45 job
+
+The old Start key (page 2 of Eden) opened the day's pages after the chime. For everyday use the helper plays the chime when Kev logs in, returns the deck, and opens nothing. Leave the Start key and the **4:45 Mando Morning job exactly as they are** (v6, Kev confirmed 15 Nov): the 4:44 wake never chimes, and the 4:45 job chimes only when Kev presses the Mando key.
+
+### Open questions for Kev
+
+Answered 15 Nov: Sunday cut-off is 11 PM Boise (a setting); the 4:45 morning job stays as it is; the Gemini app is titled "Gemini"; the chime plays only at login.
+
+1. **Screen saver all week?** The Cross saver works every day. Kev changes the saver by hand; I do not touch it.

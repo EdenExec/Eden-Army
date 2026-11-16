@@ -4,7 +4,7 @@ GUIDE: Marching across the ice. Barefoot. In his one thin cloak. And the other s
 KID: Why are they mad?
 GUIDE: Because he's doing better than they are, and they think he's showing off. This is part two of our Socrates series. Last time, Socrates the question man. Today, Socrates the soldier.
 ---
-KID: Wait, Socrates was a soldier? I thought he just talked in the market.
+KID: ...wait... Socrates was a soldier? I thought he just talked in the market.
 GUIDE: In Athens, every citizen had to be ready to fight for the city. And when Socrates was in his late thirties, Athens went to war with another Greek city called Sparta. It was a long war, almost thirty years. Socrates fought as a hoplite. That's a foot soldier with a big round shield, a helmet and a long spear, standing shoulder to shoulder in a line with the other men.
 KID: So, like, the front line?
 GUIDE: The front line. And we know what he was like in war because one of the men who fought next to him told the story. His name was Alcibiades. He was young, rich, handsome and very proud. Everybody in Athens knew him. And Plato wrote down what Alcibiades said about Socrates, years later, at a dinner party.
@@ -22,13 +22,13 @@ GUIDE: He did. He stood there until the next morning. And when the sun came up, 
 KID: That's the weirdest thing I've ever heard. What was he thinking about?
 GUIDE: Nobody knows. He never said. But here's what it tells us. Socrates took thinking as seriously as other people took eating and sleeping. When he wanted to know something, he didn't quit.
 ---
-KID: Okay, but you said he won something.
+KID: ...okay... But you said he won something.
 GUIDE: Here's the big one. At Potidaea, there was a battle, and Alcibiades got wounded. He was down on the ground, hurt, with enemies all around. And Socrates would not leave him. He stood over him and fought, and he saved Alcibiades and his armor too.
 KID: He saved his life!
 GUIDE: He saved his life. And after the battle, the generals wanted to give out a prize for bravery. The prize of valor. The biggest honor a soldier could get. And who do you think deserved it?
 KID: Socrates, obviously.
 GUIDE: Obviously. Alcibiades himself told the generals, Socrates should get it, he saved me. But the generals wanted to give it to Alcibiades, partly because he came from a rich, important family. And here's the part Alcibiades never forgot. Socrates was even more eager than the generals that Alcibiades should get the prize, not him.
-KID: Wait. He wanted the other guy to get his prize?
+KID: ...wait... He wanted the other guy to get his prize?
 GUIDE: He pushed for it. He did the brave thing, and then he let somebody else take the credit.
 KID: That's like scoring the winning goal and saying, no, give the trophy to him.
 GUIDE: That's exactly what it's like. G, here's a question for you. You save the game for your team, and the coach gives the game ball to somebody else. How do you feel?
@@ -44,7 +44,7 @@ GUIDE: Alcibiades said it's the men running away headlong who get chased. The ca
 KID: I thought humble meant shy.
 GUIDE: Lots of people think that. Humble doesn't mean thinking you're nothing. It means you don't need to be the center of everything. Which frees you up to be brave.
 ---
-GUIDE: Okay. There's one more kind of courage, and it might be the hardest. After the long war, Athens lost to Sparta. And for a while, a gang of thirty powerful men took over the city. People called them the Thirty. They were cruel. They took people's money and had people put to death to get rid of anyone who stood in their way.
+GUIDE: ...okay... There's one more kind of courage, and it might be the hardest. After the long war, Athens lost to Sparta. And for a while, a gang of thirty powerful men took over the city. People called them the Thirty. They were cruel. They took people's money and had people put to death to get rid of anyone who stood in their way.
 KID: That sounds scary.
 GUIDE: It was. And one day, the Thirty called in Socrates and four other men. And they gave them an order. Go to the island of Salamis, arrest a man named Leon, and bring him back so we can put him to death. Leon hadn't done anything wrong.
 KID: Why did they want Socrates to do it?
@@ -69,9 +69,9 @@ GUIDE: On purpose, to wake people up. Now, here's the thing about a horse and a 
 KID: Swat it.
 GUIDE: Swat it. Hold on to that. That's where part three begins.
 ---
-KID: Wait, but. If Socrates was so humble, why did he go around saying he was a gift from God to the city? That doesn't sound humble.
+KID: ...wait... but. If Socrates was so humble, why did he go around saying he was a gift from God to the city? That doesn't sound humble.
 GUIDE: Great catch, Finn. That's a real question people argue about. Here's one way to see it. Socrates never said he was better than anyone. He said he didn't know much. But he believed he had a job to do, and he wasn't going to quit just because it was unpopular. Humble people can still be sure about their job. A humble firefighter still runs into the fire.
-KID: Okay. That makes sense.
+KID: ...okay... That makes sense.
 ---
 GUIDE: Here's your try-this for the week. Do one good thing, and let somebody else get the credit. Help with a chore and don't mention it. Pass the ball so a friend can score. And don't tell anyone, not even at dinner. Tell Dad on Sunday.
 KID: That's going to be so hard. I always want to tell.

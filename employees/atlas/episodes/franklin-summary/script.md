@@ -4,7 +4,7 @@ GUIDE: Ben Franklin, the whole story. Let's go.
 ---
 GUIDE: Boston, seventeen-oh-six. A candle and soap maker named Josiah has a baby boy. And this boy is the fifteenth of how many children? G?
 KID: G says seventeen! Fifteenth of seventeen.
-GUIDE: Right. There's not much money, so Ben's school ends when he's about ten. But he never stops learning. He spends every penny on books. He borrows books and stays up all night so he can give them back in the morning. If you only remember one thing about Ben's whole life, remember this. He taught himself almost everything, from books.
+GUIDE: ...right... There's not much money, so Ben's school ends when he's about ten. But he never stops learning. He spends every penny on books. He borrows books and stays up all night so he can give them back in the morning. If you only remember one thing about Ben's whole life, remember this. He taught himself almost everything, from books.
 KID: And he loved swimming.
 GUIDE: He loved swimming. He made wooden paddles for his hands. And one day at a pond, he lay on his back holding a kite string, and the wind pulled him all the way across, while a friend carried his clothes around to the other side.
 KID: Still the coolest thing in the whole series.
@@ -23,13 +23,13 @@ GUIDE: Thirteen. But it started with twelve. Then a Quaker friend kindly told hi
 KID: Imitate Jesus and Socrates.
 GUIDE: G, you know who Socrates is now. The barefoot question man of Athens, who knew how much he didn't know. And teenage Ben had read about him in a book by Xenophon. That's when Ben started saying, I think, and it seems to me, instead of certainly. Hold on to the humility thread, because I'm going to show you it runs through Ben's whole life.
 ---
-KID: Okay, so then he's a printer.
+KID: ...okay... So then he's a printer.
 GUIDE: Then he's the best printer in Philadelphia. He runs a newspaper, and he publishes an almanac every year under another made-up name. Poor Richard. It's full of short sayings. Early to bed and early to rise, makes a man, G?
 KID: Healthy, wealthy, and wise.
 GUIDE: And another good one. Well done is better than well said. Ben was a doer. When something in Philadelphia was broken, he fixed it. No books in town? He and his friends start a lending library. Houses burning down? A fire company, neighbors with leather buckets. Cold, smoky houses? He invents a better stove. And then the governor offers him a patent, so only Ben could make money from it.
 KID: And he said no.
 GUIDE: He said no. He said, we all enjoy great advantages from other people's inventions, so we should be glad to share ours, freely. Finn, is that humble?
-KID: Yeah. He didn't think it was all his. He knew he got help from everybody else's ideas.
+KID: ...yeah... He didn't think it was all his. He knew he got help from everybody else's ideas.
 GUIDE: That's humility. The humble person remembers how much he's been given.
 ---
 KID: Now the lightning!
@@ -55,14 +55,14 @@ GUIDE: They put his face on plates and rings. And Ben, patient and friendly and 
 KID: And then the hot room.
 GUIDE: The hot room. Philadelphia, summer of seventeen eighty-seven. Ben is eighty-one, the oldest man there, sometimes carried in a chair because he's in pain. The states are fighting. Big against small. Men threatening to walk out. And Ben stands up and reminds them that God governs in the affairs of men, and if a sparrow can't fall to the ground without His notice, how can a nation rise without His help? G, where's the sparrow from?
 KID: G says Matthew ten. Jesus said it.
-GUIDE: Right. And now think about how Ben spoke in that room all summer. Not, I'm certainly right. More like, I think, it seems to me. On the last day, Ben brought a speech he'd written out, and a friend named James Wilson read it for him. In it he said he'd lived long enough to change his mind many times about important things. So the older he got, the more he doubted his own opinions and respected other people's. And he asked every man there to doubt himself a little, and sign.
+GUIDE: ...right... And now think about how Ben spoke in that room all summer. Not, I'm certainly right. More like, I think, it seems to me. On the last day, Ben brought a speech he'd written out, and a friend named James Wilson read it for him. In it he said he'd lived long enough to change his mind many times about important things. So the older he got, the more he doubted his own opinions and respected other people's. And he asked every man there to doubt himself a little, and sign.
 KID: That's the Socrates thing! Knowing you might not know.
 GUIDE: That's Socrates, and that's humility number thirteen, at eighty-one years old. And then, the chair. Ben had been staring all summer at a sun painted on the back of the leader's chair, wondering if it was rising or setting. And as they signed, he said, now I know. It's a rising sun.
 KID: And the lady asked what they made.
 GUIDE: A woman named Elizabeth Powel asked, Doctor, what have we got, a republic or a monarchy? And Ben said?
 KID: A republic, if you can keep it.
 ---
-KID: Wait, but. Was Ben perfect? He makes it sound like he was.
+KID: ...wait... but. Was Ben perfect? He makes it sound like he was.
 GUIDE: No, and he'd be the first to tell you. He was proud as a young man. He used Socrates's questions to trap people. And worst of all, when he was younger he owned enslaved people. That was wrong. But Ben changed. He came to believe slavery was evil, he led a group working to end it, and in the year he died he asked Congress to end it. Ben's little book was full of black dots his whole life. What made him great wasn't a clean page. It was that he kept trying, and kept changing when he found out he was wrong.
 KID: So humble people can change. Proud people can't.
 GUIDE: Finn, that might be the best thing you've said all series.

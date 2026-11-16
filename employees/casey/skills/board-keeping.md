@@ -15,12 +15,12 @@ Once each weekday morning (and again whenever Kev adds a JO on the board), you k
 A JO Kev adds on the board writes `scout_queue/{id}` with status `queued`; your voice-note intake writes one too. For each `queued` document, oldest first:
 
 1. Read the JO row and the depth chart its `depth` links point to. A JO with no `depth` link: find the seat on that client's chart, or note "no seat yet".
-2. Check the client rules: discreet client (brief says "Client · discreet" only, never the name), Moss (referral asks only), no fee agreement yet (do not brief; flag "waiting on fee agreement" and leave the queue item `queued` with a note).
+2. Check the client rules: name the client as stored (Baker is "Baker Concrete"; no client is discreet since 13 Nov 2026), Moss (referral asks only), no fee agreement yet (do not brief; flag "waiting on fee agreement" and leave the queue item `queued` with a note).
 3. Write the brief to `projects/team-hub/scout-briefs/<YYYY-MM-DD>-<job-id>.md`:
 
    | Line | What |
    |---|---|
-   | JO | id, client (or "Client · discreet"), role, location, rank, status |
+   | JO | id, client (by name), role, location, rank, status |
    | Kev's words | board_note and condition, verbatim |
    | Seat | the depth chart and seat, who is already under it by name and stage (so Scout does not re-pull them) |
    | Owner | the lead recruiter, or "no owner yet" |
@@ -54,9 +54,9 @@ At most ten lines, result first, through Radar's hand-off (Radar carries it onto
 > Quiet 7 days (2): VMG supers DC; Hoffman Amarillo LV supers.
 > Waiting on fee agreement: Pruter.
 
-Counts are from this pass, never estimated. Discreet rows read "Client · discreet". No pay, phones or emails.
+Counts are from this pass, never estimated. Clients by name. No pay, phones or emails.
 
 ## Never
 
-- Never brief Scout on a discreet client by name, on Moss as dial targets, or on a JO whose client has not signed a fee agreement.
+- Never brief Scout on Moss as dial targets, or on a JO whose client has not signed a fee agreement.
 - Never delete a queue item or a row; never run on Saturday; never message a recruiter.

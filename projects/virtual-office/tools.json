@@ -1,5 +1,13 @@
 [
  {
+  "id": "runway",
+  "name": "Runway",
+  "kind": "artifact",
+  "owner": "lookahead",
+  "url": "https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv",
+  "expectedEveryDays": 2
+ },
+ {
   "id": "hub",
   "name": "Team Hub",
   "kind": "artifact",

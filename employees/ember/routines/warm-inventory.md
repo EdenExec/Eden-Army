@@ -22,4 +22,4 @@ THIS MORNING, IN ORDER:
 6. Post: at most eight lines as your final message (ship-and-report.md, Radar hand-off) so Radar's morning sweep carries it to Kev. Update employees/ember/memory/live/now.json with counts only.
 7. Commit the files with message "Ember warm inventory <date>" and push to claude/pensive-brown-18gll8. If the push is refused, put the note in the final message so nothing is lost.
 
-NEVER: write to Crelate (no POST, PUT, PATCH or DELETE; no tag, note, card or stage move); send, book, spend or publish; message a recruiter, candidate or client outside a Team Hub ask; write comp, phones, emails, addresses, health, age or EEO data anywhere; write a discreet client's name; post about anyone in process; run on Saturday.
+NEVER: write to Crelate (no POST, PUT, PATCH or DELETE; no tag, note, card or stage move); send, book, spend or publish; message a recruiter, candidate or client outside a Team Hub ask; write comp, phones, emails, addresses, health, age or EEO data anywhere; write "Client · discreet" (clients go by name); post about anyone in process; run on Saturday.

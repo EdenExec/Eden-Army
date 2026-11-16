@@ -1,7 +1,9 @@
 // The only file that talks to macOS. Everything uses execFile (no shell), so nothing a user types
 // can become a command.
 import { execFile } from "node:child_process";
-import { KEY_CODES, pressKeyCode, controlNumber, volumeScript, parseVolume, windowCountScript, activateScript, menuClickScript, decideOpen, explainOsaError, interpretMenuResult } from "./keys.js";
+import { homedir } from "node:os";
+import { existsSync } from "node:fs";
+import { KEY_CODES, pressKeyCode, controlNumber, volumeScript, parseVolume, windowCountScript, activateScript, menuClickScript, appPathCandidates, decideOpen, explainOsaError, interpretMenuResult } from "./keys.js";
 
 function run(cmd, args) {
 	return new Promise((resolve, reject) => {
@@ -15,10 +17,26 @@ const osa = (script) => run("osascript", ["-e", script]);
 
 export const sys = {
 	openUrl: (url) => run("open", [url]),
-	openApp: (name) => run("open", ["-a", name]),
+	// By name first; if the system cannot find it (some web apps), try /Applications and ~/Applications by path.
+	openApp: async (name) => {
+		try {
+			return await run("open", ["-a", name]);
+		} catch (err) {
+			const path = appPathCandidates(name, homedir()).find((p) => existsSync(p));
+			if (!path) throw err;
+			return run("open", [path]);
+		}
+	},
+	// The name of the frontmost app, with no permission needed (lsappinfo). Empty if unknown.
+	frontApp: async () => {
+		const asn = (await run("lsappinfo", ["front"])).trim();
+		if (!asn) return "";
+		const out = await run("lsappinfo", ["info", "-only", "name", asn]);
+		return /"LSDisplayName"="([^"]*)"/.exec(out)?.[1] ?? "";
+	},
 	// Open the app, then make sure its real window is up. Returns { ok, reason? }.
 	openAppWindow: async (name, menuTitle = "") => {
-		await run("open", ["-a", name]);
+		await sys.openApp(name);
 		try {
 			await sleep(300);
 			let count = "noprocess";

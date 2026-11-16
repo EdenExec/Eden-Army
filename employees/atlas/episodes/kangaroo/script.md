@@ -16,7 +16,7 @@ GUIDE: A lot bigger. And here's the fun part about the name. The males are the r
 KID: Blue flyers. That's a good name.
 GUIDE: The males are called boomers. And a baby kangaroo is called a joey.
 ---
-KID: Okay, the jumping. How far?
+KID: ...okay... The jumping. How far?
 GUIDE: G, remember your jump. About a meter and a half. A big red kangaroo can cover eight or nine meters in one hop. That's around twenty-six to thirty feet.
 KID: Thirty feet in one jump? That's longer than a car.
 GUIDE: Longer than most cars, and most pickup trucks too. And it can hop about sixty kilometers an hour. That's like a car driving through town. And they can keep up a fast hop for a long way without getting too tired.

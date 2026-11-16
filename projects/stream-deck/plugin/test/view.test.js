@@ -40,11 +40,13 @@ test("view: in a call shows the end time and a progress line", () => {
 	assert.ok(v.left.progress > 0.4 && v.left.progress < 0.6);
 });
 
-test("view: Sabbath shows REST, locks the Join key", () => {
+test("view: Sabbath shows REST with the sundown line, a clock instead of a countdown, locks the Join key", () => {
 	const v = view(Date.UTC(2026, 10, 14, 19)); // noon Saturday Boise
 	assert.equal(v.rest, true);
 	assert.equal(v.left.label, "REST");
-	assert.match(v.left.countdown, /^\d+ h/);
+	assert.equal(v.left.countdown, "");
+	assert.equal(v.restSub, "until sundown Sat");
+	assert.deepEqual(v.clock, { time: "12:00", ampm: "PM" });
 	assert.equal(v.join.enabled, false);
 	assert.equal(v.join.link, null);
 	assert.equal(v.dayCaption, "");

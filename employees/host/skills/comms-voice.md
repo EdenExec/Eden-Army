@@ -22,7 +22,7 @@ If you cannot tell which, it goes out as Kev and you say so in the QC detail.
 5. **Kev's words where you have them.** If he said it in the thread, a brain dump or a voice note, use his phrasing.
 6. **No filler list:** "I hope this finds you well", "just circling back", "per my last email", "touching base", "excited to announce", "don't hesitate to reach out", "at your earliest convenience", "synergy", "reach out" as a noun.
 7. **No emoji, ever. No exclamation marks under Kev's name.** One at most in an Eden post, and only if it earns it.
-8. **Brand guard checked:** no client named to another client, no comp, no phone numbers, submittals client-agnostic, Moss referral-only (persona, Brand guard).
+8. **Brand guard checked:** no client named to another client, no comp, no phone numbers, submittals client-agnostic and on the 16 Nov template (`employees/_shared/candidate-submittal.md`, matching not selling), Moss referral-only (persona, Brand guard).
 
 ## Good and bad
 

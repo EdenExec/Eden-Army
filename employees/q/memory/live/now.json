@@ -1,7 +1,1 @@
-{
-  "task": "Stream Deck +: 10 new v3 keys, setup.md and COWORK-TASK updated, plugin fixes (dash names, show-window, alerts); 48 plugin tests pass. Two questions with Kev.",
-  "since": "2026-11-12T07:46:00Z",
-  "state": "done",
-  "blockedOn": "Kev: Participants slot, Flow window vs shortcut; Marlowe look review",
-  "updated": "2026-11-12T08:05:00Z"
-}
+{"task":"Disable Max Betcher's Crelate access (ticket t-202611161914-mxqr): runbook written, QC item 2026-11-16-d1c1a4 queued","since":"2026-11-16T20:45:00Z","state":"blocked","blockedOn":"Kev: approve QC 2026-11-16-d1c1a4 (write_external, deactivate Max in Crelate) and name who inherits his open jobs","next":"After approval: Kev/admin deactivates in Crelate UI; Q verifies read-only that Max shows inactive; then scorecard/CloudTalk roster follow-ups. Also pending: Recruiter kit QC tap, Crelate clean-out method, Hawk calendar, Contributor sharing","updated":"2026-11-16T20:45:00Z"}

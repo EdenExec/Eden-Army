@@ -312,13 +312,13 @@
 
   /* ---------- the floor ---------- */
   var ZONE_OF = { radar: 'rad', recruiting: 'rec', finance: 'fin', family: 'fam', other: 'rec' };
-  var AGENT_ORDER = ['scout', 'casey', 'ember', 'dean', 'q', 'pm', 'tally', 'docket', 'host', 'atlas', 'housing-architect', 'keys', 'hale', 'jethro', 'barnabas', 'lookahead'];
-  var WING = ['atlas', 'housing-architect', 'keys', 'hale', 'jethro', 'barnabas', 'lookahead'];   // the KDTW wing: private, closes whole under Screen share
+  var AGENT_ORDER = ['scout', 'casey', 'ember', 'dean', 'q', 'pm', 'tally', 'docket', 'host', 'atlas', 'housing-architect', 'keys', 'hale', 'jethro', 'barnabas', 'lookahead', 'gordo'];
+  var WING = ['atlas', 'housing-architect', 'keys', 'hale', 'jethro', 'barnabas', 'lookahead', 'gordo'];   // the KDTW wing: private, closes whole under Screen share
   var SEAT = { q: 'rec', host: 'fin', pm: 'spx', casey: 'cli', ember: 'cli' };   // ember: MPC and warm-inventory keeper, Kev 28 Oct: next to Casey in Client work   // casey: Client Care Manager, Kev 23 Oct: a desk in Client work, over the job-order board   // pm: the special projects PM, Kev 21 Oct; side projects inside EPG, reports to Radar
     // Kev, 21 Oct: Q takes Host's old seat on the recruiting desk; Jenny (host) sits by Docket
   function zoneOf(a) { return SEAT[a.id] || (WING.indexOf(a.id) >= 0 ? 'fam' : (ZONE_OF[a.desk] || 'rec')); }
   /* A desk that exists in the repo before its first office sync still sits in its zone (Hawk, 30 Oct): the synced doc replaces the stub the moment it arrives. */
-  var STUBS = { lookahead: { id: 'lookahead', name: 'Hawk', role: 'Look-ahead keeper', desk: 'family', sensitive: true, light: 'idle', counts: {}, task: null, stub: true } };
+  var STUBS = { lookahead: { id: 'lookahead', name: 'Hawk', role: 'Look-ahead keeper', desk: 'family', sensitive: true, light: 'idle', counts: {}, task: null, stub: true }, gordo: { id: 'gordo', name: 'Gordo', role: 'Hobbies guide', desk: 'family', sensitive: true, light: 'idle', counts: {}, task: null, stub: true } };
   function withStubs(m) { Object.keys(STUBS).forEach(function (k) { if (!m[k]) m[k] = Object.assign({}, STUBS[k]); }); return m; }
   function isDusk() { var d = new Date(), x = d.getHours() + d.getMinutes() / 60; return !(x >= 7.5 && x <= 18.5); }
 
@@ -455,7 +455,7 @@
   }
   function renderTools() {
     var box = $('#tools'); box.textContent = ''; box.appendChild(h('span', { class: 'eyebrow', text: 'Tools' }));
-    toolsFor(['hub', 'eden-daily', 'day-board', 'workshop', 'eden-desk', 'ledger', 'cash-pulse', 'quickbooks', 'gusto'].filter(function (id) { return !(S.share && id === 'cash-pulse'); })).forEach(function (x) { box.appendChild(toolLink(x, '')); });
+    toolsFor(['runway', 'hub', 'eden-daily', 'day-board', 'workshop', 'eden-desk', 'ledger', 'cash-pulse', 'quickbooks', 'gusto'].filter(function (id) { return !(S.share && id === 'cash-pulse'); })).forEach(function (x) { box.appendChild(toolLink(x, '')); });
   }
   /* every blink on the floor shares one clock, so lights flash in unison instead of twinkling */
   function phaseLock() { var tt = performance.now() / 1000; document.querySelectorAll('.led').forEach(function (l) { l.style.setProperty('--ph', '-' + (tt % 15).toFixed(3) + 's'); }); }

@@ -1,5 +1,5 @@
 - 2026-10-15: 2026-10-15 (Radar, from Kev 13 Oct): phone rule changed. Crelate mobile and direct numbers MAY go on internal Eden-only recruiter sheets (never client-facing, never the hub). ZoomInfo-sourced rows still carry no phone, personal email or comp. persona.md and skills/lead-list.md updated by Q in 135c5c6.
 - 2026-10-19 (Kev):
   - **Prometheus vs Promethean.** Prometheus is a Bay Area real estate investor. Promethean is a NYC and Miami GC and a sister company to PB South. Never merge them.
-  - **INL safety.** The client is Baker (Client · discreet). Target NQA-1 certified nuclear safety people, structural or GC side.
+  - **INL safety.** The client is Baker, named outright (Kev, 13 Nov 2026: no client is discreet). Target NQA-1 certified nuclear safety people, structural or GC side.
   - **Megawatt Quincy** is a traveling data center PM role, so travelers from anywhere count.

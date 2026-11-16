@@ -52,11 +52,7 @@ function rightHalf(m) {
 		g += text(418 + 12 + String(focus.minutes).length * 20, 58, S.unit, 600, C.grey, LABELS.min);
 	}
 
-	// Volume (x 600 to 800)
-	const vText = rest ? C.restText : C.cream;
-	const vFill = volume.muted ? (rest ? C.restLabel : C.grey) : vText;
-	g += text(618, 58, volume.muted ? 20 : S.big, 600, vFill, volume.muted ? LABELS.muted : String(volume.level), { tabular: true });
-	if (!volume.muted) g += bar(666, 50, 116, volume.level / 100, vText, rest ? C.restLabel : C.grey);
+	g += volumeBlock(volume, rest);
 	return g;
 }
 
@@ -88,7 +84,37 @@ function captions(m) {
 	return g;
 }
 
+// Volume (x 600 to 800): the number and a thin bar. Shared by the work strip and the Sabbath strip.
+function volumeBlock(volume, rest) {
+	const vText = rest ? C.restText : C.cream;
+	const vFill = volume.muted ? (rest ? C.restLabel : C.grey) : vText;
+	let g = text(618, 58, volume.muted ? 20 : S.big, 600, vFill, volume.muted ? LABELS.muted : String(volume.level), { tabular: true });
+	if (!volume.muted) g += bar(666, 50, 116, volume.level / 100, vText, rest ? C.restLabel : C.grey);
+	return g;
+}
+
+// Rough text width, enough to centre the clock without measuring a font.
+const clockWidth = (time) => [...time].reduce((w, ch) => w + (ch === ":" ? S.clock * 0.3 : S.clock * 0.65), 0);
+
+// The Sabbath strip (v7): REST on the first dial, a plain clock centred above dials 2 and 3, volume on dial 4.
+// No countdown, no meeting, no dial captions except VOLUME.
+function restBody(m) {
+	const M = S.margin;
+	let g = `<rect width="${STRIP.width}" height="${STRIP.height}" fill="${C.panel}"/>`;
+	g += text(M, 52, S.restWord, 600, C.restText, LABELS.rest, { spacing: 4 });
+	if (m.restSub) g += text(M, 72, S.small, 500, C.restLabel, m.restSub, { spacing: 0.4 });
+	const { time, ampm } = m.clock;
+	const total = clockWidth(time) + 8 + S.unit * 1.8;
+	const x = 400 - total / 2;
+	g += text(x, 62, S.clock, 500, C.cream, time, { tabular: true });
+	g += text(x + clockWidth(time) + 8, 62, S.unit, 600, C.grey, ampm, { spacing: 1 });
+	g += volumeBlock(m.volume, true);
+	g += text(618, 92, S.caption, 700, C.restLabel, LABELS.dials[3], { spacing: 1.8 });
+	return g;
+}
+
 function body(m) {
+	if (m.rest) return restBody(m);
 	return `<rect width="${STRIP.width}" height="${STRIP.height}" fill="${C.panel}"/>${leftHalf(m)}${rightHalf(m)}${dividers(m)}${captions(m)}`;
 }
 

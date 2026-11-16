@@ -1,0 +1,46 @@
+{
+  "id": "hebrews",
+  "order": -1,
+  "status": "now",
+  "stream": "word",
+  "title": "Hebrews: Hold fast to the better Son",
+  "summary": "Saturday studies with Barny through Hebrews. Jesus is better than the angels, Moses, the priests and the old covenant, so hold fast. Four sessions so far, through chapter 10; ask Barny for the rest.",
+  "sessions": [
+    {
+      "n": 1,
+      "title": "God's final word: the better Son",
+      "read": "Hebrews 1-3",
+      "focus": "Overview of the book; the Son, the drift warning, today"
+    },
+    {
+      "n": 2,
+      "title": "The rest that remains",
+      "read": "Hebrews 4:1-5:10",
+      "focus": "Sabbath rest; the high priest who sympathizes"
+    },
+    {
+      "n": 3,
+      "title": "Grow up, hold the anchor",
+      "read": "Hebrews 5:11-7:28",
+      "focus": "Maturity; the hardest warning; Melchizedek"
+    },
+    {
+      "n": 4,
+      "title": "Once for all",
+      "read": "Hebrews 8:1-10:18",
+      "focus": "New covenant; the finished sacrifice"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Hebrews (BibleProject overview video)",
+      "author": "BibleProject",
+      "link": "https://bibleproject.com/explore/video/hebrews/"
+    },
+    {
+      "title": "Read Hebrews in the ESV",
+      "author": "esv.org",
+      "link": "https://www.esv.org/Hebrews+1/"
+    }
+  ]
+}

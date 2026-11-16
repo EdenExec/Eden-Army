@@ -1,10 +1,11 @@
 {
   "episode": "socrates-3",
-  "characters": 9767,
+  "characters": 9782,
+  "rendered_characters": 9782,
   "model": "eleven_multilingual_v2",
   "voices": {
     "GUIDE": "PerZoH0r6nxBZXCoIPpv",
-    "KID": "tJHJUEHzOkMoPmJJ5jo2"
+    "KID": "s3TPKV1kjDlVtZbl4Ksh"
   },
-  "duration_s": 793.887347
+  "duration_s": 786.364082
 }

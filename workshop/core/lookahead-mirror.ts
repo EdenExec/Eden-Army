@@ -13,6 +13,8 @@ export type Mirror = {
 };
 
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
+/** Health details never reach a surface: an item that reads like an appointment stays on the Look Ahead page (15 Nov). */
+export const MEDICAL = /doctor|dentist|dental|medical|physical|therapy|therap|clinic|surgery|appointment|ortho|pediatric/i;
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
 /** The Sunday on or before a date: Hawk's weeks run Sunday to Saturday. */
 export const sundayOf = (d: string) => addDays(d, -new Date(`${d}T12:00:00Z`).getUTCDay());
@@ -22,7 +24,7 @@ export function buildMirror(items: Record<string, LaItem>, weeks: Record<string,
   if (!ISO.test(today)) throw new Error(`today "${today}" must be YYYY-MM-DD`);
   const horizon = addDays(today, opts.days ?? 21);
   const all: MirrorItem[] = Object.entries(items)
-    .filter(([, x]) => !x.hidden && ISO.test(x.start ?? ""))
+    .filter(([, x]) => !x.hidden && ISO.test(x.start ?? "") && !MEDICAL.test(String(x.title ?? "")))
     .map(([id, x]) => ({ id, title: txt(x.title, 80) || "(untitled)", kind: txt(x.kind, 12) || "event", lane: txt(x.lane, 8) || "both", start: x.start!, end: ISO.test(x.end ?? "") ? x.end! : "", time: txt(x.time, 20), owner: txt(x.owner, 24), status: txt(x.status, 8) || "set" }))
     .sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
   const next = all.filter((x) => x.start <= horizon && (x.end || x.start) >= today && x.status !== "done").slice(0, 12);

@@ -9,6 +9,7 @@ const items = {
   "far": { title: "Christmas", start: "2026-12-25" },
   "gone": { title: "Removed", start: "2026-11-02", hidden: true },
   "span": { title: "Boise", start: "2026-10-28", end: "2026-11-02" },
+  "doc": { title: "Dentist for G", start: "2026-11-03" },
 };
 describe("look-ahead mirror (meta/lookahead)", () => {
   const m = buildMirror(items, { "2026-10-25": { one: "Pack" } }, "2026-10-30", { url: "u", now: new Date("2026-10-30T03:00:00Z") });
@@ -21,4 +22,5 @@ describe("look-ahead mirror (meta/lookahead)", () => {
     assert.equal(m.week.one, "Pack");
   });
   test("an item's note never leaves the Look Ahead page", () => { assert.ok(!/movers|school/.test(JSON.stringify(m))); });
+  test("health details never reach the Command Center", () => { assert.ok(!/Dentist/.test(JSON.stringify(m))); });
 });

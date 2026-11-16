@@ -17,7 +17,7 @@ Check every name in a voice note against this file and the Hub before you write.
 | Moss | `moss` | **Referral-only.** Never a dial; Moss people go only on a "Moss · referral asks only" tab |
 | Pruter Construction | `pruter` | SoCal structural concrete. Fee agreement not yet signed (23 Oct): JOs stay on hold until it is |
 | Drywall contact, Michael Sherrill (company to confirm) | `drywall-sherrill` | Austin and San Antonio drywall roles; company name to confirm with Kev |
-| Baker Concrete, including the INL work | `baker` | Baker Concrete, including the INL work, may be named on the Team Hub (Kev, 23 Oct 2026: "put Baker INL stuff, no problem"): `client: "Baker Concrete"`, `client_slug: "baker"`, no `discreet` flag. Outside the Hub it stays "Client · discreet": never in anything a client sees, on a screen share, in client-facing paper or in a deck. `discreet: true` still exists for any client Kev asks to keep unnamed on the Hub. |
+| Baker Concrete, including the INL work | `baker` | Baker Concrete, including the INL work, may be named on the Team Hub (Kev, 23 Oct 2026: "put Baker INL stuff, no problem"): `client: "Baker Concrete"`, `client_slug: "baker"`, no `discreet` flag. Named everywhere internal since 13 Nov 2026 (Kev: "just say Baker"): never "Client · discreet". As with every client, Baker's name never goes in anything another client sees. |
 | Carmel, Swinerton | not on the board yet | Clients: never prospects |
 
 ## The team on the board

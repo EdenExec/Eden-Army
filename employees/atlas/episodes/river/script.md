@@ -15,16 +15,16 @@ KID: Deal.
 GUIDE: Idea one. The fish. Before you can find a trout, you need to know what a trout wants. And it wants four things, same as you want four things on a long drive.
 KID: Snacks, a window, a nap, and nobody poking me.
 GUIDE: That's almost exactly it. A trout wants cold water with oxygen in it, that's breathing. Food drifting past, that's snacks. Something to hide under, that's nobody poking it. And as little current as it can manage while it still gets to eat. That's the nap.
-KID: Wait, fish need oxygen? I thought they breathe water.
+KID: ...wait... fish need oxygen? I thought they breathe water.
 GUIDE: They pull the oxygen that's dissolved in the water through their gills. Cold water holds more oxygen than warm water. Think of a cold soda. Open it, it fizzes a little. Leave it in the sun, open it, it goes everywhere. Warm liquid can't hold its gas.
 KID: So a trout in warm water is like a kid in a stuffy car.
-GUIDE: Exactly. Around sixty-eight degrees, trout get stressed. Good fly fishers carry a thermometer and stop fishing when it gets that warm. Lee Wulff, one of the great fishermen of the last century, put it this way almost ninety years ago. A good game fish is too valuable to be caught only once. You take care of the fish first. This morning the water coming out of Anderson Ranch Dam on the South Fork of the Boise was about fifty-one degrees. I read that off a government gauge on the river; your dad can pull it up on his phone. Fifty-one is cold enough to make you yelp. The trout think it's perfect.
+GUIDE: ...exactly... Around sixty-eight degrees, trout get stressed. Good fly fishers carry a thermometer and stop fishing when it gets that warm. Lee Wulff, one of the great fishermen of the last century, put it this way almost ninety years ago. A good game fish is too valuable to be caught only once. You take care of the fish first. This morning the water coming out of Anderson Ranch Dam on the South Fork of the Boise was about fifty-one degrees. I read that off a government gauge on the river; your dad can pull it up on his phone. Fifty-one is cold enough to make you yelp. The trout think it's perfect.
 KID: Okay, so cold water. What about the snacks?
 GUIDE: Here's the picture. A river is a conveyor belt. Everything that falls in, bugs, bits of bugs, a grasshopper that jumped wrong, it all rides the current downstream. The trout doesn't go looking for food. It parks itself where the belt runs past its nose, faces upstream, and picks off what it wants.
 KID: Faces upstream. Why not sideways?
 GUIDE: Two reasons. If it faced downstream the current would push water into its gills the wrong way, and it couldn't hold still. And facing upstream, the food comes to it. It sees the bug coming, tips up, eats, drops back down.
 KID: But it's not in the fast water, you said.
-GUIDE: Right, and this is the trick. Swimming hard in fast water burns more energy than the bug is worth. So the trout finds a spot where slow water sits right next to fast water. It rests in the slow water with its nose on the edge of the fast water. Food goes by on the fast side. One flick of the tail, grab it, back to the slow side.
+GUIDE: ...right... And this is the trick. Swimming hard in fast water burns more energy than the bug is worth. So the trout finds a spot where slow water sits right next to fast water. It rests in the slow water with its nose on the edge of the fast water. Food goes by on the fast side. One flick of the tail, grab it, back to the slow side.
 KID: It's like standing next to the escalator and grabbing stuff off it.
 GUIDE: That's the best way anyone's ever said it. Now the last thing. Cover. Trout get eaten. Ospreys, herons, otters, bigger trout. A fish that sits in the open in bright sun is a fish that gets picked off. So it wants a roof. Deep water is a roof. A bubbly surface is a roof, because the bird can't see through it. A log, a rock, a bank that's been hollowed out underneath. Those are all roofs.
 KID: So a perfect trout spot is cold, has the belt going past, has a roof, and is slow.
@@ -93,7 +93,7 @@ KID: Floating the right way?
 GUIDE: That's the cast. Hold that thought.
 KID: Holding it.
 ---
-GUIDE: Okay. The cast. Nobody learns to cast from a podcast. You learn it on the grass with your dad holding your wrist. But I can give you the picture, so when he does that, you know what he's doing.
+GUIDE: ...okay... The cast. Nobody learns to cast from a podcast. You learn it on the grass with your dad holding your wrist. But I can give you the picture, so when he does that, you know what he's doing.
 KID: Fine. What's the picture?
 GUIDE: A clock. You're standing sideways to the clock, rod in your hand. Straight up is twelve. The cast goes from about ten o'clock in front of you to about two o'clock behind you. That's it. Ten and two. Not a big swing. A short, firm stroke, and a stop.
 KID: Why do you stop?
@@ -104,7 +104,7 @@ KID: How do you know how long to wait?
 GUIDE: Norman Maclean's father taught his boys with a metronome. Tick, tick, tick, tick. He said casting is an art done on a four-count rhythm between ten and two o'clock. One, lift the line off the water. Two, throw it up and back. Three, wait, let it straighten. Four, power forward and stop at ten. He said the power comes not from power everywhere, but from knowing where to put it on.
 KID: A metronome. For fishing.
 GUIDE: It was his wife's, off the cabin piano, and he carried it down to the river. When she worried about it getting wet, he clapped the beat with his hands instead. The point is, it's a rhythm, not a muscle thing. Your dad can clap it for you.
-KID: Okay, so the line's out. Then what?
+KID: ...okay... So the line's out. Then what?
 GUIDE: Then comes the part that actually catches fish. The drift. Remember the conveyor belt. A real bug rides the belt at the exact speed of the water. It doesn't skate sideways. It doesn't leave a wake. If your fly does either of those things, a trout looks at it and thinks, that's wrong, and lets it go by.
 KID: Why would the fly move wrong?
 GUIDE: Because your line is lying across water that's moving at different speeds. The fast current grabs the line and pulls the fly along faster than the water it's sitting in. That's called drag. It's the number one reason a trout refuses a fly. Not the wrong fly. Drag.
@@ -134,7 +134,7 @@ KID: Have you ever hooked somebody?
 GUIDE: Every fly fisher has hooked himself. That's why we pinch the barb, the little backward point that keeps the hook from sliding out. Squeeze it flat with pliers. Barbless. If it goes in your thumb, it comes out. And on the South Fork of the Boise it's the law anyway. One barbless hook per fly, no bait. So you learn it right from the start.
 KID: Does barbless mean you lose more fish?
 GUIDE: A few. Remember Lee Wulff. Too valuable to be caught only once. So let it go, and let it go gently. Barbless, wet hands, keep the fish in the water, back it goes. That's the deal you make with the river.
-KID: Okay. Cold water, knees, shuffle, belt, glasses, look behind, barbless.
+KID: ...okay... Cold water, knees, shuffle, belt, glasses, look behind, barbless.
 GUIDE: You've got it. And one you didn't say. Tell somebody where you are. Always.
 KID: Tell somebody. Got it.
 ---

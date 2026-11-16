@@ -2,6 +2,8 @@
 
 The scorecard is how the team sees its week in numbers before the Round Table. Crelate activity is the scoreboard; the 42-box card on the Eden Desk is each recruiter's own read of the week. You build the first and collect the second. Read `memory/seed/crelate-scorecard-spec.md` first: it holds the API details, the activity verb IDs, the Crelate user IDs and the counting rules.
 
+**Update, 12 Nov 2026 (Kev): the flow to watch is Dial → RP → Resume → PTC → FTI.** Submittals only mean a resume was built, so they are no longer a headline metric. Lead every scorecard and board with these five stages and the ratio between each (RPs per 100 dials, resumes per RP, PTCs per resume, FTIs per PTC). Dials are CloudTalk outbound counts per recruiter (counts only).
+
 ## When
 
 - **Friday by 11:30 AM Pacific:** first pull (the week so far), so the Round Table pack is ready. Label it "Friday in progress".

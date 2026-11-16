@@ -12,7 +12,7 @@ GUIDE: He did. And he filled the empty spaces in the almanac with short, funny s
 KID: My mom says that one!
 GUIDE: That's Poor Richard. Here's another. Well done is better than well said.
 KID: So doing it beats talking about it.
-GUIDE: Exactly. G, that one's good for chores.
+GUIDE: ...exactly... G, that one's good for chores.
 ---
 KID: So he's a printer. When does he do science?
 GUIDE: Ben had a rule. If something in Philadelphia was broken, fix it. There were hardly any books in town, so he and his friends started one of the first lending libraries in America. Everyone chipped in, and everyone could borrow.

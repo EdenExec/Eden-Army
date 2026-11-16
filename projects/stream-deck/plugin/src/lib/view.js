@@ -4,20 +4,23 @@
 import { LABELS, RULES } from "../theme.js";
 import { formatCountdown, formatClock } from "./countdown.js";
 import { selectMeeting, isCream, joinState } from "./meetings.js";
-import { sabbathWindow, DEFAULT_PLACE } from "./sabbath.js";
+import { sabbathWindow, sabbathLayoutWindow, DEFAULT_PLACE, DEFAULT_SUNDAY_CUTOFF } from "./sabbath.js";
 import { clockLabel, dayLabel } from "./tz.js";
 
 // input: { now, events, place:{lat,lon,tz}, timer: FocusTimer, volume:{level,muted} }
-export function buildView({ now, events = [], place = DEFAULT_PLACE, timer, volume = { level: 0, muted: false } }) {
+export function buildView({ now, events = [], place = DEFAULT_PLACE, timer, volume = { level: 0, muted: false }, cutoff = DEFAULT_SUNDAY_CUTOFF }) {
 	const tz = place.tz;
 	const sab = sabbathWindow(now, place);
-	const rest = !!sab?.active;
+	// v7: "rest" is the whole Sabbath layout, Friday sunset to the Sunday cut-off. "Until sundown Sat" shows only up to Saturday sunset.
+	const layout = sabbathLayoutWindow(now, place, cutoff);
+	const rest = !!layout?.active;
+	const restSub = rest && layout.proper ? LABELS.restSub : "";
 	const sel = selectMeeting(events, now);
 	const join = joinState(sel, now);
 
 	let left;
 	if (rest) {
-		left = { label: LABELS.rest, title: LABELS.restTitle, countdown: formatCountdown(sab.end - now), progress: null, cream: false };
+		left = { label: LABELS.rest, title: restSub, countdown: "", progress: null, cream: false };
 	} else if (sel.kind === "none") {
 		const toSabbath = sab ? sab.start - now : Infinity;
 		if (toSabbath > 0 && toSabbath <= 24 * 3600000) {
@@ -61,8 +64,11 @@ export function buildView({ now, events = [], place = DEFAULT_PLACE, timer, volu
 		flashOn: flashing && Math.floor(now / 1000) % 2 === 0,
 	};
 
+	const clockParts = clockLabel(now, tz).split(" "); // ["9:41", "PM"]
 	return {
 		rest,
+		restSub,
+		clock: { time: clockParts[0], ampm: clockParts[1] ?? "" },
 		left,
 		dayCaption: rest ? "" : dayLabel(now, tz),
 		desktopCaption: rest ? "" : LABELS.desktopHint,
