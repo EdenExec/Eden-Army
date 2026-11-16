@@ -211,7 +211,7 @@ team = {
 ACTIVE_ST = ("active", "new", "kill?")
 all_jos = JOS.get("jos", []) or []
 act = [j for j in all_jos if j.get("status") in ACTIVE_ST]
-AT_RISK = ["triton-precon-miami", "pb-south-demo-super-miami", "discreet-qc-oil-gas"]
+AT_RISK = ["triton-precon-miami", "discreet-qc-oil-gas"]
 need_lead = [u.get("jo") for u in (NEXT.get("unowned") or [])]
 no_cand_ids = NEXT.get("no_pipeline_active") or [j["id"] for j in act if sum((j.get("counts") or {}).values()) == 0]
 by_id = {j.get("id"): j for j in all_jos}
