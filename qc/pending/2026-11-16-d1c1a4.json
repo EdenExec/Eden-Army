@@ -1,0 +1,9 @@
+{
+  "id": "2026-11-16-d1c1a4",
+  "status": "pending",
+  "createdAt": "2026-11-16T20:44:55.772Z",
+  "employee": "q",
+  "kind": "write_external",
+  "summary": "Deactivate Max Betcher's Crelate user (ticket t-202611161914-mxqr)",
+  "detail": "Kev: Max left Eden 2026-11-16, will not be in Crelate going forward. Change: set user Max Betcher to Inactive/disabled in Crelate Settings > Users. Do not delete; his records and history stay. Reassign open jobs/tasks first (Kev to name owner). Runbook: projects/eden-crm/proposals/2026-11-16-disable-max-betcher-crelate-access.md"
+}
