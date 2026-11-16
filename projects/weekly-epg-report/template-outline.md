@@ -22,7 +22,7 @@ For Marlowe (look) and Q (artifact template). Cream and ink, Montserrat, hairlin
 
 ## Page 4: Deals, candidates, pitches (#deals)
 
-- Offers out and second-phase interviews to schedule (deal desk): stage, client (or "a client (discreet)"), days since touch, next step.
+- Offers out and second-phase interviews to schedule (deal desk): stage, client by name, days since touch, next step.
 - Big candidates in process (Casey) and FTIs to set; no contact details, no pay.
 - Pitches out and new leads (Scout, Crelate); MPCs to take to market (Ember). UNVERIFIED where a source is missing.
 

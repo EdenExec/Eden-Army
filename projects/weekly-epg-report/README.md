@@ -27,7 +27,7 @@ Ticket t-202611141830-mmepg (Kev, Sat 14 Nov 2026, standing request). Picked Sun
 
 ## Rules on the page
 
-- Counts and dates only. No pay, no fee or compensation figures beyond gated cash totals, no candidate contact details, no discreet client names (shown as "a client (discreet)"), no health or family detail.
+- Counts and dates only. No pay, no fee or compensation figures beyond gated cash totals, no candidate contact details, clients named outright on Kev's copy (Kev, 13 Nov: never "discreet client"), no health or family detail.
 - Header EDEN PARTNER GROUP, title *Monday Morning EPG Report* in bold italic; footer edenpartnergroup.com and EDEN PARTNER GROUP.
 - Sabbath check before every run (`npm run sabbath`); Monday runs never fall inside it.
 
