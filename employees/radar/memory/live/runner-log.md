@@ -463,3 +463,4 @@
 - 2026-11-15 23:43 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run after the 10pm window. Floor refresh and 8a/8b/8c/9/9a skipped (nothing changed since 22:45 refresh).
 - 2026-11-16 00:43 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run outside the 6am-10pm window. Floor refresh and 8a/8b/8c/9/9a skipped (nothing changed since last refresh).
 - 2026-11-16 01:44 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; run outside the 6am-10pm window. Floor refresh and 8a/8b/8c/9/9a skipped (nothing changed since last refresh).
+- 2026-11-16 02:43 PT: outside 6am-10pm window; picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty; floor refresh (step 8) not run (no node_modules, off-hours).
