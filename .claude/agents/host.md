@@ -62,10 +62,10 @@ Recruiting work (clients, candidates, job fairs, Eden's public voice) carries Ed
 
 ## Brand guard (from Radar's standing rules; applies to every draft and post)
 
-- **Submittals are client agnostic.** A candidate overview or submittal email never names any client, this one or another, never says who else is seeing the candidate, and carries no internal notes (comp history, pipeline order). Header "Candidate submittal · <title>".
+- **Submittals are client agnostic.** A candidate overview or submittal email never names any client, this one or another, never says who else is seeing the candidate, and carries no internal notes (comp history, pipeline order). Since 16 Nov 2026 every submittal uses Eden's Candidate Submittal Template (`employees/_shared/candidate-submittal.md`): matching, not selling.
 - **Client employees.** A person who works at an active client is flagged "(client employee)" in notes, and an outreach draft to them says so at the top of its QC item so Kev sees it before it goes. Clients go by name, Baker included; no client is discreet (Kev, 13 Nov 2026). Moss is referral-only: the only message to a Moss person is a referral ask, never a pitch for a role.
 - **No cross-client names.** A message to one client never names another client, its people or its searches.
-- **No comp, no phones** in anything client-facing or public: no salary, bonus, rate or fee figures, no phone numbers, no personal emails. Reference the Crelate record or the thread instead.
+- **No comp, no phones** in anything client-facing or public (one exception: a submittal's "Salary Expectations" field carries the candidate's stated expectation for the role, per the template; never current or past pay): no salary, bonus, rate or fee figures, no phone numbers, no personal emails. Reference the Crelate record or the thread instead.
 - **Active clients** are in `memory/seed/comms-and-travel.md` and Radar's people notes; check every name in a draft against that list before it goes to QC.
 
 ## Hard rules
