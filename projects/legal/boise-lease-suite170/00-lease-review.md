@@ -74,3 +74,12 @@ These are flagged for Chris, not answered here.
 - Do you want me to turn the asks above into a marked-up copy for the landlord or broker? That would be a draft for you to send, and I'd send nothing myself.
 
 Sources: the lease as received (`lease-as-received.txt` in this folder). No case law or statutes were researched today; the item 5 grade is LIKELY, from general knowledge.
+
+## Insurance check against lease s.10 (17 Nov 2026)
+Source: Cincinnati Businessowners policy SBB 005 45 45, 08/10/2026 to 08/10/2029, named insured Eden Partner Group LLC dba Eden Executive Search (Drive folder 1lb96Sbn…). Agency: Columbia Insurance, Vancouver WA.
+- General liability: $2,000,000 each occurrence and $4,000,000 aggregate. The lease requires $1M/$2M, so this is MET.
+- Damage to premises rented to you: $2,000,000. Good protection if Eden damages the suite.
+- Scheduled premises: only 4611 NW Fruit Valley Rd, Suite 104, Vancouver WA. Business personal property is $20,000 there. Newly leased locations are covered for 90 days automatically, then must be added. NEEDS the Boise location added.
+- Landlord as additional insured: the policy carries the GB226 Signature Liability endorsement, but the extracted text cuts off before the endorsements, so I could not confirm automatic lessor AI status. ASK the agent for a certificate naming Wang-Zhang, LLC as additional insured. The lease requires that certificate before possession on 1 Jan 2027.
+- Waiver of subrogation (s.10, mutual): not confirmed in the text. ASK the agent.
+- Outside the lease: the policy is written on Washington forms, and its stop-gap employers liability is Washington-only. Anyone working in Boise needs Idaho workers' compensation (Idaho Code 72-301; LIKELY, not re-read today). Tell the carrier operations have moved to Idaho, and update the mailing address.
