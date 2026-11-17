@@ -46,7 +46,7 @@ Only an `MPC` with no touch in more than 60 days. Nothing else goes to Radar as 
 - A Command Center ticket: `{agent: "radar", ask: "Red: MPC <Name> (<title>), owner <Recruiter>, no touch in <n> days (cadence 30). Kev or the owner decides: touch this week, re-tag Passive A, or drop the MPC tag.", priority: "now", status: "open", createdBy: "ember", lever: "alert", createdAt, updatedAt}`.
 - Once per crossing: record it in `memory/live/alerts.md` (date, person, ticket id). Do not re-alert the same person until another 30 days pass with no touch.
 - The owner still gets the normal ask (within the cap). The alert is for Kev's decision, not a second nudge.
-- A discreet client (the INL work) never appears in the ask or the ticket by name: "Client · discreet". Baker is named as of 5 Nov 2026.
+- Clients go by name in the ask and the ticket: Baker and the INL work are "Baker" (no client is discreet since 13 Nov 2026).
 
 ## Hard rules
 

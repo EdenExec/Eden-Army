@@ -4,14 +4,14 @@ GUIDE: Good. G, don't open it yet. Hold it in your hands for a second. Inside th
 KID: The rarest one? Which one is that?
 GUIDE: The bull trout. Hang on to that. G, open the box.
 ---
-KID: Whoa. There's like a hundred of them. Some are fluffy, some are shiny, some look like tiny furry worms.
+KID: ...whoa... There's like a hundred of them. Some are fluffy, some are shiny, some look like tiny furry worms.
 GUIDE: People have been tying those for a long time. About eighteen hundred years ago, a Roman writer named Aelian described fishermen in Macedonia, near Greece. They wrapped red wool around a hook, tied on two little feathers from a rooster, and floated it down a stream to catch speckled fish.
 KID: Red wool and feathers. That's basically what's in this box.
 GUIDE: Basically. And about five hundred years ago, in England, a book about fishing with a hook was printed, and it's credited to a woman named Dame Juliana Berners. It had recipes for flies to use in different months of the year. So the answer to our question is very old. A trout eats a fly because the fly looks like food and moves like food. Let's take those one at a time.
 KID: How does it look like food? It doesn't look exactly like a bug.
 GUIDE: It doesn't have to. Remember what we said about matching the hatch? Size first, shape second, color last. A trout has a split second to decide. The water is cold, the food is drifting by fast, and if it waits too long, the bug is gone. So the fish asks a few quick questions. Is it the right size? Is it the right shape? Then, maybe, is it the right color?
 KID: So if the real bugs are tiny, I need a tiny fly.
-GUIDE: Exactly. A perfect copy in the wrong size gets ignored. A scruffy little thing in the right size gets eaten.
+GUIDE: ...exactly... A perfect copy in the wrong size gets ignored. A scruffy little thing in the right size gets eaten.
 ---
 GUIDE: Now the second half of the lie. It has to move like food. A real bug drifting down the river doesn't swim against the current. It just rides along, the same speed as the water around it.
 KID: Like a leaf floating down.
@@ -19,9 +19,9 @@ GUIDE: Just like a leaf. Now picture your fly line lying across fast water. The 
 KID: And the trout goes, that's not a bug. Bugs don't water-ski.
 GUIDE: That's it. Fishermen call that drag, and it's the number one reason a good fly doesn't get eaten. The trick is to let the fly drift free, as if nothing is attached to it. Most guides will tell you the drift matters more than the fly.
 KID: So the lie isn't just what it looks like. It's how it acts.
-GUIDE: Right. And that's true about a lot of things, Finn. You can tell a lot more about something by how it acts than by how it looks.
+GUIDE: ...right... And that's true about a lot of things, Finn. You can tell a lot more about something by how it acts than by how it looks.
 ---
-GUIDE: Okay, G, here's your first job. Look through the box and find three kinds of fly. First, find one with a fluffy wing or a puff of hair on top, something that looks like it would float.
+GUIDE: ...okay... G, here's your first job. Look through the box and find three kinds of fly. First, find one with a fluffy wing or a puff of hair on top, something that looks like it would float.
 KID: He's got one. It's got little stiff hairs sticking out all around it.
 GUIDE: That's a dry fly. It floats on top and copies a bug that has just hatched and is sitting on the water. Those stiff hairs work like a water bug's legs and hold it up. Now, G, find the heaviest little one you can. Maybe it has a shiny gold bead on its head.
 KID: Got it. It's tiny and heavy, with a gold bead.
@@ -71,7 +71,7 @@ GUIDE: Some of it. That's why a streamer that looks like a sculpin is one of the
 KID: There is. It looks kind of like a tadpole with fur.
 GUIDE: That might be a sculpin pattern. Keep it out. That one's for the shady bank.
 ---
-KID: Okay. Now the rarest one. Where do we find a bull trout?
+KID: ...okay... Now the rarest one. Where do we find a bull trout?
 GUIDE: First, a secret about the bull trout. It isn't really a trout. It's a char, a cousin of the trout, like the brook trout and the lake trout. And it is the pickiest fish in Idaho about one thing. Cold water. Bull trout need some of the coldest, cleanest water there is, the kind that comes straight off snow and mountain springs.
 KID: Then they're not down in town by the bike path.
 GUIDE: Mostly not. Most Boise bull trout live up in the mountains, above the dams. The Middle Fork and the North Fork of the Boise River are their home. In winter, a lot of them drop down into Arrowrock Reservoir, where there's plenty to eat. Then they swim back up the forks, all the way to small cold streams near the headwaters, to spawn.
@@ -95,9 +95,9 @@ GUIDE: That's it. And here's a trick that helps. Many fishermen squeeze down the
 ---
 GUIDE: Now the wait, but. Finn, what catches more fish, the perfect fly or the perfect drift?
 KID: The perfect fly. That's why the box has a hundred of them.
-GUIDE: Wait, but. Remember the water skier?
+GUIDE: ...wait... but. Remember the water skier?
 KID: Oh. If it drags, the fish won't eat it, no matter how perfect it is.
-GUIDE: Right. Most beginners spend their time changing flies. Most good fishermen spend their time fixing the drift. They move their feet, they change the angle, they lift the line off the fast water, so the fly floats free. A plain fly on a perfect drift beats a beautiful fly that's skating.
+GUIDE: ...right... Most beginners spend their time changing flies. Most good fishermen spend their time fixing the drift. They move their feet, they change the angle, they lift the line off the fast water, so the fly floats free. A plain fly on a perfect drift beats a beautiful fly that's skating.
 KID: So learn to drift before you buy a hundred flies.
 GUIDE: Your dad's wallet is going to like you, Finn.
 ---

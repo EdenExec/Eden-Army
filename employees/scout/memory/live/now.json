@@ -1,8 +1,1 @@
-{
-  "task": "Idle: no active job order or market-map pull on the desk (sync patrol t-202611091221-ssc check-in)",
-  "since": "2026-11-09T20:44:25Z",
-  "state": "idle; last finished work was t-202610280057-vtsc (PB South VT JO and lists, 28 Oct)",
-  "blockedOn": "Kev: review Todd email draft in Superhuman; QC 2026-10-27-d656c4 (open since 28 Oct, not re-verified this session)",
-  "next": "Waiting for a new job order; the stage + upload + link and exact LinkedIn items from the 28 Oct entry are still open and unstarted",
-  "updated": "2026-11-09T20:44:25Z"
-}
+{"task":"Idle: EL-037 Juicy healthcare PM + super WPB list landed, report sent to Radar","since":"2026-11-12T02:40:00Z","state":"idle","blockedOn":null,"next":"Waiting for the next job order; Radar to date the Lead Log row for EL-037","updated":"2026-11-12T02:45:00Z"}

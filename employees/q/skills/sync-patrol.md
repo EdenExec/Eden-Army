@@ -53,6 +53,6 @@ Raise a red alert to Radar only when the same item is still stale after 3 runs.
 ## Never
 
 - No pay, phones, emails, health, family or candidate detail on any bench. Sensitive benches (recruiting, revenue, finance, depth, family) still carry counts only.
-- No discreet client names (use "Client · discreet").
+- No client names on a tile, and never "Client · discreet" (no client is discreet since 13 Nov 2026).
 - Never write `actions` (those are Kev's taps), never approve, never delete.
 - Commit any code or source-map change and push: `git push -q origin HEAD:claude/pensive-brown-18gll8 HEAD:workshop/phase-0` (on rejection fetch, merge `origin/claude/pensive-brown-18gll8`, push again).

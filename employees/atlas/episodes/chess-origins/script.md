@@ -9,7 +9,7 @@ GUIDE: Historians follow clues, like detectives. Old books, old game pieces, old
 KID: Chaturanga. What does that mean?
 GUIDE: It means "four parts," and the four parts are the four parts of an old Indian army. Foot soldiers. Horses. Elephants. And chariots. G, look at your pieces and tell me which ones were the foot soldiers.
 KID: He's holding up a pawn. The little guys in the front row.
-GUIDE: Right. The pawns were the foot soldiers, marching in front. The horses are still horses. That's your knight. Now here's where it gets good. The elephants and the chariots.
+GUIDE: ...right... The pawns were the foot soldiers, marching in front. The horses are still horses. That's your knight. Now here's where it gets good. The elephants and the chariots.
 KID: There aren't any elephants on this board.
 GUIDE: There were. When the game went to Europe, people didn't really know what an elephant was doing on a battlefield, so the elephant changed. In English it became the bishop. In some other languages, it's still called the elephant today. And the chariot, a war wagon pulled by horses, that's the piece in the corner.
 KID: The rook was a chariot? That's why it goes in straight lines. Chariots can't turn very well.
@@ -30,12 +30,12 @@ GUIDE: There's an old Persian poem, written about a thousand years ago, called t
 KID: Could you do that, G? Figure out chess just from looking at it?
 GUIDE: He's shaking his head. Me neither.
 ---
-KID: Okay. Persia. Then what?
+KID: ...okay... Persia. Then what?
 GUIDE: Then the game kept traveling. Arab armies took over Persia, and the game spread across a huge part of the world, all the way to Baghdad, where the best players became famous. The oldest chess game we have written down comes from Baghdad, from more than a thousand years ago.
 KID: How did it get to Europe?
 GUIDE: Through Spain and Italy. By about the year one thousand, people were playing chess in much of Europe. And Europeans did what everybody did. They made the pieces look like their own world. The chariot became a castle tower. The elephant became a bishop. The counselor became a queen.
 KID: And knights stayed knights, because Europe had knights.
-GUIDE: Right. Now I want to tell you about the most famous chess set ever found. In eighteen thirty-one, on an island off the coast of Scotland called the Isle of Lewis, somebody dug up a pile of little carved chessmen. Almost a hundred pieces, carved from walrus tusk.
+GUIDE: ...right... Now I want to tell you about the most famous chess set ever found. In eighteen thirty-one, on an island off the coast of Scotland called the Isle of Lewis, somebody dug up a pile of little carved chessmen. Almost a hundred pieces, carved from walrus tusk.
 KID: Walrus tusk? Like the big teeth?
 GUIDE: The big teeth. They're about eight or nine hundred years old, and most experts think they were carved in Norway. They have grumpy little faces. Kings holding swords across their laps. Queens with their hands on their cheeks, looking worried.
 KID: Why are the queens worried?
@@ -55,7 +55,7 @@ KID: And he asked for gold?
 GUIDE: He asked for rice. One grain on the first square. Two on the second. Four on the third. Doubling every square, all the way to sixty-four.
 KID: That doesn't sound like much. Some rice.
 GUIDE: The king thought so too. G, let's try it. Put one finger on the first square. One grain. Next square, two. Next, four. Then eight, sixteen, thirty-two, sixty-four. You're only at the end of the first row and it's a hundred twenty-eight.
-KID: Okay, that's still a bowl of rice.
+KID: ...okay... That's still a bowl of rice.
 GUIDE: By the end of the second row, it's over thirty thousand grains on one square. By the middle of the board, it's billions. By the last square, the whole board adds up to more than eighteen quintillion grains.
 KID: What's a quintillion?
 GUIDE: It's a one with eighteen zeros after it. That much rice would weigh hundreds of billions of tons. More rice than the whole world grows in hundreds of years.

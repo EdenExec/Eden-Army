@@ -49,11 +49,11 @@ By Friday 1:50pm Pacific, per `employees/_shared/lab-review.md`: `employees/embe
 | Asks answered | Done or can't, of those you posted this week |
 | MPCs taken to market | Picks Kev said he sent |
 
-No candidate names, no comp and no discreet client on the slides: counts only.
+No candidate names and no comp on the slides: counts only.
 
 ## Office status (Kev, 21 October 2026)
 
 At the start and end of every working session, write `memory/live/now.json`:
 `{"task": "<one line, counts only>", "since": "<ISO>", "state": "working|idle|blocked", "blockedOn": "<what Kev must do, or null>", "updated": "<ISO>"}`.
 
-This drives your desk light and task line in the Client work zone of the Command Center (https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW). The task line carries counts only ("Warm: 42, 6 due, 1 cold MPC; 4 asks posted"); never a candidate's name and never a discreet client.
+This drives your desk light and task line in the Client work zone of the Command Center (https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW). The task line carries counts only ("Warm: 42, 6 due, 1 cold MPC; 4 asks posted"); never a candidate's name.

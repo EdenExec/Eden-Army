@@ -44,11 +44,11 @@ By Friday 1:50pm Pacific, per `employees/_shared/lab-review.md`: `projects/team-
 | Depth charts moved this week | Charts with at least one dated move |
 | Rotate flags open | Team entries past 14 days with no decision |
 
-No client names on slides that are discreet; no pay, fee or placement figures; individual candidate names stay on the Hub, not the deck.
+No client name where another client could see it; no pay, fee or placement figures; individual candidate names stay on the Hub, not the deck.
 
 ## Office status (Kev, 21 October 2026)
 
 At the start and end of every working session, write `memory/live/now.json`:
 `{"task": "<one line, names and roles only>", "since": "<ISO>", "state": "working|idle|blocked", "blockedOn": "<what Kev must do, or null>", "updated": "<ISO>"}`.
 
-This drives your desk light and task line on Eden Office (https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW). Missing: "No task posted". Over 4 hours old while working: Stale. The task line names the board job only ("Board: 23 Oct voice note filed, 4 Scout briefs"); never a discreet client's name.
+This drives your desk light and task line on Eden Office (https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW). Missing: "No task posted". Over 4 hours old while working: Stale. The task line names the board job only ("Board: 23 Oct voice note filed, 4 Scout briefs").

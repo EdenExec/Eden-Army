@@ -18,11 +18,21 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--ui);margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:190px minmax(0,1fr);gap:28px}
-header.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px}
+header.top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+a.home{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--ui);color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--page);border-radius:4px;padding:9px 14px}
+.top-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+a.home:hover{background:var(--soft)} a.home:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 h1{font:600 26px/1.1 var(--display);letter-spacing:.08em;margin:0}
 .sub{color:var(--mute);font-size:13px}
 .eyebrow{font:600 11px/1.3 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-nav.rooms{display:flex;flex-direction:column;gap:2px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start}
+.rail{display:flex;flex-direction:column;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;min-width:0;max-height:calc(100vh - 32px);overflow:auto}
+nav.rooms{display:flex;flex-direction:column;gap:2px}
+nav.rooms a.title{font:700 17px/1.3 var(--ui);letter-spacing:.01em}
+details.more>summary{list-style:none;cursor:pointer;padding:8px 10px;border-radius:4px;font:600 11px/1.3 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:'+';font-size:14px;letter-spacing:0} details.more[open]>summary::after{content:'\2212'}
+details.more>summary:hover{background:var(--page)}
+details.more[open]{display:flex;flex-direction:column;gap:2px}
 nav.rooms a{display:flex;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:4px;color:var(--ink);text-decoration:none;font-weight:500}
 nav.rooms a small{color:var(--mute);font-weight:400;font-variant-numeric:tabular-nums}
 nav.rooms a:hover{background:var(--page)} nav.rooms a[aria-current="page"]{background:var(--soft);font-weight:600}
@@ -84,11 +94,61 @@ details.study .in{padding:0 16px 16px;display:flex;flex-direction:column;gap:10p
 .stream-h{display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--ink);padding-left:12px}
 .answer{font:400 15.5px/1.7 var(--read);white-space:pre-wrap}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pr{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;border-top:1px solid var(--line);padding-top:10px}
+.pr:first-of-type{border-top:0;padding-top:0}
+.pr .who{font-weight:600} .pr .for{font:400 15px/1.55 var(--read)} .pr.done .who{text-decoration:line-through;color:var(--mute)}
+.script{display:flex;flex-direction:column;gap:8px;max-height:420px;overflow:auto;padding-right:4px}
+.script p{font:400 15px/1.6 var(--read)} .script b{font:600 11px/1 var(--ui);letter-spacing:.12em;margin-right:6px}
+.script p.speaking{background:var(--soft);border-radius:4px;outline:4px solid var(--soft)}
+.pod-ctl{display:flex;gap:12px;align-items:center;justify-content:center}
+.cbtn{background:none;border:1px solid var(--line);color:var(--ink);width:46px;height:46px;border-radius:50%;padding:0;display:grid;place-items:center;cursor:pointer;position:relative}
+.cbtn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cbtn .n{position:absolute;bottom:4px;font:600 8.5px/1 var(--ui);letter-spacing:.04em}
+.cbtn.play{width:58px;height:58px;background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cbtn.play svg{fill:currentColor;stroke:none;width:24px;height:24px}
+.cbtn.sm{width:38px;height:38px} .cbtn.sm svg{width:17px;height:17px}
+.cbtn:hover{background:var(--soft)} .cbtn.play:hover{background:var(--ink);opacity:.9}
+.pod-time{text-align:center;font:500 12px/1 var(--ui);color:var(--mute);font-variant-numeric:tabular-nums}
+.pod-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;cursor:pointer} .pod-bar i{display:block;height:100%;width:0;background:var(--ink)}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow:auto}
+.modal>.sheet{width:min(640px,100%);max-height:100%;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.pw{display:flex;flex-direction:column;gap:6px;padding:0 10px}
+.pw-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.pw-list li{border-bottom:1px solid var(--line)} .pw-list li:last-child{border-bottom:0}
+.pw-row{display:flex;align-items:center;gap:8px;padding:4px 0;min-width:0}
+.pw-name{flex:1;min-width:0;text-align:left;border:0;background:none;padding:0;font:400 13px/1.35 var(--ui);color:var(--ink);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pw-name[aria-expanded="true"]{font-weight:600}
+.pw-detail{display:flex;flex-direction:column;gap:4px;padding:0 0 8px 22px}
+.pw-detail textarea{min-height:0;font:13px/1.45 var(--read);padding:5px 8px;background:transparent}
+.pw-detail .link{align-self:flex-start;font-size:12px;padding:0}
+.pw-list input[type=checkbox]{width:14px;height:14px;margin:0;flex:none}
+.pw-list li.done .pw-name{color:var(--mute);text-decoration:line-through}
+.pw input[type=text]{font:13px/1.3 var(--ui);padding:5px 8px;background:transparent}
+.pw-more{font:500 12px/1.3 var(--ui);color:var(--mute)}
+.onair{display:inline-flex;align-items:center;gap:7px;font:600 11px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:#C0392B}
+.onair i{width:9px;height:9px;border-radius:50%;background:#E5483B;box-shadow:0 0 0 0 rgba(229,72,59,.6);animation:onair 1.6s ease-in-out infinite}
+.onair.amber{color:#B7791F} .onair.amber i{background:#E9A23B;animation:blink 1.1s ease-in-out infinite}
+.onair.green{color:#2F7A4A} .onair.green i{background:#3FA46A;animation:glowg 2.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px 1px rgba(233,162,59,.7)}50%{opacity:.25;box-shadow:none}}
+@keyframes glowg{0%,100%{box-shadow:0 0 3px 1px rgba(63,164,106,.35)}50%{box-shadow:0 0 9px 3px rgba(63,164,106,.6)}}
+@keyframes onair{0%{box-shadow:0 0 0 0 rgba(229,72,59,.55);opacity:1}70%{box-shadow:0 0 0 8px rgba(229,72,59,0);opacity:.75}100%{box-shadow:0 0 0 0 rgba(229,72,59,0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.onair i{animation:none!important}}
+details.fold>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary .fold-t{font-weight:600}
+details.fold>summary .fold-t::before{content:'\25B8';display:inline-block;width:16px;color:var(--mute);transition:transform .15s}
+details.fold[open]>summary .fold-t::before{transform:rotate(90deg)}
+details.fold>summary .fold-n{font:500 12px/1 var(--ui);color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fold-in{display:flex;flex-direction:column;gap:10px;padding:10px 0 4px 16px;min-width:0}
+details.fold.sheet{padding:10px 18px} details.fold.sheet>summary{border-bottom:0}
+.fold-add{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.fold-add textarea{min-height:0}
+.fold-in>button,.fold-in>.link{align-self:flex-start}
+.gen{font:500 14.5px/1.9 var(--read)}
 @media (max-width:900px){.cols{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
-  nav.rooms{position:static;flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:4px}
-  nav.rooms a{white-space:nowrap} nav.rooms a small{display:none}
+  .rail{position:static;max-height:none;overflow:visible}
   .sheet{padding:16px}
 }
 footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;font:600 11px/1.3 var(--ui);letter-spacing:.14em;color:var(--mute)}
@@ -102,24 +162,32 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     <div><span class="eyebrow">KDTW GROUP · Sabbath study</span><h1>BARNY'S WORKSHOP</h1></div>
     <div class="sub" id="state">Opening the workshop…</div>
   </header>
+  <div class="rail">
   <nav class="rooms" aria-label="Rooms">
-    <a href="#sabbath" data-room="sabbath">This Sabbath</a>
-    <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
-    <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
-    <a href="#people" data-room="people">Saints and teachers <small id="n-people"></small></a>
-    <a href="#charts" data-room="charts">Charts and maps</a>
-    <a href="#ahead" data-room="ahead">Look ahead</a>
-    <a href="#podcasts" data-room="podcasts">Podcasts</a>
+    <a href="#sabbath" data-room="sabbath" class="title">This Sabbath</a>
+    <details class="more" id="rooms-more">
+      <summary>Rooms</summary>
+      <a href="#timeline" data-room="timeline">Biblical Timeline</a>
+      <a href="#journal" data-room="journal">Journal <small id="n-journal"></small></a>
+      <a href="#prayer" data-room="prayer">Prayer list and answers <small id="n-prayer"></small></a>
+      <a href="#studies" data-room="studies">Studies <small id="n-studies"></small></a>
+      <a href="#people" data-room="people">Saints and teachers <small id="n-people"></small></a>
+      <a href="#charts" data-room="charts">Charts and maps</a>
+      <a href="#ahead" data-room="ahead">Look ahead</a>
+      <a href="#podcasts" data-room="podcasts">Podcasts</a>
+    </details>
   </nav>
+  <div id="rail-prayer"></div>
+  </div>
   <main id="main" aria-live="polite"></main>
   <footer class="kd"><span>KDTW GROUP</span><span class="mono" role="img" aria-label="KDTW monogram">KDTW</span></footer>
 </div>
 
 <script>
 (function () {
-  var ROOMS = ['sabbath', 'journal', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
+  var ROOMS = ['sabbath', 'timeline', 'journal', 'prayer', 'studies', 'people', 'charts', 'ahead', 'podcasts'];
   var KINDS = [['learned', 'Learned this week'], ['study', 'Study note'], ['question', 'Question'], ['prayer', 'Prayer'], ['carry', 'To carry']];
-  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], progress: {}, rhythm: {}, pick: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
+  var S = { db: null, uid: null, live: false, sabbath: [], framework: null, studies: [], people: [], next: [], podcasts: [], charts: [], journal: [], prayers: [], eps: [], voices: {}, pod: { busy: false, text: '', err: '' }, podForm: null, tl: null, tlErr: false, podNote: null, pwOpen: null, answering: null, progress: {}, rhythm: {}, pick: null, more: null, sabSel: null, sample: null, filter: 'all', peopleKind: 'all', draft: null, asking: false, answer: '' };
   var $ = function (s) { return document.querySelector(s); };
   function h(tag, attrs) {
     var el = document.createElement(tag), kids = Array.prototype.slice.call(arguments, 2);
@@ -159,14 +227,20 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
         listen('charts', 'charts', function (a, b) { return (a.order || 0) - (b.order || 0); });
         db.doc('meta/framework').onSnapshot(function (s) { S.framework = s.exists ? s.data() : null; render(); }, function () {});
         db.collection('data/users/' + id).onSnapshot(function (snap) {
-          var j = [];
+          var j = [], pr = [], ep = [];
           snap.docs.forEach(function (d) {
             var v = d.data() || {};
             if (d.id === 'progress') S.progress = v.studies || {};
-            else if (d.id === 'choices') S.pick = v.next || null;
+            else if (d.id === 'choices') { S.pick = v.next || null; S.more = v.more || null; }
             else if (d.id.indexOf('rhythm-') === 0) S.rhythm[d.id.slice(7)] = v.ticks || {};
             else if (d.id.indexOf('j-') === 0) j.push(Object.assign({ id: d.id }, v));
+            else if (d.id.indexOf('p-') === 0) pr.push(Object.assign({ id: d.id }, v));
+            else if (d.id.indexOf('ep-') === 0) ep.push(Object.assign({ id: d.id }, v));
+            else if (d.id === 'voices') S.voices = v;
           });
+          pr.sort(function (a, b) { return String(b.started).localeCompare(String(a.started)); });
+          ep.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
+          S.prayers = pr; S.eps = ep;
           j.sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
           S.journal = j; render();
         }, function () {});
@@ -182,6 +256,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (!S.live) return Promise.reject(new Error('offline'));
     var id = e.id || ('j-' + Date.now().toString(36));
     var doc = { kind: e.kind, text: e.text, ref: e.ref || '', prompt: e.prompt || '', sabbath: e.sabbath || '', at: e.at || new Date().toISOString(), edited: e.id ? new Date().toISOString() : null, notion: e.notion || false };
+    if (e.ep) { doc.ep = e.ep; doc.tag = e.tag || 'note'; }
     return saved(mine(id).set(doc));
   }
 
@@ -190,17 +265,71 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     var r = room(), m = $('#main');
     document.querySelectorAll('nav.rooms a').forEach(function (a) { if (a.getAttribute('data-room') === r) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     $('#n-journal').textContent = S.journal.length || '';
+    $('#n-prayer').textContent = S.prayers.filter(function (x) { return !x.answered; }).length || '';
     $('#n-studies').textContent = S.studies.length || '';
     $('#n-people').textContent = S.people.length || '';
-    var ae = document.activeElement, keep = ae && ae.id && m.contains(ae) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
-    if (keep && /^(TEXTAREA|INPUT|SELECT)$/.test(ae.tagName)) return;   // never rebuild under someone typing
-    m.textContent = '';
-    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts })[r](m);
+    var rail = $('#rail-prayer'), ae = document.activeElement, keep = ae && ae.id && (m.contains(ae) || rail.contains(ae)) ? { id: ae.id, s: ae.selectionStart, e: ae.selectionEnd } : null;
+    if (keep && (/^(TEXTAREA|SELECT)$/.test(ae.tagName) || (ae.tagName === 'INPUT' && ae.type !== 'checkbox'))) return;   // never rebuild under someone typing (a ticked box may rebuild; focus comes back below)
+    m.textContent = ''; rail.textContent = ''; rail.appendChild(prayerBox());
+    ({ sabbath: roomSabbath, journal: roomJournal, studies: roomStudies, people: roomPeople, charts: roomCharts, ahead: roomAhead, podcasts: roomPodcasts, prayer: roomPrayer, timeline: roomTimeline })[r](m);
+    var rh = m.querySelector('.room-h');   // Home sits under the date (or the room's label) on every room
+    if (rh) {
+      var right = rh.children.length > 1 ? rh.lastElementChild : null, col = h('div', { class: 'top-right' });
+      var hb = h('a', { href: '#sabbath', class: 'home', id: 'home', 'aria-label': 'Home: This Sabbath' }); hb.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 7.5 8 2.5l6 5M3.5 6.5V13.5h3.5V9.5h2v4h3.5V6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg><span>Home</span>';
+      hb.addEventListener('click', function () { S.sabSel = null; if (location.hash === '#sabbath') { render(); window.scrollTo(0, 0); } });
+      if (right) col.appendChild(right); col.appendChild(hb); rh.appendChild(col);
+    }
+    if (keep) { var back = document.getElementById(keep.id); if (back && back !== document.activeElement) back.focus({ preventScroll: true }); }
+  }
+
+  /* A Sabbath doc may belong to a series (study + session). The room opens on the first one not yet completed. */
+  function sabKey(s) { return [s.study || 'sabbath', s.session || s.id]; }
+  function sabDone(s) { var k = sabKey(s); return !!((S.progress[k[0]] || {})[k[1]]); }
+  function sabSeries(study) { return S.sabbath.filter(function (d) { return d.study === study; }).sort(function (a, b) { return (a.session || 0) - (b.session || 0); }); }
+  function sabCurrent() {
+    if (!S.sabbath.length) return null;
+    var pick = S.sabSel && S.sabbath.filter(function (d) { return d.id === S.sabSel; })[0]; if (pick) return pick;
+    var today = new Date().toISOString().slice(0, 10), asc = S.sabbath.slice().sort(function (a, b) { return String(a.date || a.id).localeCompare(String(b.date || b.id)); });
+    var past = asc.filter(function (d) { return String(d.date || d.id).slice(0, 10) <= today; }), anchor = past.length ? past[past.length - 1] : asc[0];
+    if (!anchor.study) return anchor;
+    var series = sabSeries(anchor.study);
+    return series.filter(function (d) { return !sabDone(d); })[0] || series[series.length - 1];
+  }
+  function setSabDone(s, val) {
+    var k = sabKey(s), all = Object.assign({}, S.progress), p = Object.assign({}, all[k[0]] || {}); p[k[1]] = val; all[k[0]] = p; S.progress = all;
+    return saved(mine('progress').set({ studies: all, at: new Date().toISOString() }));
+  }
+  function completeBox(s, series) {
+    var box = h('div', { class: 'practice row' }), done = sabDone(s), i = series.indexOf(s), next = i >= 0 ? series[i + 1] : null;
+    if (!S.live) { box.appendChild(h('p', { class: 'note', text: 'Open this page in Claude, signed in, to mark the study complete.' })); return box; }
+    if (!done) {
+      var b = h('button', { class: 'primary', type: 'button', text: 'Complete this study' });
+      b.addEventListener('click', function () { b.disabled = true; setSabDone(s, true).then(function () { S.sabSel = next ? next.id : s.id; render(); window.scrollTo(0, 0); }, function () { b.disabled = false; }); render(); });
+      box.appendChild(b);
+      if (next) box.appendChild(h('span', { class: 'note', text: 'Next: ' + ((next.passage || {}).ref || next.title) }));
+      return box;
+    }
+    box.appendChild(h('span', { class: 'status next', text: 'Completed' }));
+    if (next) { var go = h('button', { class: 'primary', type: 'button', text: 'Go to the next study: ' + ((next.passage || {}).ref || next.title) }); go.addEventListener('click', function () { S.sabSel = next.id; render(); window.scrollTo(0, 0); }); box.appendChild(go); }
+    else if (s.study) {
+      var asked = S.more === s.study, more = h('button', { class: asked ? '' : 'primary', type: 'button', 'aria-pressed': String(asked), text: asked ? 'Asked for the next chapters' : 'Ask Barny for the next chapters' });
+      more.addEventListener('click', function () { S.more = asked ? null : s.study; saved(mine('choices').set({ next: S.pick, more: S.more, at: new Date().toISOString() })).catch(function () {}); render(); });
+      box.appendChild(more);
+      box.appendChild(h('span', { class: 'note', text: asked ? 'Barny sees this the next time you open his session, and sets out the next chapters in this same layout.' : 'This is the last session set out so far.' }));
+    }
+    var undo = h('button', { class: 'link', type: 'button', text: 'Mark not done' }); undo.addEventListener('click', function () { setSabDone(s, false).catch(function () {}); S.sabSel = s.id; render(); }); box.appendChild(undo);
+    return box;
   }
 
   function roomSabbath(m) {
-    var s = S.sabbath[0];
-    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'This Sabbath' }), h('span', { class: 'eyebrow', text: s ? fmtDate(s.date || s.id) : '' })));
+    var s = sabCurrent(), today = new Date().toISOString().slice(0, 10), when = s ? String(s.date || s.id) : '';
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'This Sabbath' }), h('span', { class: 'eyebrow', text: s ? (when.slice(0, 10) > today ? 'Planned for ' : '') + fmtDate(when) : '' })));
+    var series = s && s.study ? sabSeries(s.study) : [];
+    if (series.length > 1) {
+      var strip = h('div', { class: 'chips', role: 'group', 'aria-label': 'Studies in this series' });
+      series.forEach(function (d) { var c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(d.id === s.id), text: (sabDone(d) ? '\u2713 ' : '') + (d.session ? d.session + ' \u00b7 ' : '') + ((d.passage || {}).ref || d.title || d.id) }); c.addEventListener('click', function () { S.sabSel = d.id; render(); }); strip.appendChild(c); });
+      m.appendChild(strip);
+    }
     if (!s) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: S.live ? 'Barny sets out each Sabbath\'s passage, study and practice here by Friday afternoon.' : 'The passage, study and practice for the Sabbath appear here.' }))); return; }
     var cols = h('div', { class: 'cols' }), sh = h('article', { class: 'sheet reading' });
     var p = s.passage || {};
@@ -208,6 +337,7 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (s.readAloud) sh.appendChild(h('blockquote', { text: s.readAloud }));
     if (s.readAloud && s.readAloudNote) sh.appendChild(h('p', { class: 'note', text: s.readAloudNote }));
     if (s.setting) { sh.appendChild(h('h3', { text: 'The setting' })); sh.appendChild(h('p', { text: s.setting })); }
+    (s.sections || []).forEach(function (x) { sh.appendChild(h('h3', null, x.heading || '', grade(x.grade))); sh.appendChild(h('p', { text: x.body || '' })); });
     list(sh, 'Look closely', s.observe, 'ol');
     if ((s.words || []).length) { sh.appendChild(h('h3', { text: 'Word by word' })); var dl = h('dl', { class: 'words' }); s.words.forEach(function (w) { dl.appendChild(h('dt', null, '“' + w.word + '”' + (w.orig ? ' · ' + w.orig : ''), grade(w.grade))); dl.appendChild(h('dd', { text: w.note || '' })); }); sh.appendChild(dl); }
     if ((s.crossRefs || []).length) { sh.appendChild(h('h3', { text: 'Across the Bible' })); var ul = h('ul', { class: 'q' }); s.crossRefs.forEach(function (c) { ul.appendChild(h('li', null, link(c.ref, c.link), c.note ? ' · ' + c.note : '')); }); sh.appendChild(ul); }
@@ -215,7 +345,9 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     if (s.practice) sh.appendChild(h('div', { class: 'practice' }, h('span', { class: 'eyebrow', text: 'Practice' + (s.practice.stream ? ' · ' + s.practice.stream : '') }), h('h3', { text: s.practice.name || '' }), h('p', { text: s.practice.how || '' })));
     if (s.pray) { sh.appendChild(h('h3', { text: 'Pray' })); sh.appendChild(h('p', { text: s.pray })); }
     if (s.carry) sh.appendChild(h('p', { class: 'note' }, 'Carry into the week: ', link(s.carry, s.carryLink || 'https://www.esv.org/' + encodeURIComponent(s.carry) + '/')));
+    sh.appendChild(completeBox(s, series));
     var side = h('aside');
+    side.appendChild(podWidget(s));
     side.appendChild(rhythmBox(s));
     side.appendChild(promptsBox(s));
     side.appendChild(askBox(s));
@@ -375,15 +507,344 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     sec.appendChild(h('p', { class: 'note', text: S.pick ? 'Your pick is marked. Barny reads it when he plans the next Sabbaths.' : 'Pick one. Barny reads your pick when he plans the next Sabbaths. His recommendation is first.' }));
     S.next.forEach(function (n, i) {
       var picked = S.pick === n.id, b = h('button', { type: 'button', class: picked ? 'primary' : '', 'aria-pressed': String(picked), text: picked ? 'Your pick' : 'Pick this' }); b.disabled = !S.live;
-      b.addEventListener('click', function () { S.pick = picked ? null : n.id; saved(mine('choices').set({ next: S.pick, at: new Date().toISOString() })).catch(function () {}); render(); });
+      b.addEventListener('click', function () { S.pick = picked ? null : n.id; saved(mine('choices').set({ next: S.pick, more: S.more, at: new Date().toISOString() })).catch(function () {}); render(); });
       sec.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: (n.stream || '') + (i === 0 ? ' · Barny\'s recommendation' : '') })), h('h3', { text: n.title }), h('p', { text: n.why || '' }), h('div', { class: 'row' }, b)));
     });
     m.appendChild(sec);
   }
 
+  /* ---------- prayer (private to Kev: data/users/<id>/p-*) ---------- */
+  function dayKey() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function savePrayer(x) { var doc = { who: x.who, for: x.for || '', started: x.started, days: x.days || [], answered: !!x.answered, answeredAt: x.answeredAt || null, answer: x.answer || '' }; return saved(mine(x.id).set(doc)); }
+  function prayRow(x, compact) {
+    var t = dayKey(), today = (x.days || []).indexOf(t) >= 0;
+    var cb = h('input', { type: 'checkbox', id: 'pr-' + x.id, 'aria-label': 'Prayed for ' + x.who + ' today' }); cb.checked = today; cb.disabled = !S.live;
+    cb.addEventListener('change', function () { var d = (x.days || []).filter(function (k) { return k !== t; }); if (cb.checked) d.push(t); savePrayer(Object.assign({}, x, { days: d })).catch(function () {}); });
+    var n = (x.days || []).length, body = h('div', null, h('div', { class: 'who', text: x.who }), x.for ? h('div', { class: 'for', text: x.for }) : null,
+      compact ? null : h('div', { class: 'note', text: 'Praying since ' + (x.started ? new Date(x.started).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '') + ' · prayed on ' + n + (n === 1 ? ' day' : ' days') }));
+    if (!compact && S.live) {
+      if (S.answering === x.id) {
+        var ta = h('textarea', { id: 'pr-ans-' + x.id, 'aria-label': 'How God answered', placeholder: 'How did God answer?', rows: '3' }), ok = h('button', { class: 'primary', type: 'button', text: 'Mark answered' }), no = h('button', { type: 'button', text: 'Cancel' });
+        ok.addEventListener('click', function () { S.answering = null; savePrayer(Object.assign({}, x, { answered: true, answeredAt: new Date().toISOString(), answer: ta.value.trim() })).catch(function () {}); ta.blur(); render(); });
+        no.addEventListener('click', function () { S.answering = null; render(); });
+        body.appendChild(ta); body.appendChild(h('div', { class: 'row' }, ok, no));
+      } else {
+        var ans = h('button', { class: 'link', type: 'button', text: 'Answered' }); ans.addEventListener('click', function () { S.answering = x.id; render(); });
+        var del = h('button', { class: 'link', type: 'button', text: 'Remove' });
+        del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(x.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Remove for good?'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Remove'; }, 4000); });
+        body.appendChild(h('div', { class: 'row' }, ans, del));
+      }
+    }
+    return h('div', { class: 'pr' + (today ? ' done' : '') }, cb, body);
+  }
+  function addPrayerForm() {
+    var who = h('input', { type: 'text', id: 'pr-new-who', 'aria-label': 'Who needs prayer', placeholder: 'Who needs prayer?' });
+    var what = h('input', { type: 'text', id: 'pr-new-for', 'aria-label': 'What to pray for', placeholder: 'What to pray for (optional)' });
+    var b = h('button', { class: 'primary', type: 'submit', text: 'Add to the list' }); b.disabled = !S.live;
+    var f = h('form', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Add someone' }), h('div', { class: 'row' }, h('div', { style: 'flex:1 1 180px;min-width:0' }, who), h('div', { style: 'flex:2 1 240px;min-width:0' }, what)), h('div', { class: 'row' }, b));
+    f.addEventListener('submit', function (e) { e.preventDefault(); var w = who.value.trim(); if (!w) return; var x = { id: 'p-' + Date.now().toString(36), who: w, for: what.value.trim(), started: new Date().toISOString(), days: [] }; who.value = ''; what.value = ''; who.blur(); what.blur(); savePrayer(x).catch(function () {}); });
+    return f;
+  }
+  function roomPrayer(m) {
+    var act = S.prayers.filter(function (x) { return !x.answered; }), done = S.prayers.filter(function (x) { return x.answered; }).sort(function (a, b) { return String(b.answeredAt).localeCompare(String(a.answeredAt)); });
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Who needs prayer?' }), h('span', { class: 'eyebrow', text: 'Private to you' })));
+    m.appendChild(addPrayerForm());
+    var list = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Praying for (' + act.length + ')' }), h('p', { class: 'note', text: 'Tick each one as you pray today. Ticks start fresh each morning; the count keeps the history. This list lives only in your account; Barny never reads it unless you bring it to him.' }));
+    if (!act.length) list.appendChild(h('p', { class: 'empty', text: S.live ? 'Add the first name above.' : 'Open this page in Claude, signed in, to keep your prayer list.' }));
+    act.forEach(function (x) { list.appendChild(prayRow(x)); });
+    m.appendChild(list);
+    var ans = h('section', { class: 'sheet' }, h('span', { class: 'eyebrow', text: 'Answered prayers (' + done.length + ')' }));
+    if (!done.length) ans.appendChild(h('p', { class: 'empty', text: 'When God answers, tap Answered and write how. They gather here to remember (Psalm 77:11).' }));
+    done.forEach(function (x) {
+      var back = h('button', { class: 'link', type: 'button', text: 'Keep praying' }); back.addEventListener('click', function () { savePrayer(Object.assign({}, x, { answered: false, answeredAt: null })).catch(function () {}); });
+      ans.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: x.who + (x.for ? ' · ' + x.for : '') }), h('span', { text: 'Answered ' + (x.answeredAt ? new Date(x.answeredAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '') })), x.answer ? h('p', { class: 'body', text: x.answer }) : null, h('div', { class: 'row' }, back)));
+    });
+    m.appendChild(ans);
+  }
+  /* The prayer widget: the same shape as The Rhythm (tick, name, a quiet count on the right), with a quick add and answered prayers kept. */
+  function prayerBox() {
+    var t = dayKey(), act = S.prayers.filter(function (x) { return !x.answered; });
+    var box = h('section', { class: 'pw' }, h('span', { class: 'eyebrow', text: 'Who needs prayer?' }));
+    var ul = h('ul', { class: 'pw-list' });
+    act.forEach(function (x) {
+      var on = (x.days || []).indexOf(t) >= 0, cb = h('input', { type: 'checkbox', id: 'pw-' + x.id, 'aria-label': 'Prayed for ' + x.who + ' today' }); cb.checked = on; cb.disabled = !S.live;
+      cb.addEventListener('change', function () { var d = (x.days || []).filter(function (k) { return k !== t; }); if (cb.checked) d.push(t); savePrayer(Object.assign({}, x, { days: d })).catch(function () {}); });
+      var open = S.pwOpen === x.id, nm = h('button', { type: 'button', class: 'pw-name', 'aria-expanded': String(open), text: x.who });
+      nm.addEventListener('click', function () { S.pwOpen = open ? null : x.id; render(); });
+      var li = h('li', { class: on ? 'done' : '' }, h('div', { class: 'pw-row' }, cb, nm));
+      if (open) {
+        var req = h('textarea', { id: 'pw-req-' + x.id, rows: '2', 'aria-label': 'What to pray for', placeholder: 'What to pray for' }); req.value = x.for || '';
+        function saveReq() { var v = req.value.trim(); if (v !== (x.for || '')) savePrayer(Object.assign({}, x, { for: v })).catch(function () {}); }
+        req.addEventListener('blur', saveReq); req.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); req.blur(); } });
+        var ans = h('button', { class: 'link', type: 'button', text: 'Answered' }); ans.addEventListener('click', function () { S.answering = x.id; S.pwOpen = null; location.hash = '#prayer'; });
+        li.appendChild(h('div', { class: 'pw-detail' }, req, ans));
+      }
+      ul.appendChild(li);
+    });
+    if (act.length) box.appendChild(ul);
+    if (S.live) {
+      var who = h('input', { type: 'text', id: 'pw-new', 'aria-label': 'Add a name', placeholder: '+ Add a name' });
+      var f = h('form', null, who);
+      f.addEventListener('submit', function (e) { e.preventDefault(); var w = who.value.trim(); if (!w) return; who.value = ''; who.blur(); savePrayer({ id: 'p-' + Date.now().toString(36), who: w, for: '', started: new Date().toISOString(), days: [] }).then(function () { setTimeout(function () { var n = document.getElementById('pw-new'); if (n) n.focus(); }, 30); }, function () {}); });
+      box.appendChild(f);
+    }
+    var go = h('a', { href: '#prayer', class: 'pw-more', text: 'Full list and answers' }); box.appendChild(go);
+    return box;
+  }
+
+  /* ---------- podcast: Barny writes a two-voice script with Atlas; the browser reads it aloud ---------- */
+  function parseScript(t) {
+    var out = [];
+    String(t || '').split(/\n+/).forEach(function (ln) {
+      var m = ln.match(/^\s*\**\s*(BARNY|ATLAS)\s*\**\s*:\s*(.*)$/i);
+      if (m) out.push({ who: m[1].toLowerCase(), text: m[2].trim() }); else if (out.length && ln.trim()) out[out.length - 1].text += ' ' + ln.trim();
+    });
+    return out.filter(function (x) { return x.text; });
+  }
+  function playerControls(ep) {
+    if (ep.audio) { var a = h('audio', { controls: true, preload: 'none', src: ep.audio }); a.style.width = '100%'; return a; }
+    return h('p', { class: 'note', text: ep.studio === 'requested' ? 'Rendering with ElevenLabs is requested: Barny renders it in his session and it plays here.' : 'Script ready. Tap "Render with ElevenLabs" and Barny renders it in your chosen voices.' });
+  }
+  function scriptView(ep) {
+    var box = h('div', { class: 'script', role: 'list' });
+    parseScript(ep.script).forEach(function (t, i) { box.appendChild(h('p', { id: 'ln-' + ep.id + '-' + i, role: 'listitem' }, h('b', { text: t.who === 'atlas' ? 'ATLAS' : 'BARNY' }), t.text)); });
+    return box;
+  }
+  function studioButton(ep) {
+    if (ep.audio || ep.studio === 'rendering') return null; var asked = ep.studio === 'requested', b = h('button', { class: asked ? 'link' : 'primary', type: 'button', text: asked ? 'Render requested (tap to cancel)' : 'Render with ElevenLabs' });
+    b.addEventListener('click', function () { var d = Object.assign({}, ep); delete d.id; d.studio = asked ? null : 'requested'; saved(mine(ep.id).set(d)).catch(function () {}); });
+    return b;
+  }
+  var POD_LENGTHS = [[5, 'About 5 minutes'], [10, 'About 10 minutes'], [15, 'About 15 minutes'], [20, 'About 20 minutes']];
+  function podPrompt(s, f) {
+    var mins = +f.length || 10, words = mins * 150;
+    var parts = ['Study: ' + (s.title || '') + ' (' + ((s.passage || {}).ref || '') + ')'];
+    if (s.readAloud) parts.push('ESV text you may quote exactly: ' + s.readAloud);
+    if (s.setting) parts.push('Setting: ' + s.setting);
+    (s.sections || []).forEach(function (x) { parts.push(x.heading + (x.grade ? ' [' + x.grade + ']' : '') + ': ' + x.body); });
+    if ((s.reflect || []).length) parts.push('Questions: ' + s.reflect.join(' | '));
+    if (s.practice) parts.push('Practice: ' + s.practice.name + '. ' + s.practice.how);
+    if (s.carry) parts.push('Verse to carry: ' + s.carry);
+    var brief = ['Themes Kev wants: ' + (f.themes || 'the study as a whole'), 'Focus areas: ' + ((f.focus || []).concat(f.focusOther ? [f.focusOther] : []).join('; ') || 'Barny\'s choice'), 'Direction from Kev: ' + (f.direction || 'none given')].join('\n');
+    return 'Write a podcast script: a warm two-voice conversation about this Bible study between BARNY (Barnabas, Kev\'s spiritual advisor: Scripture-first, historically orthodox and evangelical, encouraging) and ATLAS (a curious tutor who asks the questions a thoughtful listener would ask and pushes for plain, everyday examples). The listener is Kev: a husband, father and business owner who studies on Saturdays.\n\nKev\'s brief for this episode:\n' + brief + '\nFollow his themes, focus and direction closely.\n\nLength: about ' + words + ' words (' + mins + ' minutes spoken). Format: every line starts with "BARNY:" or "ATLAS:". No headings, stage directions, lists, markdown or emoji. Spoken English, contractions, short sentences.\n\nRules: quote Scripture only from the ESV text given below, word for word; for any other verse, name the reference and paraphrase. Where faithful Christians differ (anything marked DISPUTED), say so plainly, give the main views fairly, and suggest bringing it to his pastor; never pick a side on a secondary matter. Never claim a word from God or invent a quotation from a teacher. Open with a vivid question, not "welcome to the show". Close with one sentence to carry and the practice.\n\n' + parts.join('\n\n');
+  }
+  function podForm(s) {
+    var f = S.podForm, wrap = h('form', { class: 'sheet' }, h('h3', { text: 'Generate new podcast' }), h('p', { class: 'note', text: 'A few questions so Barny and Atlas head in the right direction.' }));
+    function keep(k, v) { f[k] = v; store('bw-podform', f); }
+    var themes = h('input', { type: 'text', id: 'pf-themes', 'aria-label': 'Themes', placeholder: 'Themes, e.g. rest, the finished work, drifting' }); themes.value = f.themes || ''; themes.addEventListener('input', function () { keep('themes', themes.value); });
+    wrap.appendChild(h('label', { for: 'pf-themes', class: 'note', text: 'Themes' })); wrap.appendChild(themes);
+    wrap.appendChild(h('span', { class: 'note', text: 'Focus areas (pick any)' }));
+    var chips = h('div', { class: 'chips' });
+    (s.sections || []).map(function (x) { return x.heading; }).concat(['Application at Eden', 'Husband and father', 'Prayer']).forEach(function (t) {
+      var on = (f.focus || []).indexOf(t) >= 0, c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(on), text: t });
+      c.addEventListener('click', function () { var a = (f.focus || []).filter(function (x) { return x !== t; }); if (!on) a.push(t); f.focus = a; store('bw-podform', f); render(); });
+      chips.appendChild(c);
+    });
+    wrap.appendChild(chips);
+    var other = h('input', { type: 'text', id: 'pf-other', 'aria-label': 'Other focus', placeholder: 'Anything else to focus on (optional)' }); other.value = f.focusOther || ''; other.addEventListener('input', function () { keep('focusOther', other.value); });
+    wrap.appendChild(other);
+    var dir = h('textarea', { id: 'pf-dir', 'aria-label': 'Direction', rows: '3', placeholder: 'Any direction: tone, a question to answer, who it is for (e.g. "talk to me as a leader going into a hard week")' }); dir.value = f.direction || ''; dir.addEventListener('input', function () { keep('direction', dir.value); });
+    wrap.appendChild(h('label', { for: 'pf-dir', class: 'note', text: 'Direction' })); wrap.appendChild(dir);
+    var len = h('select', { id: 'pf-len', 'aria-label': 'Ideal length' }); POD_LENGTHS.forEach(function (l) { var o = h('option', { value: String(l[0]), text: l[1] }); if (+f.length === l[0]) o.selected = true; len.appendChild(o); }); len.addEventListener('change', function () { keep('length', len.value); });
+    wrap.appendChild(h('label', { for: 'pf-len', class: 'note', text: 'Ideal length' })); wrap.appendChild(len);
+    var go = h('button', { class: 'primary', type: 'submit', text: 'Write the script' }), cancel = h('button', { type: 'button', text: 'Cancel' });
+    cancel.addEventListener('click', function () { S.podForm = null; store('bw-podform', null); render(); });
+    wrap.appendChild(h('div', { class: 'row' }, go, cancel, h('span', { class: 'note', text: 'Barny and Atlas write it from this study and your answers.' })));
+    wrap.addEventListener('submit', function (e) { e.preventDefault(); document.activeElement && document.activeElement.blur(); generatePod(s, Object.assign({}, f)); });
+    return wrap;
+  }
+  function generatePod(s, f) {
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
+    S.podForm = null; store('bw-podform', null); S.pod = { busy: true, text: '', err: '' }; render();
+    S.sample([{ role: 'user', content: podPrompt(s, f) }], { modelTier: 'default', cache: false, onText: function (x) { S.pod.text = x.text; var el = document.getElementById('pod-live'); if (el) el.textContent = x.text.slice(-320); } })
+      .then(function (r) {
+        var text = r.text || S.pod.text; if (parseScript(text).length < 4) throw { code: 'short' };
+        var id = ep ? ep.id : 'ep-' + Date.now().toString(36);
+        return saved(mine(id).set({ kind: 'ep', title: s.title || '', ref: (s.passage || {}).ref || '', sabbath: s.id, script: text, brief: f, minutes: +f.length || 10, at: new Date().toISOString(), studio: null, audio: null })).then(function () { S.pod = { busy: false, text: '', err: '' }; });
+      })
+      .catch(function (e) { S.pod = { busy: false, text: '', err: e && e.code === 'not_granted' ? 'Asking Claude is turned off for this page.' : e && e.code === 'rate_limited' ? 'Too many requests just now. Try again in a minute.' : 'The script did not come through. Try again.' }; })
+      .then(function () { render(); });
+  }
+  /* One audio element for the page, outside the rebuilt DOM, so playback survives re-renders. */
+  var AUD = new Audio(); AUD.preload = 'none';
+  var IC = { play: '<path d="M7 5l12 7-12 7z"/>', pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>', back: '<path d="M4 12a8 8 0 1 0 2.3-5.6"/><path d="M4 4v4h4"/>', fwd: '<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/>',
+    note: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>', mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/>', lib: '<path d="M4 4h4v16H4zM10 4h4v16h-4zM16 5l3.5-1 3 15.5-3.5 1z"/>' };
+  function icbtn(name, label, cls, n) { var b = h('button', { type: 'button', class: 'cbtn ' + (cls || ''), 'aria-label': label, title: label }); b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + IC[name] + '</svg>' + (n ? '<span class="n">' + n + '</span>' : ''); return b; }
+  function mmss(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); }
+  function podTick() {
+    var tm = document.getElementById('pod-time'), bar = document.getElementById('pod-bar-i'), pp = document.getElementById('pod-pp');
+    if (tm) tm.textContent = mmss(AUD.currentTime) + (isFinite(AUD.duration) ? ' / ' + mmss(AUD.duration) : '');
+    if (bar && isFinite(AUD.duration) && AUD.duration) bar.style.width = (100 * AUD.currentTime / AUD.duration) + '%';
+    if (pp) { pp.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + (AUD.paused ? IC.play : IC.pause) + '</svg>'; pp.setAttribute('aria-label', AUD.paused ? 'Play' : 'Pause'); }
+  }
+  ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata'].forEach(function (e) { AUD.addEventListener(e, podTick); });
+  function podWidget(s) {
+    var ep = S.eps.filter(function (x) { return x.sabbath === s.id; })[0];
+    var live = S.pod.busy ? ['Writing the script', 'red'] : ep && !ep.audio && ep.studio === 'rendering' ? ['Recording', 'red'] : ep && !ep.audio && ep.studio === 'requested' ? ['Recording requested', 'amber'] : ep && ep.audio && !ep.played ? ['New episode ready', 'green'] : null;
+    var lib = h('a', { href: '#podcasts', class: 'pw-more', text: 'Podcast library' });
+    var box = h('section', { class: 'sheet' }, h('div', { class: 'room-h' }, h('span', { class: 'eyebrow', text: 'Podcast' }), live ? h('span', { class: 'onair ' + live[1], role: 'status' }, h('i'), live[0]) : null));
+    if (S.pod.busy) return box;   // the light in the header is enough (Kev, 14 Nov)
+    if (ep && ep.audio) {
+      if (AUD.getAttribute('data-ep') !== ep.id) { AUD.src = ep.audio; AUD.setAttribute('data-ep', ep.id); }
+      box.appendChild(h('p', { class: 'note', text: (ep.ref || '') + (ep.minutes ? ' · ' + ep.minutes + ' min' : '') }));
+      var back = icbtn('back', 'Back 15 seconds', '', '15'), pp = icbtn(AUD.paused ? 'play' : 'pause', AUD.paused ? 'Play' : 'Pause', 'play'), fwd = icbtn('fwd', 'Forward 15 seconds', '', '15'); pp.id = 'pod-pp';
+      back.addEventListener('click', function () { AUD.currentTime = Math.max(0, AUD.currentTime - 15); });
+      fwd.addEventListener('click', function () { AUD.currentTime = Math.min(AUD.duration || 1e9, AUD.currentTime + 15); });
+      pp.addEventListener('click', function () { if (AUD.paused) { AUD.play().catch(function () {}); if (!ep.played) { var d = Object.assign({}, ep); delete d.id; d.played = new Date().toISOString(); saved(mine(ep.id).set(d)).catch(function () {}); } } else AUD.pause(); });
+      box.appendChild(h('div', { class: 'pod-ctl' }, back, pp, fwd)); box.appendChild(h('span', { class: 'pod-time', id: 'pod-time' }));
+      var bar = h('div', { class: 'pod-bar', role: 'presentation' }, h('i', { id: 'pod-bar-i' }));
+      bar.addEventListener('click', function (e) { var r = bar.getBoundingClientRect(); if (isFinite(AUD.duration)) AUD.currentTime = AUD.duration * (e.clientX - r.left) / r.width; });
+      box.appendChild(bar);
+      setTimeout(podTick, 0);
+    } else if (ep) {
+      box.appendChild(h('p', { class: 'note', text: ep.studio === 'rendering' ? 'Barny is recording it now. It plays here when it is done.' : ep.studio === 'requested' ? 'Script ready. Rendering is requested; send Barny a comment and it plays here.' : 'Script ready. Render it to play here.' }));
+      var st = studioButton(ep); if (st) box.appendChild(st);
+    } else box.appendChild(h('p', { class: 'note', text: 'No episode for this study yet.' }));
+    if (ep && S.podNote !== null) {
+      var at = mmss(AUD.currentTime), ta = h('textarea', { id: 'pod-note', 'aria-label': 'Note', rows: '3', placeholder: 'Your note at ' + at }); ta.value = S.podNote;
+      ta.addEventListener('input', function () { S.podNote = ta.value; });
+      var save = h('button', { class: 'primary', type: 'button', text: 'Save to journal' }), cancel = h('button', { type: 'button', text: 'Cancel' });
+      save.addEventListener('click', function () { var t = ta.value.trim(); if (!t) return; S.podNote = null; ta.blur(); saveEntry({ kind: 'study', text: t, ref: (ep.ref || '') + ' · podcast ' + at, sabbath: s.id, ep: ep.id, tag: 'note' }).catch(function () {}); render(); });
+      cancel.addEventListener('click', function () { S.podNote = null; render(); });
+      box.appendChild(ta); box.appendChild(h('div', { class: 'row' }, save, cancel));
+    }
+    var row = h('div', { class: 'pod-ctl' });
+    if (ep && S.podNote === null) { var note = icbtn('note', 'Make a note', 'sm'); note.disabled = !S.live; note.addEventListener('click', function () { S.podNote = ''; render(); setTimeout(function () { var t = document.getElementById('pod-note'); if (t) t.focus(); }, 0); }); row.appendChild(note); }
+    if (S.sample) { var gen = icbtn('mic', 'Generate new podcast', 'sm'); gen.disabled = !S.live; gen.addEventListener('click', function () { S.podForm = store('bw-podform') || Object.assign({ themes: s.title || '', focus: [], focusOther: '', direction: '', length: '10' }, ep && ep.brief ? ep.brief : {}); render(); }); row.appendChild(gen); }
+    var libb = icbtn('lib', 'Podcast library', 'sm'); libb.addEventListener('click', function () { location.hash = '#podcasts'; }); row.appendChild(libb);
+    box.appendChild(row);
+    if (S.pod.err) box.appendChild(h('p', { class: 'note', text: S.pod.err }));
+    if (ep) { var read = h('details', null, h('summary', { class: 'note', text: 'Read the script' }), scriptView(ep)); box.appendChild(read); }
+    if (S.podForm) {
+      var modal = h('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Generate new podcast' }, podForm(s));
+      modal.addEventListener('click', function (e) { if (e.target === modal) { store('bw-podform', S.podForm); S.podForm = null; render(); } });
+      box.appendChild(modal);
+    }
+    return box;
+  }
+
+  /* ElevenLabs voice samples, rendered by Barny and published with the page (voices/*.mp3). Kev's pick saves to data/users/<id>/voices. */
+  var VOICE_SAMPLES = [
+    { who: 'barny', id: 'f5gk6ENs9vgDBvfkTj7e', name: 'J Thomas', about: 'Warm, raspy and real, middle-aged American. Kev\'s pick for Barny (14 Nov)', file: 'voices/barny-jthomas.mp3' },
+    { who: 'barny', id: 'zD5RRa1ndly0YgnhdKgR', name: 'Jesse', about: 'Natural audiobook voice, middle-aged American, relaxed storyteller', file: 'voices/barny-jesse.mp3' },
+    { who: 'barny', id: 'nPczCjzI2devNBz1zQrb', name: 'Brian', about: 'Deep, resonant and comforting, middle-aged American', file: 'voices/barny-brian.mp3' },
+    { who: 'barny', id: 'cjVigY5qzO86Huf0OWal', name: 'Eric', about: 'Smooth and trustworthy, middle-aged American', file: 'voices/barny-eric.mp3' },
+    { who: 'barny', id: 'iP95p4xoKVk53GoZ742B', name: 'Chris', about: 'Charming and down-to-earth, middle-aged American', file: 'voices/barny-chris.mp3' },
+    { who: 'atlas', id: 'PerZoH0r6nxBZXCoIPpv', name: 'Michael Moody', about: 'Grandfatherly, warm and deep. Atlas\'s voice on the family episodes since October', file: 'voices/atlas-michael.mp3' },
+    { who: 'atlas', id: 'JBFqnCBsd6RMkjVDRZzb', name: 'George', about: 'Warm, captivating storyteller, British', file: 'voices/atlas-george.mp3' },
+    { who: 'atlas', id: 'pqHfZKP75CvOlQylNhV4', name: 'Bill', about: 'Wise, mature and balanced, older American', file: 'voices/atlas-bill.mp3' }
+  ];
+  function chosenVoice(who) { var v = (S.voices || {})[who]; return VOICE_SAMPLES.filter(function (x) { return x.who === who && x.id === v; })[0] || VOICE_SAMPLES.filter(function (x) { return x.id === (who === 'atlas' ? 'PerZoH0r6nxBZXCoIPpv' : 'f5gk6ENs9vgDBvfkTj7e'); })[0]; }
+  /* Biblical Timeline room: the same data as the interactive map (published with this page under data/), plus the genealogy. */
+  var MAP_URL = 'https://claude.ai/artifact/LHME6tkLhLWV4hygaT1Z8f';
+  function esvLink(ref) { return link(ref, 'https://www.esv.org/' + ref.replace(/ /g, '+') + '/'); }
+  function loadTimeline() {
+    if (S.tl || S.tlErr) return;
+    S.tl = 'loading';
+    Promise.all(['events', 'finds', 'scripture', 'genealogy'].map(function (n) { return fetch('data/' + n + '.json').then(function (r) { if (!r.ok) throw new Error(n); return r.json(); }); }))
+      .then(function (x) { S.tl = { events: x[0].events, finds: x[1].finds, ot: x[2].ot, nt: x[2].nt, links: x[2].links, gen: x[3].segments }; render(); }, function () { S.tl = null; S.tlErr = true; render(); });
+  }
+  function roomTimeline(m) {
+    var open = h('a', { href: MAP_URL, target: '_blank', rel: 'noopener', class: 'pw-more', text: 'Open the interactive map' });
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Biblical Timeline' }), h('span', { class: 'eyebrow', text: 'Genesis to Revelation' })));
+    m.appendChild(h('p', { class: 'note' }, 'Finds and records, the Old Testament in the New, and the line of promise. The full interactive map: ', open));
+    loadTimeline();
+    if (S.tlErr) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'The timeline data did not load. Reload the page to try again.' }))); return; }
+    if (!S.tl || S.tl === 'loading') { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Opening the timeline…' }))); return; }
+    var T = S.tl, nm = {}; T.events.forEach(function (e) { nm[e.id] = e; });
+    // 1. Timeline
+    var f1 = fold('tl-events', [h('span', { class: 'fold-t', text: 'Timeline' }), h('span', { class: 'fold-n', text: T.events.length + ' events · ' + T.finds.length + ' finds' })], true); f1.classList.add('sheet');
+    var in1 = h('div', { class: 'fold-in' });
+    T.events.forEach(function (e) {
+      var fs = []; T.finds.forEach(function (f) { f.links.forEach(function (l) { if (l.to === e.id) fs.push({ f: f, l: l }); }); });
+      var ef = fold('tl-e-' + e.id, [h('span', { class: 'fold-t', text: e.title }), h('span', { class: 'fold-n', text: e.when + ' · ' + fs.length + (fs.length === 1 ? ' find' : ' finds') })], false);
+      var body = h('div', { class: 'fold-in' }, h('p', { class: 'note', text: e.note }));
+      var refs = h('div', { class: 'chips' }); e.refs.forEach(function (r) { refs.appendChild(esvLink(r)); }); body.appendChild(refs);
+      fs.forEach(function (x) { body.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('strong', { text: x.f.name }), h('span', { text: x.f.when })), h('p', { class: 'body', text: x.l.note }), h('span', { class: 'note' }, x.l.type === 'names' ? 'Names a person' : x.l.type === 'confirms' ? 'Confirms' : x.l.type === 'setting' ? 'Real setting' : 'Parallel', grade(x.l.grade), ' · ' + x.f.nowAt))); });
+      ef.appendChild(body); in1.appendChild(ef);
+    });
+    f1.appendChild(in1); m.appendChild(f1);
+    // 2. Old and New
+    var f2 = fold('tl-scripture', [h('span', { class: 'fold-t', text: 'Old Testament in the New' }), h('span', { class: 'fold-n', text: T.links.length + ' links' })], false); f2.classList.add('sheet');
+    var in2 = h('div', { class: 'fold-in' }), ntRef = {}; T.nt.forEach(function (n) { ntRef[n.id] = n.ref; });
+    var lastEra = null;
+    T.ot.forEach(function (o) {
+      if (o.era !== lastEra) { in2.appendChild(h('span', { class: 'eyebrow', text: (nm[o.era] || {}).title || o.era })); lastEra = o.era; }
+      var ls = T.links.filter(function (l) { return l.from === o.id; }), row = h('div', { class: 'entry' }, h('div', { class: 'meta' }, esvLink(o.ref), h('span', { text: o.gist })));
+      var list = h('div', { class: 'chips' }); ls.forEach(function (l) { list.appendChild(h('span', { class: 'note' }, (l.type === 'quote' ? 'Quoted in ' : l.type === 'fulfillment' ? 'Fulfilled in ' : 'Echoed in '), esvLink(ntRef[l.to]))); });
+      row.appendChild(list); in2.appendChild(row);
+    });
+    f2.appendChild(in2); m.appendChild(f2);
+    // 3. Genealogy
+    var f3 = fold('tl-gen', [h('span', { class: 'fold-t', text: 'Genealogy: the line of promise' }), h('span', { class: 'fold-n', text: 'Adam to Jesus' })], false); f3.classList.add('sheet');
+    var in3 = h('div', { class: 'fold-in' });
+    T.gen.forEach(function (g, i) {
+      var gf = fold('tl-g-' + i, [h('span', { class: 'fold-t', text: g.title }), h('span', { class: 'fold-n', text: g.names.length + ' names' })], i === 0);
+      var refs = h('div', { class: 'chips' }); g.refs.forEach(function (r) { refs.appendChild(esvLink(r)); });
+      gf.appendChild(h('div', { class: 'fold-in' }, h('p', { class: 'gen', text: g.names.join('  →  ') }), h('p', { class: 'note', text: g.note }), refs));
+      in3.appendChild(gf);
+    });
+    f3.appendChild(in3); m.appendChild(f3);
+  }
+
+  /* The podcast library: episodes filed by study series, each holding Kev's notes, concepts and responses (journal entries tagged with the episode). */
+  var POD_TAGS = [['note', 'Note'], ['concept', 'Concept'], ['response', 'Response']];
+  function fold(key, summary, openByDefault) {
+    var d = h('details', { class: 'fold' }), st = store('bw-fold-' + key); d.open = st == null ? !!openByDefault : !!st;
+    d.addEventListener('toggle', function () { store('bw-fold-' + key, d.open); });
+    var sm = h('summary'); [].concat(summary).forEach(function (x) { if (x) sm.appendChild(x); }); d.appendChild(sm); return d;
+  }
+  function epNotes(ep) { return S.journal.filter(function (j) { return j.ep === ep.id; }).sort(function (a, b) { return String(a.at).localeCompare(String(b.at)); }); }
+  function epCard(ep) {
+    var notes = epNotes(ep);
+    var d = fold('ep-' + ep.id, [h('span', { class: 'fold-t', text: (ep.ref || 'Episode') + (ep.minutes ? ' · ' + ep.minutes + ' min' : '') }), h('span', { class: 'fold-n', text: (ep.audio ? '' : 'script only · ') + notes.length + (notes.length === 1 ? ' note' : ' notes') })], false);
+    var body = h('div', { class: 'fold-in' });
+    if (ep.brief && ep.brief.themes) body.appendChild(h('p', { class: 'note', text: 'Themes: ' + ep.brief.themes + (ep.brief.direction ? ' · ' + ep.brief.direction : '') }));
+    if (ep.audio) { var a = h('audio', { controls: true, preload: 'none', src: ep.audio }); a.style.width = '100%'; body.appendChild(a); }
+    else { body.appendChild(h('p', { class: 'note', text: ep.studio === 'rendering' ? 'Barny is recording it now.' : ep.studio === 'requested' ? 'Waiting for Barny to record it.' : 'Script only. Render it from This Sabbath to hear it.' })); var sb = studioButton(ep); if (sb) body.appendChild(sb); }
+    POD_TAGS.forEach(function (t) {
+      var mine2 = notes.filter(function (n) { return (n.tag || 'note') === t[0]; }); if (!mine2.length) return;
+      var f = fold('ep-' + ep.id + '-' + t[0], [h('span', { class: 'fold-t', text: t[1] + 's' }), h('span', { class: 'fold-n', text: String(mine2.length) })], true);
+      var inner = h('div', { class: 'fold-in' });
+      mine2.forEach(function (n) { inner.appendChild(h('div', { class: 'entry' }, h('div', { class: 'meta' }, h('span', { text: n.ref || '' }), h('span', { text: short(n.at) })), h('p', { class: 'body', text: n.text }))); });
+      f.appendChild(inner); body.appendChild(f);
+    });
+    if (S.live) {
+      var tag = 'note', chips = h('div', { class: 'chips', role: 'group', 'aria-label': 'Kind of note' });
+      POD_TAGS.forEach(function (t, i) { var c = h('button', { class: 'chip', type: 'button', 'aria-pressed': String(i === 0), text: t[1] }); c.addEventListener('click', function () { tag = t[0]; chips.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); }); }); chips.appendChild(c); });
+      var ta = h('textarea', { id: 'epn-' + ep.id, rows: '2', 'aria-label': 'Add a note to this episode', placeholder: 'A note, a concept, or your response to this episode' });
+      var add = h('button', { class: 'primary', type: 'button', text: 'Add' });
+      add.addEventListener('click', function () { var v = ta.value.trim(); if (!v) return; ta.value = ''; ta.blur(); saveEntry({ kind: 'study', text: v, ref: ep.ref || '', sabbath: ep.sabbath, ep: ep.id, tag: tag }).catch(function () {}); });
+      body.appendChild(h('div', { class: 'fold-add' }, chips, ta, h('div', { class: 'row' }, add)));
+    }
+    var scr = fold('ep-' + ep.id + '-script', [h('span', { class: 'fold-t', text: 'Script' }), h('span', { class: 'fold-n', text: parseScript(ep.script).length + ' turns' })], false);
+    scr.appendChild(h('div', { class: 'fold-in' }, scriptView(ep))); body.appendChild(scr);
+    var del = h('button', { class: 'link', type: 'button', text: 'Delete episode' });
+    del.addEventListener('click', function () { if (del.getAttribute('data-sure')) { saved(mine(ep.id).delete()).catch(function () {}); return; } del.setAttribute('data-sure', '1'); del.textContent = 'Delete for good? Notes stay in the journal'; setTimeout(function () { del.removeAttribute('data-sure'); del.textContent = 'Delete episode'; }, 4000); });
+    body.appendChild(del);
+    d.appendChild(body); return d;
+  }
   function roomPodcasts(m) {
-    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Podcasts' }), h('span', { class: 'eyebrow', text: 'Two voices, one subject' })));
-    if (!S.podcasts.length) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'Episodes on the week\'s study, read aloud in two voices, appear here with their scripts.' }))); return; }
+    m.appendChild(h('div', { class: 'room-h' }, h('h2', { text: 'Podcast library' }), h('span', { class: 'eyebrow', text: S.eps.length + (S.eps.length === 1 ? ' episode' : ' episodes') })));
+    if (!S.eps.length) { m.appendChild(h('div', { class: 'sheet' }, h('p', { class: 'empty', text: 'No episodes yet. On This Sabbath, tap Generate new podcast. Each episode files here by study, with your notes, concepts and responses kept under it.' }))); }
+    var groups = {}, order = [];
+    S.eps.forEach(function (ep) {
+      var sab = S.sabbath.filter(function (x) { return x.id === ep.sabbath; })[0] || {}, st = S.studies.filter(function (x) { return x.id === sab.study; })[0];
+      var key = st ? st.id : 'other', title = st ? st.title : 'Other studies';
+      if (!groups[key]) { groups[key] = { title: title, eps: [] }; order.push(key); }
+      groups[key].eps.push(Object.assign({ _n: sab.session || 0 }, ep));
+    });
+    order.forEach(function (k) {
+      var g = groups[k]; g.eps.sort(function (a, b) { return (a._n - b._n) || String(a.at).localeCompare(String(b.at)); });
+      var f = fold('series-' + k, [h('span', { class: 'fold-t', text: g.title }), h('span', { class: 'fold-n', text: g.eps.length + (g.eps.length === 1 ? ' episode' : ' episodes') })], true);
+      var inner = h('div', { class: 'fold-in' }); g.eps.forEach(function (ep) { inner.appendChild(epCard(S.eps.filter(function (x) { return x.id === ep.id; })[0])); });
+      f.appendChild(inner); f.classList.add('sheet'); m.appendChild(f);
+    });
+    if (!S.podcasts.length) return;
+    var fb = fold('series-barny', [h('span', { class: 'fold-t', text: 'From Barny' }), h('span', { class: 'fold-n', text: String(S.podcasts.length) })], false); fb.classList.add('sheet');
+    var wrapB = h('div', { class: 'fold-in' }); roomPodcastsShared(wrapB); fb.appendChild(wrapB); m.appendChild(fb);
+  }
+  function roomPodcastsShared(m) {
     var g = h('div', { class: 'grid' });
     S.podcasts.forEach(function (p) {
       var card = h('article', { class: 'card' }, h('span', { class: 'kind', text: [p.stream, p.length].filter(Boolean).join(' · ') }), h('h3', { text: p.title }), h('p', { text: p.premise || '' }));
@@ -395,7 +856,22 @@ footer.kd{grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px;dis
     m.appendChild(g);
   }
 
+  (function () { var d = document.getElementById('rooms-more'); if (!d) return; if (store('bw-menu') || (location.hash && ['#sabbath', ''].indexOf(location.hash) < 0)) d.open = true; d.addEventListener('toggle', function () { store('bw-menu', d.open); }); })();
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.podForm) { store('bw-podform', S.podForm); S.podForm = null; render(); } });
   window.addEventListener('hashchange', function () { store('bw-room', room()); render(); window.scrollTo(0, 0); });
-  boot();
+  /* Keep Kev's place when Barny republishes: the viewer hands this state to the new version (window.claude.hot). */
+  function start(data) {
+    data = data || {};
+    if (data.podForm) S.podForm = data.podForm;
+    if (data.podNote != null) S.podNote = data.podNote;
+    if (data.sabSel) S.sabSel = data.sabSel;
+    if (data.answering) S.answering = data.answering;
+    if (data.room && ROOMS.indexOf(data.room) >= 0 && !location.hash) store('bw-room', data.room);
+    boot();
+    if (data.scroll) setTimeout(function () { window.scrollTo(0, data.scroll); }, 60);
+  }
+  var hot = window.claude && window.claude.hot;
+  if (hot && hot.snapshot) hot.snapshot(function () { return { podForm: S.podForm, podNote: S.podNote, sabSel: S.sabSel, answering: S.answering, room: room(), scroll: window.scrollY }; });
+  if (hot && hot.ready) hot.ready(start); else start((hot && hot.data) || {});
 })();
 </script>

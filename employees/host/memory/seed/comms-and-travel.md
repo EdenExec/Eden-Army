@@ -17,7 +17,7 @@ Hoffman, Pence Kelly (and its GC Fortis), PB South, Promethean, Triton, VMG Mech
 | Rule | Source |
 |---|---|
 | Moss: referral asks only, never a pitch | Kev, 9 October 2026 |
-| Baker Concrete: discreet; every note carries "Client · discreet" | Kev, 9 October 2026 |
+| Baker Concrete (and the INL work, Baker's job): named "Baker" in every note; no client is discreet | Kev, 9 October and 13 November 2026 |
 | Submittals client agnostic: no client named, no send order, no internal notes | Kev, 8 October 2026 |
 | No client staff on a call sheet (Moss, Fortis for Pence Kelly, Swinerton) | Kev, 5 October 2026 |
 

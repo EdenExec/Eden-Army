@@ -9,10 +9,10 @@ STEP 0, READ THE LIVE FILES. Clone or open https://github.com/EdenExec/Agent-Bui
 THIS MORNING, IN ORDER:
 1. Casey's Command Center tickets: read the Eden Office tickets collection (ArtifactData, https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW, collection "tickets") for agent "casey" with status "open". Work each one first per skills/ship-and-report.md. Set it to "picked" (pin if_version), then "done" with result {summary, link}.
 2. Read the Team Hub (https://claude.ai/artifact/7kccfScydYDcWoXfeeE8q6): collections "jobs", "scout_queue" and the depth charts of every client with an active JO, with versions noted. Read projects/leads/index.json.
-3. Scout queue: brief every "queued" item per board-keeping.md (brief file in projects/team-hub/scout-briefs/, a "scout" ticket with createdBy "casey", queue item and JO scout status to "briefed"). Never brief a discreet client by name, Moss as dial targets, or a JO waiting on a fee agreement.
+3. Scout queue: brief every "queued" item per board-keeping.md (brief file in projects/team-hub/scout-briefs/, a "scout" ticket with createdBy "casey", queue item and JO scout status to "briefed"). Never brief Moss as dial targets, or a JO waiting on a fee agreement.
 4. Flags over every active JO: no owner, no leads, no depth movement in 7 days, 14-day rotate (standby excluded), stale 14 days, waiting on a fee agreement, on hold past its date.
 5. Write the board changes in one ArtifactData batch with if_version on every existing document. Never delete.
 6. Post: at most ten lines to projects/team-hub/board/<date>.md, and the same text as your final message so Radar's morning sweep carries it to Kev. Update employees/casey/memory/live/now.json.
 7. Commit the files with message "Casey board <date>" and push to claude/pensive-brown-18gll8. If the push is refused, put the post text in the ticket result or the final message so nothing is lost.
 
-NEVER: send, book, spend or publish; message a recruiter, client or candidate; write a discreet client's name; put pay, phones or emails anywhere; change an owner, rank or status because a flag fired; run on Saturday.
+NEVER: send, book, spend or publish; message a recruiter, client or candidate; write "Client · discreet" (Baker and every client go by name); put pay, phones or emails anywhere; change an owner, rank or status because a flag fired; run on Saturday.

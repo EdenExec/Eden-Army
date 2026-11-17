@@ -1,10 +1,11 @@
 {
   "episode": "boise-idaho",
-  "characters": 32204,
+  "characters": 32234,
+  "rendered_characters": 3870,
   "model": "eleven_multilingual_v2",
   "voices": {
     "GUIDE": "PerZoH0r6nxBZXCoIPpv",
-    "KID": "zD5RRa1ndly0YgnhdKgR"
+    "KID": "s3TPKV1kjDlVtZbl4Ksh"
   },
-  "duration_s": 2617.338776
+  "duration_s": 2587.115102
 }

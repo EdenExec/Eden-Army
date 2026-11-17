@@ -1,0 +1,5 @@
+node_modules/
+com.kdtw.edendeck.sdPlugin/bin/
+com.kdtw.edendeck.sdPlugin/logs/
+*.streamDeckPlugin
+logs/

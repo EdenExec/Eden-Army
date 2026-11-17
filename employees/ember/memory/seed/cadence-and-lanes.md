@@ -33,11 +33,11 @@ Recruiter slugs for `team_asks.to`: `max`, `evan`, `noah`, `andrew`, `bridger`, 
 
 **Owner recruiter** = the person who applied the tag (or added them to the Warm card), else the owner of their last touch, else "owner: Kev to name". Ember never assigns an owner.
 
-## Clients (who is never a target for poaching and never named when discreet)
+## Clients (who is never a target for poaching)
 
 | Client | Rule for Ember |
 |---|---|
-| Baker Concrete, including the INL work | "Client · discreet" in everything Ember writes. A Baker employee is never picked to market |
+| Baker Concrete, including the INL work | Named "Baker" in everything Ember writes (no client is discreet since 13 Nov 2026). A Baker employee is never picked to market |
 | Moss | Referral asks only; never marketed to as a poaching target, never a Moss employee picked; Moss material never names another client |
 | Triton, PB South, VMG, Megawatt, Hoffman, Pence Kelly and its GC Fortis, Carmel, Promethean, Prometheus, Swinerton, Pruter, MK Sherrill | Clients: fine as MPC targets (Kev markets to clients). A candidate who works at one is never picked |
 

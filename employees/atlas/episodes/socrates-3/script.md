@@ -44,7 +44,7 @@ GUIDE: Plato says he was calm and even cheerful. The prison officer who came to 
 KID: That's sad.
 GUIDE: It is sad. His friend Phaedo said, he was the best, the wisest and the most upright man we ever knew. And it's okay to feel sad about it. The city made a terrible mistake.
 ---
-KID: Okay. So now Ben. Where does Ben come in?
+KID: ...okay... So now Ben. Where does Ben come in?
 GUIDE: Jump forward two thousand years. Boston, about seventeen twenty-two. Ben Franklin is a teenager, about sixteen, working in his brother's print shop. And he's trying to become a better writer and a better arguer. In a grammar book, he finds a short example of an argument done the Socratic way, with questions. Then he gets a copy of a book called Xenophon's Memorable Things of Socrates.
 KID: Xenophon! The robot name. You said it would matter.
 GUIDE: Told you. That book is full of Socrates asking his questions. And Ben wrote, I was charmed with it. He decided to copy it. He stopped flatly telling people they were wrong, and became what he called a humble inquirer.
@@ -52,7 +52,7 @@ KID: So Ben became humble.
 GUIDE: Here's where it gets honest. At first, no. Ben admitted in his own book that he got really good at the question trick, and he used it to win. He'd ask innocent-sounding questions, lead people step by step into a trap, and then, gotcha. He said he won arguments that neither he nor his side always deserved.
 KID: That's the mean version! The pride in a costume!
 GUIDE: Exactly what we talked about in part one. Same questions, wrong heart. There was a printer in Philadelphia that Ben worked for, named Keimer, and Ben trapped him with questions so many times that Keimer finally wouldn't answer even a simple question without asking first, what are you trying to make me say?
-KID: Ha! Poor Keimer.
+KID: ...ha... Poor Keimer.
 GUIDE: Poor Keimer. But Ben grew up. After a few years, he stopped using questions as a trap. He kept one habit from Socrates, the good part. And then, when he made his list of virtues, a Quaker friend kindly told him people thought he was proud and bossy in conversation. And Ben listened. He added number thirteen. Humility. Imitate Jesus and Socrates.
 ---
 KID: So what did he actually change?
@@ -62,7 +62,7 @@ GUIDE: Ben said conversations got more pleasant. People listened to his ideas mo
 KID: So Socrates helped make America, kind of.
 GUIDE: Kind of. Think of Ben in that hot room in Philadelphia at eighty-one, helping men who disagreed find a compromise. He learned some of that from a barefoot man in Athens.
 ---
-KID: Wait, but. Why Jesus and Socrates? They're not the same.
+KID: ...wait... but. Why Jesus and Socrates? They're not the same.
 GUIDE: They're not, and that's a great place to end. Socrates shows us a humble mind. He knew how much he didn't know, so he kept asking. But Jesus shows us something even bigger. A humble heart. Jesus was the Son of God, and he still knelt down and washed his friends' dirty feet. Socrates could tell you he didn't know. Jesus could have known everything, and he still served.
 KID: So Socrates is humble thinking, and Jesus is humble serving.
 GUIDE: That's it. And Jesus is going to get his own episode soon.

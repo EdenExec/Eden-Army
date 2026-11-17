@@ -1,10 +1,11 @@
 {
   "episode": "kangaroo",
-  "characters": 6660,
+  "characters": 6665,
+  "rendered_characters": 6665,
   "model": "eleven_multilingual_v2",
   "voices": {
     "GUIDE": "PerZoH0r6nxBZXCoIPpv",
-    "KID": "tJHJUEHzOkMoPmJJ5jo2"
+    "KID": "s3TPKV1kjDlVtZbl4Ksh"
   },
-  "duration_s": 533.237551
+  "duration_s": 518.530612
 }

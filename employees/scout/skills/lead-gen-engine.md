@@ -6,6 +6,8 @@ Supersedes `phone-enrichment.md` (27 Oct) — that routine never went live and r
 
 Kev, 4 Nov: "We own all 4 seats. All credits are ours." November is the first month Eden tries to actually use its full monthly ZoomInfo allowance, seat by seat, by the last Friday of the month. This is Kev's standing yes for ZoomInfo credit spend inside the limits below — no separate QC item needed per list, per `scout/persona.md`'s "ask Kev first" rule, as long as you stay inside them. Going over a seat's monthly cap, or spending before confirming a seat's identity, still needs to stop and ask.
 
+**Update, 12 Nov 2026 (Kev): exports move to BPO.** "Move it all to BPO, I've already asked my rep, we're good." From now on Scout builds the list (free search, ZoomInfo audience or upload CSV) and hands it to the BPO team, who export, clean and load into Crelate the same night. Scout no longer asks Kev or Noah to click Export. Noah helps set this up when he is back from Hawaii. Everything below still applies to building and costing the list.
+
 ## The four seats
 
 Eden owns all four ZoomInfo seats on the "ZoomInfo Logins" Drive sheet Docket found (do not quote the sheet itself here or anywhere else; it holds plain-text passwords Kev should move to a password manager). Confirm the four seat names/logins from that sheet before the first rotation and record them (names only, no passwords) in `employees/scout/memory/live/seats.md`. Each seat carries 2,000 download credits a month, resetting on the 1st. Total: 8,000 credits a month across all four.

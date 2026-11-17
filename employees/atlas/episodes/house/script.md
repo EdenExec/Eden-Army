@@ -1,5 +1,5 @@
 GUIDE: Finn, tomorrow morning you're going to walk into a house. You'll see the kitchen first. Then the big room, then the bedrooms. And here's the strange part. The most important piece of that house, the piece that decides whether it's a good house or a bad one, you won't be able to see at all.
-KID: Wait, what? If I can't see it, where is it?
+KID: ...wait... what? If I can't see it, where is it?
 GUIDE: It's under your feet. It's in the dirt. There's a tower in Italy that's been slowly falling over for more than eight hundred years, and it's famous for it. Not because the tower was built badly. The tower is beautiful. It's falling over because of what's under it.
 KID: The Leaning Tower of Pisa. We did that in school.
 GUIDE: That's the one. By the end of this drive you'll know why it leans, why a house in Boise has its feet buried two feet down, why the pipes go in before the walls, and why a little strip of metal above a window matters more than the countertops. And tomorrow, you get a job on the walk-through. Your dad looks at the house. You look at the ground.
@@ -21,15 +21,15 @@ GUIDE: They did stop, for almost a hundred years, because of wars, and then they
 KID: Did it fall?
 GUIDE: Almost. In the nineteen nineties they closed it and put the best ground engineers in the world on it. And here's the clever part. They didn't push it back. They couldn't. They drilled little tubes under the high side, the north side, and slowly sucked out tiny amounts of dirt. The high side settled, and the whole tower tipped back about a foot and a half. They opened it again in two thousand and one.
 KID: So they fixed it by making the good side worse?
-GUIDE: Ha, yes. They made the good side sink to match. That's a sharp way to say it. Now, what do you think it cost to fix the ground under a tower, eight hundred years late?
+GUIDE: ...ha... yes. They made the good side sink to match. That's a sharp way to say it. Now, what do you think it cost to fix the ground under a tower, eight hundred years late?
 KID: Millions and millions.
 GUIDE: Millions, years of work, and a team of the smartest people on earth. Versus what it would have cost to test the dirt first, which is one guy with a drill and a notebook. That's why builders today drill a hole and send the dirt to a lab before they pour anything. Is this rock, is this sand, is this clay that swells up like a sponge when it rains and shrinks when it dries?
 KID: And if it's the bad kind?
 GUIDE: Then they dig deeper, or pack in good gravel with a machine, or put the house on big concrete legs that go down to solid ground.
-KID: Okay, so the dirt is tested. Then you dig?
+KID: ...okay... So the dirt is tested. Then you dig?
 GUIDE: Then you dig. And how deep you dig depends on winter. Finn, what happens to water when it freezes?
 KID: It gets bigger. Like the ice cube tray bulging up.
-GUIDE: Right. So the water in the ground freezes in winter, the ground swells, and it can lift a house like a jack. In spring it thaws and drops it. Up, down, every year. That cracks things. So the bottom of your foundation has to sit below the line where the ground freezes. Around Boise that's about two feet down. In Florida it's basically nothing.
+GUIDE: ...right... So the water in the ground freezes in winter, the ground swells, and it can lift a house like a jack. In spring it thaws and drops it. Up, down, every year. That cracks things. So the bottom of your foundation has to sit below the line where the ground freezes. Around Boise that's about two feet down. In Florida it's basically nothing.
 KID: So that's the third thing. The pipes.
 GUIDE: The pipes. Water has to come in. Dirty water has to go out. Power, maybe gas, the internet. All of it comes from the street, underground, through trenches. Before the digger shows up, the utility companies spray little paint lines on the ground. Red for power, blue for water, green for sewer, yellow for gas. You'll see those on this trip too.
 KID: Why mark them?
@@ -69,7 +69,7 @@ KID: That's like the bucket brigade but with bricks.
 GUIDE: It's the bucket brigade with bricks. And he invented the machines too, an ox-powered hoist to lift the stone, and he had food sent up so the workers didn't waste the day climbing down for lunch. He thought about the order of everything. That dome is still the biggest brick dome ever built, and nothing holds it up but the way it was built.
 ---
 KID: Can I ask something? Tomorrow, if I see a crack in the foundation, does that mean the house is broken?
-GUIDE: Ah. That's the wait-but question, and most grown-ups get it wrong in both directions. Some people see any crack and panic. Others say cracks are normal and ignore all of them. Both are wrong.
+GUIDE: ...ah... That's the wait-but question, and most grown-ups get it wrong in both directions. Some people see any crack and panic. Others say cracks are normal and ignore all of them. Both are wrong.
 KID: So which cracks matter?
 GUIDE: Here's the picture. Concrete shrinks a little as it dries, the way a mud puddle cracks in the sun. So a thin, straight, up-and-down crack in a concrete wall, thinner than a coin, is usually just the concrete settling in. Almost every house has one or two. Not a worry.
 KID: Then what is a worry?
@@ -77,17 +77,17 @@ GUIDE: A crack that runs sideways across the wall, like the wall is being pushed
 KID: And the ground moving is the Pisa problem.
 GUIDE: The Pisa problem. Here's the other half of that test, and it's one you can do with your eyes closed. Doors. Go through the house and close the inside doors. If one of them sticks at the top corner, or won't latch, or there's a gap at the top that's wedge shaped, that door is telling you the frame has moved.
 KID: Because the door frame was square when they built it.
-GUIDE: Right. The door is a ruler that's been sitting in the wall for years. If the house twisted, the door shows it. Same with little cracks running diagonally out from the inside corners of windows. One is nothing. Every window, that's a pattern.
+GUIDE: ...right... The door is a ruler that's been sitting in the wall for years. If the house twisted, the door shows it. Same with little cracks running diagonally out from the inside corners of windows. One is nothing. Every window, that's a pattern.
 KID: So a crack isn't a yes or a no. It's a question.
 GUIDE: It's a question. Which way does it run, how wide is it, and is anything else agreeing with it. If the crack is alone, it's probably just concrete being concrete. If the doors and the windows and the floors are all saying the same thing, then you listen.
 ---
-KID: Okay. Frame's up, pipes are in, walls are closed. Now the part everybody actually looks at?
+KID: ...okay... Frame's up, pipes are in, walls are closed. Now the part everybody actually looks at?
 GUIDE: The outside and the finish. And this is where I'm going to tell you the thing most people buying a house get backwards.
 KID: Let me guess. It's about the countertops.
 GUIDE: It's about the countertops. Everybody walks into a kitchen and looks at the countertops. Shiny stone. Nice. Here's the truth. Countertops cost a few thousand dollars and you can swap them in a day. The thing that actually decides whether a house lasts a hundred years or rots in twenty is the skin, and how it handles water.
 KID: Water again. It was the dirt, and now it's the walls.
 GUIDE: Water is the enemy of every building ever made. Wet wood rots. Wet steel rusts. Wet walls grow mold. So the skin of a house, the roof and walls and windows, builders call it the envelope, has one real job. Keep water out, and when some gets in anyway, let it get back out.
-KID: Wait, water gets in anyway?
+KID: ...wait... water gets in anyway?
 GUIDE: Always. Wind pushes rain sideways. Nothing's perfect. So smart builders think in layers. Picture a raincoat over a wool sweater. The raincoat sheds most of the rain. That's the siding and the roof. Some gets through at the seams, so under it there's a second layer, a paper or plastic wrap around the whole house, that sheds water down and out. Then the sweater, the insulation, has to be able to dry if it gets damp.
 KID: I've seen houses wrapped in that stuff. The white or blue wrap with the big letters.
 GUIDE: That's the raincoat under the raincoat. Count those on this drive too. Now, the key word for tomorrow. Flashing. You said a crack is a question. Flashing is the answer to a different question. Where does water go when it hits a hole?
@@ -115,7 +115,7 @@ GUIDE: Pretty doesn't mean dry. Which brings us to your job tomorrow.
 KID: So what exactly do I do tomorrow?
 GUIDE: Your dad's going to be inside talking with the agent, and I want you outside first, walking all the way around the house, slowly, like a detective. Your first question is the one from the code. Which way does the ground go?
 KID: Away from the house. Six inches in ten feet.
-GUIDE: Right. You don't need a ruler. Crouch down and look along the ground. Does it fall away from the wall, or dip toward it? Look especially under the downspouts. A little bowl worn into the dirt at the wall means water's been collecting there.
+GUIDE: ...right... You don't need a ruler. Crouch down and look along the ground. Does it fall away from the wall, or dip toward it? Look especially under the downspouts. A little bowl worn into the dirt at the wall means water's been collecting there.
 KID: Got it. Then what?
 GUIDE: Then the foundation itself. Walk along the concrete where it meets the dirt. You're looking for the cracks we talked about. Straight and thin, fine. Sideways, stair-step, wide, or stepped, you call your dad over. Then look up at the windows from outside. Above each window there should be a little lip of metal, the flashing, sitting over the top of the window frame. If you see caulk smeared all over the top edge instead, somebody was fixing a leak.
 KID: Caulk is the goo in a tube?
@@ -145,7 +145,7 @@ KID: Like Brunelleschi's wine up the hoist.
 GUIDE: Just like Brunelleschi, five hundred years apart. There's a line in the Bible your dad likes. Whatever your hand finds to do, do it with your might. Those builders weren't just working hard. They were working with all of it, with the plan and the order and the follow-through. That's the difference between a crew that builds a hundred and two stories in a year and a crew that's still arguing about the foundation.
 KID: So that's the Execution thing. Dad's pillar.
 GUIDE: That's the one. Prepared, organized, action, follow through. So here's the one sentence I want you to carry out of the truck. A house is built from the ground up, and the best money in it is spent where you can't see it.
-KID: Okay, my version. The dirt and the water matter more than the kitchen, and the guys who built the great stuff did the boring parts in the right order and all the way.
+KID: ...okay... My version. The dirt and the water matter more than the kitchen, and the guys who built the great stuff did the boring parts in the right order and all the way.
 GUIDE: That's better than mine. Now go be a detective tomorrow. And next week's question, since you'll be standing next to the Boise River this weekend. What is a trout actually looking for, and how do you read the water to find him?
 KID: Fish. Finally.
 GUIDE: Fish. Count your porta-potties, Finn.

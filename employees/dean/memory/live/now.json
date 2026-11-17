@@ -1,12 +1,16 @@
 {
-  "task": "Recruiter pre-screen bench: 3x daily read of the form responses and the review page for Kev and Nick",
+  "task": "Role playbooks v1 (t-202611162050-rplb)",
   "since": "2026-11-03T22:50:00Z",
-  "state": "idle, no new work this session. Pre-screen bench was last logged 2026-11-03; not re-run today. Sync-patrol check-in only (t-202611091221-sdn).",
+  "state": "v1 playbook markdown drafted, not published, not committed. Riley pack checked and patched (day-90 stop, title TBD, gatekeeper yes, training status). Bran partial: guide is in Drive, not read.",
   "files": [
-    "projects/workforce/hiring/prescreen-log.md",
-    "projects/workforce/hiring/prescreen-review.html"
+    "projects/workforce/playbooks/README.md",
+    "projects/workforce/playbooks/riley-backend-support.md",
+    "projects/workforce/hiring/riley-backend-support.md"
   ],
   "page": "https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT",
-  "updated": "2026-11-09T20:45:00Z",
-  "blockedOn": "Kev: share the pre-screen review page with Nick from its Share menu (open since 2026-11-03)"
+  "updated": "2026-11-16T23:59:00Z",
+  "blockedOn": "Kev: Sadie/Rex/Presley hires, WIP & PIPE style, Drive read of Bran's guide, Riley week-2 rehearsal and track",
+  "on": "Friday scorecard runs inside the Round Table (DTXbu7B6F3B2s8NEnmYdCE) from 13 Nov: recruiters and Nick are Contributors and see only their own scorecard; Kev sees the live leadership order and cards fill on Finish the week. Checks 8:01/9:01/10:01, 10:15-10:50 one-shots, 12:05 final; numbers 7:50. Old per-person desks stay as backup.",
+  "updatedAt": "2026-11-16T23:59:00Z",
+  "last": "Role playbooks v1 drafted under projects/workforce/playbooks/ (7 files + README)"
 }

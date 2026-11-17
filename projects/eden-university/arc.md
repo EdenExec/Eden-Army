@@ -50,7 +50,7 @@ Every chapter has a code (2.4, 3.5, …), one outcome, a drill, a proof and a so
 | 2.2 | Crelate: active JOs, Leads and Buckets, logging every activity right | Yes: M10, M15; trained 21 Oct |
 | 2.3 | Crelate in Claude, read-only | Yes: M16 |
 | 2.4 | The Friday scorecard and the 42-box card | Partly: M19; new scorecard page 6 Nov |
-| 2.5 | The submittal packet and the client's Must Dos | Yes: packet workflow; trained 28 Oct |
+| 2.5 | The submittal packet and the client's Must Dos | Yes: `modules/submittal-match-not-sell.md` (match, don't sell; Kev, 16 Nov 2026), packet workflow trained 28 Oct |
 | 2.6 | Data discipline: privacy, discreet clients, candidate data | Partly: M03 |
 | 2.7 | Your daily rhythm and time blocks | Yes: M14 |
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- EdenWake: starts at login and stays open (restarts if it stops). It only watches the screen saver,
+     lock screen and display sleep, and writes ~/.edendeck/screen.json for the Eden Deck plugin.
+     Install:  cp com.kdtw.edenwake.plist ~/Library/LaunchAgents/
+               launchctl load ~/Library/LaunchAgents/com.kdtw.edenwake.plist
+     Remove:   launchctl unload ~/Library/LaunchAgents/com.kdtw.edenwake.plist && rm ~/Library/LaunchAgents/com.kdtw.edenwake.plist
+     The shell wrapper is there because a LaunchAgent does not expand ~ or $HOME by itself. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.kdtw.edenwake</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>exec "$HOME/.edendeck/bin/EdenWake"</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>LimitLoadToSessionType</key><string>Aqua</string>
+  <key>ProcessType</key><string>Interactive</string>
+  <key>StandardErrorPath</key><string>/tmp/edenwake.log</string>
+  <key>StandardOutPath</key><string>/tmp/edenwake.log</string>
+</dict>
+</plist>

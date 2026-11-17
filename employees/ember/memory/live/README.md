@@ -1,6 +1,6 @@
 # Ember (MPC and warm-inventory keeper) live memory
 
-New facts go here, one dated bullet each (2026-10-28: ...). Label names or cadences Kev changed, which plan version is live, endpoints Q verified, recruiters' preferences about asks, MPCs Kev said he marketed and to whom (company type only for discreet clients). Work facts only: no comp, phones, emails, home addresses, health, age or EEO data, and never a discreet client's name.
+New facts go here, one dated bullet each (2026-10-28: ...). Label names or cadences Kev changed, which plan version is live, endpoints Q verified, recruiters' preferences about asks, MPCs Kev said he marketed and to whom. Work facts only: no comp, phones, emails, home addresses, health, age or EEO data.
 
 Files Ember keeps here:
 - `alerts.md`: red alerts filed (date, person, owner, ticket id), so the same MPC is not re-alerted inside 30 days.

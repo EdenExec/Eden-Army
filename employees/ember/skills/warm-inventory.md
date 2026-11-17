@@ -41,7 +41,7 @@ Order: cold, overdue, due, then ok by due date. Then three short sections:
 ## Rules
 
 - **Names, titles, companies, tags, stages and dates only.** No comp, no contact details, no health, family, age or EEO data, ever. If a field like that came back from Crelate, it is dropped before anything is written.
-- The INL work is "Client · discreet" in the company column; Baker Concrete is named as of 5 Nov 2026. A person at any current client gets "(client employee: do not market)" in Why, and is never a Monday pick.
+- Companies go by name: Baker and the INL work are "Baker" (no client is discreet since 13 Nov 2026). A person at any current client gets "(client employee: do not market)" in Why, and is never a Monday pick.
 - Every date comes from this pass. "Not in Crelate" beats a guess.
 - One list per working day; a re-run the same day overwrites that day's file, never yesterday's.
 - The list is a draft in your folder. Showing it on the Team Hub (a "Warm inventory" folder next to "Candidates in process") is a proposal in `projects/mpc/crelate-tag-plan.md` for Kev; until he says yes, it lives here and the link goes in your note.

@@ -5,7 +5,7 @@ Kev, 24 Oct 2026: "More up-to-date status reports on each job order, especially 
 | Field | Rule |
 |---|---|
 | When | Mon, Wed, Fri at 7:40am PT, before the board-keeping post. Run `npm run sabbath` first; Friday's report is built and held before sunset, never run inside the Sabbath |
-| Who sees it | Kev and Nick only. File `projects/team-hub/reports/<YYYY-MM-DD>-jo-status.md`. Fee figures live here and nowhere on the Team Hub or a screen share. Baker shows as "Client · discreet" |
+| Who sees it | Kev and Nick only. File `projects/team-hub/reports/<YYYY-MM-DD>-jo-status.md`. Fee figures live here and nowhere on the Team Hub or a screen share. Baker shows as "Baker" (no client is discreet since 13 Nov 2026) |
 | Order | Tier, then Kev's rank. Tiers: Retained (PB South, Triton), High (Megawatt, Hoffman, VMG), Below (Moss and the rest). Replace with Crelate's Retained, Top Priority, Go Now, Typical once Radar can read it |
 
 ## Columns

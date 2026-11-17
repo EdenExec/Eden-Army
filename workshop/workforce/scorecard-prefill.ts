@@ -1,4 +1,4 @@
-// node workshop/workforce/scorecard-prefill.ts [--week-ending 2026-11-05] [--now 2026-11-06T00:00:00Z] [--out file.json]
+// node workshop/workforce/scorecard-prefill.ts [--week-ending 2026-11-05] [--now 2026-11-06T00:00:00Z] [--out file.json] [--all yes]
 //
 // Read-only. Counts each recruiter's Crelate activity for the Friday Scorecard's scored week, Friday 00:00 to
 // Thursday 23:59 Pacific (or to now, if the week isn't over), with the same rules as the Round Table board
@@ -37,16 +37,19 @@ const after = new Date(fromMs).toISOString().replace(".000Z", "Z");
 const [activities, jobs] = await Promise.all([client.activities(after), client.jobs()]);
 const counts = countActivities(activities, jobs, [], w);
 const recruiters = ROSTER.filter((p) => p.group === "recruiter" && !p.hidden && p.ids.length);
+// --all yes adds leadership rows (Nick, Kev) after the team total; they never count in the team row.
+const leaders = flag.all ? ROSTER.filter((p) => p.group === "leadership" && p.ids.length) : [];
 const rows = recruiters.map((p) => {
   const c = counts.persons[p.slug]!;
   return { name: p.name, rps: c.this.rps, days_at_15: Math.min(5, daysAtGoal(c.rpsByDay)), ftis: c.this.ftis, mps: c.this.mps, ptcs: c.this.ptcs, resumes: c.this.resumes, submittals: c.this.subs };
 });
+const leadRows = leaders.map((p) => { const c = counts.persons[p.slug]!; return { name: p.name, rps: c.this.rps, days_at_15: Math.min(5, daysAtGoal(c.rpsByDay)), ftis: c.this.ftis, mps: c.this.mps, ptcs: c.this.ptcs, resumes: c.this.resumes, submittals: c.this.subs }; });
 const team = rows.reduce((t, r) => ({ rps: t.rps + r.rps, ftis: t.ftis + r.ftis, mps: t.mps + r.mps, ptcs: t.ptcs + r.ptcs, resumes: t.resumes + r.resumes, submittals: t.submittals + r.submittals }),
   { rps: 0, ftis: 0, mps: 0, ptcs: 0, resumes: 0, submittals: 0 });
 const result = {
   source: "Crelate API v3, read-only, board counting rules",
   window: `${weekStart} 00:00 to ${ptDate(toMs - 1)} ${toMs < ptMidnightUtc(addDays(weekEnd, 1)) ? "(so far)" : "23:59"} Pacific`,
-  pulled_at: new Date().toISOString(), recruiters: rows, team,
+  pulled_at: new Date().toISOString(), recruiters: rows, team, leadership: leadRows,
 };
 if (flag.out) { mkdirSync(dirname(flag.out), { recursive: true }); writeFileSync(flag.out, JSON.stringify(result, null, 2) + "\n"); }
 console.log(`Scored week ${result.window}`);

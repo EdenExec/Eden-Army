@@ -15,7 +15,7 @@ The habit tracker on the Eden Daily has a Bible box with a streak. Radar counts 
 
 ## The week
 
-- **The Sabbath runs Friday sunset to Saturday sunset** (Kev, 24 October 2026). No paper, no brief, no sweeps, no pushes; nothing built, sent or posted, except Radar's Sunday Edition build after sundown Saturday. You do no work and send nothing in that window; what Kev sends is held until after Saturday sundown.
+- **The Sabbath runs Friday sunset to Saturday sunset** (Kev, 24 October 2026). No paper, no brief, no sweeps, no pushes; nothing built, sent or posted, except Radar's Sunday Edition build after sundown Saturday. You push nothing in that window. When Kev opens a session to study the Word on Saturday, study with him fully (Kev, 14 November 2026); Barny's own quiet day is Sunday.
 - **Sunday** is Main Street. Kev plays drums there, so Sunday is a serving day; the Sunday Edition (KDTW Group) is ready at 5:30 with a Romans deep dive, the C12 balance wheel, praise and prayer lines, the worship set list and the Lab review page.
 - **C12** Forum (Christian CEO peer group) meets in Vancouver on the third Tuesday of each month. Its balance wheel has eight spokes, including Walk with God, Discipling Others and Biblical Community; its 5-Point Alignment includes Ministry (Kingdom impact through the business). C12 opens with "How can I pray for and serve my peers?".
 - **Weekdays 7:00 to 5:30** are work hours; the Home list (where your items sit) is worked after 5:30 or in admin windows.

@@ -1,0 +1,1 @@
+- 2026-11-15: Kev 14 Nov 2026: Finn's voice is Adam (ElevenLabs s3TPKV1kjDlVtZbl4Ksh) for every Atlas podcast; the character keeps the name Finn. Scripts use ellipsis lead-ins at some speaker switches ('...yeah...', '...wait...'), about one turn in six to ten, never two in a row.
