@@ -30,7 +30,6 @@ The first run is three lists for Moss: Tampa pre-construction, Tampa senior supe
 | Never load Moss's own employees. | Moss is our client. We recruit for them, not from them. |
 | Phone numbers stay inside Eden. | Never put them in an email, chat or anything outside Drive and Crelate. |
 
-<!-- pagebreak -->
 
 ## Part 1: Pull the list in ZoomInfo Sales
 
@@ -133,7 +132,6 @@ Create one Google Sheet per list, titled "2026-11-17 · Moss · [Role] · [City]
 
 For schedulers, open the LinkedIn profile and estimate years of experience. If you cannot tell in two minutes, mark Tier 2 and write "years unclear" in Fit note. Anyone over 10 years goes in Fit note only: "over 10 years, check with Scout".
 
-<!-- pagebreak -->
 
 ## Part 6: Load into Crelate
 
