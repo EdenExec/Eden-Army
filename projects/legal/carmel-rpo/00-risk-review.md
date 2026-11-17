@@ -73,3 +73,8 @@ Before 13.4 goes in: confirm Eden actually carries professional/E&O cover at $1M
 - Governing law: Washington, Idaho or California?
 
 Grades: statutes cited from working knowledge, not re-read today (LIKELY). Outside counsel isn't needed for a 90-day, $22,500 retainer deal unless Carmel's privacy terms add an uncapped indemnity.
+
+## Kev's calls (17 Nov)
+- Pay history: Kev asked where it sits in 4.1. It doesn't; it's a proposed addition. He's choosing between a contract line and an internal team rule.
+- Pay ranges in postings: dropped. Eden won't post for Carmel.
+- 10.1: change to "upon its satisfactory review of them".
