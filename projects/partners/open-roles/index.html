@@ -1,0 +1,433 @@
+<title>Eden Open Roles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap">
+<style>
+/* Layout: one quiet column, a white ledger per region on cream; each role reads as a row (code, role, requirements). */
+:root {
+  --bg: #FAF8F3; --card: #FFFFFF; --ink: #111111; --mute: #5A5A5A; --line: #D9D6CE; --soft: #F0EDE6;
+  --accent: #111111; --accent-ink: #FFFFFF; --warn: #7A5A1C;
+  --font: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151515; --card: #1D1D1C; --ink: #F2F0EA; --mute: #A3A09A; --line: #2F2F2D; --soft: #232321;
+    --accent: #F2F0EA; --accent-ink: #111111; --warn: #D2A95C; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151515; --card: #1D1D1C; --ink: #F2F0EA; --mute: #A3A09A; --line: #2F2F2D; --soft: #232321;
+  --accent: #F2F0EA; --accent-ink: #111111; --warn: #D2A95C; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 920px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 40px; display: grid; gap: 32px; }
+.draft { max-width: 920px; margin: 16px auto 0; margin-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); padding: 10px 14px; border: 1px dashed var(--warn); color: var(--warn); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+@media (min-width: 952px) { .draft { margin-inline: auto; } }
+.eyebrow, .label, .tally, .chip-row-label { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); margin: 0; }
+header.mast { display: grid; gap: 12px; padding-bottom: 24px; border-bottom: 2px solid var(--ink); }
+header.mast .eyebrow { color: var(--ink); }
+h1 { margin: 0; font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.1; font-weight: 700; font-style: italic; letter-spacing: -.01em; text-wrap: balance; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.facts strong { color: var(--ink); font-weight: 600; }
+.intro { margin: 0; max-width: 62ch; color: var(--mute); }
+.filters { display: grid; gap: 14px; }
+.chip-row { display: grid; gap: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-size: 13px; font-weight: 500; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; display: inline-flex; gap: 8px; align-items: baseline; cursor: pointer; }
+.chip .n { font-size: 11px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.chip:hover { border-color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.chip[aria-pressed="true"] .n { color: var(--accent-ink); opacity: .7; }
+button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.status { margin: 0; font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.region { display: grid; gap: 12px; }
+.region-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+h2 { margin: 0; font-size: 1.3rem; font-weight: 700; letter-spacing: -.005em; }
+.tally-n { color: var(--ink); }
+.roles { background: var(--card); border: 1px solid var(--line); }
+.role { display: grid; gap: 10px 28px; padding: 20px; border-top: 1px solid var(--line); }
+.role:first-child { border-top: 0; }
+.role-id { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ref { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: .12em; font-variant-numeric: tabular-nums; color: var(--ink); background: var(--soft); border: 1px solid var(--line); padding: 3px 8px; cursor: copy; white-space: nowrap; }
+.ref.copied { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.pill { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 3px 9px; border: 1px solid var(--line); color: var(--mute); border-radius: 999px; }
+.pill.hot { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.role-main, .role-detail { min-width: 0; display: grid; gap: 4px; align-content: start; }
+h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; font-weight: 700; text-wrap: balance; }
+.where { margin: 0; font-size: 13px; font-weight: 500; }
+.where .sep { color: var(--line); margin-inline: 8px; }
+.blind { margin: 0; font-size: 13px; font-style: italic; color: var(--mute); }
+.role-detail { gap: 6px; }
+.must { margin: 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: 14px; }
+.must li { padding-left: 16px; position: relative; }
+.must li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; background: var(--ink); }
+.sell { margin: 6px 0 0; display: grid; gap: 2px; font-size: 14px; font-weight: 500; }
+@media (min-width: 760px) {
+  .role { grid-template-columns: 7.5rem minmax(0, 1fr) minmax(0, 1.15fr); }
+  .role-id { flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+}
+.empty { margin: 0; padding: 24px 20px; background: var(--card); border: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.empty button { font: inherit; font-size: 13px; font-weight: 600; background: var(--accent); color: var(--accent-ink); border: 0; padding: 8px 14px; cursor: pointer; }
+footer.submit { display: grid; gap: 10px; padding-top: 24px; border-top: 2px solid var(--ink); }
+footer.submit p { margin: 0; max-width: 62ch; }
+.howto { font-size: 1rem; font-weight: 600; }
+.brandline { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-top: 16px; margin-top: 8px; border-top: 1px solid var(--line); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+@media (prefers-reduced-motion: no-preference) { .chip, .ref { transition: background-color .15s, color .15s, border-color .15s; } }
+</style>
+
+  <!-- DRAFT BANNER: delete this one line, or run build.py --final -->
+  <div class="draft" id="draft-banner">Draft for Kev's review. Not yet shared with partners.</div>
+
+<main class="wrap">
+  <header class="mast">
+    <p class="eyebrow">Eden Partner Group · Open Roles for Partners</p>
+    <h1>16 open roles, client-blind</h1>
+    <ul class="facts">
+      <li>As of <strong>13 Nov 2026</strong></li>
+      <li><strong>16</strong> roles</li>
+      <li><strong>7</strong> hot</li>
+      <li><strong>4</strong> regions</li>
+    </ul>
+    <p class="intro">Each role carries an Eden reference code. Quote it when you submit a candidate. Tap a code to copy it.</p>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filter roles">
+    <div class="chip-row"><p class="chip-row-label">Region</p><div class="chips"><button type="button" class="chip" id="f-region-all" data-group="region" data-value="all" aria-pressed="true">All<span class="n">16</span></button><button type="button" class="chip" id="f-region-florida" data-group="region" data-value="Florida" aria-pressed="false">Florida<span class="n">9</span></button><button type="button" class="chip" id="f-region-dc-and-virginia" data-group="region" data-value="DC and Virginia" aria-pressed="false">DC and Virginia<span class="n">3</span></button><button type="button" class="chip" id="f-region-texas" data-group="region" data-value="Texas" aria-pressed="false">Texas<span class="n">2</span></button><button type="button" class="chip" id="f-region-west" data-group="region" data-value="West" aria-pressed="false">West<span class="n">2</span></button></div></div>
+    <div class="chip-row"><p class="chip-row-label">Sector</p><div class="chips"><button type="button" class="chip" id="f-sector-all" data-group="sector" data-value="all" aria-pressed="true">All<span class="n">16</span></button><button type="button" class="chip" id="f-sector-commercial" data-group="sector" data-value="commercial" aria-pressed="false">Commercial<span class="n">12</span></button><button type="button" class="chip" id="f-sector-mechanical" data-group="sector" data-value="mechanical" aria-pressed="false">MEP<span class="n">3</span></button><button type="button" class="chip" id="f-sector-data-centers" data-group="sector" data-value="data centers" aria-pressed="false">Data centers<span class="n">1</span></button></div></div>
+    <p class="status" id="status" aria-live="polite">Showing all 16 roles</p>
+  </div>
+
+    <section class="region" data-region="Florida" aria-labelledby="h-florida">
+      <div class="region-head">
+        <h2 id="h-florida">Florida</h2>
+        <p class="tally"><span class="tally-n">9</span> roles · 5 hot</p>
+      </div>
+      <div class="roles">
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-001" aria-label="Copy reference code EPG-001">EPG-001</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>Senior PM / Preconstruction</h3>
+          <p class="where">Miami, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">Regional general contractor, South Florida</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Senior PM or preconstruction background</li><li>Helps stand up and run preconstruction</li><li>Miami-based or willing to relocate</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Build the preconstruction function at a growing South Florida builder.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-002" aria-label="Copy reference code EPG-002">EPG-002</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>Bench Project Manager</h3>
+          <p class="where">West Palm Beach, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">National general contractor, South Florida high-rise</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Experienced PM on large vertical builds</li><li>Available soon (immediate need)</li><li>West Palm Beach area or willing to move</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Immediate seat on a deep PM bench with room to step into larger projects.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-015" aria-label="Copy reference code EPG-015">EPG-015</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>Project Engineers and Field Engineers</h3>
+          <p class="where">West Palm Beach, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">National general contractor, South Florida high-rise</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>GC or subcontractor project engineering experience</li><li>RFIs, submittals and field coordination</li><li>West Palm Beach area</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Join a large vertical project team with a fast path to APM.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="mechanical">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-016" aria-label="Copy reference code EPG-016">EPG-016</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>MEP Engineer or Superintendent</h3>
+          <p class="where">West Palm Beach, FL<span class="sep" aria-hidden="true">/</span>MEP</p>
+          <p class="blind">Regional general contractor, South Florida</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Mechanical background</li><li>5 to 7 years minimum</li><li>Palm Beach County based</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Own MEP coordination on a South Florida build.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="mechanical">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-017" aria-label="Copy reference code EPG-017">EPG-017</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>MEP Project Executive</h3>
+          <p class="where">Miami, FL<span class="sep" aria-hidden="true">/</span>MEP</p>
+          <p class="blind">National general contractor, South Florida high-rise</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Project executive with an MEP background</li><li>Coordinates and oversees existing MEP leads (not an MEP super)</li><li>Large vertical building experience</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Senior oversight of all MEP on a major Miami tower.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-018" aria-label="Copy reference code EPG-018">EPG-018</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Assistant Project Manager</h3>
+          <p class="where">Miami, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">Regional general contractor, South Florida</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>APM or strong project engineer ready to step up</li><li>Florida construction experience</li><li>Miami based</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Step into an APM seat at a growing Miami builder.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-020" aria-label="Copy reference code EPG-020">EPG-020</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Project Coordinator / Admin</h3>
+          <p class="where">Miami, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">National general contractor, South Florida high-rise</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Procore proficiency</li><li>High-rise project experience</li><li>Strong paperwork and document control</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Support role on a high-rise team with a path into project management.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-026" aria-label="Copy reference code EPG-026">EPG-026</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>APM or Field Engineer (structural, windows, finishes)</h3>
+          <p class="where">West Palm Beach, FL<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">Regional general contractor, South Florida</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Structural, window or finishes scope experience</li><li>APM or field engineer level</li><li>Palm Beach County based</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Hands-on field role that leads to project management.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Florida" data-sector="mechanical">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-030" aria-label="Copy reference code EPG-030">EPG-030</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Junior MEP Support (inspections, permits, documents)</h3>
+          <p class="where">Miami, FL<span class="sep" aria-hidden="true">/</span>MEP</p>
+          <p class="blind">National general contractor, South Florida high-rise</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>A couple of years out of school</li><li>Strong computer and document-control skills</li><li>Construction or design-firm background; need not be pure MEP</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Entry point on a major tower with exposure to every trade.</p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="region" data-region="DC and Virginia" aria-labelledby="h-dc-and-virginia">
+      <div class="region-head">
+        <h2 id="h-dc-and-virginia">DC and Virginia</h2>
+        <p class="tally"><span class="tally-n">3</span> roles · 2 hot</p>
+      </div>
+      <div class="roles">
+      <article class="role" data-region="DC and Virginia" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-006" aria-label="Copy reference code EPG-006">EPG-006</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>Project Executive (Maryland)</h3>
+          <p class="where">Reston, VA (covers Maryland)<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">General contractor, Mid-Atlantic</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Project executive running a regional book</li><li>Maryland market relationships</li><li>Based in the DC area; one or two remote days a week</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Run the Maryland book with flexibility to work remotely part of the week.</p>
+        </div>
+      </article>
+      <article class="role" data-region="DC and Virginia" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-010" aria-label="Copy reference code EPG-010">EPG-010</button>
+          <span class="pill hot">Hot</span>
+        </div>
+        <div class="role-main">
+          <h3>VDC Manager (lead)</h3>
+          <p class="where">DC metro (remote-friendly)<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">General contractor, Mid-Atlantic</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Leads VDC and BIM coordination</li><li>Team lead experience</li><li>Remote hire preferred</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Lead VDC with the flexibility to work remotely.</p>
+        </div>
+      </article>
+      <article class="role" data-region="DC and Virginia" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-022" aria-label="Copy reference code EPG-022">EPG-022</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Chief Estimator</h3>
+          <p class="where">Washington, DC<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">General contractor, Mid-Atlantic</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Leads estimating for a general contractor</li><li>Runs preconstruction pricing and bids</li><li>Washington DC market experience</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Lead estimating for a Mid-Atlantic builder.</p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="region" data-region="Texas" aria-labelledby="h-texas">
+      <div class="region-head">
+        <h2 id="h-texas">Texas</h2>
+        <p class="tally"><span class="tally-n">2</span> roles · 0 hot</p>
+      </div>
+      <div class="roles">
+      <article class="role" data-region="Texas" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-041" aria-label="Copy reference code EPG-041">EPG-041</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Senior Project Manager (drywall)</h3>
+          <p class="where">Austin, TX<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">Drywall and interiors subcontractor, Texas</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Drywall or interiors subcontractor PM experience</li><li>Senior-level project management</li><li>Austin based</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Lead projects for a growing Texas drywall subcontractor.</p>
+        </div>
+      </article>
+      <article class="role" data-region="Texas" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-042" aria-label="Copy reference code EPG-042">EPG-042</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Senior Estimator (drywall)</h3>
+          <p class="where">San Antonio, TX<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">Drywall and interiors subcontractor, Texas</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Drywall or interiors estimating experience</li><li>Senior-level estimator</li><li>San Antonio based</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Own pricing for a growing Texas drywall subcontractor.</p>
+        </div>
+      </article>
+      </div>
+    </section>
+    <section class="region" data-region="West" aria-labelledby="h-west">
+      <div class="region-head">
+        <h2 id="h-west">West</h2>
+        <p class="tally"><span class="tally-n">2</span> roles · 0 hot</p>
+      </div>
+      <div class="roles">
+      <article class="role" data-region="West" data-sector="commercial">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-029" aria-label="Copy reference code EPG-029">EPG-029</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Self-perform Project Engineers and PMs</h3>
+          <p class="where">Boise, ID<span class="sep" aria-hidden="true">/</span>Commercial</p>
+          <p class="blind">General contractor with self-perform, western US</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Self-perform project engineering or PM experience</li><li>Concrete or carpentry self-perform scopes</li><li>Boise area</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Self-perform builder with strong local project flow.</p>
+        </div>
+      </article>
+      <article class="role" data-region="West" data-sector="data centers">
+        <div class="role-id">
+          <button type="button" class="ref" data-ref="EPG-031" aria-label="Copy reference code EPG-031">EPG-031</button>
+          <span class="pill">Active</span>
+        </div>
+        <div class="role-main">
+          <h3>Project Manager, traveling (data center)</h3>
+          <p class="where">Quincy, WA<span class="sep" aria-hidden="true">/</span>Data centers</p>
+          <p class="blind">Mission-critical and data center contractor</p>
+        </div>
+        <div class="role-detail">
+          <p class="label">Must-haves</p>
+          <ul class="must"><li>Data center or mission-critical PM experience</li><li>Willing to travel</li><li>Quincy area project</li></ul>
+          <p class="sell"><span class="label">The pitch</span>Traveling data center PM role on active hyperscale work.</p>
+        </div>
+      </article>
+      </div>
+    </section>
+  <div class="empty" id="empty" hidden><span>No roles match both filters.</span><button type="button" id="clear">Show all roles</button></div>
+
+  <footer class="submit">
+    <p class="label">How to submit</p>
+    <p class="howto">Submit candidates to your Eden contact with the reference code. Eden's standard split terms apply.</p>
+    <div class="brandline"><span>edenpartnergroup.com</span><span>Eden Partner Group</span></div>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var state = { region: "all", sector: "all" };
+  var total = 16;
+  var roles = Array.prototype.slice.call(document.querySelectorAll(".role"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".region"));
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+  function apply() {
+    var shown = 0;
+    roles.forEach(function (r) {
+      var ok = (state.region === "all" || r.dataset.region === state.region) &&
+               (state.sector === "all" || r.dataset.sector === state.sector);
+      r.hidden = !ok; if (ok) shown++;
+    });
+    sections.forEach(function (s) { s.hidden = !s.querySelector(".role:not([hidden])"); });
+    chips.forEach(function (c) { c.setAttribute("aria-pressed", String(state[c.dataset.group] === c.dataset.value)); });
+    document.getElementById("empty").hidden = shown > 0;
+    document.getElementById("status").textContent = shown === total
+      ? "Showing all " + total + " roles" : "Showing " + shown + " of " + total + " roles";
+  }
+  chips.forEach(function (c) {
+    c.addEventListener("click", function () { state[c.dataset.group] = c.dataset.value; apply(); });
+  });
+  document.getElementById("clear").addEventListener("click", function () { state.region = "all"; state.sector = "all"; apply(); });
+  document.querySelectorAll(".ref").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var code = b.dataset.ref;
+      function done() { b.classList.add("copied"); b.textContent = "Copied"; setTimeout(function () { b.classList.remove("copied"); b.textContent = code; }, 1400); }
+      function fallback() { var r = document.createRange(); r.selectNodeContents(b); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      try { navigator.clipboard.writeText(code).then(done, fallback); } catch (err) { fallback(); }
+    });
+  });
+})();
+</script>
