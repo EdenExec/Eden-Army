@@ -1,0 +1,125 @@
+TITLE: Carmel Partners & Eden Partner Group - RPO Bridge Services Agreement (DRAFT)
+== TAB Tab 1
+Carmel Partners & Eden Partner Group
+RPO Services Agreement (90 days, non-exclusive)
+This RPO Services Agreement (the "Agreement") is made between Carmel Partners, with offices at 1000 Sansome Street, First Floor, San Francisco, CA 94111 ("Carmel"), and Eden Partner Group LLC, a Wyoming limited liability company, with offices at 4611 Fruit Valley Road, Vancouver, WA 98660 ("Eden"). Carmel and Eden are each a "Party".
+Background
+Carmel is restructuring its HR function and needs recruiting capacity on its open requisitions while it does. The Parties want a short, non-exclusive, retained bridge: Eden works Carmel's open requisitions as Carmel's recruiting team for 90 days, the retainer is credited in full against hire fees, and at the end of the agreement, the Parties decide whether to continue, renew, adjust, or terminate the agreement.
+1. Definitions
+Covered Role: A role listed in Schedule 1, or one Carmel later assigns to Eden in writing (email is enough). Carmel may withdraw or add a Covered Role by written notice.
+Start Date: ______________
+Term: 90 Days from the Start Date, ending on ______________.
+First-Year Base Salary: The annual base salary in the hire's offer, not counting bonus, sign-on, relocation, benefits, or equity. For a contract or consulting role, the pay contracted for the first 12 months.
+Start: The hire's first day of work. A fee is earned only when the hire actually starts.
+Submittal: Eden's written presentation of a candidate to Carmel for a named Covered Role, made with the candidate's consent, on Eden's standard submittal format
+Eden Candidate: A candidate Eden submits who is not an In-Process Candidate (Section 9.2)
+In-Process Candidate: A candidate listed in Schedule 2
+2. Term
+2.1 Ninety days. This Agreement runs from the Start Date to the End Date.
+2.2 Ending early. Either Party may end this Agreement at any time on 30 days' written notice. Retainer already paid is not refunded, but it stays available as credit under Section 6.
+2.3 After the End Date. This Agreement ends on the End Date unless the Parties agree in writing to extend it, either month to month on these terms or as a longer RPO agreement. The option to move this to a month-to-month or adjust the terms of this agreement will be explored at or near day 60 of this agreement.
+2.4 Interim terms. If Carmel accepts these terms by email before signing, both Parties are bound by them from the Start Date until this Agreement is signed.
+3. Non-exclusive
+3.1 Eden's engagement is not exclusive. Carmel may continue recruiting directly, use its own employee referrals, and use other agencies for any role, including Covered Roles (see Sections 6 and 7 for details).
+3.2 Eden may work for other clients, but will continue to refrain from recruiting any Carmel employees for any other client while this Agreement is in force (Section 12).
+4. Services
+4.1 In scope.
+Eden does:
+Recruiting on Covered Roles, including sourcing once each role's hand-off is done
+Hiring-manager coordination: intake, calibration, and feedback
+Screening Eden-sourced candidates, Carmel applicants, and employee referrals
+Submittals in Eden's standard format, in line with hiring managers' preferences
+Interview coordination through to offer stage
+Out of scope (stays with Carmel):
+Employer brand and Carmel's LinkedIn page
+Job posting and UKG administration
+Onboarding
+Compensation consulting and formal benchmarking
+HR generalist work
+Offers, background checks and hiring decisions
+4.2 Offer stage. Carmel makes and extends every offer. Eden keeps the candidate warm and reports what the candidate expects.
+4.3 Changes. A new service is added only in writing.
+5. What Carmel provides
+5.1 Applicants. Resumes from UKG for each Covered Role: a spreadsheet of linked resumes plus a shared folder Carmel controls, refreshed at least weekly.
+5.2 Access. UKG user IDs where needed if Carmel chooses; and access to hiring managers for intake calls.
+5.3 Decisions. A named Carmel lead with authority to assign roles and approve terms (Brandy Fulton), and a named delegate when she is away. Hiring-manager feedback within 2 business days of a Submittal, and standing weekly interview availability.
+5.4 Handover. Half-hour hiring-manager hand-offs in the first week of active searches, plus an introduction to any active candidates before Eden contacts anyone on it.
+6. Fees and retainer credit (Option B)
+6.1 Fees.
+Monthly retainer:
+$7,500 a month; three payments in the
+Invoiced on: 1 Dec 2026, 1 Jan 2027 and 1 Feb 2027 (next business day if a holiday)
+Terms: Due 10 days from Invoice date.
+Placement fee, Eden Candidate:
+20% of First-Year Base Salary ·
+Invoiced upon Candidate Start
+Net Terms: Due within 30 days of Start
+Screening fee, employee referral or internal applicant:
+6% of First-Year Base Salary ·
+Net Terms: Due within 30 days of Start
+Third-party Agency placement through Eden:
+No more than 24% of First-Year Base Salary in all (Section 7) ·
+Net Terms: Due within 30 days after Start
+6.2 Full credit. Every retainer dollar is credited against Eden's placement and screening fees. Credits stack, several can apply to one invoice, and Carmel chooses where they go.
+6.3 Limits on credit. Credit does not reduce a fee below zero, does not apply to third-party placements, and is not paid out in cash.
+6.4 Life of the credit. Unused credit stays good until 180 days after this Agreement ends, for any Eden search.
+6.5 Examples. A $150,000 hire carries a $30,000 fee; with the full $22,500 credit applied, the invoice is $7,500. A $200,000 hire carries a $40,000 fee before credit.
+6.6 Expenses. Travel only with Carmel's advance approval, billed at cost. Background checks are at Carmel's expense.
+7. Outside agencies
+7.1 Carmel approves, Eden runs a one-time split. Eden manages an outside agency only on a role Carmel approves in writing, under a one-time split agreement between Eden and that agency. The agency submits through Eden, Eden invoices Carmel, and Eden pays the agency. Carmel has no contract with that agency for that placement and pays it nothing.
+Fee of 24%: Eden negotiates the split structure within that 24% directly with the other third-party agency.
+7.2 Fee cap. Carmel pays no more than 24% of First-Year Base Salary in all for a third-party placement. Eden's management fee of 6 points is inside the cap, and each invoice shows it. Third-party placements carry the same guarantee as Eden's (Section 8).
+7.3 Duplicates. The first Submittal Carmel receives wins.
+7.4 Carmel's existing agency agreements stay Carmel's. As an option, Carmel may tell those agencies that from 1 January 2027 it pays no more than 24% and routes new agency submittals through Eden. Carmel decides and sends any such notice; Eden does not contact Carmel's agencies about their terms unless instructed to do so.
+8. Replacement guarantee
+8.1 120 days. If a hire leaves, or Carmel lets them go for performance or conduct, within 120 days of Start, Eden runs one replacement search at no added fee and no new retainer.
+8.2 Conditions. Carmel tells Eden within 10 business days of the departure, and the fee was paid by its due date.
+8.3 Exclusions. The guarantee does not apply if the role is eliminated, the hire is laid off in a restructuring, or Carmel materially changes the role, pay or location. Credit already applied to the first invoice stays applied.
+9. Candidate ownership
+9.1 Twelve months. If Carmel or an affiliate hires an Eden Candidate, for any role, as an employee or contractor, within 12 months of Eden's first Submittal of that candidate, the fee in Section 6 is due. This survives the end of this Agreement.
+9.2 Already in Carmel's process. A candidate is not Eden's if, in the 6 months before Eden's Submittal, they interviewed with Carmel or another agency submitted them to Carmel.
+9.3 In-Process Candidates. Candidates already in Carmel's process at the Start Date are listed in Schedule 2 with the fee, if any, that applies to each. Candidates Eden submitted before the Start Date stay under the terms they were submitted on.
+9.4 Submittals stay inside Carmel. Carmel keeps Eden's Submittals within Carmel and does not forward them outside it.
+10. Data and confidentiality
+10.1 Carmel's data stays with Carmel. Applicant data stays in Carmel's systems and the shared folder. Eden uses it only for this work, does not copy it into Eden's systems, and does not sell or share it. Eden will sign Carmel's standard privacy (CCPA service-provider) terms.
+10.2 Named people only. Each Eden person with access is named to Carmel and bound to confidentiality in writing. Eden answers for them.
+10.3 At the end. Within 10 business days after this Agreement ends, Eden deletes or returns Carmel data (Carmel chooses), gives up its access and confirms in writing.
+10.4 Automated tools. Eden does not use an automated tool to make or substantially assist a hiring decision on a Carmel role without Carmel's written approval. Eden's submittal is a human assessment.
+10.5 Confidential information. Each Party keeps the other's non-public business information confidential and uses it only for this Agreement, during the Term and for [2] years after.
+11. Reporting and checkpoints
+11.1 Weekly. Each Monday, a scorecard for every Covered Role: candidates screened, submitted, interviewing, at offer and started; days open; days to first Submittal; hiring-manager feedback time; risks and next steps. A 30-minute review with Carmel's lead follows.
+11.2 Service standards. Eden: intake within 2 business days of a new role, first candidates within 10 business days of intake. Carmel: feedback within 2 business days of a Submittal and weekly interview availability.
+11.3 Day 45 Review [Proposed: Wednesday 13 January 2027]. Both Parties compare the scorecard with the standards and adjust roles or targets.
+12. Team and relationship
+12.1 Eden. Kevin Williams, Founder: quality control on every Carmel role, the relationship with Carmel's HR lead, and contract compliance. Eden names its client lead and candidate lead to Carmel at signing.
+12.2 Carmel. Brandy Fulton, HR lead, decides for Carmel.
+12.3 Independent contractor. Eden is an independent contractor. Eden's people are not Carmel employees, and Eden is responsible for their pay, taxes, and benefits.
+12.4 No poaching. During the Term, Eden does not recruit Carmel employees for any other client, and Carmel does not hire Eden's staff directly.
+13. Legal terms [Docket to draft or review]
+13.1 Compliance. Each Party follows the employment, privacy and anti-discrimination laws that apply to its part of the hiring process.
+13.2 Governing law and venue. Washington
+13.3 Notices. In writing, by email to the named leads, with a copy to 4611 Nw Fruit Valley Rd, Vancouver, WA 98660
+13.4 Fit with Carmel's standard terms and order of precedence. If this Agreement is attached to Carmel's standard terms, this Agreement controls on fees, credit, guarantee, candidate ownership, outside agencies, term, and exclusivity. Placements made before the Start Date keep their own terms, including their guarantees and fee protection.
+13.5 Entire agreement. This Agreement, with its schedules, is the whole agreement on this subject, and is changed only in writing signed by both Parties.
+13.6 Counterparts and e-signature. This Agreement may be signed in counterparts and electronically.
+Signatures
+For Carmel
+Signature: ______________________
+Name: Brandy Fulton
+Title: SVP - Human Resources
+Date: ______________________
+For Eden Partner Group LLC
+Signature: ______________________
+Name: Kevin Williams
+Title: Founder & President - Eden Partner Group
+Date: ______________________
+Schedule 1: Covered Roles at the Start Date
+Senior Associate, Investor Services
+Director of Capital Projects: San Francisco
+Analyst, Acquisitions & Development: New York
+Analyst, FP&A Fund Management: New York
+Design Associate: San Francisco
+Senior Analyst, Asset Management: New York
+Development Execution & Capital Projects: Santa Monica
+Schedule 2: In-Process Candidates
+To be completed by Carmel's HR lead and Eden at the hand-offs in the first week: each candidate, the role, who sourced them, and the fee that applies (none, a screening fee, or the terms of an earlier Eden Submittal).

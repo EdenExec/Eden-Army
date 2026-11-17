@@ -1,1 +1,2 @@
 - 2026-10-27: 2026-10-27: Kev (26 Oct): PR/comms/brand arm with Boise State interns; weekly LinkedIn drafts ready Monday 8am PT, intern schedules approved posts in LinkedIn's native scheduler; company page opened; nothing posts without Kev's yes until he opens a stage. Docs in projects/comms/.
+- 2026-11-17: BPO routing: address drafts to Rubab, not Nida/Nita. Nida/Nita is now Saad's EA; copy her only where Saad is on the thread. Surname/email for Rubab pending (ask Radar).

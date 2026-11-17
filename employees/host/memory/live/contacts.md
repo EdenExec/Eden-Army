@@ -1,0 +1,1 @@
+- 2026-11-17: BPO contact (Kev, 16 Nov 2026 dictation): Rubab (very sharp, AI savant) is now Eden's BPO contact; drafts to BPO go to Rubab. 'Nita' (dictated; thread shows Nida Shafaqat at BPO, confirm spelling) has moved to be Saad's EA at BPO. Rubab's surname and address not yet in mail: confirm before first draft.

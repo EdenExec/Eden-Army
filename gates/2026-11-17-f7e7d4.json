@@ -1,0 +1,58 @@
+{
+  "id": "2026-11-17-f7e7d4",
+  "subject": "Carmel RPO bridge agreement: fee and credit figures",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Total retainer over the 90-day term (3 monthly payments)",
+      "claimed": 22500,
+      "unit": "usd",
+      "source": "RPO draft s.6.1: $7,500 a month invoiced 1 Dec 2026, 1 Jan 2027, 1 Feb 2027",
+      "recomputed": 22500,
+      "ok": true,
+      "note": "3 x 7,500 per s.6.1 (invoices 1 Dec, 1 Jan, 1 Feb)"
+    },
+    {
+      "label": "Fee on a $150,000 hire at the Eden Candidate rate",
+      "claimed": 30000,
+      "unit": "usd",
+      "source": "RPO draft s.6.1 (20% of First-Year Base) and s.6.5 example",
+      "recomputed": 30000,
+      "ok": true,
+      "note": "20% x 150,000 per s.6.1"
+    },
+    {
+      "label": "Invoice on that $150,000 hire after the full retainer credit",
+      "claimed": 7500,
+      "unit": "usd",
+      "source": "RPO draft s.6.2 and s.6.5",
+      "recomputed": 7500,
+      "ok": true,
+      "note": "30,000 fee - 22,500 credit (s.6.2); above zero floor s.6.3"
+    },
+    {
+      "label": "Fee on a $200,000 hire before credit",
+      "claimed": 40000,
+      "unit": "usd",
+      "source": "RPO draft s.6.5",
+      "recomputed": 40000,
+      "ok": true,
+      "note": "20% x 200,000"
+    },
+    {
+      "label": "Agency share of a third-party placement after Eden's 6-point management fee, in points of base",
+      "claimed": 18,
+      "unit": "pct",
+      "source": "RPO draft s.7.2: 24% cap, Eden's 6 points inside it",
+      "recomputed": 18,
+      "ok": true,
+      "note": "24 cap - 6 Eden points (s.7.2)"
+    }
+  ],
+  "createdAt": "2026-11-17T00:56:55.815Z",
+  "doc": "projects/legal/carmel-rpo/00-risk-review.md",
+  "checkedBy": "tally",
+  "closedAt": "2026-11-17T00:57:10.536Z"
+}
