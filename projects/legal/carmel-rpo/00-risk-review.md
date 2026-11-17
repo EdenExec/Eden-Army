@@ -78,3 +78,16 @@ Grades: statutes cited from working knowledge, not re-read today (LIKELY). Outsi
 - Pay history: Kev asked where it sits in 4.1. It doesn't; it's a proposed addition. He's choosing between a contract line and an internal team rule.
 - Pay ranges in postings: dropped. Eden won't post for Carmel.
 - 10.1: change to "upon its satisfactory review of them".
+
+## Edits made in the Google Doc (17 Nov, per Kev)
+- Party is now "Carmel Partners and all of its affiliates". Eden stays a Wyoming LLC with the Vancouver, WA notice address.
+- 2.2: all three retainer payments stay due on early exit, and remain as credit.
+- 6.1: no screening fee on internal promotions or transfers. The "three payments in the" typo is fixed.
+- 6.2 and 6.3: credit applies only to placement fees for Eden Candidates; screening fees are excluded.
+- 8.1 and 8.3: the guarantee covers Eden Candidates only, not screening-fee hires.
+- 10.1: Eden signs Carmel's privacy terms "upon its satisfactory review of them".
+- 10.5: two (2) years. "End Date" is now defined.
+- 13: new 13.2 indemnity, 13.3 liability cap, 13.4 insurance (GL, professional liability and EPL, no dollar figure), and 13.5 Washington law with Clark County venue. The remaining sections are renumbered 13.6 to 13.9.
+- Not done, per Kev: pay history (internal rule), postings, the 12-month-tail records carve-out, third-party split terms.
+- Internal rule for Carmel roles: ask candidates about pay expectations only, never current or past pay.
+- The reply to Brandy is in Kev's Superhuman Drafts on the LinkedIn Follow-up thread, with the LinkedIn correction and two compliant options.
