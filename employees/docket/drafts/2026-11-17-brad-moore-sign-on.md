@@ -7,9 +7,9 @@ subtitle: "Sign-on bonus structure: Brad Moore, General Superintendent"
 
 ### Sign-on bonus structure: Brad Moore, General Superintendent
 
-**Docket, Tue 17 Nov 2026. Internal draft for Kev. Nothing here has been sent or signed.** Numbers are in gate `GATE_ID` with Tally.
+**Docket, Tue 17 Nov 2026. Internal draft for Kev. Nothing here has been sent or signed.** Numbers are in gate `2026-11-17-fb0d64` with Tally.
 
-## Verdict: FIX FIRST (pick the structure, then one line to Bobby)
+## Executive summary: FIX FIRST (pick the structure, then one line to Bobby)
 
 - **My pick: Structure C.** PB South pays Brad the full $5,000 through its own payroll, on the first payroll after he completes 90 days. Eden pays its half by taking $2,500 off the placement invoice.
 - **Why:** one payer, one tax form (W-2), and nothing for anyone to claw back. The offer comes from the employer, which closes better than a recruiter's side letter. Eden's cost falls from $5,000 to $2,500.
@@ -42,7 +42,7 @@ I could not read Kev's mail in this session (no mail tool loaded), so the base s
 | Paper | Eden side letter to Brad | One clause in PB South's offer letter | Offer-letter clause plus a short Eden-PB South letter |
 | Main risk | Eden holds Brad's SSN and bank details on a form. The template's "independent contractor" label is wrong | Bobby may want Eden to share the cost | Eden gives the discount before day 90, so it has to fall away if the bonus is never paid |
 
-**Timing variant, if Kev needs more pull to close:** pay $2,500 on Brad's first payroll and $2,500 after day 90. The first half then needs a repayment clause in PB South's offer letter: Brad repays it if he resigns, or is fired for cause, before day 90. A repayment promise from a departing employee is hard to collect, which is why day 90 alone is the default.
+**Timing variant, if Kev needs more pull to close:** $2,500 on Brad's first payroll and $2,500 after day 90. The first half then needs a repayment clause in PB South's offer letter, and a departing employee's promise to repay is hard to collect. That is why day 90 alone is the default.
 
 ## Tax treatment (headline only; Chris confirms)
 
@@ -59,6 +59,8 @@ I could not read Kev's mail in this session (no mail tool loaded), so the base s
 1. When Eden pays a candidate directly and the candidate performs no services for Eden, is that 1099-NEC or 1099-MISC box 3, and is it deductible to Eden or booked against revenue?
 2. Under Structure C, do we book Eden's $2,500 as a fee discount (contra-revenue), with the Hub "Sign-On" column left at zero?
 3. Eden's 2026 sign-on letters call the candidate a "1099 independent contractor". How should those payments be filed for 2026, and should the template change before the next one?
+
+<!-- pagebreak -->
 
 ## Draft 1: clause for PB South's offer letter (Structure C or B)
 
@@ -96,7 +98,6 @@ To Jeff Rosser, copy Bobby Hubner. From Kev. **Draft; Kev sends.**
 
 - **Kev to confirm with Bobby:** a 50/50 split (C) or PB South paying all of it (B). If Bobby offers to cover the whole $5,000, take B.
 - **Which paper governs Brad's fee:** the RPO framework (18%, 90 days, no guarantee) or the 2025 General Super agreement (22%, 120-day guarantee). The Hub shows PB South placements at 18%. Joel confirms before the invoice.
-- **Entity names:** PB South's employing entity, and Eden Partner Group LLC as payee (PB South pays EPG; the 2025 engaged agreements name Eden Executive Search).
-- **Split partner:** confirm Brad is not an Inlet (Steve Cross) candidate. If he were, a fee discount would also cut Steve's 50% share.
+- **Entities and split partner:** name PB South's employing entity, with Eden Partner Group LLC as payee (the 2025 agreements name Eden Executive Search). Also confirm Brad is not an Inlet (Steve Cross) candidate: if he were, the discount would also cut Steve's 50% share.
 
 EDEN PARTNER GROUP · edenpartnergroup.com

@@ -1,0 +1,174 @@
+{
+  "id": "2026-11-17-fb0d64",
+  "subject": "Brad Moore sign-on structure (PB South) and VMG retained overview review",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "open",
+  "items": [
+    {
+      "label": "Brad Moore sign-on bonus, total",
+      "claimed": 5000,
+      "unit": "usd",
+      "source": "Kev's dictation Mon 16 Nov 2026 11:26pm MT, relayed in Radar's task: the amount Kev offered Brad Moore. Docket draft employees/docket/drafts/2026-11-17-brad-moore-sign-on.md, 'The facts on file'."
+    },
+    {
+      "label": "Structure C: Eden's share of the bonus (fee discount on the invoice)",
+      "claimed": 2500,
+      "unit": "usd",
+      "source": "Docket draft employees/docket/drafts/2026-11-17-brad-moore-sign-on.md, Structure C: the bonus total split equally between PB South and Eden."
+    },
+    {
+      "label": "Structure C: PB South's net share of the bonus",
+      "claimed": 2500,
+      "unit": "usd",
+      "source": "Same draft, Structure C: bonus total less Eden's equal share."
+    },
+    {
+      "label": "Structure A: Eden's cost",
+      "claimed": 5000,
+      "unit": "usd",
+      "source": "Same draft, Structure A: Eden pays the whole bonus out of its fee."
+    },
+    {
+      "label": "Structure B: Eden's cost",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "Same draft, Structure B: PB South pays the whole bonus."
+    },
+    {
+      "label": "Bonus vesting day (days of continuous employment)",
+      "claimed": 90,
+      "unit": "days",
+      "source": "Eden's standard sign-on letter template 'Sign-On Bonus - EPG & ____' (Drive) and Docket memory 2026-11-11 (paid after the guaranteed period); Docket draft offer-letter clause."
+    },
+    {
+      "label": "PB South placement fee rate under the RPO framework",
+      "claimed": 18,
+      "unit": "pct",
+      "source": "Drive doc 'PB South RPO Framework' (1-zkcmt0_cu4-CjJElHrzJL83Axre7h_iHCmtyFiel4E), section 'Reduction in Headhunting Cost'."
+    },
+    {
+      "label": "PB South monthly RPO retainer (credited against fees)",
+      "claimed": 7500,
+      "unit": "usd",
+      "source": "Drive doc 'PB South RPO Framework', section 'Reduction in Headhunting Cost'."
+    },
+    {
+      "label": "PB South fee payment window after start under the RPO framework",
+      "claimed": 90,
+      "unit": "days",
+      "source": "Drive doc 'PB South RPO Framework', 'Payment Terms', headhunting service fees."
+    },
+    {
+      "label": "Replacement guarantee in the 2025 PB South General Super engaged agreement",
+      "claimed": 120,
+      "unit": "days",
+      "source": "Drive doc 'Engaged Fee Search Agreement _ PB South & Eden _ Gen Super FL' (1GXntPBBfOl_XUQAq23CgTVMv5itJpqt9ZtL1O-uj8gc), guarantee paragraph."
+    },
+    {
+      "label": "2026 Form 1099 reporting threshold (payments after 31 Dec 2025)",
+      "claimed": 2000,
+      "unit": "usd",
+      "source": "One Big Beautiful Bill Act change to IRC 6041/6041A thresholds for payments made after 31 Dec 2025 (IRS guidance or the statute text)."
+    },
+    {
+      "label": "VMG Option A placement fee on a $160,000 hire, before credit",
+      "claimed": 36000,
+      "unit": "usd",
+      "source": "deliverables/vmg/vmg-retained-overview.html, Terms table: Option A rate times a $160,000 first-year base."
+    },
+    {
+      "label": "VMG Option B placement fee on a $160,000 hire, before credit",
+      "claimed": 32000,
+      "unit": "usd",
+      "source": "Same table: Option B rate times $160,000."
+    },
+    {
+      "label": "VMG Option C placement fee on a $160,000 hire, before credit",
+      "claimed": 28800,
+      "unit": "usd",
+      "source": "Same table: Option C rate times $160,000."
+    },
+    {
+      "label": "VMG today (25%) fee on a $160,000 hire",
+      "claimed": 40000,
+      "unit": "usd",
+      "source": "Same table: today's contingency rate (June agreement) times $160,000."
+    },
+    {
+      "label": "VMG Option A placement fee on a $200,000 hire, before credit",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Same table: Option A rate times a $200,000 base."
+    },
+    {
+      "label": "VMG Option B placement fee on a $200,000 hire, before credit",
+      "claimed": 40000,
+      "unit": "usd",
+      "source": "Same table: Option B rate times $200,000."
+    },
+    {
+      "label": "VMG Option C placement fee on a $200,000 hire, before credit",
+      "claimed": 36000,
+      "unit": "usd",
+      "source": "Same table: Option C rate times $200,000."
+    },
+    {
+      "label": "VMG today (25%) fee on a $200,000 hire",
+      "claimed": 50000,
+      "unit": "usd",
+      "source": "Same table: 25% times $200,000."
+    },
+    {
+      "label": "VMG Option B retainer paid over six months",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Same table: Option B monthly retainer times 6 months."
+    },
+    {
+      "label": "VMG Option C six-month cost with two $200,000 hires (greater of retainer paid and fees)",
+      "claimed": 75000,
+      "unit": "usd",
+      "source": "Same table: Option C. Cost = the larger of (monthly retainer x 6) and (2 x Option C fee on $200,000), since retainer is credited 100% against fees and unused credit is lost after the term."
+    },
+    {
+      "label": "VMG Option B six-month cost with two $200,000 hires (greater of retainer paid and fees)",
+      "claimed": 80000,
+      "unit": "usd",
+      "source": "Same table: Option B, same rule as the Option C item."
+    },
+    {
+      "label": "In-process candidate at $300,000 base: fee at the June 25% rate",
+      "claimed": 75000,
+      "unit": "usd",
+      "source": "Docket review employees/docket/drafts/2026-11-17-vmg-retained-review.md issue 3: June agreement rate ('Vertical Mechanical Group -Headhunting Fee Agreement', Drive) times an illustrative $300,000 base (Zach Melton's ask, projects/team-hub/drafts/2026-10-30-status-pb-south-vmg-hoffman.md)."
+    },
+    {
+      "label": "In-process candidate at $300,000 base: fee at Option B 20%",
+      "claimed": 60000,
+      "unit": "usd",
+      "source": "Same illustration: Option B rate times $300,000."
+    },
+    {
+      "label": "June VMG agreement guarantee window",
+      "claimed": 180,
+      "unit": "days",
+      "source": "Drive doc 'Vertical Mechanical Group -Headhunting Fee Agreement', Guarantee section."
+    },
+    {
+      "label": "VMG past-due amount at 11 Nov 2026",
+      "claimed": 37000,
+      "unit": "usd",
+      "source": "projects/finance/ar/2026-11-11-joel-handoff.md, 'Totals by client', VMG row, past-due column."
+    },
+    {
+      "label": "VMG started but not yet invoiced at 11 Nov 2026",
+      "claimed": 42500,
+      "unit": "usd",
+      "source": "projects/finance/ar/2026-11-11-joel-handoff.md, 'Totals by client', VMG row, never-invoiced column."
+    }
+  ],
+  "createdAt": "2026-11-17T06:36:26.737Z",
+  "doc": "employees/docket/drafts/2026-11-17-brad-moore-sign-on.md; employees/docket/drafts/2026-11-17-vmg-retained-review.md",
+  "ask": "Kev: Brad Moore Structure C (PB South pays $5,000 via payroll at day 90, Eden takes $2,500 off the fee); VMG: lead with Option B, clear past-due first, add Terms schedule"
+}
