@@ -477,3 +477,4 @@
 - 2026-11-16 13:50 PT: picked 0, closed 0, gated 0, blocked 0, FAILs 0. Queue empty. Floor refresh (step 8), 8a-9a not run this hour (short run, no node_modules).
 - 2026-11-16 14:50 PT: picked 1, closed 1 (Jethro desk status), gated 0, blocked 0, FAILs 0. Floor refresh (step 8), 8a-9a not run this hour (short run, no node_modules).
 - 2026-11-16 16:50 PT: picked 0 (1 stuck >2h, re-run once), closed 1 (Dean role playbooks v1), gated 0, blocked 0, FAILs 0. Floor refresh (step 8), 8a-9a not run this hour (short run, no node_modules).
+- 2026-11-16 17:45 PT: picked 1, closed 1 (Jethro stale-desk ticket), gated 0, blocked 0, FAILs 0. Docket ticket t-202611171600-crln is working under another session, left alone. Floor refresh (step 8), benches, cockpit and CloudTalk steps not run this pass (no dump/prep done).
