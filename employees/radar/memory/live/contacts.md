@@ -1,0 +1,1 @@
+- 2026-11-17: Kev 16 Nov 2026: BPO contact is now Rubab (very sharp, an AI savant). Nita moved to Saad's EA at BPO. Drafts to BPO go to Rubab.
