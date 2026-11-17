@@ -3,3 +3,4 @@
 - 2026-11-04 · XL narrowed counts · Sr PM 86, PM 338 (pool cos, SF metro, has-mobile) · upper bound ~424 credits · seat still unconfirmed
 - 2026-11-12 · EL-037 Juicy Healthcare PM + Super WPB · free search only (company and contact search, no redeem, no enrich) · paid credits 0 · seat not named (seats.md still missing)
 - 2026-11-12 (Kev's ask, via Radar): EL-037 new leads put in two ZoomInfo audiences on the Kev 1 seat (28 + 27 = 55) for a bulk web-app export of mobiles. Free search showed 48 with a mobile (21 of them DNC) and 7 with none; 1 already under management. Estimated cost if all 55 are exported: about 54 bulk credits. Building the audiences cost nothing; confirm actual credits after the export.
+- 2026-11-17 · Moss Tampa precon (235), Tampa senior super (188), WPB/Miami schedulers (136) · ZoomInfo audiences under Kev 1 · est. up to ~560 credits if all exported, not confirmed; build-time charge unknown

@@ -20,7 +20,10 @@ for line in src.splitlines():
         if all(re.fullmatch(r":?-{3,}:?", c) for c in cells):
             continue
         if hdr is None:
-            hdr = cells; continue
+            hdr = cells
+            if len([c for c in cells if c]) > 2:  # wide tables: keep the column labels as a bold line
+                add("**" + " · ".join(c.replace("**", "") for c in cells if c) + "**", bullet=True)
+            continue
         cells = [c for c in cells if c]
         if not cells: continue
         add("**" + cells[0].replace("**", "") + "**" + (": " + " · ".join(cells[1:]) if len(cells) > 1 else ""), bullet=True)

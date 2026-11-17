@@ -1,0 +1,1 @@
+- 2026-11-17: Kev 16 Nov 2026: Max resigned. Joel pulled him from finance; keep his email, shut down Crelate; his Crelate seat goes to Rex or Riley (Kev picks). Offboarding row on the ledger.
