@@ -1,0 +1,111 @@
+{
+  "id": "2026-11-18-9cde01",
+  "subject": "Benches 18 Nov 2026: revenue and finance (books not closed)",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Revenue MTD QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1-18 Nov 2026",
+      "recomputed": 0,
+      "ok": true,
+      "note": "QBO P&L 1-18 Nov: no financial data; Nov income 0"
+    },
+    {
+      "label": "Revenue YTD QuickBooks",
+      "claimed": 578728,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1 Jan-18 Nov 2026 Total Income",
+      "recomputed": 578728,
+      "ok": true,
+      "note": "QBO P&L YTD Total Income 578,728.00 (Sales 519,628 + Services 59,100; monthly sum agrees)"
+    },
+    {
+      "label": "Cash on hand",
+      "claimed": 238673.68,
+      "unit": "usd",
+      "source": "QuickBooks balance sheet cash basis 18 Nov, Bank Accounts",
+      "recomputed": 238673.68,
+      "ok": true,
+      "note": "QBO BS cash basis Bank Accounts: 1,000.06 + 237,673.62"
+    },
+    {
+      "label": "Open AR in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AR aging 18 Nov",
+      "recomputed": 0,
+      "ok": true,
+      "note": "QBO AR aging no_data 18 Nov (books not closed; Cash Pulse shows 195,150 open)"
+    },
+    {
+      "label": "Open AP",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AP aging 18 Nov",
+      "recomputed": 0,
+      "ok": true,
+      "note": "QBO AP aging no_data 18 Nov"
+    },
+    {
+      "label": "Past due owed",
+      "claimed": 158700,
+      "unit": "usd",
+      "source": "Cash Pulse placements.json: sum open where status=open and due<2026-11-18",
+      "recomputed": 158700,
+      "ok": true,
+      "note": "6 rows: 62046 55,000; 62059 35,200; 62060 37,000; 62061 19,000; 62063 7,500; 62064 5,000 (sum of open field)"
+    },
+    {
+      "label": "Past due invoice count",
+      "claimed": 6,
+      "unit": "count",
+      "source": "same rows",
+      "recomputed": 6,
+      "ok": true
+    },
+    {
+      "label": "Oldest past due days late",
+      "claimed": 98,
+      "unit": "days",
+      "source": "row 62046 due 2026-08-12 to 2026-11-18",
+      "recomputed": 98,
+      "ok": true,
+      "note": "62046 due 2026-08-12 to 2026-11-18"
+    },
+    {
+      "label": "Invoiced not yet due",
+      "claimed": 36450,
+      "unit": "usd",
+      "source": "Cash Pulse placements: status=open, due>=2026-11-18",
+      "recomputed": 36450,
+      "ok": true,
+      "note": "62056 29,700 + 62057 6,750"
+    },
+    {
+      "label": "Coming not invoiced excl Megawatt",
+      "claimed": 187100,
+      "unit": "usd",
+      "source": "Cash Pulse placements: status=upcoming excluding Megawatt 62054 (moved to 2027 by Kev 23 Oct)",
+      "recomputed": 187100,
+      "ok": true,
+      "note": "upcoming 232,100 less 62054 45,000: 62062 33,000; 62065 33,300; 62066 33,300; 62067 42,500; 62068 45,000"
+    },
+    {
+      "label": "Megawatt moved to 2027",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Cash Pulse placements 62054",
+      "recomputed": 45000,
+      "ok": true,
+      "note": "62054 open 45,000; dataset (updated 17 Oct) still shows status upcoming, expected 2026-11-15"
+    }
+  ],
+  "createdAt": "2026-11-18T16:51:24.201Z",
+  "doc": "projects/virtual-office/benches/revenue.json",
+  "checkedBy": "docket",
+  "closedAt": "2026-11-18T16:52:27.292Z"
+}
