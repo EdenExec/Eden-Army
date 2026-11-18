@@ -1,19 +1,19 @@
 [
   {
     "id": "62046",
-    "name": "Client · discreet · Senior Superintendent",
+    "name": "Baker Construction · Senior Superintendent",
     "owed": "$55,000",
-    "status": "past due, 76 days late",
     "due": "2026-08-12",
+    "status": "past due, 98 days late",
     "expected": "2026-11-15",
     "kev": "Kev: paying soon?"
   },
   {
     "id": "62059",
-    "name": "Client · discreet · QC Manager",
+    "name": "Baker · QC Manager",
     "owed": "$35,200",
-    "status": "past due, 13 days late",
     "due": "2026-10-14",
+    "status": "past due, 35 days late",
     "expected": "2026-10-30",
     "kev": "Kev: paying soon. Check: $2,000 gap on the fee (Docket)"
   },
@@ -21,8 +21,8 @@
     "id": "62060",
     "name": "VMG · Sr. Superintendent",
     "owed": "$37,000",
-    "status": "past due, 13 days late",
     "due": "2026-10-14",
+    "status": "past due, 35 days late",
     "expected": "2026-10-30",
     "kev": "Kev: client on the fence about the candidate; at risk"
   },
@@ -30,16 +30,16 @@
     "id": "62061",
     "name": "Pence Kelly · Superintendent",
     "owed": "$19,000",
-    "status": "past due, 13 days late",
     "due": "2026-10-14",
+    "status": "past due, 35 days late",
     "expected": "2026-10-30"
   },
   {
     "id": "62063",
     "name": "PB South · retainer",
     "owed": "$7,500",
-    "status": "past due, 11 days late",
     "due": "2026-10-16",
+    "status": "past due, 33 days late",
     "expected": "2026-10-16",
     "kev": "Kev: PB South always pays late"
   },
@@ -47,16 +47,16 @@
     "id": "62064",
     "name": "Triton Construction · retainer",
     "owed": "$5,000",
-    "status": "past due, 11 days late",
     "due": "2026-10-16",
+    "status": "past due, 33 days late",
     "expected": "2026-10-16"
   },
   {
     "id": "62056",
     "name": "PB South · Superintendent",
     "owed": "$29,700",
-    "status": "invoiced",
     "due": "2026-12-01",
+    "status": "invoiced, not yet due",
     "expected": "2026-12-01",
     "kev": "Kev: PB South always pays late"
   },
@@ -64,61 +64,61 @@
     "id": "62057",
     "name": "PB South · Assistant Superintendent",
     "owed": "$6,750",
-    "status": "invoiced",
     "due": "2026-12-23",
+    "status": "invoiced, not yet due",
     "expected": "2026-12-23",
     "kev": "Kev: PB South always pays late"
-  },
-  {
-    "id": "62054",
-    "name": "Megawatt · General Superintendent",
-    "owed": "$45,000",
-    "status": "moved to 2027",
-    "due": "not invoiced",
-    "expected": "2026-11-15",
-    "kev": "Kev: moved to 2027; Kev to call him to confirm Megawatt"
   },
   {
     "id": "62062",
     "name": "Swinerton - LA · Superintendent",
     "owed": "$33,000",
-    "status": "not yet invoiced",
     "due": "2026-11-28",
+    "status": "not yet invoiced",
     "expected": "2026-11-28"
   },
   {
-    "id": "62067",
-    "name": "VMG · Senior Project Manager",
-    "owed": "$42,500",
+    "id": "62065",
+    "name": "PB South · MEP Superintendent",
+    "owed": "$33,300",
+    "due": "2026-12-18",
     "status": "not yet invoiced",
-    "due": "2026-12-09",
-    "expected": "2026-12-09"
-  },
-  {
-    "id": "62068",
-    "name": "PB South · General Superintendent",
-    "owed": "$45,000",
-    "status": "not yet invoiced",
-    "due": "2026-12-10",
-    "expected": "2026-12-25",
+    "expected": "2027-01-02",
     "kev": "Kev: PB South always pays late"
   },
   {
     "id": "62066",
     "name": "PB South · Superintendent",
     "owed": "$33,300",
-    "status": "not yet invoiced",
     "due": "2026-12-17",
+    "status": "not yet invoiced",
     "expected": "2027-01-01",
     "kev": "Kev: PB South always pays late"
   },
   {
-    "id": "62065",
-    "name": "PB South · MEP Superintendent",
-    "owed": "$33,300",
+    "id": "62067",
+    "name": "VMG · Senior Project Manager",
+    "owed": "$42,500",
+    "due": "2026-12-09",
     "status": "not yet invoiced",
-    "due": "2026-12-18",
-    "expected": "2027-01-02",
+    "expected": "2026-12-09"
+  },
+  {
+    "id": "62068",
+    "name": "PB South · General Superintendent",
+    "owed": "$45,000",
+    "due": "2026-12-10",
+    "status": "not yet invoiced",
+    "expected": "2026-12-25",
     "kev": "Kev: PB South always pays late"
+  },
+  {
+    "id": "62054",
+    "name": "Megawatt · General Superintendent",
+    "owed": "$45,000",
+    "due": "not invoiced",
+    "status": "moved to 2027",
+    "expected": "2026-11-15",
+    "kev": "Kev: moved to 2027; Kev to call him to confirm Megawatt"
   }
 ]
