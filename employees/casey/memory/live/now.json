@@ -1,7 +1,7 @@
 {
-  "task": "t-202611130700-jobd: Team Hub board updates from Kev's comments on the meeting room JO deck (13 Nov)",
-  "since": "2026-11-13T07:00:00Z",
-  "state": "APPLIED to Team Hub jobs (batch, if_version pinned): (1) pb-south-hibiscus-night-super set to status closed, closed_on 2026-11-13, board_note 'client hired internally' (now v5); matched on role + West Palm Beach as the only Night Superintendent row, but the row's client is PB South (Hibiscus Garage), not a 'national GC high-rise': Kev to confirm it is the right row. (2) discreet-qc-oil-gas (Baker QC Manager, oil and gas) team set to Nick as lead, Kev not owner (now v3). (3) Baker named outright: all 8 Baker Concrete rows already carry client 'Baker Concrete' / slug 'baker' with no discreet field on the board; the 'discreet-' doc ids stay (ids cannot change). Any 'Client · discreet' label is in the rendered page/docs, not the data; not changed here.",
-  "blockedOn": "Kev: confirm the closed row is the Hibiscus night super (PB South); say where he still sees 'Client · discreet' (page render, not row data).",
-  "updated": "2026-11-13T07:00:00Z"
+  "task": "Kev overnight voice note 16 Nov: Max reassignment proposal v2, Danny accepted, Hoffman at risk, Moss leads, PB South review",
+  "since": "2026-11-17T06:30:00Z",
+  "state": "idle",
+  "blockedOn": "Kev: approve Max owners (drafts/2026-11-17-max-reassignment-proposal-v2.md); say post it for the Bridger Hoffman ask; Alex surname",
+  "updated": "2026-11-17T07:00:00Z"
 }

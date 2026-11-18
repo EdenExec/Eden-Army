@@ -646,6 +646,24 @@ All targets are (A) until Kev confirms. The accelerated track measures days to y
 
 **Source.** `projects/recruiter-desk/brief.md` section 5 (tracks); `projects/workforce/kyle-cockell-prestart.md`.
 
+### M28 · The submittal: match, don't sell
+
+| Day | Time | Pillar | Needs |
+|---|---|---|---|
+| Weeks 3 to 4, with your first submittal | 2 hours | 05 Transparency | M15, M21 |
+
+**Goal.** You write a client submittal on Eden's template that matches the candidate to the role's Must Do's with facts and passes the five-point check.
+
+| # | Do this | You should see |
+|---|---|---|
+| 1 | Read `projects/eden-university/modules/submittal-match-not-sell.md`: the worked example (invented) and the selling-versus-matching table. | You can turn a selling line into a fact |
+| 2 | Pull the Must Do's from three open JOs and write three practice submittals on the template from practice resumes. No contact details, no client names saved in the module folder. | Three drafts, one bullet per Must Do |
+| 3 | Run the five-point check on each and fix what fails. Kev reviews your first live submittal before it goes. | Ready for review |
+
+**Show me (2 min).** Three drafts, names and contact details cropped out, reviewed by Nick. Row M28. The "Submittal certified" checklist (8 lines, signed in person by Kev or Nick) is in the module page.
+
+**Source.** Kev, 16 Nov 2026; `employees/_shared/candidate-submittal.md`.
+
 ### Certification C2 · First desk running (day 30)
 
 Signed in person by Kev or Nick. Dean records the date and the counts, nothing else about the person.
@@ -656,7 +674,7 @@ Signed in person by Kev or Nick. Dean records the date and the counts, nothing e
 | 2 | Friday cards in by 1:00 PM for weeks 2 to 4 | Eden Desk record |
 | 3 | At or above the ramp target for the last 2 weeks (15 a day by week 4, A) | Crelate count, as of the Friday pull |
 | 4 | Activity on the right job; own board passes Nick's Friday audit | M10 table, Nick's audit |
-| 5 | First screen, first PTC and first submittal logged | Counts, no names |
+| 5 | First screen, first PTC and first submittal logged; M28 drills reviewed | Counts, no names |
 | 6 | A 25-name sheet that passes 8 of 8 checks and a 10-of-10 dedupe spot check | M17, M18 proof |
 | 7 | Desk and Claude read-only counts agree within 1 | M15, M16 proof |
 | 8 | Wednesday takeaways written 3 of the last 4 | M20 proof |

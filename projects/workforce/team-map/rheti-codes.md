@@ -4,21 +4,21 @@ Order 1310803, bought 11 Nov 2026 on the Enneagram Institute customer account (E
 
 How to hand one out: give the person one unused code plus the one-sheet (`Eden's Enneagram Overview.pdf`). They take it at tests.enneagraminstitute.com. When you hand one out, tell Dean the name and code so this list stays current.
 
-## Used (3)
+## Used (3) and assigned (1)
 
 | Code | Given to | Date | Taken |
 |---|---|---|---|
 | renwy7u68b | Riley Hilgart | 11 Nov | 11 Nov |
 | reng6mrudb | Rex Hickman | 11 Nov | 11 Nov |
 | renc6soq7b | Sadie Kienzle | 11 Nov | 11 Nov |
+| ren7dh8ecb | Brendan Caine (1099 partner candidate) | assigned 17 Nov, Kev to send | |
 
 All three results are in Kev's inbox (Superhuman label AI/Enneagram).
 
-## Available (7)
+## Available (6)
 
 | Code | Given to | Date |
 |---|---|---|
-| ren7dh8ecb | | |
 | ren47uzjpb | | |
 | renvib3c7b | | |
 | renzuarw6b | | |

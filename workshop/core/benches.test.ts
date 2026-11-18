@@ -73,6 +73,13 @@ describe("recruiting and depth benches", () => {
     assert.equal(label(b, "Next start date"), "Mon 2 Nov");
     assert.equal(label(b, "30-day plans open"), "1");
   });
+  test("a start still to be decided reads 'date not set', never a broken date", () => {
+    const b = depthBench(board({ recruiters: [{ status: "starts", start: "tbd" }] }), { count: 1, asOf: "2026-10-25T01:20:00Z" }, true, tue);
+    assert.equal(label(b, "New hires starting (not yet started)"), "1");
+    assert.equal(label(b, "Next start date"), "date not set");
+    const none = depthBench(board({ recruiters: [{ status: "active" }] }), { count: 0, asOf: "2026-10-25T01:20:00Z" }, true, tue);
+    assert.equal(label(none, "Next start date"), "none set");
+  });
 });
 
 describe("university bench", () => {

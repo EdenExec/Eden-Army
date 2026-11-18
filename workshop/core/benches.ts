@@ -95,11 +95,12 @@ export function depthBench(board: BoardLite, planFiles: { count: number; asOf: s
   const gen = board.generated_at ?? now.toISOString();
   const people = [...(board.recruiters ?? []), ...(board.leadership ?? [])];
   const starting = people.filter((p) => p.status === "starts");
-  const next = starting.map((p) => p.start).filter((d): d is string => !!d).sort()[0];
+  // The roster carries a start as "tbd" until Dean sets it: only a real date is a date, anything else reads "date not set".
+  const next = starting.map((p) => p.start).filter((d): d is string => typeof d === "string" && /^\d{4}-\d{2}-\d{2}/.test(d) && !Number.isNaN(Date.parse(d.slice(0, 10)))).sort()[0];
   const src = boardLive ? "Crelate team roster, read only" : "Round Table board file (projects/workforce/board/current.json)";
   const tiles: Tile[] = [
     { label: "New hires starting (not yet started)", value: String(starting.length), source: src, asOf: gen },
-    { label: "Next start date", value: next ? longDay(next) : "none set", source: src, asOf: gen },
+    { label: "Next start date", value: next ? longDay(next) : starting.length ? "date not set" : "none set", source: src, asOf: gen },
     { label: "30-day plans open", value: String(planFiles.count), source: "New-hire plan files under projects/workforce/", asOf: planFiles.asOf },
   ];
   return finishBench("depth", "Dean", "New-hire setup files and the Crelate roster. Counts only.", tiles, now);

@@ -1,2 +1,3 @@
 - 2026-11-05 ticket runner: step 8 floor refresh could not run in this routine (Team Hub reads cannot be saved to files; no versions.json source). Desks stay stale until a live Radar session runs it. Fix: allow out_dir for Team Hub or let office-prep skip team_asks/jobs.
 - 2026-11-08: ticket runner skipped full office-prep floor refresh (time/size of Notion paging); desks stale until next run.
+- 2026-11-18 (ticket runner, 09:50 PT): ticket t-202611080400-hawk sat 10 days because Hawk filed it with `body` and no `status`, `ask` or `createdAt`, so the runner's query for `open` never matched it. Closed today as superseded. Fix to make: Hawk's look-ahead skill files tickets with `status: "open"`, and the runner's step 1 also flags any ticket that has no status.

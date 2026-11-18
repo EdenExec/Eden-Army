@@ -50,7 +50,7 @@ Every chapter has a code (2.4, 3.5, …), one outcome, a drill, a proof and a so
 | 2.2 | Crelate: active JOs, Leads and Buckets, logging every activity right | Yes: M10, M15; trained 21 Oct |
 | 2.3 | Crelate in Claude, read-only | Yes: M16 |
 | 2.4 | The Friday scorecard and the 42-box card | Partly: M19; new scorecard page 6 Nov |
-| 2.5 | The submittal packet and the client's Must Dos | Yes: packet workflow; trained 28 Oct |
+| 2.5 | The submittal packet and the client's Must Dos | Yes: `modules/submittal-match-not-sell.md` (match, don't sell; Kev, 16 Nov 2026), packet workflow trained 28 Oct |
 | 2.6 | Data discipline: privacy, discreet clients, candidate data | Partly: M03 |
 | 2.7 | Your daily rhythm and time blocks | Yes: M14 |
 
@@ -130,6 +130,7 @@ Every Wednesday session is logged with the chapter codes it covered, and whether
 | Wed 28 Oct | 3.6 News sweep · 2.5 Submittal packet · 3.7 Name Game | 3.6 deeper, 2.5 new, 3.7 refresher | Recap of 21 Oct |
 | Wed 4 Nov | 4.2 Hiring-authority ice breaker · 3.5 VDC Manager · 3.8 The quiet offer | New | Run of show built the day of; Tuesday draft was blank |
 | Wed 11 Nov (planned) | 3.5 Superintendents · 3.10 VP Field Ops vs GM vs PX · 1.2 10-5-3-1 November update | 3.5 and 3.10 new, 1.2 refresher | Built Tue 10 Nov; `projects/workforce/eden-university/2026-11-11-headhunter-training.md` |
+| Wed 18 Nov (planned) | 3.4 How a GC is organised · 3.10 VP of Ops vs GM · 2.5 Submittal: match, don't sell | 3.4 and 3.10 new, 2.5 deeper pass (Kev's rule of 16 Nov, SUB-01) | Built Tue 17 Nov; `projects/workforce/eden-university/2026-11-18-headhunter-training.md`. 4.8 moved to 2 Dec |
 
 **Never covered yet as a group session:** 3.1 to 3.4, 3.10, every Level 4 chapter except a taste of 4.2, and all of Level 5. (Levels 0 and 1 were done last year and are refreshed this November.)
 
@@ -142,7 +143,7 @@ Every Wednesday session is logged with the chapter codes it covered, and whether
 | Wed 11 Nov | 3.5 Superintendents: the ladder, and 3.10 who hires them (GM vs VP of Field Ops) | 1.2 10-5-3-1 November update, in the room | Vancouver's yearly refresh is due this month |
 | Wed 18 Nov | 3.4 How a GC is organised, with 3.10 VP of Ops vs GM | 4.8 Selling above the line | Nobody has had BD as a session |
 | Wed 25 Nov | (Thanksgiving week, short) | 4.6 Autopsy: read your own scorecard | First three scorecards are in |
-| Wed 2 Dec | 3.5 MEP: who's who on a mechanical job | 4.10 Servicing clients, and 4.2 intake like a consultant | Deeper pass on 4 Nov's ice breaker |
+| Wed 2 Dec | 3.5 MEP: who's who on a mechanical job | 4.8 Selling above the line (moved from 18 Nov); 4.10 Servicing clients next | Deeper pass on 4 Nov's ice breaker |
 | Wed 9 Dec | 3.5 Project executives vs senior PMs, and 3.10 what a PX wants from a recruiter | 4.9 Emotional intelligence | Pairs with client service the week before |
 | Wed 16 Dec | 3.5 Safety managers, and 3.10 the Talent Acquisition manager | 3.3 Sourcing: Boolean and X-ray | The pre-screen shows how much sourcing skill varies |
 

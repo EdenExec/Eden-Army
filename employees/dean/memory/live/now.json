@@ -1,13 +1,16 @@
 {
-  "task": "Scorecard consolidation plan and RP meter copy (t-202611140115-rpmm)",
+  "task": "Role playbooks v1 (t-202611162050-rplb)",
   "since": "2026-11-03T22:50:00Z",
-  "state": "Meter copy edited in draft/round-table.html (not published); consolidation plan written in projects/workforce/round-table.md. Awaiting Kev QC: read per-person desks, write coach notes to Round Table cards, publish.",
+  "state": "v1 playbook markdown drafted, not published, not committed. Riley pack checked and patched (day-90 stop, title TBD, gatekeeper yes, training status). Bran partial: guide is in Drive, not read.",
   "files": [
-    "projects/workforce/round-table.md",
-    "projects/workforce/draft/round-table.html"
+    "projects/workforce/playbooks/README.md",
+    "projects/workforce/playbooks/riley-backend-support.md",
+    "projects/workforce/hiring/riley-backend-support.md"
   ],
   "page": "https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT",
-  "updated": "2026-11-15T09:00:00Z",
-  "blockedOn": "Kev: approve QC steps 1-4 (read desks, write coach fields to cards, publish, retire old desks); no artifact connector this session",
-  "on": "Friday scorecard runs inside the Round Table (DTXbu7B6F3B2s8NEnmYdCE) from 13 Nov: recruiters and Nick are Contributors and see only their own scorecard; Kev sees the live leadership order and cards fill on Finish the week. Checks 8:01/9:01/10:01, 10:15-10:50 one-shots, 12:05 final; numbers 7:50. Old per-person desks stay as backup."
+  "updated": "2026-11-16T23:59:00Z",
+  "blockedOn": "Kev: Sadie/Rex/Presley hires, WIP & PIPE style, Drive read of Bran's guide, Riley week-2 rehearsal and track",
+  "on": "Friday scorecard runs inside the Round Table (DTXbu7B6F3B2s8NEnmYdCE) from 13 Nov: recruiters and Nick are Contributors and see only their own scorecard; Kev sees the live leadership order and cards fill on Finish the week. Checks 8:01/9:01/10:01, 10:15-10:50 one-shots, 12:05 final; numbers 7:50. Old per-person desks stay as backup.",
+  "updatedAt": "2026-11-16T23:59:00Z",
+  "last": "Role playbooks v1 drafted under projects/workforce/playbooks/ (7 files + README)"
 }

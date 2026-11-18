@@ -1,0 +1,1 @@
+- 2026-11-16: Kev 16 Nov 2026: docs for Kev to edit go to Google Drive on Eden letterhead, not .docx in chat. Template Doc 1LsHFOFCexn0RmbWyXu_8cySdyTo1k14zQi6xw48zCCk, working folder 1NOcpiKkHqht_xlh5VOBdtkT3jr33_7AJ; workshop/tools/md2gdoc.py builds the update requests.

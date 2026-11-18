@@ -70,3 +70,7 @@ The "Kev's yes" column reads: spend (a seat, a licence, a premium), access (who 
 | Idaho payroll, the signed paper, the school and visa forms | Joel, Docket | Legal and identity steps. The tracks hold no pay, rate or contract terms |
 | Every Approved mark on a post, deck, invite or message | Kev, or the leader who owns the ask | No intern sends, posts, spends or edits a shared record alone |
 | The end-of-program review | Bridger, in person | A review is a conversation. Nobody creates an invite for it |
+
+## Open ledger item: intern JD-modules training deck (due 18 Nov)
+
+For Bridger and Nick. Added 16 Nov 2026: the submittal module (`projects/eden-university/modules/submittal-match-not-sell.md`, Kev's match-not-sell standard) belongs in that deck.
