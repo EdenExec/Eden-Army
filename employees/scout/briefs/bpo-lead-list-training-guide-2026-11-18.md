@@ -42,6 +42,7 @@ Scout sends one brief per list. Do not start a list without one. If a field is b
 | Company filters | Industry and company size |
 | Expected size | The row count to expect. Ask before exporting if you are 50 rows or more above it. |
 | Tier rules | What makes a Tier 1 or Tier 2 person for this role |
+| Tags | The Book, Sector, Company type, Title and broad role tags for this list (see Part 6) |
 | Special rules | Anything unusual for this client, such as referral asks only |
 
 ## Part 2: Pull the list in ZoomInfo Sales
@@ -119,7 +120,31 @@ Use the person's city to settle split states, such as the Idaho panhandle or the
 
 If the brief asks you to judge years of experience, open the LinkedIn profile and estimate. If you cannot tell in two minutes, mark Tier 2 and write "years unclear" in Fit note.
 
-## Part 6: Load into Crelate
+## Part 6: Tag every record
+
+Tags are how recruiters find people in Crelate. Our rule is broad, few, and one spelling each. Use only the values below. Never invent a tag or a new spelling.
+
+| Level | Approved values | Where the value comes from |
+|---|---|---|
+| Book | Construction, Oil and Gas, Development | The brief. Construction unless it says otherwise. |
+| Sector | Mixed Use, Multifamily, Commercial, Mission Critical, Industrial, Civil, Environmental, Public Works, Education | The brief. If it is blank, use the main work the person's company does. |
+| Company type | GC, Mechanical, Electrical, Drywall, Concrete, Civil, Owner Builder, CM, Owner's Rep, Architect's firm | The person's company, from its name and ZoomInfo description. One plain word, never "contractor" or "firm" variants. |
+| Title | Superintendent, General Superintendent, Project Manager, PX, APM, PE, Estimator | The person's job title, matched to the closest approved value. |
+| Broad role | Project Management, Field Operations | Every person gets one. Field Operations for superintendents. Project Management for PMs, estimators and schedulers. |
+| Location | City, State and Time Zone, as three separate tags | The sheet's City, State and Time Zone columns. |
+
+Two more tags go on every lead load.
+
+| Tag | Example |
+|---|---|
+| Client | The client's name from the brief |
+| Lead date | Lead YYYY-MM-DD |
+
+If no approved value fits, leave that tag off. Write "no tag for [title or company type]" in the Lead Log Owner note so Kev and Nick can decide whether to add one. Pre-con manager, scheduler and similar titles are not on the Title list yet, so expect to log those.
+
+Keep tags broad. Detail like "healthcare" or "P6" goes in the Fit note, not in a tag.
+
+## Part 7: Load into Crelate
 
 Lists go into a bucket in the Leads / Buckets column. Never load them onto an active job order and never create a job order for a list.
 
@@ -130,23 +155,16 @@ Lists go into a bucket in the Leads / Buckets column. Never load them onto an ac
 | 3 | If the person exists, add the existing record to the bucket. Add the mobile only if the record has none. Do not change the owner, status or notes. |
 | 4 | If the person is new, create one record with Name, Title, Company, LinkedIn URL, City, State, Time Zone and Mobile. |
 | 5 | Set Source to "Eden lead load YYYY-MM-DD" (the day you load). |
-| 6 | Add the tags below to every record, plus any extra tags the brief names. |
-
-| Tag | Example |
-|---|---|
-| Client | The client's name from the brief |
-| Role | The role from the brief |
-| Time Zone | PST, MST, CST or EST |
-| Lead date | Lead YYYY-MM-DD |
+| 6 | Add the Part 6 tags to every record, including existing ones you add to the bucket. |
 
 Skip any person Crelate already marks do-not-contact and count them. Never upload pay, age, ethnicity, gender, home address or personal email, even if a column has it.
 
-## Part 7: Finish and report
+## Part 8: Finish and report
 
 | Step | What to do |
 |---|---|
 | 1 | Save the final sheet in the master lead folder in Drive. Do not move, rename or copy any other sheet. |
-| 2 | In the Lead Log, put the load date in the In Crelate column. In Owner note write counts only: loaded, already in Crelate, skipped, removed as client staff, and the bucket name. |
+| 2 | In the Lead Log, put the load date in the In Crelate column. In Owner note write counts only: loaded, already in Crelate, skipped, removed as client staff, and the bucket name. Add any "no tag for" notes. |
 | 3 | In the same Owner note, log the credits: the row count you exported. |
 | 4 | Email radar@edenexec.com one short note: sheets loaded, records created, duplicates matched, rows skipped, anything odd. No names or phone numbers in the email. |
 
@@ -164,7 +182,8 @@ This is a filled-in brief. Use it to check your own work.
 | Tier rules | Tier 1: pre-con manager through VP at a commercial contractor. Tier 2: estimators. |
 | Special rules | Moss prefers healthcare experience, then transportation and public works. Flag healthcare contractors in Fit note. |
 | Excluded | Moss and every other client. Moss staff are never loaded. |
-| Bucket and tags | Moss - Pre-Con Manager - Tampa Leads. Tags: Moss, Pre-Con Manager, EST, Lead YYYY-MM-DD |
+| Bucket | Moss - Pre-Con Manager - Tampa Leads |
+| Tags | Book: Construction. Sector: Commercial. Company type: GC. Broad role: Project Management. Location: the person's city, FL, EST. Client: Moss. Lead date: Lead YYYY-MM-DD. Title: Estimator for estimators; no approved tag for Pre-Con Manager, so log it. |
 
 Two more Moss briefs run the same way. Superintendents: senior and general superintendents at contractors with 200+ employees in Tampa Bay. Schedulers: scheduler titles with no manager or controls titles, in West Palm Beach and Miami, with 2 to 10 years and P6 checked from LinkedIn.
 
