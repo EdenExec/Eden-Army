@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-11-18",
   "by": "Q (first sync patrol 27 Oct; recruiter leaderboard 28 Oct)",
   "rule": "Counts and dates only; every tile names its source. A bench's asOf is the sync time while its source is inside sourceWindow, and the source's own age when it is not, so the page never says fresh over old data. Never write actions, never approve, never delete. Finance and revenue are Tally's: Q never writes a money figure there.",
   "refresh": "npm run office-prep -- run <dump> <versions> <dest> (the hourly ticket runner). The dump must include `benches` (Command Center) and `jobs` (Team Hub) or the bench writes are dropped. Code: workshop/core/benches.ts (pure), workshop/office/benches.ts (reads the sources), tests beside each.",
@@ -12,7 +12,8 @@
       "window": "2 h (jobs are read live each run)",
       "sourceWindow": "7 d (lead stage dates)",
       "compute": "active / on-hold / filled / killed JOs by status; new = opened in the last 7 days; no owner = active with an empty team; depth seat = active with depth[]; lead sheets landed / phones added = stage dates present in the index",
-      "never": "client names (counts only)"
+      "never": "client names (counts only)",
+      "status": "job tiles live; lead tiles show the index's last stage date (11 Nov as of 18 Nov), past the 7 d sourceWindow. Owner ticket t-202611091617-scli (Casey, blocked on phone-pass dates)"
     },
     {
       "id": "recruiting",
@@ -63,7 +64,7 @@
       "sourceWindow": "24 h",
       "compute": "open, due this week, overdue in the Home lane",
       "never": "item text, names, anything private",
-      "status": "blocked: no ledger rows reach office-prep yet (ticket to Radar, 27 Oct)"
+      "status": "live, checked 18 Nov: the hourly runner passes the Home-lane rows as <dump>/ledger.json. A patrol run without those rows leaves the bench (and the desks and meta/sync) to the hourly runner"
     },
     {
       "id": "finance",
@@ -72,7 +73,7 @@
       "source": "QuickBooks via Tally; numbers gate with Docket",
       "window": "24 h",
       "compute": "never by Q",
-      "status": "stale: QuickBooks sign-in expired (alert qbo-auth); ticket to Tally, 27 Oct"
+      "status": "live, checked 18 Nov: Tally wrote it that morning through the numbers gate"
     },
     {
       "id": "revenue",
@@ -81,7 +82,7 @@
       "source": "Hub Rev Report via Tally",
       "window": "24 h",
       "compute": "never by Q",
-      "status": "stale: same; ticket to Tally, 27 Oct"
+      "status": "live, checked 18 Nov: Tally wrote it that morning through the numbers gate"
     }
   ],
   "documents": {
