@@ -17,11 +17,11 @@ Model: `model.py` (inputs at the top; run with `python3 -I model.py`). Part of "
 March and June jump on the $10K quarterly LinkedIn payment; March also starts Boise rent; April doubles Vancouver rent.
 
 ## Layers on top of the floor (per month)
-- B: 1099 contractors at the 2026 run-rate, about $11.0K/mo (QuickBooks contract labor $99,084 over 9 months). Who stays 1099 is open.
-- C: three sales draws at $3,000 from February, a PLACEHOLDER ($9,000/mo).
+- B: remaining 1099 contractors. Evan and Bridger move to W-2 in January and Max left mid-Nov, so none are listed yet (2026 run-rate was about $11K/mo, before those changes). Joel Gaines and others still to be listed.
+- C: sales hires on a $4,000/mo draw for a 90-day training period ($12,000 per hire, Kev 18 Nov). Three hires starting February is a PLACEHOLDER ($12K/mo for three months).
 - D / E: owner distributions, pro rata for Kev and Nick: $10.0K/mo (low) or $16.7K/mo (high) in total.
 
-Total monthly cash out: A about $67K to $81K; with B and C about $79K to $101K; with D or E about $89K to $118K.
+Total monthly cash out: floor about $67K to $81K; with three draw hires about $67K to $92K; with owner distributions about $77K to $109K.
 
 ## What the roster assumes
 - Vancouver W-2: Andrew 4,000, Evan 4,500, Noah 4,500. Boise: Bridger 4,500, Nick 10,000, Kev 10,000, Riley 4,000, Rex 4,000 (tentative). Sadie 20 hr/wk at $15-20 (about $1,300-1,733/mo; midpoint used).

@@ -22,8 +22,8 @@ LINKEDIN_Q = {"2027-03": 10000, "2027-06": 10000}              # $10K quarterly,
 VAN_RENT = {m: (1004.95 if m < "2027-04" else 2004.95) for m in MONTHS}   # $1K + $4.95 card fee; $2K from April
 INTERNET = 60 + 60
 BOISE_RENT = {m: (0 if m < "2027-03" else 3039.83) for m in MONTHS}       # Docket: possession 1 Jan, rent from 1 Mar 2027, Y1 $3,039.83
-CONTRACTORS_YTD_RUNRATE = round(99083.59 / 9)                              # QB contract labor, 9 months with expenses
-SALES_DRAWS = {"hires": 3, "draw": 3000, "start": "2027-02"}               # PLACEHOLDER; Kev said "a few"
+CONTRACTORS_YTD_RUNRATE = 0   # Evan and Bridger move to W-2 in Jan, Max left mid-Nov (Kev 18 Nov). Other 1099s (e.g. Joel Gaines) still to be listed; 2026 run-rate was about $11K/mo
+SALES_DRAWS = {"hires": 3, "draw": 4000, "start": "2027-02", "months": 3}   # draw $4K/mo for a 90-day training period ($12K per hire, Kev 18 Nov); hire count and start are PLACEHOLDERS
 DISTR_LOW, DISTR_HIGH = 5000, 8333                                          # per owner per month; pro rata, so x2 at Eden
 
 OPENING_CASH = 238674     # QuickBooks 11 Nov, unverified: books have not moved since 27 Oct
@@ -40,7 +40,8 @@ def run():
         fixed = (VEHICLE_REIMB + VAN_RENT[m] + BOISE_RENT[m] + INTERNET + INVESTOR_INTEREST + C12
                  + LINKEDIN_Q.get(m, 0) + OTHER_OPEX)
         floor = payroll_cash + fixed
-        draws = SALES_DRAWS["hires"] * SALES_DRAWS["draw"] if m >= SALES_DRAWS["start"] else 0
+        i = MONTHS.index(m) - MONTHS.index(SALES_DRAWS["start"])
+        draws = SALES_DRAWS["hires"] * SALES_DRAWS["draw"] if 0 <= i < SALES_DRAWS["months"] else 0
         rows.append(dict(month=m, gross_wages=round(sal), gross_wages_lo=round(sal_lo), gross_wages_hi=round(sal_hi),
                          employer_burden=round(tax), payroll_cash=round(payroll_cash), fixed_and_other=round(fixed),
                          floor=round(floor), contractors=CONTRACTORS_YTD_RUNRATE, sales_draws=draws,
@@ -50,8 +51,8 @@ def run():
 def cases(rows):
     out = {}
     out["A. Floor: W-2 payroll + burden + offices + fixed bills + other opex"] = [r["floor"] for r in rows]
-    out["B. A + 1099 contractors at 2026 run-rate"] = [r["floor"] + r["contractors"] for r in rows]
-    out["C. B + 3 sales draws (placeholder)"] = [r["floor"] + r["contractors"] + r["sales_draws"] for r in rows]
+    out["B. A + remaining 1099 contractors (none listed yet)"] = [r["floor"] + r["contractors"] for r in rows]
+    out["C. B + 3 sales hires on $4K/mo draws for 90 days (placeholder count)"] = [r["floor"] + r["contractors"] + r["sales_draws"] for r in rows]
     out["D. C + owner distributions, low (pro rata)"] = [r["floor"] + r["contractors"] + r["sales_draws"] + r["distr_low"] for r in rows]
     out["E. C + owner distributions, high (pro rata)"] = [r["floor"] + r["contractors"] + r["sales_draws"] + r["distr_high"] for r in rows]
     return out
