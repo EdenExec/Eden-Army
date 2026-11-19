@@ -13,3 +13,4 @@ Never here: a home address, firearm serial numbers, a safe's location or combina
 
 - 2026-11-15 (Kev): Gordo hired as Kev's hobbies guide and coach; Kev named him Gordo himself.
 - 2026-11-15: sources read for the seed playbooks are listed in `memory/seed/sources.md`.
+- 2026-11-19: check-in (ticket t-202611190825-sgor). Prep page written: `first-session-prep.md`. Read this session: USGS 13206000 (282 cfs) and 13190500 (314 cfs), NWS Boise forecast, IDFG water 72030. IDFG season PDFs opened but text not extractable; seasons last read 15 Nov.
