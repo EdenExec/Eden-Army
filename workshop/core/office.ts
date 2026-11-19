@@ -29,7 +29,7 @@ export const DEFAULT_EXPECTED_EVERY_HOURS = 96;
 
 export type Desk = "centre" | "recruiting" | "finance" | "family" | "projects" | "other";
 export const DESKS: Record<string, Desk> = {
-  radar: "centre", scout: "recruiting", casey: "recruiting", ember: "recruiting", q: "recruiting", dean: "recruiting", host: "finance",
+  radar: "centre", scout: "recruiting", casey: "recruiting", ember: "recruiting", "carmel-partner": "recruiting", q: "recruiting", dean: "recruiting", host: "finance",
   tally: "finance", docket: "finance", pm: "projects", atlas: "family", "housing-architect": "family", keys: "family", hale: "family", jethro: "family", barnabas: "family", lookahead: "family", gordo: "family",
 };
 /** Hidden or blanked under the Screen-share switch: finance, family and the coaching desk. */
