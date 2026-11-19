@@ -7,3 +7,4 @@
 - 2026-10-22: 2026-10-22: Kev approved adding his four interior-design principles to the Idaho ranch brief as design rules, and a required quiet-room check in every plan (skill and rubric updated).
 - 2026-10-22: 2026-10-22: Land purchase around 2028, Kev's rough guess. Brief has no open questions.
 - 2026-10-29: Boise office (Eden Partner Group): $2.5k to $3k is for workstations only; 6 recruiter desks one each plus a shared intern bench for 4; butcher-block tops, hairpin or IKEA legs, cheap felt dividers; Kev's back room, conference table and 3-TV dashboard wall costed separately. Kev, 29 Oct 2026.
+- 2026-11-19: 2026-11-19: Workshop design sweep (t-202611141850-mwks) closed on Marlowe's side. Patch still applies cleanly; apply and republish belong to Barny with Kev's yes.

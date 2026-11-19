@@ -1,9 +1,9 @@
 {
-  "task": "Design sweep of Barny's Workshop (t-202611141850-mwks): handed to Barny as a patch and mock",
-  "status": "15 Nov 2026: redesign of podcast player and lights, rail prayer list, podcast library, Biblical Timeline and rooms menu done as a patch plus mock for Barny to publish. Nothing published or committed.",
+  "task": "Check-in 19 Nov 2026: Workshop design sweep (t-202611141850-mwks) closed on Marlowe's side; next is Friday's lab-review deck",
+  "status": "19 Nov 2026 06:50 PT: sweep closed out. Patch rechecked today and still applies cleanly to projects/barny-workshop/workshop.html (git apply --check). Not yet applied or republished: that step is Barny's, gated on Kev. Nothing published, sent, spent or committed by Marlowe.",
   "state": "idle",
-  "lastHeard": "2026-11-15T09:30:00Z",
-  "updated": "2026-11-15T09:30:00Z",
+  "lastHeard": "2026-11-19T14:50:00Z",
+  "updated": "2026-11-19T14:50:00Z",
   "counts": {
     "waitingOnKev": 3,
     "openProjects": 2,
@@ -26,6 +26,9 @@
     "to": "Barny",
     "patch": "projects/barny-workshop/design-sweep-2026-11-15/workshop.patch",
     "mock": "projects/barny-workshop/design-sweep-2026-11-15/mock.html",
-    "shots": "projects/barny-workshop/design-sweep-2026-11-15/shots/"
-  }
+    "shots": "projects/barny-workshop/design-sweep-2026-11-15/shots/",
+    "state": "closed for Marlowe; awaiting Barny to apply and republish with Kev's yes",
+    "checked": "2026-11-19: git apply --check passes"
+  },
+  "next": "By Fri 20 Nov 1:50pm PT: weekly lab-review status decks for eden-ranch-idaho and the hot-tub pick, then a status card on the Desk."
 }

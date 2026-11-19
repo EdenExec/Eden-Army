@@ -113,6 +113,7 @@ describe("staleness: a green glow on a dead agent is the worst lie", () => {
         { id: "t1", agent: "dean", status: "done", createdAt: "2026-10-20T10:00:00Z", pickedAt: "2026-10-20T11:00:00Z", doneAt: "2026-10-21T15:30:00Z" },
         { id: "t2", agent: "scout", status: "open", createdAt: "2026-10-19T09:00:00Z", updatedAt: "2026-10-21T12:00:00Z" },
         { id: "t3", agent: "q", status: "done", doneAt: "2026-10-22T09:00:00Z" },   // in the future: ignored
+        { id: "t4", agent: "radar", createdBy: "lookahead", status: "done", createdAt: "2026-10-21T08:00:00Z", doneAt: "2026-10-21T16:30:00Z" },   // filed by Hawk: heard from Hawk at createdAt only
       ],
       asks: [{ from: "tally", createdAt: "2026-10-21T14:00:00Z" }, { from: "scout", createdAt: "2026-10-21T13:00:00Z" }],
     });
@@ -121,6 +122,7 @@ describe("staleness: a green glow on a dead agent is the worst lie", () => {
     assert.equal(lastHeardOf("tally", i), "2026-10-21T14:00:00.000Z");
     assert.equal(lastHeardOf("radar", i), "2026-10-21T17:00:00.000Z");
     assert.equal(lastHeardOf("q", i), null);
+    assert.equal(lastHeardOf("lookahead", i), "2026-10-21T08:00:00.000Z");
     const by = Object.fromEntries(buildAgents(i, []).map((x) => [x.id, x]));
     assert.equal(by.dean!.silent, false);
     assert.equal(by.dean!.lastHeard, "2026-10-21T15:30:00.000Z");

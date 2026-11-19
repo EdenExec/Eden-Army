@@ -45,7 +45,9 @@ export type RunResult = { routine: string; agent?: string; lastRunAt?: string; o
 /** A ticket as the sync reads it from the tickets collection. The SLA and the game need ask, createdAt, doneAt and result too. */
 export type TicketLite = { id: string; agent: string; status: string; pickedAt?: string; priority?: string; ask?: string; createdAt?: string; updatedAt?: string; doneAt?: string; result?: { summary?: string; link?: string } | null;
   /** Short title the runner writes (8 words or fewer), the project it belongs to, why it is blocked, and what is waiting for Kev's Approve. */
-  title?: string; project?: string; blockedOn?: string; proposed?: { exact?: string } | null };
+  title?: string; project?: string; blockedOn?: string; proposed?: { exact?: string } | null;
+  /** The agent that filed the ticket (Hawk files to Radar every night); filing one is hearing from that agent. */
+  createdBy?: string };
 /** An ask an agent posted to the recruiters on the Team Hub (`team_asks`); only `from` and the times matter here. */
 export type AskLite = { id?: string; from?: string; createdAt?: string };
 /** A row of the actions collection (Kev's Done / Follow up / Zzz taps). */
@@ -239,6 +241,8 @@ export function lastHeardOf(id: string, input: SyncInput): string | null {
   const times = [input.heard?.[id], nf?.updated,
     ...input.qc.filter((q) => q.employee === id).map((q) => q.createdAt),
     ...(input.tickets ?? []).filter((t) => t.agent === id).flatMap((t) => [t.createdAt, t.pickedAt, t.doneAt, t.updatedAt]),
+    // A ticket the agent filed to someone else (Hawk to Radar, Q to Casey) is hearing from it too: only its createdAt is the filer's.
+    ...(input.tickets ?? []).filter((t) => t.createdBy === id && t.agent !== id).map((t) => t.createdAt),
     ...(input.asks ?? []).filter((x) => x.from === id).map((x) => x.createdAt)];   // doneAt and replies are the recruiter's, not the agent's
   let best: number | null = null;
   for (const v of times) {
