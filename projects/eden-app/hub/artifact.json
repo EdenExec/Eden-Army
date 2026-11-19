@@ -21,7 +21,7 @@
     ] }
   },
   "documents": {
-    "roles/current": "{schema, people:[{key, name, role, slug?, id?, email?, extras?, confirm?}], owner_id}. Kev edits in Settings.",
+    "roles/current": "{schema, people:[{key, name, role, slug?, id?, extras?, confirm?}] (no emails), owner_id}. Kev edits in Settings.",
     "content/home": "Jenny: {welcome, messages_of_the_day[], announcements_seed[] (confirm_with_kev = draft, Kev only), ggotw, cross_footer}",
     "content/comms": "Jenny: {global_norms[], channels[{id, name, purpose, who_posts, norms[]}]}",
     "content/tickets": "Jenny: {ticket_types[{id, name, fields[{name, type}], handler, turnaround}]}",
