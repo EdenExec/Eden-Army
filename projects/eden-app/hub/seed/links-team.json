@@ -1,0 +1,10 @@
+{
+ "items": [
+  {"title": "Round Table", "url": "https://claude.ai/artifact/DTXbu7B6F3B2s8NEnmYdCE", "blurb": "The full recruiting scoreboard.", "tag": "Scoreboard"},
+  {"title": "Eden Day Board", "url": "https://claude.ai/artifact/4QFTb8NFvWhbc2jg5zD4hc", "blurb": "The daily board.", "tag": "Daily"},
+  {"title": "Depth charts", "url": "https://claude.ai/artifact/7kccfScydYDcWoXfeeE8q6", "blurb": "Seats and the people lined up behind each one.", "tag": "Charts"},
+  {"title": "PB South Staffing Board", "url": "https://claude.ai/artifact/Q7G53Lu6MQopPnKVthYCaV", "blurb": "The staffing board for one search.", "tag": "Board"},
+  {"title": "Open roles", "url": "https://claude.ai/artifact/PJr7WQT2p8FBVAVSg1P3zv", "blurb": "The partner list of open roles, client-blind.", "tag": "Roles"},
+  {"title": "Recruiter Pre-screen Bench", "url": "https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT", "blurb": "Practise the screen before the live call.", "tag": "Practice"}
+ ]
+}

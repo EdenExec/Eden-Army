@@ -1,0 +1,33 @@
+{
+ "items": [
+  {"title": "Command Center", "url": "https://claude.ai/artifact/WF9MaVZaf3qkf2354wcHDW", "blurb": "Your private cockpit: every agent's desk and the ticket line.", "tag": "Cockpit"},
+  {"title": "Cash Pulse", "url": "https://claude.ai/artifact/LxaFb1CvQgqcsrMn5KXie7", "blurb": "Cash position.", "tag": "Finance"},
+  {"title": "WIP and Pipe", "url": "https://claude.ai/artifact/4fueMmheVrnVz79KuDDMs2", "blurb": "Work in progress and the pipeline.", "tag": "Finance"},
+  {"title": "Runway", "url": "https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv", "blurb": "The weeks ahead.", "tag": "Finance"},
+  {"title": "Credit Burn", "url": "https://claude.ai/artifact/29SgfQbFS2y4ZmVLzfX3h7", "blurb": "Metered credits used.", "tag": "Spend"},
+  {"title": "Agent org chart", "url": "https://claude.ai/artifact/CyZ475DJjbNNaGbfc93nZN", "blurb": "Every agent and who they report to.", "tag": "Team"},
+  {"title": "Round Table", "url": "https://claude.ai/artifact/DTXbu7B6F3B2s8NEnmYdCE", "blurb": "The full recruiting scoreboard.", "tag": "Recruiting"},
+  {"title": "Eden Daily", "url": "https://claude.ai/artifact/FCrzGTCDJAovVNC2HA2oux", "blurb": "Today's paper.", "tag": "Paper"},
+  {"title": "Eden Weekly newsletter plan", "url": "https://claude.ai/artifact/2deVesv7c176vwBcKw4cKr", "blurb": "The newsletter plan.", "tag": "Comms"},
+  {"title": "Eden Army Playbook", "url": "https://claude.ai/artifact/TRoaPMoZ2wMppE2SaQVW9B", "blurb": "How the team operates together.", "tag": "Playbook"},
+  {"title": "Eden App wireframe for Cody", "url": "https://claude.ai/artifact/Ka7gVfWkRv78fwhzWoG5Dh", "blurb": "The wireframe for the 2:30 meeting.", "tag": "Cody"}
+ ],
+ "wired": [
+  {"piece": "Sign-in and roles", "state": "Wired", "note": "The page knows who is signed in; you edit roles in Settings. Others match by name until you link their login."},
+  {"piece": "Leaderboards and JO board", "state": "Seeded", "note": "A copy of the Crelate board, read tonight. A routine to refresh it is not scheduled yet."},
+  {"piece": "CloudTalk dials", "state": "Seeded", "note": "Copied from the Round Table, counts only. No refresh routine yet."},
+  {"piece": "Tickets", "state": "Wired", "note": "Forms save to the Hub database. Radar's scheduled pickup is not built yet."},
+  {"piece": "Comms channels", "state": "Wired", "note": "Simple posts. No replies, reactions or notifications."},
+  {"piece": "JO check-out", "state": "Wired", "note": "Limit from RP pace; recorded in the Hub only, never in Crelate. The under-15 tier is for you to confirm."},
+  {"piece": "My tasks", "state": "Wired", "note": "Private to each person."},
+  {"piece": "Training tiles", "state": "Wired", "note": "Five live links; six tiles wait on content being published."},
+  {"piece": "Partners list", "state": "Seeded", "note": "16 client-blind roles from the 13 Nov draft. Refresh before sharing with a partner."},
+  {"piece": "Calendar on My Desk", "state": "Coming", "note": "Calendars are not connected."},
+  {"piece": "Notes logged and tagged", "state": "Coming", "note": "Needs a write path; Crelate stays the record."},
+  {"piece": "Revenue leaderboard", "state": "Coming", "note": "The Rev Report is not synced."},
+  {"piece": "GGOTW", "state": "Coming", "note": "Meaning, criteria and picker are yours to confirm."},
+  {"piece": "Interns' scorecards", "state": "Coming", "note": "No interns on the Crelate board yet. Bridger is flagged to see them."},
+  {"piece": "Partner PIN portal", "state": "Coming", "note": "Needs a separate page for people with no login. Your decision."},
+  {"piece": "Handbook", "state": "Coming", "note": "Outline only."}
+ ]
+}

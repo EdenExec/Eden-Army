@@ -1,0 +1,16 @@
+{
+ "schema": 1,
+ "note": "Who is who on the Hub. Kev edits this in Settings. Names and roles only; the one email is Kev's own. A linked login (id) is added in Settings once each person has a claude.ai account.",
+ "people": [
+  {"key": "kev", "name": "Kevin Williams", "role": "president", "email": "kev@edenexec.com", "slug": "kev"},
+  {"key": "nick", "name": "Nick", "role": "admin", "slug": "nick", "confirm": true},
+  {"key": "evan", "name": "Evan", "role": "recruiter", "slug": "evan"},
+  {"key": "noah", "name": "Noah", "role": "recruiter", "slug": "noah"},
+  {"key": "andrew", "name": "Andrew", "role": "recruiter", "slug": "andrew"},
+  {"key": "bridger", "name": "Bridger", "role": "recruiter", "slug": "bridger", "extras": ["intern-scorecards"]},
+  {"key": "kyle", "name": "Kyle", "role": "recruiter", "slug": "kyle"}
+ ],
+ "owner_id": null,
+ "updated_at": "2026-11-19T08:30:00Z",
+ "updated_by": null
+}
