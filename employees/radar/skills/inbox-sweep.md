@@ -84,3 +84,12 @@ Kev, 21 Oct: every ready draft gets a Superhuman link, so he can send it from Su
 ## New JO catch (Kev, 24 Oct 2026; via Casey, 25 Oct)
 
 Every weekday sweep: read Crelate `jobs` created since the last sweep in the Retained, Top Priority, Go Now and Typical columns (read-only, `jobs?statuses=...&fields=Id,JobNum,Name,CreatedOn,Owners`). Any new JO: ticket **Scout** (lead gen for the JO) and **Casey** (place it on the board, depth chart, Must Dos). Write the client as Crelate stores it (Baker is "Baker"). Never create the ticket twice for the same JobNum.
+
+## Carmel watch (Kev, 19 Nov 2026)
+
+Carmel Partners is top priority: reply within 1 hour, an end-of-day status on every workstream, and no Carmel message left unanswered. This sweep is the one Carmel inbox watch. No other routine reads the inbox for Carmel.
+
+1. **Every run.** Pull every thread from carmelpartners.com, or about a Carmel role or a candidate in a Carmel process, from the last 70 minutes, plus any still waiting on Kev or Michael Duggan.
+2. **Flag.** A Carmel thread waiting 45 minutes or more is an interrupt. Push "Carmel: <who> needs <what>, <n> min", and draft the reply in Kev's voice. Draft only; never send outside Eden.
+3. **Tracker.** Update the Carmel Tracker comms log (https://claude.ai/artifact/GTjZyx5ZNEn7hnEoZXbPhH, see `employees/carmel-partner/skills/comms-watch.md`): thread, who owes the reply, opened at.
+4. **End of day (the 4pm Boise run).** Send one internal email to kev@edenexec.com and michael@edenexec.com, subject "Carmel EOD · <date>". It carries one line per workstream from the tracker, the open threads and tomorrow's first moves. Kev allowed this on 19 Nov. Counts and roles only: no candidate contact details and no pay.
