@@ -1,0 +1,19 @@
+{
+  "_meta": {"author": "host (Jenny)", "written": "2026-11-19", "storage": "Hub database only; nothing leaves Eden"},
+  "global_norms": [
+    "Result first: the point in the first line.",
+    "No phone numbers, emails, pay, health or family details, ever.",
+    "Client names stay on internal recruiting posts only, never in Partners.",
+    "Be kind, be brief, be specific. Warm, never snarky.",
+    "The Sabbath is quiet: no posting from Friday sunset to Saturday sunset."
+  ],
+  "channels": [
+    {"id": "announcements", "name": "Announcements", "purpose": "Official news from Kev and leadership.", "who_posts": "Kev, admins", "norms": ["Read-only for recruiters.", "One topic per post.", "Reactions welcome, threads go to Help."]},
+    {"id": "wins", "name": "Wins", "purpose": "Placements, starts, great calls, personal milestones. Celebrate out loud.", "who_posts": "Everyone", "norms": ["Name the win and the person who earned it.", "Say what made it work in one line.", "No candidate private details."]},
+    {"id": "help", "name": "Help", "purpose": "Ask a question, get an answer from a teammate or an Eden agent.", "who_posts": "Everyone", "norms": ["Tag it: recruiting, tools, process, other.", "Say what you tried.", "Close the loop when solved."]},
+    {"id": "recruiting-tips", "name": "Recruiting tips", "purpose": "Scripts, objections, sourcing moves that worked.", "who_posts": "Everyone", "norms": ["Share the move, not the candidate.", "Keep it reusable."]},
+    {"id": "reading-room", "name": "Reading room", "purpose": "Books, podcasts and ideas. Leaders are readers.", "who_posts": "Everyone", "norms": ["One line on why it is worth the time."]},
+    {"id": "prayer-and-encouragement", "name": "Encouragement", "purpose": "A place to lift each other up, including prayer requests if you choose to share.", "who_posts": "Everyone", "norms": ["Optional and voluntary.", "Share only what is yours to share.", "No health or family detail about others."]},
+    {"id": "off-the-clock", "name": "Off the clock", "purpose": "Boise life, food, sports, fun.", "who_posts": "Everyone", "norms": ["Keep it clean and kind.", "Work posts belong elsewhere."]}
+  ]
+}

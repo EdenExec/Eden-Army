@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "owner": "Dean",
+  "updated": "2026-11-19",
+  "source": "Kev, 19 Nov 2026 brain dump: finish JOs before checking out new; about 20 RPs/day = 3 JOs; about 15 RPs/day = max 2. Standard 15 RPs/day, 75/week (Must-Do 2, 15 by noon).",
+  "rp_standard": {"per_day": 15, "per_week": 75, "target_by": "12:00 local (Boise)", "working_days": "Mon to Fri, excluding Sabbath (Fri sunset to Sat sunset)"},
+  "jo_checkout": {
+    "pace": "avg_rps_per_working_day = sum(RPs logged on the last 5 completed working days) / 5. Today is excluded. If fewer than 5 days exist, divide by days available.",
+    "limit_formula": "pace >= 20 -> 3; 15 <= pace < 20 -> 2; pace < 15 -> 1 (A)",
+    "tiers": [
+      {"min_pace": 20, "max_open_jos": 3},
+      {"min_pace": 15, "max_open_jos": 2},
+      {"min_pace": 0, "max_open_jos": 1, "assumed": true}
+    ],
+    "can_check_out_new": "open_checked_out_count < limit",
+    "open_definition": "A JO is open from check-out until the person marks it finished (or Kev/Nick closes it). Finish before checking out new.",
+    "display": "Show pace, limit, open count and a plain line: 'You can check out N more' or 'Finish a JO first'. Source and time on the number.",
+    "assumptions": ["'About' in Kev's words is treated as the exact thresholds above; no rounding.", "Below 15 RPs/day was not stated; (A) one JO. Kev to confirm.", "Partial days and new hires in week 1 to 2 use the ramp: limit 1 until C1 is signed."]
+  },
+  "scorecard_on_desk": {
+    "metrics": [
+      {"key": "rps", "label": "RPs", "daily_target": 15, "weekly_target": 75, "show": "today, this week, 4-week average"},
+      {"key": "mps", "label": "MPs", "show": "this week, 4-week average"},
+      {"key": "resumes", "label": "Resumes", "show": "this week, 4-week average"},
+      {"key": "ptcs", "label": "PTCs", "show": "this week, 4-week average"},
+      {"key": "submittals", "label": "Submittals", "show": "this week, 4-week average"},
+      {"key": "ftis", "label": "FTIs", "show": "this week, 4-week average"}
+    ],
+    "source": "board/current (same schema as the Round Table); label 'Crelate as of <time>'. Partial week marked partial. No fake numbers: if not wired, say 'coming'.",
+    "never_show": ["pay", "comp", "split percentages", "health", "family", "age"]
+  },
+  "visibility": {
+    "recruiter": "own desk only",
+    "intern": "own desk; scorecard also visible to Bridger",
+    "bridger": "own plus all interns' scorecards",
+    "president": "all",
+    "discussion": "Scorecards are discussed in person; the Hub shows numbers, never schedules a review."
+  }
+}

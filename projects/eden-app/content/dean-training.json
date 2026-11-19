@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "owner": "Dean",
+  "updated": "2026-11-19",
+  "note": "Ordered tiles for the Training tab. audience: all | recruiter | intern | new-hire. link.type: artifact (live URL) or repo (path note, not clickable until the content is published). Nothing here holds pay, health, family or age.",
+  "tiles": [
+    {"id": "eden-university", "title": "Eden University", "blurb": "Five tracks, 130 modules: the recruiter 90-day course and four intern tracks.", "link": {"type": "artifact", "url": "https://claude.ai/artifact/3PcejY9tXPRs4TkaFLagGX"}, "audience": "all"},
+    {"id": "new-hire-track", "title": "Your first 90 days", "blurb": "Week 1, 30, 60 and 90 ramp with a certification at each gate. Your own artifact follows this.", "link": {"type": "repo", "path": "projects/eden-app/content/dean-new-hire-framework.md"}, "audience": "new-hire"},
+    {"id": "recruiter-course", "title": "Stand Up Your Desk (recruiter course)", "blurb": "27 modules from accounts to owning a depth chart; three certifications.", "link": {"type": "repo", "path": "projects/eden-university/stand-up-your-desk/course.md"}, "audience": "recruiter"},
+    {"id": "recruiter-kit", "title": "Recruiter Kit", "blurb": "The working kit for the desk: scripts, tags and checklists.", "link": {"type": "artifact", "url": "https://claude.ai/artifact/PnmcT8riSACwvfK71VfKc3"}, "audience": "recruiter"},
+    {"id": "prescreen-bench", "title": "Pre-screen Bench", "blurb": "Practise the screen before the live call.", "link": {"type": "artifact", "url": "https://claude.ai/artifact/4Nasro5TiVN8G5Wta6k2jT"}, "audience": "recruiter"},
+    {"id": "headhunter-training", "title": "Wednesday Headhunter Training", "blurb": "Each week: one construction concept, one recruiting concept, the takeaways. Latest: 18 Nov.", "link": {"type": "repo", "path": "projects/workforce/eden-university/2026-11-18-headhunter-training.md"}, "audience": "all"},
+    {"id": "submittal-standard", "title": "The submittal standard: match, not sell (M28)", "blurb": "Show the fit between the candidate and the role in the client's terms. Do not pitch. Rule of 16 Nov.", "link": {"type": "repo", "path": "projects/eden-university/modules/submittal-match-not-sell.md"}, "audience": "recruiter"},
+    {"id": "intern-tracks", "title": "Intern tracks", "blurb": "Sales, Ops, Comms and Marketing, 12 weeks each, run by Bridger.", "link": {"type": "repo", "path": "projects/eden-university/README.md"}, "audience": "intern"},
+    {"id": "certifications", "title": "Certifications", "blurb": "C1 Desk live, C2 First desk running, C3 Full desk. Signed off in person by Kev or Nick.", "link": {"type": "repo", "path": "projects/eden-university/stand-up-your-desk/course.md"}, "audience": "recruiter"},
+    {"id": "core-values", "title": "Seven Pillars and the six Must-Dos", "blurb": "The standard every scorecard and module is built on.", "link": {"type": "repo", "path": "Google Doc: Eden-Core-Values (id 1b17pmgnzvhiBO4TkmH_JJNSp407bgrVjfMHbKSBdFmg)"}, "audience": "all"},
+    {"id": "army-playbook", "title": "Eden Army Playbook", "blurb": "How the Eden team operates together.", "link": {"type": "artifact", "url": "https://claude.ai/artifact/TRoaPMoZ2wMppE2SaQVW9B"}, "audience": "all"}
+  ]
+}

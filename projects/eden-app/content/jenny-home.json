@@ -1,0 +1,45 @@
+{
+  "_meta": {"author": "host (Jenny)", "written": "2026-11-19", "status": "draft content for Q to load; nothing posted"},
+  "welcome": {
+    "headline": "Welcome to Eden.",
+    "body": "This is your front door: your day, your board, your training and your requests, in one place. Show up sharp, finish what you start, and ask for help early. We are glad you are here."
+  },
+  "messages_of_the_day": [
+    {"id": 1, "pillar": "Righteousness", "text": "Do the quiet things right. Nobody sees the prepared call, but everybody feels it.", "scripture": "Colossians 3:23"},
+    {"id": 2, "pillar": "Winning", "text": "Winning is not one big day. It is the fifteenth call when the fourteenth went nowhere."},
+    {"id": 3, "pillar": "Accountability", "text": "Say what you will do, then do it, then tell us. That is the whole system."},
+    {"id": 4, "pillar": "Discipline", "text": "Slow is smooth, smooth is fast. Run the routine and let the results catch up.", "scripture": "Proverbs 12:1"},
+    {"id": 5, "pillar": "Transparency", "text": "Bad news early is a gift. Bad news late is a bill.", "scripture": "Psalm 25:21"},
+    {"id": 6, "pillar": "Growth", "text": "Leaders are readers. Learners are earners. Read ten pages before you dial.", "scripture": "Psalm 78:72"},
+    {"id": 7, "pillar": "Execution", "text": "Prepared. Organized. Action. Follow through. In that order.", "scripture": "Ecclesiastes 9:10"},
+    {"id": 8, "pillar": "Recruiting grit", "text": "Every placement started as a stranger who did not pick up the first time."},
+    {"id": 9, "pillar": "Recruiting grit", "text": "Don't chase the day. Plan the week, then work the plan."},
+    {"id": 10, "pillar": "Recruiting grit", "text": "Chop tomorrow's wood today: audit your inventory before you leave."},
+    {"id": 11, "pillar": "Recruiting grit", "text": "A good submittal matches a person to a role. It does not sell. Be accurate and be kind."},
+    {"id": 12, "pillar": "Encouragement", "text": "A slow morning is not a slow week. Make the next call."},
+    {"id": 13, "pillar": "Encouragement", "text": "Celebrate a teammate's win out loud today. It costs nothing and it compounds."},
+    {"id": 14, "pillar": "Righteousness", "text": "Treat every candidate the way you would want your own family treated.", "scripture": "Colossians 3:23"},
+    {"id": 15, "pillar": "Winning", "text": "Know the rules, then play to win inside them. Clarity beats hustle."},
+    {"id": 16, "pillar": "Accountability", "text": "Own the task, not the excuse. Ownership is the fastest way to be trusted."},
+    {"id": 17, "pillar": "Growth", "text": "Autopsy your work. What worked, what didn't, what changes tomorrow?"},
+    {"id": 18, "pillar": "Execution", "text": "Whatever your hand finds to do, do it with your might.", "scripture": "Ecclesiastes 9:10"},
+    {"id": 19, "pillar": "Encouragement", "text": "Rest is part of the work. Close the laptop, be present, come back strong.", "scripture": "Exodus 20:8"},
+    {"id": 20, "pillar": "Winning", "text": "Finish the race you are in. Keep going.", "scripture": "2 Timothy 4:7"}
+  ],
+  "announcements_seed": [
+    {"id": "a1", "title": "Boise office", "body": "Our Boise home base is open for the team. Details on hours and desks will follow from the office lead.", "confirm_with_kev": true},
+    {"id": "a2", "title": "A new RPO partnership", "body": "Eden has signed a new RPO partnership. More on how it affects your desk will come as roles open.", "confirm_with_kev": true},
+    {"id": "a3", "title": "NLE in December", "body": "NLE is coming in December. Watch this space for dates and what to prepare.", "confirm_with_kev": true}
+  ],
+  "ggotw": {
+    "name": "GGOTW",
+    "meaning": "OPEN QUESTION FOR KEV: what does GGOTW stand for?",
+    "placeholder_blurb": "The GGOTW award recognises one teammate each week. Meaning, criteria and picker to be confirmed by Kev.",
+    "proposed_picking_method_if_kev_agrees": "Nominated in the wins channel by Thursday, chosen by Kev on Friday before the Sabbath, announced Sunday on Home."
+  },
+  "cross_footer": {
+    "line": "Whatever you do, work at it with all your heart, as working for the Lord.",
+    "reference": "Colossians 3:23",
+    "note": "Kev may prefer another verse or line; swap freely."
+  }
+}

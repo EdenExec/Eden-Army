@@ -1,0 +1,58 @@
+{
+  "_meta": {"author": "host (Jenny)", "written": "2026-11-19", "routing": "Tickets land in the Hub database; Radar picks up. Nothing is sent, booked or paid from the Hub. All turnarounds are targets, not promises.", "no_sensitive_fields": "No phones, personal emails, pay, health or family fields on any form."},
+  "ticket_types": [
+    {"id": "leads", "name": "Leads request", "fields": [
+      {"name": "Role or industry focus", "type": "text"},
+      {"name": "Region", "type": "text"},
+      {"name": "How many leads", "type": "number"},
+      {"name": "Needed by", "type": "date"},
+      {"name": "Why (JO or search it supports)", "type": "text"}],
+      "handler": "Scout", "turnaround": "1 business day"},
+    {"id": "travel", "name": "Travel request", "fields": [
+      {"name": "Destination", "type": "text"},
+      {"name": "Dates", "type": "daterange"},
+      {"name": "Purpose", "type": "text"},
+      {"name": "Preferences (airline, hotel area)", "type": "text"},
+      {"name": "Budget ceiling", "type": "text"}],
+      "handler": "Jenny drafts plan; Kev approves any spend", "turnaround": "2 business days to a plan; booking only after Kev's yes"},
+    {"id": "reimbursement", "name": "Reimbursement", "fields": [
+      {"name": "What it was for", "type": "text"},
+      {"name": "Date", "type": "date"},
+      {"name": "Amount", "type": "number"},
+      {"name": "Receipt attached", "type": "file"},
+      {"name": "Business reason", "type": "text"}],
+      "handler": "Radar, then Kev approves", "turnaround": "3 business days to review"},
+    {"id": "it-access", "name": "IT and access", "fields": [
+      {"name": "Tool or system", "type": "text"},
+      {"name": "What you need (new access, reset, fix)", "type": "text"},
+      {"name": "Urgency", "type": "select: today, this week, whenever"}],
+      "handler": "Radar and admin", "turnaround": "Same day if urgent, otherwise 2 business days"},
+    {"id": "decision-window", "name": "Decision window ask (for Kev)", "fields": [
+      {"name": "The decision needed", "type": "text"},
+      {"name": "Your recommendation", "type": "text"},
+      {"name": "Options (up to 3)", "type": "text"},
+      {"name": "Deadline that matters", "type": "date"}],
+      "handler": "Radar pools non-urgent asks into Kev's decision windows", "turnaround": "Answered at the next decision window; urgent items should go to Radar directly"},
+    {"id": "training", "name": "Training or coaching request", "fields": [
+      {"name": "Skill you want to grow", "type": "text"},
+      {"name": "What you've tried", "type": "text"}],
+      "handler": "Dean", "turnaround": "2 business days"},
+    {"id": "comms-design", "name": "Comms or design request", "fields": [
+      {"name": "What you need (post, one-pager, graphic, announcement)", "type": "text"},
+      {"name": "Audience", "type": "text"},
+      {"name": "Needed by", "type": "date"}],
+      "handler": "Jenny, with Marlowe's design check", "turnaround": "2 business days to a draft; nothing is posted without Kev's yes"},
+    {"id": "event", "name": "Event or job fair idea", "fields": [
+      {"name": "Idea", "type": "text"},
+      {"name": "Who would come", "type": "text"},
+      {"name": "Target date", "type": "date"}],
+      "handler": "Jenny", "turnaround": "3 business days to a first plan"},
+    {"id": "jo-checkout", "name": "JO check-out exception", "fields": [
+      {"name": "JO you want", "type": "text"},
+      {"name": "Why now", "type": "text"}],
+      "handler": "Radar to Kev", "turnaround": "Next decision window"},
+    {"id": "feedback", "name": "Idea or feedback on the Hub", "fields": [
+      {"name": "What's working or not", "type": "text"}],
+      "handler": "Radar", "turnaround": "Reviewed weekly"}
+  ]
+}
