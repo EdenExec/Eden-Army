@@ -1,0 +1,43 @@
+{
+  "url": "https://claude.ai/artifact/BKrnzKEUeBujS7xERJFKwF",
+  "published": "2026-11-19",
+  "source": "projects/eden-app/hub/eden-hub.html",
+  "sharing": "Private. Kev shares it from the Share menu when he is ready; Q never changes sharing.",
+  "capabilities": {
+    "user": { "scopes": ["profile", "email"] },
+    "db": { "rules": [
+      { "path": "", "read": "interact", "write": "admin" },
+      { "path": "content", "read": "view" },
+      { "path": "roles", "read": "view" },
+      { "path": "president", "read": "admin", "write": "admin" },
+      { "path": "partners", "read": "admin", "write": "admin" },
+      { "path": "tickets", "read": "admin", "write": "admin" },
+      { "path": "tickets/{self}", "read": "interact", "write": "interact" },
+      { "path": "posts", "read": "interact", "write": "admin" },
+      { "path": "posts/{self}", "read": "interact", "write": "interact" },
+      { "path": "checkouts", "read": "interact", "write": "admin" },
+      { "path": "checkouts/{self}", "read": "interact", "write": "interact" },
+      { "path": "data/users/{self}", "write": "interact" }
+    ] }
+  },
+  "documents": {
+    "roles/current": "{schema, people:[{key, name, role, slug?, id?, email?, extras?, confirm?}], owner_id}. Kev edits in Settings.",
+    "content/home": "Jenny: {welcome, messages_of_the_day[], announcements_seed[] (confirm_with_kev = draft, Kev only), ggotw, cross_footer}",
+    "content/comms": "Jenny: {global_norms[], channels[{id, name, purpose, who_posts, norms[]}]}",
+    "content/tickets": "Jenny: {ticket_types[{id, name, fields[{name, type}], handler, turnaround}]}",
+    "content/training": "Dean: {tiles[{id, title, blurb, link{type: artifact|repo, url|path}, audience}]}",
+    "content/desk": "Dean: {rp_standard, jo_checkout{tiers[{min_pace, max_open_jos, assumed?}]}, ...}",
+    "content/partners": "Scout: {week_of, source, roles[{ref, title, market, region, sector, level, priority, client_blind, pitch, must_haves[], lead_list_url, lead_list_status}]}",
+    "content/handbook": "{title, status, md}", "content/new-hire": "{title, status, md}",
+    "links/team": "{items[{title, url, blurb, tag}]}", "president/links": "{items[], wired[{piece, state, note}]} (owner and editors only)",
+    "board/current": "Round Table schema, from npm run recruiting-board. Never committed.",
+    "phones/current": "Round Table schema with notes and inbound removed: counts only. Never committed.",
+    "tickets/<uid>": "{items:{<id>:{type, type_name, handler, fields{}, status: open|picked|done, at, status_at?, note?}}}",
+    "posts/<uid>": "{items:{<id>:{ch, text, at, gone?}}}",
+    "checkouts/<uid>": "{items:{<jo id>:{num, name, at, done_at}}}",
+    "data/users/<uid>/desk": "{tasks:{<id>:{text, done, at}}} private to each person",
+    "partners/*": "reserved for partner PINs (not built)"
+  },
+  "reseed": "node projects/eden-app/hub/seed.mjs --out <scratch>/seed --board <scratch>/board.json --phones <scratch>/phones.json, then ArtifactData set each file.",
+  "test": "node projects/eden-app/hub/test/hub-browser-test.cjs <scratch>/seed"
+}
