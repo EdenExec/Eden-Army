@@ -233,6 +233,14 @@ td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
 .folder .body .empty{font-size:13px}
 .asktoggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);background:var(--panel);color:var(--ink);padding:4px 12px 4px 4px;border-radius:999px;cursor:pointer;font:600 13px/1 var(--display);white-space:nowrap}
 .asktoggle img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.brandact{display:inline-flex;align-items:center;gap:8px}
+.themebtn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line-2);background:var(--panel);color:var(--ink);border-radius:50%;cursor:pointer;padding:0;flex:none}
+.themebtn:hover{border-color:var(--gold)}
+.themebtn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.themebtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.themebtn .sun{display:none}
+.themebtn[data-mode="dark"] .sun{display:block}
+.themebtn[data-mode="dark"] .moon{display:none}
 .asktoggle[aria-expanded="true"]{background:var(--gold);color:#1a1a1a}
 .brand .sub2{font-style:italic;font-weight:600;color:var(--ink-2);font-size:12.5px;margin-top:2px}
 .lock{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;vertical-align:-1px;margin-right:5px}
@@ -364,11 +372,15 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
 @media (max-width:420px){.bank{grid-template-columns:1fr 1fr}.brand h1{font-size:19px}.cbtn{width:50px;height:50px}.cbtn.play{width:62px;height:62px}}
 </style>
 
+<script>try{var t=localStorage.getItem("atlas-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <div class="wrap">
   <header class="top">
     <div class="brand">
       <div><div class="eyebrow"><svg class="globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7.5h14M5 16.5h14"/></svg>KDTW Group</div><h1>Atlas Desk</h1></div>
-      <button type="button" class="asktoggle" id="ask-toggle" aria-expanded="false" aria-controls="askbar"><img id="ask-toggle-av" alt="">Ask Atlas</button>
+      <div class="brandact">
+        <button type="button" class="themebtn" id="theme-btn" aria-label="Switch to dark mode" title="Dark mode"><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></button>
+        <button type="button" class="asktoggle" id="ask-toggle" aria-expanded="false" aria-controls="askbar"><img id="ask-toggle-av" alt="">Ask Atlas</button>
+      </div>
     </div>
     <div class="score">
       <button type="button" class="tile gold st locked" id="st-tile" data-goto="home"><b><svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path class="shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="s-minutes">0</span></b><span id="st-label">Screen min</span></button>
@@ -668,6 +680,16 @@ details.move.won .mn::before{background:var(--gold);border-color:var(--gold)}
   function weekKey(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);x.setHours(0,0,0,0);const y=x.getFullYear(),mo=String(x.getMonth()+1).padStart(2,"0"),da=String(x.getDate()).padStart(2,"0");return y+"-"+mo+"-"+da}
   const thisWeek=weekKey(new Date());
   const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+  /* ---------- light and dark ---------- */
+  (function(){
+    const root=document.documentElement,btn=$("#theme-btn"),mq=window.matchMedia?window.matchMedia("(prefers-color-scheme: dark)"):null;
+    const mode=()=>{const t=root.getAttribute("data-theme");return t==="dark"||t==="light"?t:(mq&&mq.matches?"dark":"light")};
+    const paint=()=>{const m=mode(),next=m==="dark"?"light":"dark";btn.dataset.mode=m;btn.setAttribute("aria-label","Switch to "+next+" mode");btn.title=next==="dark"?"Dark mode":"Light mode"};
+    btn.addEventListener("click",()=>{const next=mode()==="dark"?"light":"dark";root.setAttribute("data-theme",next);ls.set("atlas-theme",next);paint()});
+    if(mq&&mq.addEventListener)mq.addEventListener("change",paint);
+    paint();
+  })();
 
   /* ---------- tabs ---------- */
   $$('nav.tabs button[data-view]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
