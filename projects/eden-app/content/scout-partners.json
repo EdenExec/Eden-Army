@@ -1,0 +1,311 @@
+{
+  "_note": "Seed for the Hub Partners tab. Client-blind: built from projects/partners/open-roles/index.html (draft as of 13 Nov 2026, blind check passed). No client names, fees, owners, candidates, phones or emails. Level is Scout's read of the title. Refresh from build.py before Kev shares; a role marked review or closed must not appear.",
+  "week_of": "2026-11-16",
+  "source": "projects/partners/open-roles/index.html, as of 13 Nov 2026",
+  "roles": [
+    {
+      "ref": "EPG-001",
+      "title": "Senior PM / Preconstruction",
+      "market": "Miami, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Senior",
+      "priority": "Hot",
+      "client_blind": "Regional general contractor, South Florida",
+      "pitch": "Build the preconstruction function at a growing South Florida builder.",
+      "must_haves": [
+        "Senior PM or preconstruction background",
+        "Helps stand up and run preconstruction",
+        "Miami-based or willing to relocate"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-002",
+      "title": "Bench Project Manager",
+      "market": "West Palm Beach, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Mid to senior",
+      "priority": "Hot",
+      "client_blind": "National general contractor, South Florida high-rise",
+      "pitch": "Immediate seat on a deep PM bench with room to step into larger projects.",
+      "must_haves": [
+        "Experienced PM on large vertical builds",
+        "Available soon (immediate need)",
+        "West Palm Beach area or willing to move"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-015",
+      "title": "Project Engineers and Field Engineers",
+      "market": "West Palm Beach, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Entry to mid",
+      "priority": "Hot",
+      "client_blind": "National general contractor, South Florida high-rise",
+      "pitch": "Join a large vertical project team with a fast path to APM.",
+      "must_haves": [
+        "GC or subcontractor project engineering experience",
+        "RFIs, submittals and field coordination",
+        "West Palm Beach area"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-016",
+      "title": "MEP Engineer or Superintendent",
+      "market": "West Palm Beach, FL",
+      "region": "Florida",
+      "sector": "MEP",
+      "level": "Mid to senior",
+      "priority": "Hot",
+      "client_blind": "Regional general contractor, South Florida",
+      "pitch": "Own MEP coordination on a South Florida build.",
+      "must_haves": [
+        "Mechanical background",
+        "5 to 7 years minimum",
+        "Palm Beach County based"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-017",
+      "title": "MEP Project Executive",
+      "market": "Miami, FL",
+      "region": "Florida",
+      "sector": "MEP",
+      "level": "Executive",
+      "priority": "Hot",
+      "client_blind": "National general contractor, South Florida high-rise",
+      "pitch": "Senior oversight of all MEP on a major Miami tower.",
+      "must_haves": [
+        "Project executive with an MEP background",
+        "Coordinates and oversees existing MEP leads (not an MEP super)",
+        "Large vertical building experience"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-018",
+      "title": "Assistant Project Manager",
+      "market": "Miami, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Entry to mid",
+      "priority": "Active",
+      "client_blind": "Regional general contractor, South Florida",
+      "pitch": "Step into an APM seat at a growing Miami builder.",
+      "must_haves": [
+        "APM or strong project engineer ready to step up",
+        "Florida construction experience",
+        "Miami based"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-020",
+      "title": "Project Coordinator / Admin",
+      "market": "Miami, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Entry",
+      "priority": "Active",
+      "client_blind": "National general contractor, South Florida high-rise",
+      "pitch": "Support role on a high-rise team with a path into project management.",
+      "must_haves": [
+        "Procore proficiency",
+        "High-rise project experience",
+        "Strong paperwork and document control"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-026",
+      "title": "APM or Field Engineer (structural, windows, finishes)",
+      "market": "West Palm Beach, FL",
+      "region": "Florida",
+      "sector": "Commercial",
+      "level": "Entry to mid",
+      "priority": "Active",
+      "client_blind": "Regional general contractor, South Florida",
+      "pitch": "Hands-on field role that leads to project management.",
+      "must_haves": [
+        "Structural, window or finishes scope experience",
+        "APM or field engineer level",
+        "Palm Beach County based"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-030",
+      "title": "Junior MEP Support (inspections, permits, documents)",
+      "market": "Miami, FL",
+      "region": "Florida",
+      "sector": "MEP",
+      "level": "Entry",
+      "priority": "Active",
+      "client_blind": "National general contractor, South Florida high-rise",
+      "pitch": "Entry point on a major tower with exposure to every trade.",
+      "must_haves": [
+        "A couple of years out of school",
+        "Strong computer and document-control skills",
+        "Construction or design-firm background; need not be pure MEP"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-006",
+      "title": "Project Executive (Maryland)",
+      "market": "Reston, VA (covers Maryland)",
+      "region": "DC and Virginia",
+      "sector": "Commercial",
+      "level": "Executive",
+      "priority": "Hot",
+      "client_blind": "General contractor, Mid-Atlantic",
+      "pitch": "Run the Maryland book with flexibility to work remotely part of the week.",
+      "must_haves": [
+        "Project executive running a regional book",
+        "Maryland market relationships",
+        "Based in the DC area; one or two remote days a week"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-010",
+      "title": "VDC Manager (lead)",
+      "market": "DC metro (remote-friendly)",
+      "region": "DC and Virginia",
+      "sector": "Commercial",
+      "level": "Senior",
+      "priority": "Hot",
+      "client_blind": "General contractor, Mid-Atlantic",
+      "pitch": "Lead VDC with the flexibility to work remotely.",
+      "must_haves": [
+        "Leads VDC and BIM coordination",
+        "Team lead experience",
+        "Remote hire preferred"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-022",
+      "title": "Chief Estimator",
+      "market": "Washington, DC",
+      "region": "DC and Virginia",
+      "sector": "Commercial",
+      "level": "Senior to executive",
+      "priority": "Active",
+      "client_blind": "General contractor, Mid-Atlantic",
+      "pitch": "Lead estimating for a Mid-Atlantic builder.",
+      "must_haves": [
+        "Leads estimating for a general contractor",
+        "Runs preconstruction pricing and bids",
+        "Washington DC market experience"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-041",
+      "title": "Senior Project Manager (drywall)",
+      "market": "Austin, TX",
+      "region": "Texas",
+      "sector": "Commercial",
+      "level": "Senior",
+      "priority": "Active",
+      "client_blind": "Drywall and interiors subcontractor, Texas",
+      "pitch": "Lead projects for a growing Texas drywall subcontractor.",
+      "must_haves": [
+        "Drywall or interiors subcontractor PM experience",
+        "Senior-level project management",
+        "Austin based"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-042",
+      "title": "Senior Estimator (drywall)",
+      "market": "San Antonio, TX",
+      "region": "Texas",
+      "sector": "Commercial",
+      "level": "Senior",
+      "priority": "Active",
+      "client_blind": "Drywall and interiors subcontractor, Texas",
+      "pitch": "Own pricing for a growing Texas drywall subcontractor.",
+      "must_haves": [
+        "Drywall or interiors estimating experience",
+        "Senior-level estimator",
+        "San Antonio based"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-029",
+      "title": "Self-perform Project Engineers and PMs",
+      "market": "Boise, ID",
+      "region": "West",
+      "sector": "Commercial",
+      "level": "Mid",
+      "priority": "Active",
+      "client_blind": "General contractor with self-perform, western US",
+      "pitch": "Self-perform builder with strong local project flow.",
+      "must_haves": [
+        "Self-perform project engineering or PM experience",
+        "Concrete or carpentry self-perform scopes",
+        "Boise area"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    },
+    {
+      "ref": "EPG-031",
+      "title": "Project Manager, traveling (data center)",
+      "market": "Quincy, WA",
+      "region": "West",
+      "sector": "Data centers",
+      "level": "Mid to senior",
+      "priority": "Active",
+      "client_blind": "Mission-critical and data center contractor",
+      "pitch": "Traveling data center PM role on active hyperscale work.",
+      "must_haves": [
+        "Data center or mission-critical PM experience",
+        "Willing to travel",
+        "Quincy area project"
+      ],
+      "split_terms": "Kev to set",
+      "lead_list_url": null,
+      "lead_list_status": "not built yet"
+    }
+  ]
+}
