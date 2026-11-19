@@ -1,0 +1,470 @@
+<title>Carmel Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an RPO control board. Masthead, a four-figure status strip, then six tabbed ledgers; cards on phones, tables where rows line up. */
+:root {
+  --bg: #f6f4ef;          /* cream ground */
+  --panel: #ffffff;
+  --ink: #141414;
+  --muted: #5f5d58;
+  --rule: #d9d5cc;
+  --chip: #ebe8e1;
+  --ok: #3d6b4f;  --ok-bg: #e3ece5;
+  --warn: #8a6a1f; --warn-bg: #f2ead6;
+  --bad: #9b2f2a; --bad-bg: #f4e1df;
+  --focus: #141414;
+  --font: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121212; --panel: #1b1b1a; --ink: #ece9e2; --muted: #a29e95; --rule: #34322e; --chip: #262523;
+  --ok: #8fbf9f; --ok-bg: #1f2b23; --warn: #d6b46a; --warn-bg: #2c2618; --bad: #e08a83; --bad-bg: #331d1b; --focus: #ece9e2; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121212; --panel: #1b1b1a; --ink: #ece9e2; --muted: #a29e95; --rule: #34322e; --chip: #262523;
+  --ok: #8fbf9f; --ok-bg: #1f2b23; --warn: #d6b46a; --warn-bg: #2c2618; --bad: #e08a83; --bad-bg: #331d1b; --focus: #ece9e2; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 18px; }
+header.mast { display: grid; gap: 2px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+.org { font-size: 11px; font-weight: 700; letter-spacing: .18em; }
+h1 { margin: 0; font-size: 26px; font-weight: 700; font-style: italic; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 12.5px; }
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.fig { background: var(--panel); border: 1px solid var(--rule); padding: 10px 12px; display: grid; gap: 2px; }
+.fig b { font-size: 24px; font-variant-numeric: tabular-nums; }
+.fig span { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fig.bad { border-color: var(--bad); } .fig.bad b { color: var(--bad); }
+nav.tabs { display: flex; gap: 0; overflow-x: auto; border-bottom: 1px solid var(--rule); }
+nav.tabs button { font: inherit; font-weight: 600; font-size: 13px; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--muted); padding: 10px 14px; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+nav.tabs button .n { font-family: var(--mono); font-size: 11px; margin-left: 6px; color: var(--muted); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+section.pane { display: grid; gap: 14px; }
+.lede { color: var(--muted); max-width: 72ch; margin: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--rule); padding: 14px; display: grid; gap: 10px; min-width: 0; align-content: start; }
+.card h3 { margin: 0; font-size: 15px; font-weight: 700; text-wrap: balance; }
+.card .meta { color: var(--muted); font-size: 12px; }
+dl.kv { margin: 0; display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 6px 10px; }
+dl.kv dt { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.src { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 1px; }
+.chip { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; background: var(--chip); border-radius: 2px; letter-spacing: .02em; }
+.chip.ok { background: var(--ok-bg); color: var(--ok); } .chip.warn { background: var(--warn-bg); color: var(--warn); } .chip.bad { background: var(--bad-bg); color: var(--bad); }
+.scroll { overflow-x: auto; background: var(--panel); border: 1px solid var(--rule); }
+table { border-collapse: collapse; width: 100%; min-width: 680px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--rule); }
+th { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--panel); position: sticky; top: 0; }
+td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+tr.done td { color: var(--muted); }
+tr.done td.t { text-decoration: line-through; }
+.empty { background: var(--panel); border: 1px dashed var(--rule); padding: 22px; display: grid; gap: 6px; }
+.empty b { font-size: 15px; }
+form.add { background: var(--panel); border: 1px solid var(--rule); padding: 14px; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+form.add h3 { grid-column: 1 / -1; margin: 0; font-size: 14px; }
+form.add label { display: grid; gap: 4px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); min-width: 0; }
+form.add .wide { grid-column: 1 / -1; }
+input, select, textarea { font: inherit; font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink); background: var(--bg); border: 1px solid var(--rule); padding: 8px; width: 100%; border-radius: 0; }
+textarea { min-height: 60px; resize: vertical; }
+.btn { font: inherit; font-weight: 600; font-size: 13px; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); padding: 8px 14px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.small { padding: 4px 9px; font-size: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.note { font-size: 12px; color: var(--muted); }
+.banner { border: 1px solid var(--rule); background: var(--panel); padding: 10px 12px; font-size: 12.5px; }
+.banner.bad { border-color: var(--bad); color: var(--bad); }
+.eodday { display: grid; gap: 8px; }
+.eodday h3 { margin: 0; font-size: 14px; }
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--rule); padding-top: 10px; font-size: 11px; letter-spacing: .14em; color: var(--muted); }
+.client-only [data-internal] { display: none !important; }
+@media (max-width: 720px) {
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1 { font-size: 22px; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  dl.kv { grid-template-columns: 96px minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap" id="app">
+  <header class="mast">
+    <div class="org">EDEN PARTNER GROUP</div>
+    <h1>Carmel Partners &amp; Eden Partner Group · Carmel Tracker</h1>
+    <div class="sub">Kept by Carmel's Partner for Kev, Michael Duggan and Noah Fields. Internal to Eden: do not share without Kev's yes. <span id="sync">Connecting to the tracker…</span></div>
+  </header>
+
+  <div class="strip" aria-label="Status">
+    <div class="fig" id="f-roles"><b>–</b><span>Open roles</span></div>
+    <div class="fig" id="f-owed"><b>–</b><span>Replies owed by Eden</span></div>
+    <div class="fig" id="f-late"><b>–</b><span>Steps overdue</span></div>
+    <div class="fig" id="f-clock"><b>–</b><span>Red shot clocks</span></div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Tracker sections">
+    <button role="tab" id="tab-roles" aria-controls="p-roles" aria-selected="true">Roles<span class="n" id="n-roles"></span></button>
+    <button role="tab" id="tab-candidates" aria-controls="p-candidates" aria-selected="false">Candidates<span class="n" id="n-candidates"></span></button>
+    <button role="tab" id="tab-people" aria-controls="p-people" aria-selected="false">People<span class="n" id="n-people"></span></button>
+    <button role="tab" id="tab-comms" aria-controls="p-comms" aria-selected="false">Comms log<span class="n" id="n-comms"></span></button>
+    <button role="tab" id="tab-steps" aria-controls="p-steps" aria-selected="false">Next steps<span class="n" id="n-steps"></span></button>
+    <button role="tab" id="tab-eod" aria-controls="p-eod" aria-selected="false">EOD status<span class="n" id="n-eod"></span></button>
+  </nav>
+
+  <section class="pane" id="p-roles" role="tabpanel" aria-labelledby="tab-roles">
+    <p class="lede">The Schedule 1 roles plus the Marina Shores PE and the IR analyst. Fee basis follows the 19 Nov call sheet; it is Kev's ask until Brandy signs Schedule 2.</p>
+    <div class="cards" id="roles"></div>
+  </section>
+
+  <section class="pane" id="p-candidates" role="tabpanel" aria-labelledby="tab-candidates" hidden>
+    <div class="row">
+      <label class="row note" for="c-role">Role
+        <select id="c-role" style="width:auto"><option value="">All roles</option></select>
+      </label>
+      <label class="row note" for="c-client"><input type="checkbox" id="c-client" style="width:auto"> Client view (hides fee basis and internal notes)</label>
+    </div>
+    <div class="banner" id="c-clientnote" hidden>Client view. Never shared, screen-shared or sent to a hiring manager without Kev's yes for that person.</div>
+    <div id="cands"></div>
+    <form class="add" id="c-form" data-internal>
+      <h3>Add candidate</h3>
+      <label for="cf-role">Role<select id="cf-role" required></select></label>
+      <label for="cf-name">Candidate name<input id="cf-name" required autocomplete="off"></label>
+      <label for="cf-stage">Stage<select id="cf-stage"></select></label>
+      <label for="cf-source">Source<select id="cf-source"></select></label>
+      <label for="cf-next">Next step<input id="cf-next" autocomplete="off"></label>
+      <label for="cf-due">Next step due<input id="cf-due" type="date"></label>
+      <label for="cf-touch">Last touch<input id="cf-touch" type="date"></label>
+      <label class="wide" for="cf-notes">Notes (work facts; pay expectations only if stated; no phones, emails, pay history or ages)<textarea id="cf-notes"></textarea></label>
+      <label class="wide" for="cf-src">Source of this entry<input id="cf-src" placeholder="Kev's note, 20 Nov 2026" autocomplete="off"></label>
+      <div class="row wide"><button class="btn" type="submit">Add candidate</button><span class="note" id="cf-msg"></span></div>
+    </form>
+  </section>
+
+  <section class="pane" id="p-people" role="tabpanel" aria-labelledby="tab-people" hidden>
+    <p class="lede">Who decides, who schedules for whom, who gives feedback, and how each person works. Work facts only. "To confirm" means the name or link is inferred and not yet confirmed.</p>
+    <div class="cards" id="people"></div>
+  </section>
+
+  <section class="pane" id="p-comms" role="tabpanel" aria-labelledby="tab-comms" hidden>
+    <p class="lede">Each open Carmel thread, who owes the next reply and how long it has been open. Kev's commitment: a reply within 1 hour. Rows owed by Eden turn red past 60 minutes.</p>
+    <div id="comms"></div>
+  </section>
+
+  <section class="pane" id="p-steps" role="tabpanel" aria-labelledby="tab-steps" hidden>
+    <div id="steps"></div>
+    <form class="add" id="s-form">
+      <h3>Add a next step</h3>
+      <label class="wide" for="sf-text">Step<input id="sf-text" required autocomplete="off"></label>
+      <label for="sf-owner">Owner<select id="sf-owner"><option>Kev</option><option>Michael</option><option>Noah</option><option>Carmel</option><option>Carmel's Partner</option></select></label>
+      <label for="sf-due">Due<input id="sf-due" type="date"></label>
+      <label for="sf-src">Source<input id="sf-src" placeholder="Kev's note, 20 Nov 2026" autocomplete="off"></label>
+      <div class="row wide"><button class="btn" type="submit">Add step</button><span class="note" id="sf-msg"></span></div>
+    </form>
+  </section>
+
+  <section class="pane" id="p-eod" role="tabpanel" aria-labelledby="tab-eod" hidden>
+    <p class="lede">One line per workstream for the day. Carmel's Partner writes it before the end-of-day email to Kev and Michael.</p>
+    <div id="eod"></div>
+  </section>
+
+  <footer><span>edenpartnergroup.com</span><span>EDEN PARTNER GROUP</span></footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var STAGES = ["New", "Screen", "HM 1", "HM 2", "Assessment", "Final", "Offer", "Accepted", "Started", "Out"];
+  var SOURCES = [
+    ["eden", "Eden-sourced", "20% of first-year base (agreement 6.1)"],
+    ["ukg", "Carmel UKG applicant", "6% if not interviewed with Carmel before the Start Date (6.1, 9.2)"],
+    ["referral", "Employee referral", "6% (6.1)"],
+    ["schedule2", "In process at Start (Schedule 2)", "Only what Schedule 2 lists (9.3); the ask until signed"],
+    ["agency", "Outside agency", "No Eden fee unless Carmel approves a split in writing (7.1)"],
+    ["internal", "Internal promotion or transfer", "No fee (6.1)"]
+  ];
+  var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [] };
+  var loaded = {};
+  var db = null, canWrite = true;
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "text") e.textContent = attrs[k];
+      else if (k === "cls") e.className = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c != null) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function src(t) { return t ? el("span", { cls: "src", text: "Source: " + t }) : null; }
+  function val(v, s) { var d = el("dd"); d.appendChild(document.createTextNode(v == null || v === "" ? "–" : String(v))); var x = src(s); if (x) d.appendChild(x); return d; }
+  function fmtDate(iso) {
+    if (!iso) return "–";
+    var d = new Date(iso.length === 10 ? iso + "T12:00:00" : iso);
+    if (isNaN(d)) return iso;
+    var opts = iso.length === 10 ? { weekday: "short", day: "numeric", month: "short" } : { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" };
+    return d.toLocaleString(undefined, opts);
+  }
+  function today() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function workdaysSince(iso) {
+    if (!iso) return null;
+    var a = new Date(iso.length === 10 ? iso + "T12:00:00" : iso), b = new Date(), n = 0;
+    if (isNaN(a)) return null;
+    a.setHours(12, 0, 0, 0); b.setHours(12, 0, 0, 0);
+    while (a < b) { a.setDate(a.getDate() + 1); var w = a.getDay(); if (w !== 0 && w !== 6) n++; }
+    return n;
+  }
+  function mins(iso) { var t = new Date(iso).getTime(); return isNaN(t) ? null : Math.max(0, Math.round((Date.now() - t) / 60000)); }
+  function dur(m) { if (m == null) return "–"; if (m < 60) return m + " min"; var h = Math.floor(m / 60); if (h < 48) return h + " h " + (m % 60) + " min"; return Math.floor(h / 24) + " days"; }
+  function chipFor(stage) {
+    var s = (stage || "").toLowerCase();
+    var cls = /stall|red|overdue|blocked/.test(s) ? "bad" : /filled|accepted|started|closed|done/.test(s) ? "ok" : /offer|hold|waiting|not posted|to confirm/.test(s) ? "warn" : "";
+    return el("span", { cls: "chip " + cls, text: stage || "–" });
+  }
+  function clockOf(c) {
+    if (/^(Out|Started)$/.test(c.stage || "")) return null;
+    var d = workdaysSince(c.last_touch);
+    var overdue = c.next_due && c.next_due < today();
+    if (d == null) return { cls: "warn", label: "No touch logged" };
+    if (d >= 5 || overdue) return { cls: "bad", label: d + " working days" + (overdue ? ", step overdue" : "") };
+    if (d >= 3) return { cls: "warn", label: d + " working days" };
+    return { cls: "ok", label: d === 0 ? "Today" : d + " working day" + (d === 1 ? "" : "s") };
+  }
+  function roleTitle(id) { for (var i = 0; i < S.roles.length; i++) if (S.roles[i].id === id) return S.roles[i].title; return id || "–"; }
+  function sortBy(arr, key) { return arr.slice().sort(function (a, b) { return String(a[key] == null ? "~" : a[key]).localeCompare(String(b[key] == null ? "~" : b[key])); }); }
+  function emptyState(title, body) { return el("div", { cls: "empty" }, [el("b", { text: title }), el("span", { cls: "note", text: body })]); }
+
+  function renderStrip() {
+    var open = S.roles.filter(function (r) { return !/filled|closed/i.test(r.stage || ""); }).length;
+    var owed = S.comms.filter(function (c) { return c.status !== "closed" && c.owes === "eden"; });
+    var owedRed = owed.filter(function (c) { return (mins(c.opened_at) || 0) > 60; }).length;
+    var late = S.steps.filter(function (s) { return !s.done && s.due && s.due < today(); }).length;
+    var red = S.candidates.filter(function (c) { var k = clockOf(c); return k && k.cls === "bad"; }).length;
+    function set(id, n, bad) { var f = $(id); f.querySelector("b").textContent = loaded.roles ? String(n) : "–"; f.classList.toggle("bad", !!bad); }
+    set("f-roles", open); set("f-owed", owed.length, owedRed > 0); set("f-late", late, late > 0); set("f-clock", red, red > 0);
+    if (owedRed) $("f-owed").querySelector("span").textContent = "Replies owed by Eden · " + owedRed + " past 1 hour";
+    else $("f-owed").querySelector("span").textContent = "Replies owed by Eden";
+    $("n-roles").textContent = S.roles.length || ""; $("n-candidates").textContent = S.candidates.length || "";
+    $("n-people").textContent = S.people.length || ""; $("n-comms").textContent = S.comms.filter(function (c) { return c.status !== "closed"; }).length || "";
+    $("n-steps").textContent = S.steps.filter(function (s) { return !s.done; }).length || ""; $("n-eod").textContent = "";
+  }
+
+  function renderRoles() {
+    var box = $("roles"); box.replaceChildren();
+    if (!S.roles.length) { box.appendChild(emptyState(loaded.roles ? "No roles yet" : "Loading roles…", "Carmel's Partner seeds the roles from the call sheet and the agreement's Schedule 1.")); return; }
+    sortBy(S.roles, "order").forEach(function (r) {
+      var kv = el("dl", { cls: "kv" });
+      [["Hiring manager", r.hiring_manager, r.hm_source], ["EA or scheduler", r.scheduler, r.scheduler_source], ["Next step", r.next_step, r.next_step_source],
+       ["Owner", r.owner, null], ["Fee basis", r.fee_basis, r.fee_source], ["Last touch", r.last_touch ? fmtDate(r.last_touch) + (r.last_touch_note ? " · " + r.last_touch_note : "") : "–", r.last_touch_source]].forEach(function (x) {
+        kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1], x[2]));
+      });
+      var c = S.candidates.filter(function (k) { return k.role_id === r.id && k.stage !== "Out"; }).length;
+      box.appendChild(el("article", { cls: "card" }, [
+        el("div", { cls: "row" }, [chipFor(r.stage), r.schedule1 ? el("span", { cls: "chip", text: "Schedule 1" }) : el("span", { cls: "chip warn", text: "Add to Schedule 1" })]),
+        el("h3", { text: r.title }),
+        el("div", { cls: "meta", text: (r.location || "") + (c ? " · " + c + " candidate" + (c === 1 ? "" : "s") + " on the tracker" : "") }),
+        r.stage_source ? el("div", { cls: "meta" }, [document.createTextNode(r.stage_detail || ""), src(r.stage_source)]) : null,
+        kv
+      ]));
+    });
+  }
+
+  function renderCands() {
+    var box = $("cands"); box.replaceChildren();
+    var role = $("c-role").value, client = $("c-client").checked;
+    var list = S.candidates.filter(function (c) { return !role || c.role_id === role; });
+    if (!list.length) {
+      box.appendChild(emptyState(loaded.candidates ? "No candidates on the tracker yet" : "Loading candidates…", "Kev or Carmel's Partner adds each candidate with the form below: role, stage, source, next step and last touch. Names live only here, never in the repo."));
+      return;
+    }
+    var cols = ["Candidate", "Role", "Stage", "Source", "Next step", "Shot clock", "Fee basis"];
+    var thead = el("thead", null, [el("tr", null, cols.map(function (h) { var th = el("th", { text: h }); if (h === "Fee basis" || h === "Source") th.setAttribute("data-internal", ""); return th; }))]);
+    var tb = el("tbody");
+    sortBy(list, "role_id").forEach(function (c) {
+      var k = clockOf(c);
+      var srcT = (SOURCES.filter(function (s) { return s[0] === c.source_type; })[0] || [null, c.source_type || "–", ""]);
+      var stageSel = el("select", { "aria-label": "Stage for " + (c.name || "candidate") });
+      STAGES.forEach(function (s) { var o = el("option", { text: s }); if (s === c.stage) o.selected = true; stageSel.appendChild(o); });
+      stageSel.disabled = !canWrite || client;
+      stageSel.addEventListener("change", function () { write("candidates/" + c.id, { stage: stageSel.value, stage_at: new Date().toISOString() }); });
+      var touch = el("button", { cls: "btn ghost small", type: "button", text: "Touched today", "data-internal": "" });
+      touch.disabled = !canWrite;
+      touch.addEventListener("click", function () { write("candidates/" + c.id, { last_touch: today(), last_touch_source: "Tracker, " + today() }); });
+      tb.appendChild(el("tr", null, [
+        el("td", null, [el("b", { text: c.name || "–" }), c.notes && !client ? el("span", { cls: "src", text: c.notes }) : null, src(client ? null : c.source)]),
+        el("td", { text: roleTitle(c.role_id) }),
+        el("td", null, [stageSel]),
+        el("td", { "data-internal": "" }, [document.createTextNode(srcT[1])]),
+        el("td", null, [document.createTextNode(c.next_step || "–"), c.next_due ? el("span", { cls: "src", text: "Due " + fmtDate(c.next_due) }) : null]),
+        el("td", null, [k ? el("span", { cls: "chip " + k.cls, text: k.label }) : el("span", { cls: "chip", text: "–" }), c.last_touch ? el("span", { cls: "src", text: "Last touch " + fmtDate(c.last_touch) }) : null, touch]),
+        el("td", { "data-internal": "" }, [document.createTextNode(c.fee_basis || srcT[2] || "–")])
+      ]));
+    });
+    box.appendChild(el("div", { cls: "scroll" }, [el("table", null, [thead, tb])]));
+  }
+
+  function renderPeople() {
+    var box = $("people"); box.replaceChildren();
+    if (!S.people.length) { box.appendChild(emptyState(loaded.people ? "No people yet" : "Loading the people map…", "Seeded from the briefing, Crelate and Kev's Carmel email.")); return; }
+    var groups = {};
+    sortBy(S.people, "order").forEach(function (p) {
+      var kv = el("dl", { cls: "kv" });
+      [["Role in process", p.process_role], ["Roles", (p.roles || []).map(roleTitle).join("; ")], ["Assistant", p.assistant], ["Habits", p.habits], ["Prediction", p.prediction], ["Notes", p.notes]].forEach(function (x) {
+        if (x[1] == null || x[1] === "") return;
+        kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1]));
+      });
+      box.appendChild(el("article", { cls: "card" }, [
+        el("div", { cls: "row" }, [el("span", { cls: "chip", text: p.group || "Carmel" })]),
+        el("h3", { text: p.name }), el("div", { cls: "meta", text: [p.title, p.office].filter(Boolean).join(" · ") }), kv, src(p.source)
+      ]));
+    });
+  }
+
+  function renderComms() {
+    var box = $("comms"); box.replaceChildren();
+    var list = S.comms.slice().sort(function (a, b) {
+      var ao = a.status === "closed" ? 1 : 0, bo = b.status === "closed" ? 1 : 0;
+      if (ao !== bo) return ao - bo;
+      return String(a.opened_at).localeCompare(String(b.opened_at));
+    });
+    if (!list.length) { box.appendChild(emptyState(loaded.comms ? "No open threads" : "Loading the comms log…", "Carmel's Partner adds a row whenever a Carmel thread needs a reply from someone.")); return; }
+    var tb = el("tbody");
+    list.forEach(function (c) {
+      var open = c.status !== "closed", m = open ? mins(c.opened_at) : null;
+      var red = open && c.owes === "eden" && m != null && m > 60;
+      var amber = open && c.owes === "eden" && !red && m != null && m >= 45;
+      var sla = !open ? el("span", { cls: "chip ok", text: "Closed" }) : c.owes === "eden" ? el("span", { cls: "chip " + (red ? "bad" : amber ? "warn" : "ok"), text: red ? "Over 1 hour" : amber ? "Under 15 min left" : "Inside 1 hour" }) : el("span", { cls: "chip", text: "Waiting on " + (c.owes === "carmel" ? "Carmel" : c.owes === "candidate" ? "candidate" : c.owes || "–") });
+      var close = el("button", { cls: "btn ghost small", type: "button", text: "Mark answered" });
+      close.disabled = !canWrite; close.hidden = !open;
+      close.addEventListener("click", function () { write("comms/" + c.id, { status: "closed", closed_at: new Date().toISOString() }); });
+      tb.appendChild(el("tr", null, [
+        el("td", null, [el("b", { text: c.subject || "–" }), c.note ? el("span", { cls: "src", text: c.note }) : null, src(c.source)]),
+        el("td", { text: c.with || "–" }),
+        el("td", { text: c.owes === "eden" ? "Eden (" + (c.owner || "Kev") + ")" : c.owes === "carmel" ? "Carmel" : c.owes === "candidate" ? "Candidate" : (c.owes || "–") }),
+        el("td", { cls: "num" }, [document.createTextNode(open ? dur(m) : "–"), el("span", { cls: "src", text: "Since " + fmtDate(c.opened_at) })]),
+        el("td", null, [sla, el("div", null, [close])])
+      ]));
+    });
+    box.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Thread", "With", "Owes reply", "Open for", "1-hour SLA"].map(function (h) { return el("th", { text: h }); }))]), tb])]));
+  }
+
+  function renderSteps() {
+    var box = $("steps"); box.replaceChildren();
+    if (!S.steps.length) { box.appendChild(emptyState(loaded.steps ? "No steps yet" : "Loading next steps…", "Add one below, or Carmel's Partner adds them after each call and email.")); return; }
+    var list = S.steps.slice().sort(function (a, b) { if (!!a.done !== !!b.done) return a.done ? 1 : -1; return String(a.due || "9999").localeCompare(String(b.due || "9999")); });
+    var tb = el("tbody");
+    list.forEach(function (s) {
+      var cb = el("input", { type: "checkbox", id: "st-" + s.id, "aria-label": "Done: " + s.text, style: "width:auto" });
+      cb.checked = !!s.done; cb.disabled = !canWrite;
+      cb.addEventListener("change", function () { write("steps/" + s.id, { done: cb.checked, done_at: cb.checked ? new Date().toISOString() : null }); });
+      var overdue = !s.done && s.due && s.due < today();
+      var tr = el("tr", { cls: s.done ? "done" : "" }, [
+        el("td", null, [cb]),
+        el("td", { cls: "t" }, [document.createTextNode(s.text), s.role_id ? el("span", { cls: "src", text: roleTitle(s.role_id) }) : null, src(s.source)]),
+        el("td", { text: s.owner || "–" }),
+        el("td", { cls: "num" }, [overdue ? el("span", { cls: "chip bad", text: fmtDate(s.due) }) : document.createTextNode(s.due ? fmtDate(s.due) : "No date"), s.due_source ? el("span", { cls: "src", text: s.due_source }) : null])
+      ]);
+      tb.appendChild(tr);
+    });
+    box.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Done", "Step", "Owner", "Due"].map(function (h) { return el("th", { text: h }); }))]), tb])]));
+  }
+
+  function renderEod() {
+    var box = $("eod"); box.replaceChildren();
+    if (!S.eod.length) { box.appendChild(emptyState(loaded.eod ? "No EOD lines yet" : "Loading EOD status…", "Carmel's Partner writes one line per workstream each working day.")); return; }
+    var byDay = {};
+    S.eod.forEach(function (e) { (byDay[e.date] = byDay[e.date] || []).push(e); });
+    Object.keys(byDay).sort().reverse().forEach(function (d, i) {
+      var tb = el("tbody");
+      sortBy(byDay[d], "order").forEach(function (e) {
+        tb.appendChild(el("tr", null, [
+          el("td", null, [el("span", { cls: "chip " + (e.status === "red" ? "bad" : e.status === "amber" ? "warn" : "ok"), text: e.status === "red" ? "Red" : e.status === "amber" ? "Amber" : "Green" })]),
+          el("td", null, [el("b", { text: e.workstream })]),
+          el("td", null, [document.createTextNode(e.line), src(e.source)])
+        ]));
+      });
+      box.appendChild(el("div", { cls: "eodday" }, [el("h3", { text: fmtDate(d) + (i === 0 ? " · latest" : "") }), el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Status", "Workstream", "Today"].map(function (h) { return el("th", { text: h }); }))]), tb])])]));
+    });
+  }
+
+  function fillRoleSelects() {
+    [["c-role", true], ["cf-role", false]].forEach(function (x) {
+      var s = $(x[0]), keep = s.value; s.replaceChildren();
+      if (x[1]) s.appendChild(el("option", { value: "", text: "All roles" }));
+      sortBy(S.roles, "order").forEach(function (r) { s.appendChild(el("option", { value: r.id, text: r.title })); });
+      s.value = keep;
+    });
+  }
+
+  function renderAll() { renderStrip(); renderRoles(); renderCands(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); }
+
+  /* ---------- tabs (hash-routed) ---------- */
+  var TABS = ["roles", "candidates", "people", "comms", "steps", "eod"];
+  function show(name) {
+    if (TABS.indexOf(name) < 0) name = "roles";
+    TABS.forEach(function (t) { $("tab-" + t).setAttribute("aria-selected", t === name ? "true" : "false"); $("p-" + t).hidden = t !== name; });
+  }
+  TABS.forEach(function (t) { $("tab-" + t).addEventListener("click", function () { location.hash = t; show(t); }); });
+  window.addEventListener("hashchange", function () { show(location.hash.slice(1)); });
+  show(location.hash.slice(1));
+
+  /* ---------- forms ---------- */
+  STAGES.forEach(function (s) { $("cf-stage").appendChild(el("option", { text: s })); });
+  SOURCES.forEach(function (s) { $("cf-source").appendChild(el("option", { value: s[0], text: s[1] })); });
+  $("c-role").addEventListener("change", renderCands);
+  $("c-client").addEventListener("change", function () { document.body.classList.toggle("client-only", $("c-client").checked); $("c-clientnote").hidden = !$("c-client").checked; renderCands(); });
+
+  function write(path, data) {
+    if (!db) return Promise.reject(new Error("offline"));
+    return db.doc(path).update(data).catch(function (e) { $("sync").textContent = "Could not save (" + (e && e.code || "error") + "). Reload and try again."; });
+  }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40); }
+
+  $("c-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db) { $("cf-msg").textContent = "The tracker is not connected."; return; }
+    var name = $("cf-name").value.trim(), role = $("cf-role").value;
+    if (!name || !role) { $("cf-msg").textContent = "Choose a role and enter a name."; return; }
+    var st = $("cf-source").value, fee = (SOURCES.filter(function (s) { return s[0] === st; })[0] || [])[2] || "";
+    var doc = { role_id: role, name: name, stage: $("cf-stage").value, source_type: st, next_step: $("cf-next").value.trim(), next_due: $("cf-due").value || null,
+      last_touch: $("cf-touch").value || null, fee_basis: fee, notes: $("cf-notes").value.trim(), source: $("cf-src").value.trim() || ("Added on the tracker, " + today()), created_at: new Date().toISOString() };
+    var id = role + "-" + slug(name) + "-" + Date.now().toString(36);
+    db.collection("candidates").doc(id).set(doc).then(function () {
+      $("cf-msg").textContent = "Added " + name + "."; ["cf-name", "cf-next", "cf-due", "cf-touch", "cf-notes", "cf-src"].forEach(function (i) { $(i).value = ""; });
+    }).catch(function (e) { $("cf-msg").textContent = e && e.code === "invalid_argument" ? "You can view this tracker but not change it." : "Could not add (" + (e && e.code || "error") + ")."; });
+  });
+  $("s-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db) { $("sf-msg").textContent = "The tracker is not connected."; return; }
+    var text = $("sf-text").value.trim(); if (!text) return;
+    var d = { text: text, owner: $("sf-owner").value, due: $("sf-due").value || null, done: false, source: $("sf-src").value.trim() || ("Added on the tracker, " + today()), created_at: new Date().toISOString() };
+    db.collection("steps").doc("s-" + Date.now().toString(36)).set(d).then(function () { $("sf-msg").textContent = "Added."; $("sf-text").value = ""; $("sf-due").value = ""; $("sf-src").value = ""; })
+      .catch(function (e) { $("sf-msg").textContent = "Could not add (" + (e && e.code || "error") + ")."; });
+  });
+
+  /* ---------- data ---------- */
+  renderAll();
+  setInterval(function () { renderStrip(); if (!$("p-comms").hidden) renderComms(); }, 60000);
+
+  if (!window.claude || !window.claude.use) { $("sync").textContent = "Open this page on claude.ai to load the tracker."; return; }
+  var timer = setTimeout(function () { $("sync").textContent = "The tracker data can't be reached yet."; }, 10000);
+  window.claude.use("user").then(function (u) {
+    if (!u) return;
+    return Promise.resolve(u.can("data.write")).then(function (w) { if (w === false) { canWrite = false; $("c-form").hidden = true; $("s-form").hidden = true; renderAll(); } });
+  }).catch(function () {});
+  window.claude.use("db").then(function (d) {
+    if (!d) { clearTimeout(timer); $("sync").textContent = "Sign in on claude.ai to load the tracker."; return; }
+    db = d;
+    Object.keys(S).forEach(function (name) {
+      d.collection(name).onSnapshot(function (snap) {
+        S[name] = snap.docs.map(function (x) { var o = Object.assign({}, x.data()); o.id = x.id; return o; });
+        loaded[name] = true;
+        if (!snap.metadata.fromCache) { clearTimeout(timer); $("sync").textContent = "Live."; }
+        renderAll();
+      }, function (e) { clearTimeout(timer); $("sync").textContent = "The " + name + " list stopped updating (" + (e && e.code) + "). Reload the page."; });
+    });
+  });
+})();
+</script>
