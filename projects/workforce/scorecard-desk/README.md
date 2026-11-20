@@ -24,6 +24,7 @@ Sharing (Kev, Share menu): each page with its one person as **Contributor** (Nic
 - `prefill/<weekOf>`: dials, rps, days_at_15, resumes, ptcs, ftis, mps, window. Dean writes from `scorecard-prefill.ts` + CloudTalk outbound.
 - `weeks/<weekOf>`: the recruiter's answers. Fields: wins, grew, prospect, cv[21] (one Next week only), lived_out, nominee, wr[8] (Must Dos: 0 Poor, 1 Fine, 2 Good, 3 Excellent), w[8] (true when Good or Excellent), d[35] (card order; Showed up sharp is shown first), numbers_note, self_score, align, autopsy, next_week, wip, jos.
 - `candor/<their user id>`: {<weekOf>: {burnout, need, resolve}}. Rules: only the owner (Kev) and the writer read it. Dean copies only burnout to the card.
+- Kev's view (20 Nov): Kev opening a recruiter's desk sees that recruiter's candor read-only (the page lists candor/, which only the owner can, and shows the newest record that is not Kev's). Before this fix Kev saw his own blank box and some desks hold a stray `candor/<Kev's id>` from his typing; the compile must use the recruiter's record (the writer is the page person), never Kev's.
 - Rules: root read interact / write admin; weeks read+write interact; candor read+write owner, candor/{self} read+write interact. Checked 13 Nov with as_level probes.
 
 ## Compile (Friday after the survey)
