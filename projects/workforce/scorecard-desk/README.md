@@ -6,7 +6,7 @@ Built 12-13 Nov 2026 for Kev's Friday Power Hour. Each recruiter has their own p
 
 | Recruiter | Page |
 |---|---|
-| Max | https://claude.ai/artifact/MvpqWmBvj7wks23DHGTRTg |
+| ~~Max~~ (off the team, 20 Nov 2026: retired, not updated) | https://claude.ai/artifact/MvpqWmBvj7wks23DHGTRTg |
 | Evan | https://claude.ai/artifact/51f2KEWNnjdfx1aatb7aMp |
 | Noah | https://claude.ai/artifact/XasPUYY2HLNvtrxUKEEwq7 |
 | Andrew | https://claude.ai/artifact/KxYG5DKTi7A3jZogUhTmxy |
