@@ -20,6 +20,8 @@ Facts about Carmel, the agreement and the process. No candidate names (they live
 
 ## The agreement (draft, not signed, as of 19 Nov 2026)
 
+UPDATE 19 Nov 2026 (Kev; Docket's new draft, Google Doc 1-r_umMTOWrIz5ILpjvAHpJmh2x1gh9DMuo5s4Q9JM-w): first 30 days are hourly, replacing the retainer; the 20% placement fee on Eden candidates stays; the 6% screening fee is gone (hourly covers Carmel applicants and referrals); hours are not credited against placement fees; Day 30 results review replaces the Day 45 review; hold every submittal until Brandy accepts the interim terms by email. The table below is the earlier RPO retainer draft and is superseded where it conflicts.
+
 | Term | What it says | Source |
 |---|---|---|
 | Shape | 90-day retained RPO bridge, non-exclusive, close to Option B; Carmel keeps its referrals and other agencies case by case | Briefing; draft 3.1 |
@@ -60,7 +62,7 @@ Kev's rule: no fee where an offer is already out; where Eden steps in on a role 
 | Analyst, Acquisitions & Development, NY | 6% on unscreened applicants Kev screens; the ask on the 3 strong; 20% Eden |
 | Design Associate, SF | The ask (weakest case); 20% Eden |
 | Development Execution & Capital Projects, Santa Monica | 6% UKG applicants; 20% Eden (likely most of it) |
-| Marina Shores PE, Long Beach | Add to Schedule 1; 20% Eden-sourced; no fee on Alan Fluhrer's candidate as things stand |
+| Marina Shores Project Engineer, Long Beach | Add to Schedule 1; 20% Eden-sourced; no fee on Alan Fluhrer's candidate as things stand |
 | Denver superintendent backfill (confidential) | No fee; off the agreement and off the tracker |
 
 ## How Carmel runs a search

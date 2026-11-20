@@ -113,7 +113,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   </nav>
 
   <section class="pane" id="p-roles" role="tabpanel" aria-labelledby="tab-roles">
-    <p class="lede">The Schedule 1 roles plus the Marina Shores PE and the IR analyst. Fee basis follows the 19 Nov call sheet; it is Kev's ask until Brandy signs Schedule 2.</p>
+    <p class="lede">The Schedule 1 roles plus the Marina Shores Project Engineer and the IR analyst. Fee basis follows Kev's 19 Nov decision and Docket's 30-day hourly draft: hourly covers the work, 20% on Eden candidates, no screening fee. Hold submittals until Brandy accepts the interim terms by email.</p>
     <div class="cards" id="roles"></div>
   </section>
 
@@ -176,12 +176,12 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   "use strict";
   var STAGES = ["New", "Screen", "HM 1", "HM 2", "Assessment", "Final", "Offer", "Accepted", "Started", "Out"];
   var SOURCES = [
-    ["eden", "Eden-sourced", "20% of first-year base (agreement 6.1)"],
-    ["ukg", "Carmel UKG applicant", "6% if not interviewed with Carmel before the Start Date (6.1, 9.2)"],
-    ["referral", "Employee referral", "6% (6.1)"],
+    ["eden", "Eden-sourced", "20% of first-year base (hourly draft 7.1)"],
+    ["ukg", "Carmel UKG applicant", "No screening fee; hourly covers the work (hourly draft 7.2)"],
+    ["referral", "Employee referral", "No screening fee; hourly covers the work (hourly draft 7.2)"],
     ["schedule2", "In process at Start (Schedule 2)", "Only what Schedule 2 lists (9.3); the ask until signed"],
-    ["agency", "Outside agency", "No Eden fee unless Carmel approves a split in writing (7.1)"],
-    ["internal", "Internal promotion or transfer", "No fee (6.1)"]
+    ["agency", "Outside agency", "Outside agency through Eden: no more than 24% all in, only on a role Carmel approves in writing (hourly draft 7.4 to 7.6)"],
+    ["internal", "Internal promotion or transfer", "No fee (internal move)"]
   ];
   var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [] };
   var loaded = {};

@@ -55,3 +55,9 @@ Others in Crelate (development and asset management leaders, not yet in a curren
 | Kev | Primary recruiter and candidate handler | |
 | Michael Duggan | Proposed client lead (hourly); acknowledged the Marina Shores forward on 19 Nov | His Eden address (persona comms rule) is confirmed: he replied from it on 19 Nov, 1:49pm MT |
 | Noah Fields | Proposed candidate lead; on the Marina Shores PE from 19 Nov | On Kev's 19 Nov forward |
+
+## Updates, 19 Nov 2026 (Kev's calls)
+
+- Kyle Beddow, hiring manager FP&A Fund Management: culls UKG himself; Meredith Stinson (title to confirm) builds the assessment with him; EA Rachel likely schedules (to confirm with Meredith). Yadira is construction-focused.
+- Stephanie Effros: HR business partner (Caroldean's email signs her Director of Talent Acquisition & Development; to confirm). Handles all hiring-authority interactions until the first week of December, then reviewed. Handles finalists and offers (about two days).
+- Surnames now seen in email headers: Lee Bloch, Elaine Tu, Jennifer Will, Kim Hoeksema, Meredith Stinson, Kyle Beddow.
