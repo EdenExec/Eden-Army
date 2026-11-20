@@ -96,11 +96,18 @@ button:disabled{cursor:default;opacity:.6}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 nav button .dot.stampdot{width:8px;height:8px;border-radius:0;background:transparent;border:2px solid var(--ink);transform:rotate(45deg)}
 nav button[aria-current="true"] .dot.stampdot{background:transparent;border-color:var(--selt)}
+.wkbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 16px;font-size:12.5px}
+.wkbar select{width:auto;min-width:180px;max-width:100%;min-height:36px;font-size:13px;font-weight:600;padding:6px 10px}
+.wkbar .lab{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.wkbar button{font:inherit;font-size:12.5px;font-weight:700;min-height:36px;border:1px solid var(--sel);background:var(--sel);color:var(--selt);border-radius:3px;padding:6px 14px;cursor:pointer}
+.wkbar.past{border:1px solid var(--line);border-left:3px solid var(--ink);background:var(--card);border-radius:3px;padding:8px 12px}
+.wkbar.past .lab{flex:1 1 200px;min-width:0}
 [hidden]{display:none!important}
 </style>
 <main>
 <header><div><div class="kick">Eden Partner Group</div><div class="doc">Friday Scorecard</div><h1>Bridger</h1><div id="hstamp" hidden></div><div class="sub" id="wk">Loading the week…</div></div><div id="status" aria-live="polite"></div></header>
 <div id="banner" class="banner" hidden></div>
+<div id="wkbar" class="wkbar" hidden></div>
 <nav id="nav" aria-label="Sections"></nav>
 <div id="pages"></div>
 <footer class="colophon"><span>edenpartnergroup.com</span><span>Eden Partner Group</span></footer>
@@ -119,19 +126,19 @@ var BOXES=43;
 var PAGES=['Wins','Core values','Must Dos','Daily boxes','Numbers','Candor','Score & finish'];
 var $=function(id){return document.getElementById(id)};
 function h(t,a){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='class')e.className=a[k];else e.setAttribute(k,a[k])}for(var i=2;i<arguments.length;i++){var c=arguments[i];if(c==null)continue;e.appendChild(typeof c==='string'?document.createTextNode(c):c)}return e}
-var CD={},db=null,uid=null,meta=null,pre=null,A={},C={},cur=0,locked=false,canWrite=true,timers={},busy={},pend={};
+var L={},PW=[],viewing=null,liveSave=null,CD={},db=null,uid=null,meta=null,pre=null,A={},C={},cur=0,locked=false,canWrite=true,timers={},busy={},pend={};
 function ptTime(ms){return new Date(ms).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Los_Angeles'})+' PT'}
 function status(t){$('status').textContent=t}
 function banner(t,ok){var b=$('banner');if(!t){b.hidden=true;return}b.hidden=false;b.className='banner'+(ok?' ok':'');b.textContent=t}
 function arr(a,n){var o=[];for(var i=0;i<n;i++)o.push(!!(a&&a[i]));return o}
 function boxCount(){var n=0;A.d.forEach(function(x){if(x)n++});A.w.forEach(function(x){if(x)n++});return n}
 
-function save(kind){ if(locked||!canWrite||!db)return; if(kind==='a'&&A.stamp&&!stamping)A.stamp.edited=true; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
+function save(kind){ if(viewing||locked||!canWrite||!db)return; if(kind==='a'&&A.stamp&&!stamping)A.stamp.edited=true; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
 function flush(kind){
   if(busy[kind]){pend[kind]=true;return} busy[kind]=true;
   var p;
-  if(kind==='a'){var d={};for(var k in A)d[k]=A[k];d.updated=new Date().toISOString();d.week_of=meta.weekOf;p=db.doc('weeks/'+meta.weekOf).set(d)}
-  else{CD[meta.weekOf]=Object.assign({},C,{updated:new Date().toISOString()});p=db.doc('candor/'+uid).set(CD)}
+  if(kind==='a'){var d={};for(var k in L.A)d[k]=L.A[k];d.updated=new Date().toISOString();d.week_of=meta.weekOf;p=db.doc('weeks/'+meta.weekOf).set(d)}
+  else{CD[meta.weekOf]=Object.assign({},L.C,{updated:new Date().toISOString()});p=db.doc('candor/'+uid).set(CD)}
   Promise.resolve(p).then(function(){status('Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}));if(kind==='a'&&A.stamp&&!stampSaved){stampSaved=true;banner('\u2713 Saved. Your scorecard for the week is in. You can close this page.',true);try{window.scrollTo(0,0)}catch(e){}updStamp()}})
   .catch(function(e){status('Not saved');banner('Your answers did not save ('+((e&&e.code)||'error')+'). Keep this tab open and tell Kev.')})
   .then(function(){busy[kind]=false;if(pend[kind]){pend[kind]=false;flush(kind)}});
@@ -216,12 +223,43 @@ function pageCandor(){return h('section',null,h('h2',{text:'Candor'}),h('p',{cla
   fld('c','resolve','Anything you’d like resolved, or something we should be talking about?','',false))}
 var BUILD=[pageWins,pageValues,pageMust,pageDaily,pageNumbers,pageCandor,pageFinal];
 function done(i){if(i===0)return !!(A.wins&&A.grew);if(i===1)return A.cv.some(Boolean)&&!!A.lived_out;if(i===2)return A.wr.every(function(x){return x!=null});if(i===3)return A.d.some(Boolean);if(i===4)return false;if(i===6)return A.self_score!=null&&!!A.align&&!!A.autopsy&&!!A.next_week;if(i===5)return C.burnout!=null;return true}
-function renderNav(){var n=$('nav');n.innerHTML='';PAGES.forEach(function(p,i){var b=h('button',{type:'button','aria-current':String(i===cur)},(i+1)+' '+p,(i===6&&A.stamp)?h('span',{class:'dot stampdot','aria-label':'stamped'}):done(i)?h('span',{class:'dot','aria-label':'done'}):null);b.onclick=function(){go(i)};n.appendChild(b)});updHeadStamp();updStamp()}
-function go(i){cur=i;stampEl=null;scoreEl=null;try{localStorage.setItem('sc-tab-'+PERSON.slug,(meta&&meta.weekOf||'')+'|'+i)}catch(e){}renderNav();var c=$('pages');c.innerHTML='';c.appendChild(BUILD[i]());
-  var f=h('div',{class:'foot'});if(i>0){var b=h('button',{type:'button',class:'ghost',text:'Back'});b.onclick=function(){go(i-1)};f.appendChild(b)}else f.appendChild(h('span'));
-  if(i<PAGES.length-1){var nx=h('button',{type:'button',text:'Next: '+PAGES[i+1]});nx.onclick=function(){go(i+1);window.scrollTo(0,0)};f.appendChild(nx)}else f.appendChild(h('span',{class:'note',text:'That’s it. Everything saves as you go.'}));
+function skip(i){return !!viewing&&i===5&&PERSON.slug!=='kev'}
+function step(i,d){var j=i+d;while(j>=0&&j<PAGES.length&&skip(j))j+=d;return j}
+function renderNav(){var n=$('nav');n.innerHTML='';PAGES.forEach(function(p,i){if(skip(i))return;var b=h('button',{type:'button','aria-current':String(i===cur)},(i+1)+' '+p,(i===6&&A.stamp)?h('span',{class:'dot stampdot','aria-label':'stamped'}):done(i)?h('span',{class:'dot','aria-label':'done'}):null);b.onclick=function(){go(i)};n.appendChild(b)});updHeadStamp();updStamp()}
+function go(i){cur=i;stampEl=null;scoreEl=null;if(!viewing)try{localStorage.setItem('sc-tab-'+PERSON.slug,(meta&&meta.weekOf||'')+'|'+i)}catch(e){}renderNav();var c=$('pages');c.innerHTML='';c.appendChild(BUILD[i]());
+  var f=h('div',{class:'foot'});if(step(i,-1)>=0){var b=h('button',{type:'button',class:'ghost',text:'Back'});b.onclick=function(){go(step(i,-1))};f.appendChild(b)}else f.appendChild(h('span'));
+  if(step(i,1)<PAGES.length){var nx=h('button',{type:'button',text:'Next: '+PAGES[step(i,1)]});nx.onclick=function(){go(step(i,1));window.scrollTo(0,0)};f.appendChild(nx)}else f.appendChild(h('span',{class:'note',text:viewing?'Read-only.':'That’s it. Everything saves as you go.'}));
   c.appendChild(f)}
 
+function fmtWk(w){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(w||'');if(!m)return String(w);return new Date(Date.UTC(+m[1],+m[2]-1,+m[3],12)).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})}
+function snapData(x){return x&&x.exists!==false?(x.data?x.data():x):null}
+async function listWeeks(){
+  var ids=[];
+  try{var q=db.collection('weeks');var sn=q.get?await q.get():null;if(sn&&sn.docs)sn.docs.forEach(function(d){ids.push(d.id)})}catch(e){}
+  if(!ids.length){var base=Date.parse(meta.weekOf+'T12:00:00Z');for(var k=1;k<=12;k++){var w=new Date(base-k*7*86400000).toISOString().slice(0,10);try{var x=await db.doc('weeks/'+w).get();if(x&&x.exists!==false&&snapData(x))ids.push(w)}catch(e){}}}
+  PW=ids.filter(function(w){return /^\d{4}-\d\d-\d\d$/.test(w)&&w<meta.weekOf}).sort().reverse();
+  renderBar()}
+function renderBar(){var b=$('wkbar');b.innerHTML='';var bn=$('banner');bn.hidden=viewing?true:!bn.textContent;
+  if(viewing){b.hidden=false;b.className='wkbar past';b.appendChild(h('span',{class:'lab',text:'Week of '+fmtWk(viewing)+' · read-only'}));var bk=h('button',{type:'button',text:'Back to this week'});bk.onclick=backLive;b.appendChild(bk);return}
+  if(!PW.length){b.hidden=true;return}
+  b.hidden=false;b.className='wkbar';b.appendChild(h('span',{class:'lab',text:'Past weeks'}));
+  var sel=h('select',{'aria-label':'Past weeks'});sel.appendChild(h('option',{value:'',text:'Pick a week'}));PW.forEach(function(w){sel.appendChild(h('option',{value:w,text:'Week of '+fmtWk(w)}))});
+  sel.onchange=function(){if(sel.value)openPast(sel.value)};b.appendChild(sel)}
+async function openPast(w){
+  if(viewing||!w||w>=meta.weekOf)return;
+  ['a','c'].forEach(function(k){if(timers[k]){clearTimeout(timers[k]);timers[k]=null;flush(k)}});
+  var pa=null,pp=null,pc={};
+  try{pa=snapData(await db.doc('weeks/'+w).get())}catch(e){}
+  try{pp=snapData(await db.doc('prefill/'+w).get())}catch(e){}
+  if(PERSON.slug==='kev')pc=JSON.parse(JSON.stringify(CD[w]||{}));
+  liveSave={A:A,C:C,pre:pre,locked:locked,cur:cur,wk:$('wk').textContent};
+  viewing=w;A=JSON.parse(JSON.stringify(pa||{}));normA();C=pc;pre=pp;locked=true;initDraft='';
+  $('wk').textContent='Week of '+fmtWk(w);renderBar();go(0);window.scrollTo(0,0)}
+function backLive(){
+  if(!viewing||!liveSave)return;
+  A=liveSave.A;C=liveSave.C;pre=liveSave.pre;locked=liveSave.locked;$('wk').textContent=liveSave.wk;var t=liveSave.cur;viewing=null;liveSave=null;
+  renderBar();go(t);window.scrollTo(0,0)}
+function normA(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A.wr:[null,null,null,null,null,null,null,null];A.d=arr(A.d,35)}
 function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A.wr:[null,null,null,null,null,null,null,null];A.d=arr(A.d,35);var t=0;try{var v=(localStorage.getItem('sc-tab-'+PERSON.slug)||'').split('|');if(v[0]===meta.weekOf){var n=Number(v[1]);if(n>=0&&n<PAGES.length)t=n}}catch(e){}go(t)}
 (async function(){
   status('Connecting…');
@@ -245,7 +283,9 @@ function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A
   status(locked?'Closed':'');
   if(locked)banner('Scorecards have closed for the week. See leadership for help.');
   else if(isFinite(lockAt))banner('Open Thursday 5:00 PM PT (6:00 MT) to Sunday 5:00 PM PT (6:00 MT). About 15 minutes; it saves as you go. Open until '+new Date(lockAt).toLocaleDateString('en-US',{weekday:'short',timeZone:'America/Los_Angeles'})+' '+ptTime(lockAt)+'.',true);
+  L.A=A;L.C=C;
   start();
+  listWeeks();
 })();
 })();
 </script>

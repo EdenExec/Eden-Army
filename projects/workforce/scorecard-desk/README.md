@@ -42,3 +42,6 @@ Add the name to `build.py`, run `python3 build.py template.html out`, publish `o
 - Sharing must be **Contributor**, not Viewer: a viewer can't read meta/week, so the page says "This week's scorecard isn't open yet" (Andrew, 13 Nov).
 - Checks (pull newly finished scorecards into the Round Table and rewrite `queue/<weekOf>` = leadership order by stamp time): 8:01, 9:01, 10:01 PT (weekly), 10:15, 10:25, 10:35, 10:50 (one-shots; cron can't run under an hour apart, so the 10:01 run re-arms them each week), 12:05 final (everyone, stamped or not).
 - On demand: the Round Table's "Refresh scorecards" button fires the scheduled task "Refresh scorecards (Round Table button)" through Kev's Claude Code Remote connector.
+
+## Past weeks (20 Nov 2026)
+Each desk has a "Past weeks" picker (weeks/* older than meta/week, newest first). A past week opens read-only with its prefill numbers; "Back to this week" returns to the live card. Candor shows in the past view on Kev's page only. Saves always target the live week (the flush reads the live objects, so a pending save cannot land on a past week). Rebuild with `python3 build.py template.html out`.
