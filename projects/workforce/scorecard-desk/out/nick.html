@@ -126,18 +126,19 @@ var BOXES=43;
 var PAGES=['Wins','Core values','Must Dos','Daily boxes','Numbers','Candor','Score & finish'];
 var $=function(id){return document.getElementById(id)};
 function h(t,a){var e=document.createElement(t);if(a)for(var k in a){if(k==='text')e.textContent=a[k];else if(k==='class')e.className=a[k];else e.setAttribute(k,a[k])}for(var i=2;i<arguments.length;i++){var c=arguments[i];if(c==null)continue;e.appendChild(typeof c==='string'?document.createTextNode(c):c)}return e}
-var OC=null,L={},PW=[],viewing=null,liveSave=null,CD={},db=null,uid=null,meta=null,pre=null,A={},C={},cur=0,locked=false,canWrite=true,timers={},busy={},pend={};
+var OC=null,OCID=null,L={},PW=[],viewing=null,liveSave=null,CD={},db=null,uid=null,meta=null,pre=null,A={},C={},cur=0,locked=false,canWrite=true,timers={},busy={},pend={};
 function ptTime(ms){return new Date(ms).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/Los_Angeles'})+' PT'}
 function status(t){$('status').textContent=t}
 function banner(t,ok){var b=$('banner');if(!t){b.hidden=true;return}b.hidden=false;b.className='banner'+(ok?' ok':'');b.textContent=t}
 function arr(a,n){var o=[];for(var i=0;i<n;i++)o.push(!!(a&&a[i]));return o}
 function boxCount(){var n=0;A.d.forEach(function(x){if(x)n++});A.w.forEach(function(x){if(x)n++});return n}
 
-function save(kind){ if(viewing||locked||!canWrite||!db)return; if(kind==='c'&&OC)return; if(kind==='a'&&A.stamp&&!stamping)A.stamp.edited=true; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
+function save(kind){ if(viewing||locked||!canWrite||!db)return; if(kind==='a'&&A.stamp&&!stamping)A.stamp.edited=true; clearTimeout(timers[kind]); timers[kind]=setTimeout(function(){flush(kind)},700); status('Saving…') }
 function flush(kind){
   if(busy[kind]){pend[kind]=true;return} busy[kind]=true;
   var p;
   if(kind==='a'){var d={};for(var k in L.A)d[k]=L.A[k];d.updated=new Date().toISOString();d.week_of=meta.weekOf;p=db.doc('weeks/'+meta.weekOf).set(d)}
+  else if(OCID){OC[meta.weekOf]=Object.assign({},L.C,{updated:new Date().toISOString(),by:'kev'});p=db.doc('candor/'+OCID).set(OC)}
   else{CD[meta.weekOf]=Object.assign({},L.C,{updated:new Date().toISOString()});p=db.doc('candor/'+uid).set(CD)}
   Promise.resolve(p).then(function(){status('Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}));if(kind==='a'&&A.stamp&&!stampSaved){stampSaved=true;banner('\u2713 Saved. Your scorecard for the week is in. You can close this page.',true);try{window.scrollTo(0,0)}catch(e){}updStamp()}})
   .catch(function(e){status('Not saved');banner('Your answers did not save ('+((e&&e.code)||'error')+'). Keep this tab open and tell Kev.')})
@@ -149,7 +150,7 @@ function fld(store,key,label,help,req,type){
   if(type==='num'){inp=h('input',{type:'number',min:'0',max:'100',step:'1',inputmode:'numeric'});if(o[key]!=null)inp.value=o[key];inp.oninput=function(){var v=inp.value===''?null:Math.max(0,Math.min(100,Number(inp.value)));o[key]=v;save(store);renderNav()}}
   else if(type&&type.min){inp=h('select');inp.appendChild(h('option',{value:'',text:'Pick'}));for(var i=type.min;i<=type.max;i++){var op=h('option',{value:String(i),text:i+(i===type.min?' · '+type.lo:i===type.max?' · '+type.hi:'')});if(o[key]===i)op.selected=true;inp.appendChild(op)}inp.onchange=function(){o[key]=inp.value?Number(inp.value):null;save(store);renderNav()}}
   else{inp=h('textarea');inp.value=o[key]||'';inp.oninput=function(){o[key]=inp.value;save(store);renderNav()}}
-  if(locked||(store==='c'&&OC))inp.disabled=true;
+  if(locked)inp.disabled=true;
   var id='f-'+store+key;inp.id=id;
   return h('label',{class:'f','for':id},h('span',null,label,req?h('b',{class:'req',text:' *'}):null,help?h('small',{text:help}):null),inp);
 }
@@ -217,7 +218,7 @@ function pageFinal(){scoreEl=h('div',{class:'score'});updScore();stampEl=h('div'
     fld('a','next_week','Next week I will: three commitments','These are your action items. We check them first next Friday.',true),
     fld('a','wip','FTIs, PTCs and pending starts that need a follow-up','',false),
     fld('a','jos','JOs you want to work next week (and any that are dead)','Leadership confirms in the review.',false),stampEl)}
-function pageCandor(){return h('section',null,h('h2',{text:'Candor'}),h('p',{class:'note',text:OC?PERSON.name+'’s answers. Only you see them; read-only here.':'Only Kev reads this page. Skip anything you’d rather say in person.'}),
+function pageCandor(){return h('section',null,h('h2',{text:'Candor'}),h('p',{class:'note',text:OC?PERSON.name+'’s Candor. Only you and '+PERSON.name+' see it; what you type here saves to '+PERSON.name+'’s record.':'Only Kev reads this page. Skip anything you’d rather say in person.'}),
   fld('c','burnout','Burn-out','A workload read only.',false,{min:1,max:10,lo:'fried',hi:'fresh'}),
   fld('c','need','What do you need from leadership to win next week?','',false),
   fld('c','resolve','Anything you’d like resolved, or something we should be talking about?','',false))}
@@ -280,10 +281,10 @@ function start(){A.cv=arr(A.cv,21);A.w=arr(A.w,8);A.wr=(A.wr&&A.wr.length===8)?A
   try{var a=await db.doc('weeks/'+meta.weekOf).get();A=JSON.parse(JSON.stringify(a&&a.exists!==false?(a.data?a.data():a)||{}:{}))}catch(e){A={}}
   if(uid){try{var c=await db.doc('candor/'+uid).get();var cd=c&&c.exists!==false?(c.data?c.data():c):null;CD=JSON.parse(JSON.stringify(cd||{}));C=CD[meta.weekOf]||{}}catch(e){C={}}}
   /* Kev, 20 Nov: "this page did not save". It did: each viewer has their own candor/<uid>, so Kev opening a recruiter's page saw his own blank box.
-     Only the owner can list candor/, so a list that returns someone else's record means Kev is looking: show the page person's answers, read-only. */
-  if(uid&&PERSON.slug!=='kev'){try{var cq=db.collection('candor'),cs=cq.get?await cq.get():null,best=null,bt='';
-    if(cs&&cs.docs)cs.docs.forEach(function(d){if(d.id===uid)return;var v=d.data?d.data():d;if(!v||typeof v!=='object')return;var t2='';Object.keys(v).forEach(function(k){var u=v[k]&&v[k].updated;if(u&&u>t2)t2=u});if(!best||t2>bt){best=v;bt=t2}});
-    if(best){OC=JSON.parse(JSON.stringify(best));C=OC[meta.weekOf]||{}}}catch(e){}}
+     Only the owner can list candor/, so a list that returns someone else's record means Kev is looking: show the page person's record and save Kev's typing into it (Kev, 20 Nov: he fills Candor with the recruiter in the review). */
+  if(uid&&PERSON.slug!=='kev'){try{var cq=db.collection('candor'),cs=cq.get?await cq.get():null,best=null,bt='',bid=null;
+    if(cs&&cs.docs)cs.docs.forEach(function(d){if(d.id===uid)return;var v=d.data?d.data():d;if(!v||typeof v!=='object')return;var t2='';Object.keys(v).forEach(function(k){var u=v[k]&&v[k].updated;if(u&&u>t2)t2=u});if(!best||t2>bt){best=v;bt=t2;bid=d.id}});
+    if(best){OC=JSON.parse(JSON.stringify(best));OCID=bid;C=OC[meta.weekOf]||{}}}catch(e){}}
   if(!uid)canWrite=false;
   status(locked?'Closed':'');
   if(locked)banner('Scorecards have closed for the week. See leadership for help.');
