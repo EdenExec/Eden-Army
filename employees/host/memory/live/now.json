@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16T19:30:00Z",
+  "updated": "2026-11-22T21:30:00Z",
   "on": "Ticket t-202611161914-jnvs: drafted (not sent) reply to Brian Skenandore, Vesta Search, re Luis Marin and data center openings. Held for Kev: seat fit and what to share on data center roles. Nothing sent, booked, spent or published. Not committed.",
   "doc": "employees/host/drafts/2026-11-16-brian-skenandore-luis-marin.md",
   "ticket": "t-202611161914-jnvs",
@@ -29,5 +29,10 @@
     "2026-10-27-95b6f4",
     "2026-10-27-7474f5",
     "2026-10-27-ea8985"
-  ]
+  ],
+  "runway": {
+    "ticket": "t-202611222115-rnwy",
+    "png": "projects/lookahead/runway-block/weekly/2026-11-22.png",
+    "received": "Runway 22 Nov to 16 Jan. Mine only on Kev's say via Radar: Lincoln return travel research once Kev picks a day (no booking); possible Christmas-break travel (15 to 31 Dec) is Kev's call via Radar. Open: Family decision by 30 Nov. Nothing booked or sent."
+  }
 }

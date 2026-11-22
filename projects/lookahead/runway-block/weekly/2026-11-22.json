@@ -1,0 +1,27 @@
+{
+  "asOf": "2026-11-22",
+  "owner": "Hawk, for Jenny",
+  "weeks": 8,
+  "startSunday": "2026-11-22",
+  "horizons": { "w2": "2026-12-05", "w4": "2026-12-19", "w6": "2027-01-02" },
+  "events": [
+    { "id": "f-1122", "title": "Family", "start": "2026-11-22", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "lincoln", "title": "Lincoln, CA for Thanksgiving", "start": "2026-11-23", "kind": "travel", "status": "tentative", "who": "Kev & Ally", "note": "Open: return date and route home to Boise", "source": "page" },
+    { "id": "f-1124", "title": "Family", "start": "2026-11-24", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "thanksgiving", "title": "Thanksgiving", "start": "2026-11-26", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "f-1203", "title": "Family", "start": "2026-12-03", "kind": "family", "status": "tentative", "who": "Family", "source": "page" },
+    { "id": "f-1206", "title": "Family", "start": "2026-12-06", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "f-1210", "title": "Family", "start": "2026-12-10", "kind": "family", "status": "tentative", "who": "Family", "source": "page" },
+    { "id": "c12", "title": "C12 Forum", "start": "2026-12-15", "kind": "work", "status": "confirmed", "who": "Kev", "source": "page" },
+    { "id": "f-break", "title": "Family", "start": "2026-12-15", "end": "2026-12-31", "kind": "family", "status": "confirmed", "who": "Family", "note": "School break", "source": "page" },
+    { "id": "f-1220", "title": "Family", "start": "2026-12-20", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "christmas", "title": "Christmas", "start": "2026-12-25", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "f-1227", "title": "Family", "start": "2026-12-27", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "new-year", "title": "New Year's Day", "start": "2027-01-01", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "f-0107a", "title": "Family", "start": "2027-01-07", "kind": "family", "status": "confirmed", "who": "Family", "source": "page" },
+    { "id": "f-0107b", "title": "Family", "start": "2027-01-07", "kind": "family", "status": "tentative", "who": "Family", "source": "page" }
+  ],
+  "openDecisions": [
+    { "title": "Family decision", "decideBy": "2026-11-30" }
+  ]
+}
