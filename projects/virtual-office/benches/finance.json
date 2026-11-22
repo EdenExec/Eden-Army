@@ -61,8 +61,8 @@
     },
     {
       "label": "Cash flow detail",
-      "value": "EPG Cash Pulse",
-      "source": "https://claude.ai/artifact/LxaFb1CvQgqcsrMn5KXie7",
+      "value": "EPG Cash Pulse (past its 30-day window, not refreshed)",
+      "source": "https://claude.ai/artifact/LxaFb1CvQgqcsrMn5KXie7. Last published 16 Oct, data as of 17 Oct (36 days). Refresh blocked 22 Nov: Tally session has no Hub Rev Report or October bank statement access; no figures changed.",
       "asOf": "2026-10-17",
       "needsGate": false
     }
