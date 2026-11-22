@@ -1,59 +1,59 @@
 [
   {
     "id": "62046",
-    "name": "Baker Construction · Senior Superintendent",
+    "name": "Baker Construction \u00b7 Senior Superintendent",
     "owed": "$55,000",
     "due": "2026-08-12",
-    "status": "past due, 100 days late",
+    "status": "past due, 102 days late",
     "expected": "2026-11-15",
     "kev": "Kev: paying soon?"
   },
   {
     "id": "62059",
-    "name": "Baker · QC Manager",
+    "name": "Baker \u00b7 QC Manager",
     "owed": "$35,200",
     "due": "2026-10-14",
-    "status": "past due, 37 days late",
+    "status": "past due, 39 days late",
     "expected": "2026-10-30",
     "kev": "Kev: paying soon. Check: $2,000 gap on the fee (Docket)"
   },
   {
     "id": "62060",
-    "name": "VMG · Sr. Superintendent",
+    "name": "VMG \u00b7 Sr. Superintendent",
     "owed": "$37,000",
     "due": "2026-10-14",
-    "status": "past due, 37 days late",
+    "status": "past due, 39 days late",
     "expected": "2026-10-30",
     "kev": "Kev: client on the fence about the candidate; at risk"
   },
   {
     "id": "62061",
-    "name": "Pence Kelly · Superintendent",
+    "name": "Pence Kelly \u00b7 Superintendent",
     "owed": "$19,000",
     "due": "2026-10-14",
-    "status": "past due, 37 days late",
+    "status": "past due, 39 days late",
     "expected": "2026-10-30"
   },
   {
     "id": "62063",
-    "name": "PB South · retainer",
+    "name": "PB South \u00b7 retainer",
     "owed": "$7,500",
     "due": "2026-10-16",
-    "status": "past due, 35 days late",
+    "status": "past due, 37 days late",
     "expected": "2026-10-16",
     "kev": "Kev: PB South always pays late"
   },
   {
     "id": "62064",
-    "name": "Triton Construction · retainer",
+    "name": "Triton Construction \u00b7 retainer",
     "owed": "$5,000",
     "due": "2026-10-16",
-    "status": "past due, 35 days late",
+    "status": "past due, 37 days late",
     "expected": "2026-10-16"
   },
   {
     "id": "62056",
-    "name": "PB South · Superintendent",
+    "name": "PB South \u00b7 Superintendent",
     "owed": "$29,700",
     "due": "2026-12-01",
     "status": "invoiced, not yet due",
@@ -62,7 +62,7 @@
   },
   {
     "id": "62057",
-    "name": "PB South · Assistant Superintendent",
+    "name": "PB South \u00b7 Assistant Superintendent",
     "owed": "$6,750",
     "due": "2026-12-23",
     "status": "invoiced, not yet due",
@@ -71,7 +71,7 @@
   },
   {
     "id": "62062",
-    "name": "Swinerton - LA · Superintendent",
+    "name": "Swinerton - LA \u00b7 Superintendent",
     "owed": "$33,000",
     "due": "2026-11-28",
     "status": "not yet invoiced",
@@ -79,7 +79,7 @@
   },
   {
     "id": "62065",
-    "name": "PB South · MEP Superintendent",
+    "name": "PB South \u00b7 MEP Superintendent",
     "owed": "$33,300",
     "due": "2026-12-18",
     "status": "not yet invoiced",
@@ -88,7 +88,7 @@
   },
   {
     "id": "62066",
-    "name": "PB South · Superintendent",
+    "name": "PB South \u00b7 Superintendent",
     "owed": "$33,300",
     "due": "2026-12-17",
     "status": "not yet invoiced",
@@ -97,7 +97,7 @@
   },
   {
     "id": "62067",
-    "name": "VMG · Senior Project Manager",
+    "name": "VMG \u00b7 Senior Project Manager",
     "owed": "$42,500",
     "due": "2026-12-09",
     "status": "not yet invoiced",
@@ -105,7 +105,7 @@
   },
   {
     "id": "62068",
-    "name": "PB South · General Superintendent",
+    "name": "PB South \u00b7 General Superintendent",
     "owed": "$45,000",
     "due": "2026-12-10",
     "status": "not yet invoiced",
@@ -114,7 +114,7 @@
   },
   {
     "id": "62054",
-    "name": "Megawatt · General Superintendent",
+    "name": "Megawatt \u00b7 General Superintendent",
     "owed": "$45,000",
     "due": "not invoiced",
     "status": "moved to 2027",
