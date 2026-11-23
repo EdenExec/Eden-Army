@@ -1,0 +1,1 @@
+- 2026-11-23: Meredith Stinson is SVP, FP&A (finalist round with Phil, builds the Excel assessment with Kyle). Matt Feldman, NY office, good instincts from a higher level, added 23 Nov as a gut-check read. Phil: finalist round, last name unknown (confirm via Stephanie). Source: Kev's notes, 23 Nov 2026.

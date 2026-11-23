@@ -1,0 +1,1 @@
+- 2026-11-23: Scheduling note (internal people-map only, never client-facing, keep neutral): Yadira (EA, NY) has a heavy workload, so route interview scheduling elsewhere (Rachel likely, confirm with Stephanie or Meredith). Source: Kev, 23 Nov 2026.
