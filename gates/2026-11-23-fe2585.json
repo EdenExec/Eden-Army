@@ -1,0 +1,130 @@
+{
+  "id": "2026-11-23-fe2585",
+  "subject": "Benches 23 Nov",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Revenue MTD QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1-23 Nov 2026 Total Income",
+      "recomputed": 0,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: P&L Nov 1-23 income 0.00; monthly Nov 0"
+    },
+    {
+      "label": "Revenue YTD QuickBooks",
+      "claimed": 590228,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1 Jan-23 Nov 2026 Total Income",
+      "recomputed": 590228,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: Total Income 590,228.00 = Sales 530,878 + Services 59,350; monthly Feb-Nov sum ties to 590,228"
+    },
+    {
+      "label": "Top customers MTD count",
+      "claimed": 0,
+      "unit": "count",
+      "source": "QuickBooks Sales by Customer summary, cash basis, Nov 2026: customers with sales",
+      "recomputed": 0,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: Sales by Customer cash Nov no_data"
+    },
+    {
+      "label": "Cash on hand",
+      "claimed": 103221.97,
+      "unit": "usd",
+      "source": "QuickBooks balance sheet cash basis as of 23 Nov 2026, Bank Accounts total",
+      "recomputed": 103221.97,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: BS cash basis Bank Accounts 32,263.57 (Chase sav 9560) + 70,958.40 (EPG Chase chk) = 103,221.97"
+    },
+    {
+      "label": "Open AR in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AR aging summary as of 23 Nov 2026, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: AR aging no_data; BS AR 0"
+    },
+    {
+      "label": "Open AR in QuickBooks 31+ days",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AR aging summary as of 23 Nov 2026, 31+ buckets",
+      "recomputed": 0,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: AR aging no_data, all buckets 0"
+    },
+    {
+      "label": "Open AP",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AP aging summary as of 23 Nov 2026, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "against runner's read-only QBO pull 23 Nov ~06:55 PT, not independent: AP aging no_data; BS AP 0"
+    },
+    {
+      "label": "Past due owed",
+      "claimed": 158700,
+      "unit": "usd",
+      "source": "Cash Pulse datasets/placements: sum of open where status=open and due<2026-11-23",
+      "recomputed": 158700,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): 6 open rows due<2026-11-23 (62046 55,000; 62059 35,200; 62060 37,000; 62061 19,000; 62063 7,500; 62064 5,000)"
+    },
+    {
+      "label": "Past due invoice count",
+      "claimed": 6,
+      "unit": "count",
+      "source": "same rows as Past due owed",
+      "recomputed": 6,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): same 6 rows"
+    },
+    {
+      "label": "Oldest past due days late",
+      "claimed": 103,
+      "unit": "days",
+      "source": "earliest due date among past-due rows, days to 2026-11-23",
+      "recomputed": 103,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): 62046 Baker due 2026-08-12 to 2026-11-23 = 103 days"
+    },
+    {
+      "label": "Invoiced not yet due",
+      "claimed": 36450,
+      "unit": "usd",
+      "source": "Cash Pulse placements: sum of open where status=open and due>=2026-11-23",
+      "recomputed": 36450,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): 62056 29,700 (due 12-01) + 62057 6,750 (due 12-23)"
+    },
+    {
+      "label": "Coming not invoiced excl Megawatt",
+      "claimed": 187100,
+      "unit": "usd",
+      "source": "Cash Pulse placements: sum of open where status=upcoming, excluding Megawatt 62054",
+      "recomputed": 187100,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): 5 upcoming rows excl 62054: 62062 33,000; 62065 33,300; 62066 33,300; 62067 42,500; 62068 45,000. Note 62062 Swinerton expected 11-28"
+    },
+    {
+      "label": "Megawatt moved to 2027",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Cash Pulse placements row 62054 open",
+      "recomputed": 45000,
+      "ok": true,
+      "note": "independent recompute from Cash Pulse placements.json (blob 50f4552a, dataset updated 17 Oct, past 168h stale flag): row 62054 Megawatt upcoming open 45,000"
+    }
+  ],
+  "createdAt": "2026-11-23T14:45:44.652Z",
+  "doc": "projects/virtual-office/benches/revenue.json",
+  "checkedBy": "docket",
+  "closedAt": "2026-11-23T14:46:34.566Z"
+}
