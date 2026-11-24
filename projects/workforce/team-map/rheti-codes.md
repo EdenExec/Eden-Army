@@ -16,7 +16,7 @@ How to hand one out: give the person one unused code plus the one-sheet (`Eden's
 | renzuarw6b | Terry Musgrove | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
 | reny32nizb | Craig Churchill | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
 | rentsumc8b | Henry (Nick's list) | assigned 23 Nov for Kev or Nick to hand out | |
-| renms3r6kb | Nate (Nick's list) | assigned 23 Nov for Kev or Nick to hand out | |
+| renms3r6kb | Nate (Nick's list) | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
 | ren7dh8ecb | Brendan Caine (1099 partner candidate) | assigned 17 Nov, Kev to send | |
 
 All three results are in Kev's inbox (Superhuman label AI/Enneagram).
