@@ -1,0 +1,96 @@
+{
+  "id": "2026-11-23-3611f4",
+  "subject": "Carmel long agreement review 23 Nov",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "open",
+  "items": [
+    {
+      "label": "Senior Leadership hourly rate",
+      "claimed": 235,
+      "unit": "usd",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Rate section, first bullet"
+    },
+    {
+      "label": "Senior Recruiter hourly rate",
+      "claimed": 180,
+      "unit": "usd",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Rate section, second bullet"
+    },
+    {
+      "label": "Support team hourly rate",
+      "claimed": 50,
+      "unit": "usd",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Rate section, third bullet"
+    },
+    {
+      "label": "Placement fee percent of first-year base",
+      "claimed": 20,
+      "unit": "pct",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Headhunting Fee paragraph"
+    },
+    {
+      "label": "Guarantee window",
+      "claimed": 120,
+      "unit": "days",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Guarantee paragraph"
+    },
+    {
+      "label": "Eden Candidate prior-contact lookback (long version)",
+      "claimed": 365,
+      "unit": "days",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Eden Candidate paragraph; express months as days at 12 x 30.4 rounded to the calendar year = 365"
+    },
+    {
+      "label": "Eden Candidate prior-contact lookback (20 Nov short draft)",
+      "claimed": 182,
+      "unit": "days",
+      "source": "employees/docket/drafts/2026-11-20-carmel-hourly-short.md section 2.2; half a calendar year, rounded down"
+    },
+    {
+      "label": "Hourly invoice payment term (long version)",
+      "claimed": 30,
+      "unit": "days",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Invoices section; count from receipt"
+    },
+    {
+      "label": "Hourly invoice payment term (20 Nov short draft)",
+      "claimed": 15,
+      "unit": "days",
+      "source": "employees/docket/drafts/2026-11-20-carmel-hourly-short.md section 1.4; count from invoice date"
+    },
+    {
+      "label": "Notice period to end early",
+      "claimed": 10,
+      "unit": "days",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov), Ending early; business days"
+    },
+    {
+      "label": "Notice-period hours at risk, mid estimate",
+      "claimed": 40,
+      "unit": "count",
+      "source": "employees/docket/memory/live/carmel.md 19 Nov entry: middle hours estimate for 20 business days, prorated to the 10-business-day notice period"
+    },
+    {
+      "label": "Notice-period fees at risk, low (all hours at Senior Recruiter rate)",
+      "claimed": 7200,
+      "unit": "usd",
+      "source": "notice-period hours at risk (mid estimate) x Senior Recruiter rate from scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov)"
+    },
+    {
+      "label": "Notice-period fees at risk, high (all hours at Senior Leadership rate)",
+      "claimed": 9400,
+      "unit": "usd",
+      "source": "notice-period hours at risk (mid estimate) x Senior Leadership rate from scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov)"
+    },
+    {
+      "label": "Days from Start Date to end of first 30-day term to review date gap",
+      "claimed": 3,
+      "unit": "days",
+      "source": "scratchpad/brandy-doc/carmel-long.txt (Brandy's long version, 23 Nov) Term: Start Date is day 1 of 30; count calendar days from the last day of the 30 to the review date named in the same section"
+    }
+  ],
+  "createdAt": "2026-11-23T23:59:43.519Z",
+  "doc": "employees/docket/drafts/2026-11-23-carmel-long-agreement-review.md",
+  "ask": "Which fixes to send Brandy before signing"
+}
