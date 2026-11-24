@@ -461,7 +461,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   function rateOf(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; return r && typeof r.rate === "number" ? r.rate : null; }
   function hrs(n) { return (Math.round((n || 0) * 100) / 100).toFixed(2); }
   function money(n) { return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-  var curWeek = weekOf(today()), closeArmed = false;
+  var curWeek = weekOf(today()), closeArmed = false, editing = null;
   function weekDoc(wk) { return S.weeks.filter(function (w) { return w.id === wk; })[0] || null; }
   function hoursIn(wk) { return S.hours.filter(function (h) { return h.week === wk; }); }
   function statusChip(s) {
@@ -534,10 +534,33 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
         else if (h.status === "logged") act("Not billable", "excluded");
         else if (h.status === "excluded") act("Billable", "logged");
         else if (h.status === "submitted" && isOwner) act("Exclude", "excluded");
+        var work;
+        if (editing && editing.id === h.id && !locked) {
+          var tSel = el("select", { "aria-label": "Task" }); TASKS.forEach(function (t) { var o = el("option", { text: t }); if (t === editing.task) o.selected = true; tSel.appendChild(o); });
+          var rSel = el("select", { "aria-label": "Role" }); rSel.appendChild(el("option", { value: "account", text: "Account-wide (no single role)" }));
+          sortBy(S.roles, "order").forEach(function (r) { rSel.appendChild(el("option", { value: r.id, text: r.title })); }); rSel.value = editing.role_id || "account";
+          var nTa = el("textarea", { "aria-label": "What was done" }); nTa.value = editing.note || "";
+          tSel.addEventListener("change", function () { editing.task = tSel.value; });
+          rSel.addEventListener("change", function () { editing.role_id = rSel.value; });
+          nTa.addEventListener("input", function () { editing.note = nTa.value; });
+          var save = el("button", { cls: "btn small", type: "button", text: "Save" }), cancel = el("button", { cls: "btn ghost small", type: "button", text: "Cancel" });
+          save.addEventListener("click", function () {
+            var d = { task: editing.task, role_id: editing.role_id, note: (editing.note || "").trim(), edited_at: new Date().toISOString() };
+            if (!d.note) { nTa.focus(); return; }
+            editing = null; write("hours/" + h.id, d); renderHours();
+          });
+          cancel.addEventListener("click", function () { editing = null; renderHours(); });
+          work = el("td", { cls: "t" }, [el("div", { style: "display:grid;gap:6px" }, [tSel, rSel, nTa, el("div", { cls: "row" }, [save, cancel])]), src(h.source)]);
+        } else {
+          var eb = el("button", { cls: "btn ghost small", type: "button", text: "Edit", "aria-label": "Edit this line" });
+          eb.hidden = locked;
+          eb.addEventListener("click", function () { editing = { id: h.id, task: h.task, role_id: h.role_id, note: h.note }; renderHours(); });
+          work = el("td", { cls: "t" }, [el("b", { text: h.task || "–" }), document.createTextNode(" · " + roleTitle(h.role_id)), el("span", { cls: "src", text: h.note || "" }), src(h.source), eb]);
+        }
         t2.appendChild(el("tr", { cls: h.status === "excluded" ? "done" : "" }, [
           el("td", { cls: "num", text: fmtDate(h.date) }),
           el("td", { text: personLabel(h.person) }),
-          el("td", { cls: "t" }, [el("b", { text: h.task || "–" }), document.createTextNode(" · " + roleTitle(h.role_id)), el("span", { cls: "src", text: h.note || "" }), src(h.source)]),
+          work,
           el("td", null, [hin]),
           el("td", null, [statusChip(h.status), acts])
         ]));
