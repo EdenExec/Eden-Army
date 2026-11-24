@@ -131,6 +131,7 @@ Every Wednesday session is logged with the chapter codes it covered, and whether
 | Wed 4 Nov | 4.2 Hiring-authority ice breaker · 3.5 VDC Manager · 3.8 The quiet offer | New | Run of show built the day of; Tuesday draft was blank |
 | Wed 11 Nov (planned) | 3.5 Superintendents · 3.10 VP Field Ops vs GM vs PX · 1.2 10-5-3-1 November update | 3.5 and 3.10 new, 1.2 refresher | Built Tue 10 Nov; `projects/workforce/eden-university/2026-11-11-headhunter-training.md` |
 | Wed 18 Nov (planned) | 3.4 How a GC is organised · 3.10 VP of Ops vs GM · 2.5 Submittal: match, don't sell | 3.4 and 3.10 new, 2.5 deeper pass (Kev's rule of 16 Nov, SUB-01) | Built Tue 17 Nov; `projects/workforce/eden-university/2026-11-18-headhunter-training.md`. 4.8 moved to 2 Dec |
+| Wed 25 Nov (planned) | 4.6 Autopsy: read your own scorecard · 3.10 Director of Preconstruction | 4.6 new, 3.10 new hiring authority (deeper pass on 3.5 Precon from 21 Oct) | Built Tue 24 Nov; `projects/workforce/eden-university/2026-11-25-headhunter-training.md`. Thanksgiving week, 45 min |
 
 **Never covered yet as a group session:** 3.1 to 3.4, 3.10, every Level 4 chapter except a taste of 4.2, and all of Level 5. (Levels 0 and 1 were done last year and are refreshed this November.)
 
