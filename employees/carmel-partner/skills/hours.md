@@ -8,8 +8,8 @@ The **Hours** tab on the Carmel Tracker (https://claude.ai/artifact/GTjZyx5ZNEn7
 
 | Collection | One document per | Fields |
 |---|---|---|
-| `hours` | Time entry | date, week (Monday id), person (`kev`, `michael`, `admin`), hours (0.25 steps), role_id (a `roles` id or `account`), task, note, status, source, created_by, created_at |
-| `rates` | Person | person, label, rate ($/h, typed by Kev only), updated_at |
+| `hours` | Time entry | date, week (Monday id), person (`kev`, `michael`, `admin`), hours (0.25 steps), rate (optional per-line override; else the person default), role_id (a `roles` id or `account`), task, note, status, source, created_by, created_at |
+| `rates` | Person, plus `_tiers` | person, label, rate (default $/h, picked by Kev from the tiers), updated_at; `_tiers.tiers` = the three rate options Kev set (24 Nov) |
 | `weeks` | Billing week (id = Monday, `YYYY-MM-DD`) | week, status (`open`/`closed`), submitted {person: ISO}, closed_at, billable_hours {person: h} |
 
 Rates live only in the tracker database. Never write a rate into the repo, a ticket, a deck or a ledger row.

@@ -208,7 +208,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       <div class="row wide"><button class="btn" type="submit">Log time</button><span class="note" id="hf-msg"></span></div>
     </form>
     <form class="add" id="h-rates" hidden>
-      <h3>Hourly rates (Kev only; rates are never put in the repo)</h3>
+      <h3>Names and rate options (Kev only; rates are never put in the repo)</h3>
       <div class="wide note">Only you see dollar amounts on this page. Anyone with Contributor access, such as Michael, can still read these rows in the page's data, so keep the rates here only if that's fine.</div>
       <div class="wide" id="h-rate-rows" style="display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
       <div class="row wide"><button class="btn" type="submit">Save rates</button><span class="note" id="hr-msg"></span></div>
@@ -459,6 +459,17 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   function weekLabel(wk) { var a = new Date(wk + "T12:00:00"), b = new Date(wk + "T12:00:00"); b.setDate(b.getDate() + 4); var o = { day: "numeric", month: "short" }; return a.toLocaleDateString(undefined, o) + " to " + b.toLocaleDateString(undefined, o); }
   function personLabel(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; if (r && r.label) return r.label; var d = PEOPLE.filter(function (x) { return x[0] === p; })[0]; return d ? d[1] : p; }
   function rateOf(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; return r && typeof r.rate === "number" ? r.rate : null; }
+  function tiers() { var t = S.rates.filter(function (x) { return x.id === "_tiers"; })[0]; return t && Array.isArray(t.tiers) ? t.tiers.filter(function (n) { return typeof n === "number"; }) : []; }
+  function lineRate(h) { return typeof h.rate === "number" ? h.rate : rateOf(h.person); }
+  function upsert(path, data) { var parts = path.split("/"), ex = (S[parts[0]] || []).some(function (x) { return x.id === parts[1]; }); return ex ? db.doc(path).update(data) : db.doc(path).set(data); }
+  function rateSelect(cur, blankLabel, onPick, label) {
+    var s = el("select", { "aria-label": label, style: "width:auto" });
+    s.appendChild(el("option", { value: "", text: blankLabel }));
+    var list = tiers().slice(); if (typeof cur === "number" && list.indexOf(cur) < 0) list.push(cur);
+    list.forEach(function (n) { var o = el("option", { value: String(n), text: money(n) + "/h" }); if (n === cur) o.selected = true; s.appendChild(o); });
+    s.addEventListener("change", function () { onPick(s.value === "" ? null : parseFloat(s.value)); });
+    return s;
+  }
   function hrs(n) { return (Math.round((n || 0) * 100) / 100).toFixed(2); }
   function money(n) { return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
   var curWeek = weekOf(today()), closeArmed = false, editing = null;
@@ -483,7 +494,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     var all = hoursIn(curWeek), list = all.filter(function (h) { return !who || h.person === who; });
     var billed = 0, drafts = 0, open = 0, amt = 0, missingRate = false;
     all.forEach(function (h) {
-      if (BILLED[h.status]) { billed += h.hours || 0; var r = rateOf(h.person); if (r == null) missingRate = true; else amt += (h.hours || 0) * r; }
+      if (BILLED[h.status]) { billed += h.hours || 0; var r = lineRate(h); if (r == null) missingRate = true; else amt += (h.hours || 0) * r; }
       if (h.status === "draft") drafts++;
       if (h.status === "logged") open++;
     });
@@ -511,7 +522,14 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       var stat = p[0] === "kev" ? (mine.some(function (h) { return h.status === "draft"; }) ? statusChip("draft") : el("span", { cls: "chip ok", text: mine.length ? "Reviewed" : "No time yet" }))
         : sub ? el("span", { cls: "chip ok", text: "Submitted " + fmtDate(sub) }) : el("span", { cls: "chip " + (mine.length ? "warn" : ""), text: mine.length ? "Not submitted" : "No time yet" });
       var cells = [el("td", null, [el("b", { text: personLabel(p[0]) })]), el("td", { cls: "num", text: hrs(bh) }), el("td", { cls: "num", text: hrs(pend) }), el("td", { cls: "num", text: hrs(ex) })];
-      if (isOwner) { cells.push(el("td", { cls: "num", text: r == null ? "Set rate" : money(r) + "/h" })); cells.push(el("td", { cls: "num", text: r == null ? "–" : money(bh * r) })); }
+      if (isOwner) {
+        var pa = 0, pmiss = false;
+        mine.forEach(function (h) { if (!BILLED[h.status]) return; var lr = lineRate(h); if (lr == null) pmiss = true; else pa += (h.hours || 0) * lr; });
+        var rs = rateSelect(r, "Set rate", function (v) { upsert("rates/" + p[0], { person: p[0], rate: v, updated_at: new Date().toISOString() }); }, "Default rate for " + personLabel(p[0]));
+        rs.disabled = !canWrite || closed;
+        cells.push(el("td", null, [rs, el("span", { cls: "src", text: "Default; any line can differ" })]));
+        cells.push(el("td", { cls: "num", text: pmiss ? (pa ? money(pa) + " +" : "–") : money(pa) }));
+      }
       cells.push(el("td", null, [stat]));
       tb.appendChild(el("tr", null, cells));
     });
@@ -561,7 +579,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
           el("td", { cls: "num", text: fmtDate(h.date) }),
           el("td", { text: personLabel(h.person) }),
           work,
-          el("td", null, [hin]),
+          el("td", null, [hin, isOwner ? (function () { var ls = rateSelect(typeof h.rate === "number" ? h.rate : null, "Default" + (rateOf(h.person) != null ? " (" + money(rateOf(h.person)) + ")" : ""), function (v) { write("hours/" + h.id, { rate: v, edited_at: new Date().toISOString() }); }, "Rate for this line"); ls.disabled = locked; return el("div", { style: "margin-top:6px" }, [ls]); })() : null]),
           el("td", null, [statusChip(h.status), acts])
         ]));
       });
@@ -589,9 +607,11 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     if (isOwner && !rr.dataset.dirty) {
       rr.replaceChildren();
       PEOPLE.forEach(function (p) {
-        rr.appendChild(el("label", { "for": "hr-l-" + p[0] }, [document.createTextNode("Name"), el("input", { id: "hr-l-" + p[0], value: personLabel(p[0]), autocomplete: "off" })]));
-        var v = rateOf(p[0]);
-        rr.appendChild(el("label", { "for": "hr-r-" + p[0] }, [document.createTextNode(personLabel(p[0]) + " $/hour"), el("input", { id: "hr-r-" + p[0], type: "number", min: "0", step: "0.01", value: v == null ? "" : String(v) })]));
+        rr.appendChild(el("label", { "for": "hr-l-" + p[0] }, [document.createTextNode("Name for " + p[1]), el("input", { id: "hr-l-" + p[0], value: personLabel(p[0]), autocomplete: "off" })]));
+      });
+      var ts = tiers();
+      [0, 1, 2].forEach(function (i) {
+        rr.appendChild(el("label", { "for": "hr-t-" + i }, [document.createTextNode("Rate option " + (i + 1) + " ($/hour)"), el("input", { id: "hr-t-" + i, type: "number", min: "0", step: "0.01", value: ts[i] == null ? "" : String(ts[i]) })]));
       });
     }
   }
@@ -693,14 +713,14 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
 
   $("h-copy").addEventListener("click", function () {
     var rows = hoursIn(curWeek).filter(function (h) { return BILLED[h.status]; }).sort(function (a, b) { return String(a.date).localeCompare(String(b.date)) || String(a.person).localeCompare(String(b.person)); });
-    var lines = ["Carmel Partners · Eden Partner Group · hours for the week of " + weekLabel(curWeek), "Date\tPerson\tRole\tTask\tWhat was done\tHours"];
+    var lines = ["Carmel Partners · Eden Partner Group · hours for the week of " + weekLabel(curWeek), "Date\tPerson\tRole\tTask\tWhat was done\tHours" + (isOwner ? "\tRate\tAmount" : "")];
     var tot = {};
-    rows.forEach(function (h) { lines.push([h.date, personLabel(h.person), roleTitle(h.role_id) === "account" ? "Account-wide" : roleTitle(h.role_id), h.task, (h.note || "").replace(/\s+/g, " "), hrs(h.hours)].join("\t")); tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
+    rows.forEach(function (h) { lines.push([h.date, personLabel(h.person), roleTitle(h.role_id) === "account" ? "Account-wide" : roleTitle(h.role_id), h.task, (h.note || "").replace(/\s+/g, " "), hrs(h.hours)].concat(isOwner ? (function () { var lr = lineRate(h); return lr == null ? ["", ""] : [money(lr), money((h.hours || 0) * lr)]; })() : []).join("\t")); tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
     lines.push("");
     Object.keys(tot).forEach(function (p) { lines.push("Total " + personLabel(p) + "\t" + hrs(tot[p]) + " h"); });
     var text = lines.join("\n"), box = $("h-copybox");
     function fallback() { box.hidden = false; box.value = text; box.focus(); box.select(); $("h-msg").textContent = "Select all and copy the text below."; }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { $("h-msg").textContent = "Copied " + rows.length + " lines (hours only, no rates)."; }, fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { $("h-msg").textContent = "Copied " + rows.length + " lines" + (isOwner ? " with rates." : " (hours only)."); }, fallback);
     else fallback();
   });
 
@@ -709,10 +729,11 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     if (!db || !isOwner) return;
     var chain = Promise.resolve(), at = new Date().toISOString();
     PEOPLE.forEach(function (p) {
-      var label = $("hr-l-" + p[0]).value.trim() || p[1], v = $("hr-r-" + p[0]).value;
-      var doc = { person: p[0], label: label, rate: v === "" ? null : Math.round(parseFloat(v) * 100) / 100, updated_at: at };
-      chain = chain.then(function () { return db.doc("rates/" + p[0]).set(doc); });
+      var label = $("hr-l-" + p[0]).value.trim() || p[1];
+      chain = chain.then(function () { return upsert("rates/" + p[0], { person: p[0], label: label, updated_at: at }); });
     });
+    var tv = [0, 1, 2].map(function (i) { var v = $("hr-t-" + i).value; return v === "" ? null : Math.round(parseFloat(v) * 100) / 100; }).filter(function (n) { return n != null && n >= 0; });
+    chain = chain.then(function () { return upsert("rates/_tiers", { tiers: tv, updated_at: at }); });
     chain.then(function () { delete $("h-rate-rows").dataset.dirty; $("hr-msg").textContent = "Rates saved."; renderAll(); })
       .catch(function (e) { $("hr-msg").textContent = "Could not save (" + (e && e.code || "error") + ")."; });
   });
