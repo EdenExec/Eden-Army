@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: an RPO control board. Masthead, a four-figure status strip, then six tabbed ledgers; cards on phones, tables where rows line up. */
+/* Layout: an RPO control board. Masthead, a four-figure status strip, then tabbed ledgers (roles, candidates, pipeline, process, scorecards, HA review, people, comms, steps, EOD, hours); cards on phones, tables where rows line up. */
 :root {
   --bg: #f6f4ef;          /* cream ground */
   --panel: #ffffff;
@@ -83,6 +83,16 @@ textarea { min-height: 60px; resize: vertical; }
 .eodday h3 { margin: 0; font-size: 14px; }
 footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--rule); padding-top: 10px; font-size: 11px; letter-spacing: .14em; color: var(--muted); }
 .client-only [data-internal] { display: none !important; }
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(170px, 1fr); gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.lane { background: var(--panel); border: 1px solid var(--rule); padding: 8px; display: grid; gap: 6px; align-content: start; min-height: 90px; }
+.lane h4 { margin: 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+.tok { border: 1px solid var(--rule); border-left: 3px solid var(--muted); padding: 6px 8px; font-size: 12.5px; background: var(--bg); display: grid; gap: 2px; }
+.tok.ok { border-left-color: var(--ok); } .tok.warn { border-left-color: var(--warn); } .tok.bad { border-left-color: var(--bad); }
+.tok small { color: var(--muted); font-size: 11px; }
+ol.steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+a.lnk { color: var(--ink); font-weight: 600; }
+.rolehead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
+.rolehead h3 { margin: 0; font-size: 15px; }
 @media (max-width: 720px) {
   .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   h1 { font-size: 22px; }
@@ -109,6 +119,10 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   <nav class="tabs" role="tablist" aria-label="Tracker sections">
     <button role="tab" id="tab-roles" aria-controls="p-roles" aria-selected="true">Roles<span class="n" id="n-roles"></span></button>
     <button role="tab" id="tab-candidates" aria-controls="p-candidates" aria-selected="false">Candidates<span class="n" id="n-candidates"></span></button>
+    <button role="tab" id="tab-pipeline" aria-controls="p-pipeline" aria-selected="false">Pipeline<span class="n" id="n-pipeline"></span></button>
+    <button role="tab" id="tab-process" aria-controls="p-process" aria-selected="false">Process</button>
+    <button role="tab" id="tab-scorecards" aria-controls="p-scorecards" aria-selected="false">Scorecards<span class="n" id="n-scorecards"></span></button>
+    <button role="tab" id="tab-reviews" aria-controls="p-reviews" aria-selected="false">HA review<span class="n" id="n-reviews"></span></button>
     <button role="tab" id="tab-people" aria-controls="p-people" aria-selected="false">People<span class="n" id="n-people"></span></button>
     <button role="tab" id="tab-comms" aria-controls="p-comms" aria-selected="false">Comms log<span class="n" id="n-comms"></span></button>
     <button role="tab" id="tab-steps" aria-controls="p-steps" aria-selected="false">Next steps<span class="n" id="n-steps"></span></button>
@@ -142,6 +156,54 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       <label class="wide" for="cf-notes">Notes (work facts; pay expectations only if stated; no phones, emails, pay history or ages)<textarea id="cf-notes"></textarea></label>
       <label class="wide" for="cf-src">Source of this entry<input id="cf-src" placeholder="Kev's note, 20 Nov 2026" autocomplete="off"></label>
       <div class="row wide"><button class="btn" type="submit">Add candidate</button><span class="note" id="cf-msg"></span></div>
+    </form>
+  </section>
+
+  <section class="pane" id="p-pipeline" role="tabpanel" aria-labelledby="tab-pipeline" hidden>
+    <p class="lede">Who needs a time on a hiring manager's calendar, then each role's depth chart by stage. Change a scheduling status here and it saves for everyone.</p>
+    <div class="banner bad" id="pl-deadline" hidden></div>
+    <h3 style="margin:0;font-size:15px">Needs scheduling</h3>
+    <div id="pl-sched"></div>
+    <div class="row"><label class="row note" for="pl-role">Depth chart for <select id="pl-role" style="width:auto"><option value="">Every role with candidates</option></select></label></div>
+    <div id="pl-boards" style="display:grid;gap:16px"></div>
+  </section>
+
+  <section class="pane" id="p-process" role="tabpanel" aria-labelledby="tab-process" hidden>
+    <p class="lede">The interview process for each role as Carmel's hiring authorities set it, who schedules, and how many candidates sit at each step today.</p>
+    <div class="cards" id="process"></div>
+  </section>
+
+  <section class="pane" id="p-scorecards" role="tabpanel" aria-labelledby="tab-scorecards" hidden>
+    <p class="lede">The table scorecard for each role (Google Doc) and every candidate's score once screened. Recommendation is dry: a person decides, the score does not.</p>
+    <div id="scorecards" style="display:grid;gap:16px"></div>
+    <form class="add" id="sc-form" data-internal>
+      <h3>Log a scorecard</h3>
+      <label for="scf-cand">Candidate<select id="scf-cand" required></select></label>
+      <label for="scf-by">Scored by<input id="scf-by" value="Kev" autocomplete="off"></label>
+      <label for="scf-date">Date<input id="scf-date" type="date"></label>
+      <label for="scf-total">Total<input id="scf-total" type="number" min="0" step="1"></label>
+      <label for="scf-max">Out of<input id="scf-max" type="number" min="1" step="1"></label>
+      <label for="scf-rec">Recommendation<select id="scf-rec"><option>Advance</option><option>Hold</option><option>Decline</option></select></label>
+      <label class="wide" for="scf-url">Scorecard or notes link (optional)<input id="scf-url" type="url" autocomplete="off"></label>
+      <label class="wide" for="scf-notes">One line on why (work facts only)<input id="scf-notes" autocomplete="off"></label>
+      <div class="row wide"><button class="btn" type="submit">Save scorecard</button><span class="note" id="scf-msg"></span></div>
+    </form>
+  </section>
+
+  <section class="pane" id="p-reviews" role="tabpanel" aria-labelledby="tab-reviews" hidden>
+    <p class="lede">Hiring-authority feedback after each interview: who met the candidate, their call, and what happens next. Candidates past a hiring-manager round with no feedback logged show as owed.</p>
+    <div class="banner" id="rv-owed" hidden></div>
+    <div id="reviews"></div>
+    <form class="add" id="rv-form">
+      <h3>Log hiring-authority feedback</h3>
+      <label for="rvf-cand">Candidate<select id="rvf-cand" required></select></label>
+      <label for="rvf-ha">Hiring authority<input id="rvf-ha" required autocomplete="off" placeholder="Elaine Tu"></label>
+      <label for="rvf-round">Round<input id="rvf-round" autocomplete="off" placeholder="Zoom 1, in person + model test"></label>
+      <label for="rvf-date">Interview date<input id="rvf-date" type="date"></label>
+      <label for="rvf-dec">Decision<select id="rvf-dec"><option>Pending</option><option>Advance</option><option>Hold</option><option>Decline</option></select></label>
+      <label class="wide" for="rvf-fb">Feedback (as the HA gave it; work facts only)<textarea id="rvf-fb"></textarea></label>
+      <label class="wide" for="rvf-next">Next step<input id="rvf-next" autocomplete="off"></label>
+      <div class="row wide"><button class="btn" type="submit">Save feedback</button><span class="note" id="rvf-msg"></span></div>
     </form>
   </section>
 
@@ -209,7 +271,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       <div class="row wide"><button class="btn" type="submit">Log time</button><span class="note" id="hf-msg"></span></div>
     </form>
     <form class="add" id="h-rates" hidden>
-      <h3>Hourly rates (Kev only; rates are never put in the repo)</h3>
+      <h3>Names and rate options (Kev only; rates are never put in the repo)</h3>
       <div class="wide note">Only you see dollar amounts on this page. Anyone with Contributor access, such as Michael, can still read these rows in the page's data, so keep the rates here only if that's fine.</div>
       <div class="wide" id="h-rate-rows" style="display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
       <div class="row wide"><button class="btn" type="submit">Save rates</button><span class="note" id="hr-msg"></span></div>
@@ -231,13 +293,15 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     ["agency", "Outside agency", "Outside agency through Eden: no more than 24% all in, only on a role Carmel approves in writing (hourly draft 7.4 to 7.6)"],
     ["internal", "Internal promotion or transfer", "No fee (internal move)"]
   ];
-  var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [], hours: [], rates: [], weeks: [] };
+  var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [], hours: [], rates: [], weeks: [], scorecards: [], reviews: [] };
+  var SCHED = ["Needs reply", "Needs time", "Proposed", "Booked", "Done", "Blocked"];
+  var SCHED_CLS = { "Needs reply": "bad", "Needs time": "warn", "Proposed": "warn", "Booked": "ok", "Done": "ok", "Blocked": "bad" };
+  var DEC_CLS = { Advance: "ok", Hold: "warn", Decline: "bad", Pending: "" };
   var loaded = {};
   var db = null, canWrite = true, isOwner = false;
   var PEOPLE = [["kev", "Kev"], ["michael", "Michael Duggan"], ["admin", "Admin (TBD)"]];
   var TASKS = ["Intake call", "Candidate screen", "Hiring manager sync", "Scheduling and coordination", "Client management", "Submittal prep", "Sourcing", "Tracker and reporting", "Admin", "Other"];
   var BILLED = { included: 1, submitted: 1 };
-  var RATE_OPTS = [235, 180, 50];
 
   function $(id) { return document.getElementById(id); }
   function el(tag, attrs, kids) {
@@ -441,6 +505,133 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     });
   }
 
+  function link(href, text) { return /^https:\/\//.test(href || "") ? el("a", { cls: "lnk", href: href, target: "_blank", rel: "noopener", text: text }) : null; }
+  function cand(id) { return S.candidates.filter(function (c) { return c.id === id; })[0] || null; }
+  function activeStages() { return STAGES.filter(function (s) { return s !== "Out"; }); }
+  function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }
+  function workdaysUntil(iso) { var a = new Date(), b = new Date(iso + "T12:00:00"), n = 0; a.setHours(12, 0, 0, 0); while (a < b) { a.setDate(a.getDate() + 1); var w = a.getDay(); if (w && w !== 6 && a < b) n++; } return n; }
+
+  function renderPipeline() {
+    var sb = $("pl-sched"); sb.replaceChildren();
+    var need = S.candidates.filter(function (c) { return c.sched_status && c.sched_status !== "Done" && c.stage !== "Out"; });
+    var order = { "Needs reply": 0, "Blocked": 1, "Needs time": 2, "Proposed": 3, "Booked": 4 };
+    need.sort(function (a, b) { return (order[a.sched_status] - order[b.sched_status]) || String(a.replied_at || "").localeCompare(String(b.replied_at || "")); });
+    var dl = S.roles.filter(function (r) { return r.sched_deadline; });
+    var bn = $("pl-deadline");
+    if (dl.length) { bn.hidden = false; bn.textContent = dl.map(function (r) { return r.title + ": " + (r.sched_deadline_note || "book by") + " " + fmtDate(r.sched_deadline) + " (" + workdaysUntil(r.sched_deadline) + " working days left)"; }).join(" · "); } else bn.hidden = true;
+    $("n-pipeline").textContent = need.filter(function (c) { return c.sched_status === "Needs reply" || c.sched_status === "Needs time"; }).length || "";
+    if (!need.length) { sb.appendChild(emptyState(loaded.candidates ? "Nobody waiting on a time" : "Loading…", "A candidate shows here once their scheduling status is set.")); }
+    else {
+      var tb = el("tbody");
+      need.forEach(function (c) {
+        var sel = el("select", { "aria-label": "Scheduling status for " + c.name, style: "width:auto" });
+        SCHED.forEach(function (s) { var o = el("option", { text: s }); if (s === c.sched_status) o.selected = true; sel.appendChild(o); });
+        sel.disabled = !canWrite;
+        sel.addEventListener("change", function () { write("candidates/" + c.id, { sched_status: sel.value, sched_at: new Date().toISOString() }); });
+        tb.appendChild(el("tr", null, [
+          el("td", null, [el("b", { text: c.name }), el("span", { cls: "src", text: roleTitle(c.role_id) + " · " + (c.stage || "–") })]),
+          el("td", { text: c.sched_with || "–" }),
+          el("td", null, [el("span", { cls: "chip " + (SCHED_CLS[c.sched_status] || ""), text: c.sched_status }), el("div", { style: "margin-top:6px" }, [sel])]),
+          el("td", null, [document.createTextNode(c.availability || "–")]),
+          el("td", { cls: "num" }, [document.createTextNode(c.replied_at ? fmtDate(c.replied_at) : "–"), c.draft_waiting ? el("span", { cls: "src", text: "Draft reply waiting in Superhuman" }) : null]),
+          el("td", null, [document.createTextNode(c.next_step || "–"), c.next_due ? el("span", { cls: "src", text: "By " + fmtDate(c.next_due) }) : null])
+        ]));
+      });
+      sb.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Candidate", "With", "Status", "Availability", "Last heard", "Needs"].map(function (h) { return el("th", { text: h }); }))]), tb])]));
+    }
+    var box = $("pl-boards"); box.replaceChildren();
+    var pick = $("pl-role").value;
+    var roles = sortBy(S.roles, "order").filter(function (r) { return pick ? r.id === pick : S.candidates.some(function (c) { return c.role_id === r.id; }); });
+    if (!roles.length) { box.appendChild(emptyState("No candidates yet", "Add candidates on the Candidates tab and they appear here by stage.")); return; }
+    roles.forEach(function (r) {
+      var mine = S.candidates.filter(function (c) { return c.role_id === r.id; });
+      var out = mine.filter(function (c) { return c.stage === "Out"; }).length;
+      var board = el("div", { cls: "board" });
+      activeStages().forEach(function (st) {
+        var at = mine.filter(function (c) { return (c.stage || "New") === st; });
+        var lane = el("div", { cls: "lane" }, [el("h4", null, [el("span", { text: st }), el("span", { text: String(at.length) })])]);
+        at.forEach(function (c) {
+          var k = clockOf(c);
+          lane.appendChild(el("div", { cls: "tok " + (k ? k.cls : "") }, [el("b", { text: c.name }), el("small", { text: c.sched_status ? c.sched_status + (c.sched_with ? " · " + c.sched_with : "") : (c.next_step || "").slice(0, 70) })]));
+        });
+        board.appendChild(lane);
+      });
+      box.appendChild(el("div", { style: "display:grid;gap:8px" }, [el("div", { cls: "rolehead" }, [el("h3", { text: r.title + (r.location ? " · " + r.location : "") }), el("span", { cls: "note", text: mine.length - out + " active" + (out ? " · " + out + " out" : "") })]), board]));
+    });
+  }
+
+  function renderProcess() {
+    var box = $("process"); box.replaceChildren();
+    if (!S.roles.length) { box.appendChild(emptyState(loaded.roles ? "No roles yet" : "Loading…", "")); return; }
+    sortBy(S.roles, "order").forEach(function (r) {
+      var mine = S.candidates.filter(function (c) { return c.role_id === r.id && c.stage !== "Out"; });
+      var counts = activeStages().map(function (st) { var n = mine.filter(function (c) { return c.stage === st; }).length; return n ? st + " " + n : null; }).filter(Boolean).join(" · ");
+      var steps = r.process_steps && r.process_steps.length ? el("ol", { cls: "steps" }, r.process_steps.map(function (s) { return el("li", { text: String(s).replace(/^\d+\.\s*/, "") }); })) : el("div", { cls: "note", text: "Process not captured yet. Ask the hiring authority at the next check-in." });
+      var kv = el("dl", { cls: "kv" });
+      [["Hiring authority", r.hiring_manager], ["Scheduler", r.scheduler], ["Interviewers", r.interviewers], ["Assessment", r.assessment], ["Pipeline now", counts || "No candidates on the tracker"]].forEach(function (x) { if (!x[1]) return; kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1])); });
+      box.appendChild(el("article", { cls: "card" }, [el("div", { cls: "row" }, [chipFor(r.stage)]), el("h3", { text: r.title }), el("div", { cls: "meta", text: r.location || "" }), steps, kv, src(r.process_source)]));
+    });
+  }
+
+  function renderScorecards() {
+    var box = $("scorecards"); box.replaceChildren();
+    $("n-scorecards").textContent = S.scorecards.length || "";
+    var roles = sortBy(S.roles, "order").filter(function (r) { return r.scorecard_url || S.scorecards.some(function (x) { return x.role_id === r.id; }); });
+    if (!roles.length) { box.appendChild(emptyState(loaded.roles ? "No scorecards yet" : "Loading…", "Carmel's Partner links each role's table scorecard here.")); return; }
+    roles.forEach(function (r) {
+      var rows = S.scorecards.filter(function (x) { return x.role_id === r.id; }).sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
+      var head = el("div", { cls: "rolehead" }, [el("h3", { text: r.title }), r.scorecard_url ? link(r.scorecard_url, "Open the blank scorecard") : el("span", { cls: "note", text: "No scorecard doc yet" })]);
+      var body;
+      if (!rows.length) body = el("div", { cls: "note", text: "No candidate scored yet." });
+      else {
+        var tb = el("tbody");
+        rows.forEach(function (x) {
+          var c = cand(x.candidate_id);
+          tb.appendChild(el("tr", null, [
+            el("td", null, [el("b", { text: c ? c.name : (x.candidate_name || "–") }), x.notes ? el("span", { cls: "src", text: x.notes }) : null]),
+            el("td", { cls: "num", text: x.total != null ? x.total + (x.max ? " / " + x.max : "") : "–" }),
+            el("td", null, [el("span", { cls: "chip " + (DEC_CLS[x.recommendation] || ""), text: x.recommendation || "–" })]),
+            el("td", { text: (x.scorer || "–") + (x.date ? " · " + fmtDate(x.date) : "") }),
+            el("td", null, [link(x.doc_url, "Open") || document.createTextNode("–")])
+          ]));
+        });
+        body = el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Candidate", "Score", "Recommendation", "Scored by", "Notes"].map(function (h) { return el("th", { text: h }); }))]), tb])]);
+      }
+      box.appendChild(el("div", { style: "display:grid;gap:8px" }, [head, body]));
+    });
+  }
+
+  function renderReviews() {
+    var box = $("reviews"); box.replaceChildren();
+    var owed = S.candidates.filter(function (c) { return /^(HM 1|HM 2|Final)$/.test(c.stage || "") && !S.reviews.some(function (v) { return v.candidate_id === c.id && v.decision && v.decision !== "Pending"; }); });
+    var ob = $("rv-owed");
+    if (owed.length) { ob.hidden = false; ob.className = "banner bad"; ob.textContent = "Feedback owed: " + owed.map(function (c) { return c.name + " (" + roleTitle(c.role_id) + ", " + c.stage + ")"; }).join("; "); } else ob.hidden = true;
+    $("n-reviews").textContent = owed.length || "";
+    if (!S.reviews.length) { box.appendChild(emptyState(loaded.reviews ? "No hiring-authority feedback logged yet" : "Loading…", "Log each HA's call after an interview with the form below, or Carmel's Partner logs it from the debrief.")); return; }
+    var tb = el("tbody");
+    S.reviews.slice().sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); }).forEach(function (v) {
+      var c = cand(v.candidate_id);
+      tb.appendChild(el("tr", null, [
+        el("td", null, [el("b", { text: c ? c.name : (v.candidate_name || "–") }), el("span", { cls: "src", text: roleTitle(c ? c.role_id : v.role_id) })]),
+        el("td", null, [document.createTextNode(v.ha || "–"), v.round ? el("span", { cls: "src", text: v.round + (v.date ? " · " + fmtDate(v.date) : "") }) : null]),
+        el("td", null, [el("span", { cls: "chip " + (DEC_CLS[v.decision] || ""), text: v.decision || "Pending" })]),
+        el("td", null, [document.createTextNode(v.feedback || "–"), src(v.source)]),
+        el("td", { text: v.next_step || "–" })
+      ]));
+    });
+    box.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Candidate", "Hiring authority", "Decision", "Feedback", "Next step"].map(function (h) { return el("th", { text: h }); }))]), tb])]));
+  }
+
+  function fillCandSelects() {
+    ["scf-cand", "rvf-cand"].forEach(function (id) {
+      var s = $(id), keep = s.value; s.replaceChildren();
+      sortBy(S.candidates.filter(function (c) { return c.stage !== "Out"; }), "role_id").forEach(function (c) { s.appendChild(el("option", { value: c.id, text: c.name + " · " + roleTitle(c.role_id) })); });
+      if (keep) s.value = keep;
+    });
+    var pr = $("pl-role"), k2 = pr.value; pr.replaceChildren(); pr.appendChild(el("option", { value: "", text: "Every role with candidates" }));
+    sortBy(S.roles, "order").forEach(function (r) { pr.appendChild(el("option", { value: r.id, text: r.title })); }); pr.value = k2;
+  }
+
   function fillRoleSelects() {
     [["c-role", true], ["cf-role", false]].forEach(function (x) {
       var s = $(x[0]), keep = s.value; s.replaceChildren();
@@ -461,6 +652,17 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   function weekLabel(wk) { var a = new Date(wk + "T12:00:00"), b = new Date(wk + "T12:00:00"); b.setDate(b.getDate() + 4); var o = { day: "numeric", month: "short" }; return a.toLocaleDateString(undefined, o) + " to " + b.toLocaleDateString(undefined, o); }
   function personLabel(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; if (r && r.label) return r.label; var d = PEOPLE.filter(function (x) { return x[0] === p; })[0]; return d ? d[1] : p; }
   function rateOf(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; return r && typeof r.rate === "number" ? r.rate : null; }
+  function tiers() { var t = S.rates.filter(function (x) { return x.id === "_tiers"; })[0]; return t && Array.isArray(t.tiers) ? t.tiers.filter(function (n) { return typeof n === "number"; }) : []; }
+  function lineRate(h) { return typeof h.rate === "number" ? h.rate : rateOf(h.person); }
+  function upsert(path, data) { var parts = path.split("/"), ex = (S[parts[0]] || []).some(function (x) { return x.id === parts[1]; }); return ex ? db.doc(path).update(data) : db.doc(path).set(data); }
+  function rateSelect(cur, blankLabel, onPick, label) {
+    var s = el("select", { "aria-label": label, style: "width:auto" });
+    s.appendChild(el("option", { value: "", text: blankLabel }));
+    var list = tiers().slice(); if (typeof cur === "number" && list.indexOf(cur) < 0) list.push(cur);
+    list.forEach(function (n) { var o = el("option", { value: String(n), text: money(n) + "/h" }); if (n === cur) o.selected = true; s.appendChild(o); });
+    s.addEventListener("change", function () { onPick(s.value === "" ? null : parseFloat(s.value)); });
+    return s;
+  }
   function hrs(n) { return (Math.round((n || 0) * 100) / 100).toFixed(2); }
   function money(n) { return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
   var curWeek = weekOf(today()), closeArmed = false, editing = null;
@@ -485,7 +687,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     var all = hoursIn(curWeek), list = all.filter(function (h) { return !who || h.person === who; });
     var billed = 0, drafts = 0, open = 0, amt = 0, missingRate = false;
     all.forEach(function (h) {
-      if (BILLED[h.status]) { billed += h.hours || 0; var r = rateOf(h.person); if (r == null) missingRate = true; else amt += (h.hours || 0) * r; }
+      if (BILLED[h.status]) { billed += h.hours || 0; var r = lineRate(h); if (r == null) missingRate = true; else amt += (h.hours || 0) * r; }
       if (h.status === "draft") drafts++;
       if (h.status === "logged") open++;
     });
@@ -514,17 +716,12 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
         : sub ? el("span", { cls: "chip ok", text: "Submitted " + fmtDate(sub) }) : el("span", { cls: "chip " + (mine.length ? "warn" : ""), text: mine.length ? "Not submitted" : "No time yet" });
       var cells = [el("td", null, [el("b", { text: personLabel(p[0]) })]), el("td", { cls: "num", text: hrs(bh) }), el("td", { cls: "num", text: hrs(pend) }), el("td", { cls: "num", text: hrs(ex) })];
       if (isOwner) {
-        var rs = el("select", { "aria-label": "Hourly rate for " + personLabel(p[0]), style: "width:auto" });
-        rs.appendChild(el("option", { value: "", text: "Set rate" }));
-        var opts = RATE_OPTS.slice(); if (r != null && opts.indexOf(r) < 0) opts.push(r);
-        opts.forEach(function (v) { var o = el("option", { value: String(v), text: money(v) + "/h" }); if (r === v) o.selected = true; rs.appendChild(o); });
-        rs.disabled = !db || closed;
-        (function (pid, sel) { sel.addEventListener("change", function () {
-          db.doc("rates/" + pid).set({ person: pid, label: personLabel(pid), rate: sel.value === "" ? null : Number(sel.value), updated_at: new Date().toISOString() })
-            .then(function () { $("h-msg").textContent = "Rate saved for " + personLabel(pid) + "."; })
-            .catch(function (e) { $("h-msg").textContent = "Could not save rate (" + (e && e.code || "error") + ")."; });
-        }); })(p[0], rs);
-        cells.push(el("td", { cls: "num" }, [rs])); cells.push(el("td", { cls: "num", text: r == null ? "–" : money(bh * r) }));
+        var pa = 0, pmiss = false;
+        mine.forEach(function (h) { if (!BILLED[h.status]) return; var lr = lineRate(h); if (lr == null) pmiss = true; else pa += (h.hours || 0) * lr; });
+        var rs = rateSelect(r, "Set rate", function (v) { upsert("rates/" + p[0], { person: p[0], rate: v, updated_at: new Date().toISOString() }); }, "Default rate for " + personLabel(p[0]));
+        rs.disabled = !canWrite || closed;
+        cells.push(el("td", null, [rs, el("span", { cls: "src", text: "Default; any line can differ" })]));
+        cells.push(el("td", { cls: "num", text: pmiss ? (pa ? money(pa) + " +" : "–") : money(pa) }));
       }
       cells.push(el("td", null, [stat]));
       tb.appendChild(el("tr", null, cells));
@@ -575,7 +772,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
           el("td", { cls: "num", text: fmtDate(h.date) }),
           el("td", { text: personLabel(h.person) }),
           work,
-          el("td", null, [hin]),
+          el("td", null, [hin, isOwner ? (function () { var ls = rateSelect(typeof h.rate === "number" ? h.rate : null, "Default" + (rateOf(h.person) != null ? " (" + money(rateOf(h.person)) + ")" : ""), function (v) { write("hours/" + h.id, { rate: v, edited_at: new Date().toISOString() }); }, "Rate for this line"); ls.disabled = locked; return el("div", { style: "margin-top:6px" }, [ls]); })() : null]),
           el("td", null, [statusChip(h.status), acts])
         ]));
       });
@@ -603,17 +800,19 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     if (isOwner && !rr.dataset.dirty) {
       rr.replaceChildren();
       PEOPLE.forEach(function (p) {
-        rr.appendChild(el("label", { "for": "hr-l-" + p[0] }, [document.createTextNode("Name"), el("input", { id: "hr-l-" + p[0], value: personLabel(p[0]), autocomplete: "off" })]));
-        var v = rateOf(p[0]);
-        rr.appendChild(el("label", { "for": "hr-r-" + p[0] }, [document.createTextNode(personLabel(p[0]) + " $/hour"), el("input", { id: "hr-r-" + p[0], type: "number", min: "0", step: "0.01", value: v == null ? "" : String(v) })]));
+        rr.appendChild(el("label", { "for": "hr-l-" + p[0] }, [document.createTextNode("Name for " + p[1]), el("input", { id: "hr-l-" + p[0], value: personLabel(p[0]), autocomplete: "off" })]));
+      });
+      var ts = tiers();
+      [0, 1, 2].forEach(function (i) {
+        rr.appendChild(el("label", { "for": "hr-t-" + i }, [document.createTextNode("Rate option " + (i + 1) + " ($/hour)"), el("input", { id: "hr-t-" + i, type: "number", min: "0", step: "0.01", value: ts[i] == null ? "" : String(ts[i]) })]));
       });
     }
   }
 
-  function renderAll() { renderStrip(); renderRoles(); renderCands(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); fillHoursSelects(); renderHours(); }
+  function renderAll() { renderStrip(); renderRoles(); renderCands(); fillCandSelects(); renderPipeline(); renderProcess(); renderScorecards(); renderReviews(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); fillHoursSelects(); renderHours(); }
 
   /* ---------- tabs (hash-routed) ---------- */
-  var TABS = ["roles", "candidates", "people", "comms", "steps", "eod", "hours"];
+  var TABS = ["roles", "candidates", "pipeline", "process", "scorecards", "reviews", "people", "comms", "steps", "eod", "hours"];
   function show(name) {
     if (TABS.indexOf(name) < 0) name = "roles";
     TABS.forEach(function (t) { $("tab-" + t).setAttribute("aria-selected", t === name ? "true" : "false"); $("p-" + t).hidden = t !== name; });
@@ -654,6 +853,28 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     var d = { text: text, owner: $("sf-owner").value, due: $("sf-due").value || null, done: false, source: $("sf-src").value.trim() || ("Added on the tracker, " + today()), created_at: new Date().toISOString() };
     db.collection("steps").doc("s-" + Date.now().toString(36)).set(d).then(function () { $("sf-msg").textContent = "Added."; $("sf-text").value = ""; $("sf-due").value = ""; $("sf-src").value = ""; })
       .catch(function (e) { $("sf-msg").textContent = "Could not add (" + (e && e.code || "error") + ")."; });
+  });
+
+  $("pl-role").addEventListener("change", renderPipeline);
+  $("scf-date").value = today(); $("rvf-date").value = today();
+  $("sc-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db) { $("scf-msg").textContent = "The tracker is not connected."; return; }
+    var c = cand($("scf-cand").value); if (!c) { $("scf-msg").textContent = "Choose a candidate."; return; }
+    var t = $("scf-total").value, m = $("scf-max").value;
+    var d = { candidate_id: c.id, role_id: c.role_id, scorer: $("scf-by").value.trim() || "Kev", date: $("scf-date").value || today(), total: t === "" ? null : parseFloat(t), max: m === "" ? null : parseFloat(m),
+      recommendation: $("scf-rec").value, doc_url: $("scf-url").value.trim() || null, notes: $("scf-notes").value.trim(), created_at: new Date().toISOString() };
+    db.collection("scorecards").doc("sc-" + c.id.slice(0, 60) + "-" + Date.now().toString(36)).set(d).then(function () { $("scf-msg").textContent = "Saved."; ["scf-total", "scf-url", "scf-notes"].forEach(function (i) { $(i).value = ""; }); })
+      .catch(function (e) { $("scf-msg").textContent = "Could not save (" + (e && e.code || "error") + ")."; });
+  });
+  $("rv-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db) { $("rvf-msg").textContent = "The tracker is not connected."; return; }
+    var c = cand($("rvf-cand").value), ha = $("rvf-ha").value.trim(); if (!c || !ha) { $("rvf-msg").textContent = "Choose a candidate and name the hiring authority."; return; }
+    var d = { candidate_id: c.id, role_id: c.role_id, ha: ha, round: $("rvf-round").value.trim(), date: $("rvf-date").value || today(), decision: $("rvf-dec").value,
+      feedback: $("rvf-fb").value.trim(), next_step: $("rvf-next").value.trim(), source: "Logged on the tracker, " + today(), created_at: new Date().toISOString() };
+    db.collection("reviews").doc("rv-" + c.id.slice(0, 60) + "-" + Date.now().toString(36)).set(d).then(function () { $("rvf-msg").textContent = "Saved."; ["rvf-round", "rvf-fb", "rvf-next"].forEach(function (i) { $(i).value = ""; }); })
+      .catch(function (e) { $("rvf-msg").textContent = "Could not save (" + (e && e.code || "error") + ")."; });
   });
 
   /* ---------- hours handlers ---------- */
@@ -707,14 +928,14 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
 
   $("h-copy").addEventListener("click", function () {
     var rows = hoursIn(curWeek).filter(function (h) { return BILLED[h.status]; }).sort(function (a, b) { return String(a.date).localeCompare(String(b.date)) || String(a.person).localeCompare(String(b.person)); });
-    var lines = ["Carmel Partners · Eden Partner Group · hours for the week of " + weekLabel(curWeek), "Date\tPerson\tRole\tTask\tWhat was done\tHours"];
+    var lines = ["Carmel Partners · Eden Partner Group · hours for the week of " + weekLabel(curWeek), "Date\tPerson\tRole\tTask\tWhat was done\tHours" + (isOwner ? "\tRate\tAmount" : "")];
     var tot = {};
-    rows.forEach(function (h) { lines.push([h.date, personLabel(h.person), roleTitle(h.role_id) === "account" ? "Account-wide" : roleTitle(h.role_id), h.task, (h.note || "").replace(/\s+/g, " "), hrs(h.hours)].join("\t")); tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
+    rows.forEach(function (h) { lines.push([h.date, personLabel(h.person), roleTitle(h.role_id) === "account" ? "Account-wide" : roleTitle(h.role_id), h.task, (h.note || "").replace(/\s+/g, " "), hrs(h.hours)].concat(isOwner ? (function () { var lr = lineRate(h); return lr == null ? ["", ""] : [money(lr), money((h.hours || 0) * lr)]; })() : []).join("\t")); tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
     lines.push("");
     Object.keys(tot).forEach(function (p) { lines.push("Total " + personLabel(p) + "\t" + hrs(tot[p]) + " h"); });
     var text = lines.join("\n"), box = $("h-copybox");
     function fallback() { box.hidden = false; box.value = text; box.focus(); box.select(); $("h-msg").textContent = "Select all and copy the text below."; }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { $("h-msg").textContent = "Copied " + rows.length + " lines (hours only, no rates)."; }, fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { $("h-msg").textContent = "Copied " + rows.length + " lines" + (isOwner ? " with rates." : " (hours only)."); }, fallback);
     else fallback();
   });
 
@@ -723,10 +944,11 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     if (!db || !isOwner) return;
     var chain = Promise.resolve(), at = new Date().toISOString();
     PEOPLE.forEach(function (p) {
-      var label = $("hr-l-" + p[0]).value.trim() || p[1], v = $("hr-r-" + p[0]).value;
-      var doc = { person: p[0], label: label, rate: v === "" ? null : Math.round(parseFloat(v) * 100) / 100, updated_at: at };
-      chain = chain.then(function () { return db.doc("rates/" + p[0]).set(doc); });
+      var label = $("hr-l-" + p[0]).value.trim() || p[1];
+      chain = chain.then(function () { return upsert("rates/" + p[0], { person: p[0], label: label, updated_at: at }); });
     });
+    var tv = [0, 1, 2].map(function (i) { var v = $("hr-t-" + i).value; return v === "" ? null : Math.round(parseFloat(v) * 100) / 100; }).filter(function (n) { return n != null && n >= 0; });
+    chain = chain.then(function () { return upsert("rates/_tiers", { tiers: tv, updated_at: at }); });
     chain.then(function () { delete $("h-rate-rows").dataset.dirty; $("hr-msg").textContent = "Rates saved."; renderAll(); })
       .catch(function (e) { $("hr-msg").textContent = "Could not save (" + (e && e.code || "error") + ")."; });
   });
@@ -740,7 +962,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   window.claude.use("user").then(function (u) {
     if (!u) return;
     Promise.resolve(u.isOwner()).then(function (o) { isOwner = !!o; renderAll(); }).catch(function () {});
-    return Promise.resolve(u.can("data.write")).then(function (w) { if (w === false) { canWrite = false; $("c-form").hidden = true; $("s-form").hidden = true; renderAll(); } });
+    return Promise.resolve(u.can("data.write")).then(function (w) { if (w === false) { canWrite = false; $("c-form").hidden = true; $("s-form").hidden = true; $("sc-form").hidden = true; $("rv-form").hidden = true; renderAll(); } });
   }).catch(function () {});
   window.claude.use("db").then(function (d) {
     if (!d) { clearTimeout(timer); $("sync").textContent = "Sign in on claude.ai to load the tracker."; return; }
