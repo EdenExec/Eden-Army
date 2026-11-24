@@ -89,6 +89,17 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
 .tok { border: 1px solid var(--rule); border-left: 3px solid var(--muted); padding: 6px 8px; font-size: 12.5px; background: var(--bg); display: grid; gap: 2px; }
 .tok.ok { border-left-color: var(--ok); } .tok.warn { border-left-color: var(--warn); } .tok.bad { border-left-color: var(--bad); }
 .tok small { color: var(--muted); font-size: 11px; }
+button.nm { font: inherit; font-weight: 700; color: var(--ink); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+button.nm:hover { text-decoration-color: var(--ink); }
+button.nm.rl { font-weight: 600; }
+dialog#dlg { border: 1px solid var(--rule); background: var(--panel); color: var(--ink); padding: 0; width: min(640px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); }
+dialog#dlg::backdrop { background: rgba(0,0,0,.45); }
+.dlg-in { padding: 18px; display: grid; gap: 14px; }
+.dlg-head { display: flex; justify-content: space-between; gap: 10px; align-items: start; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+.dlg-head h2 { margin: 0; font-size: 20px; font-style: italic; }
+.links { display: grid; gap: 8px; }
+.links .ln { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; border: 1px solid var(--rule); padding: 8px 10px; align-items: center; }
+.links .ln span.k { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 ol.steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
 a.lnk { color: var(--ink); font-weight: 600; }
 .rolehead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline; }
@@ -278,6 +289,8 @@ a.lnk { color: var(--ink); font-weight: 600; }
     </form>
   </section>
 
+  <dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg-in"><div class="dlg-head"><div><div class="org" id="dlg-kicker"></div><h2 id="dlg-title"></h2><div class="note" id="dlg-sub"></div></div><button class="btn ghost small" type="button" id="dlg-x">Close</button></div><div id="dlg-body" style="display:grid;gap:14px"></div></div></dialog>
+
   <footer><span>edenpartnergroup.com</span><span>EDEN PARTNER GROUP</span></footer>
 </div>
 
@@ -379,7 +392,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
       var c = S.candidates.filter(function (k) { return k.role_id === r.id && k.stage !== "Out"; }).length;
       box.appendChild(el("article", { cls: "card" }, [
         el("div", { cls: "row" }, [chipFor(r.stage), r.schedule1 ? el("span", { cls: "chip", text: "Schedule 1" }) : el("span", { cls: "chip warn", text: "Add to Schedule 1" })]),
-        el("h3", { text: r.title }),
+        el("h3", null, [roleBtn(r.id)]),
         el("div", { cls: "meta", text: (r.location || "") + (c ? " · " + c + " candidate" + (c === 1 ? "" : "s") + " on the tracker" : "") }),
         r.stage_source ? el("div", { cls: "meta" }, [document.createTextNode(r.stage_detail || ""), src(r.stage_source)]) : null,
         kv
@@ -409,8 +422,8 @@ a.lnk { color: var(--ink); font-weight: 600; }
       touch.disabled = !canWrite;
       touch.addEventListener("click", function () { write("candidates/" + c.id, { last_touch: today(), last_touch_source: "Tracker, " + today() }); });
       tb.appendChild(el("tr", null, [
-        el("td", null, [el("b", { text: c.name || "–" }), c.notes && !client ? el("span", { cls: "src", text: c.notes }) : null, src(client ? null : c.source)]),
-        el("td", { text: roleTitle(c.role_id) }),
+        el("td", null, [nameBtn(c), c.notes && !client ? el("span", { cls: "src", text: c.notes }) : null, src(client ? null : c.source)]),
+        el("td", null, [roleBtn(c.role_id)]),
         el("td", null, [stageSel]),
         el("td", { "data-internal": "" }, [document.createTextNode(srcT[1])]),
         el("td", null, [document.createTextNode(c.next_step || "–"), c.next_due ? el("span", { cls: "src", text: "Due " + fmtDate(c.next_due) }) : null]),
@@ -511,6 +524,60 @@ a.lnk { color: var(--ink); font-weight: 600; }
   function addDays(n) { var d = new Date(); d.setDate(d.getDate() + n); return ymd(d); }
   function workdaysUntil(iso) { var a = new Date(), b = new Date(iso + "T12:00:00"), n = 0; a.setHours(12, 0, 0, 0); while (a < b) { a.setDate(a.getDate() + 1); var w = a.getDay(); if (w && w !== 6 && a < b) n++; } return n; }
 
+  var openDlg = null;
+  function nameBtn(c) { var b = el("button", { cls: "nm", type: "button", text: c.name || "–", "aria-label": "Open " + (c.name || "candidate") }); b.addEventListener("click", function () { showCand(c.id); }); return b; }
+  function roleBtn(id) { if (!id || id === "account") return document.createTextNode(roleTitle(id)); var b = el("button", { cls: "nm rl", type: "button", text: roleTitle(id) }); b.addEventListener("click", function () { showRole(id); }); return b; }
+  function roleOf(id) { return S.roles.filter(function (r) { return r.id === id; })[0] || null; }
+  function lnRow(k, href, text, empty) { return el("div", { cls: "ln" }, [el("span", { cls: "k", text: k }), link(href, text) || el("span", { cls: "note", text: empty })]); }
+  function linkEditor(path, fields, msgId) {
+    var f = el("form", { cls: "add", "data-internal": "" }, [el("h3", { text: "Add or fix links" })]);
+    var ins = fields.map(function (x) { var i = el("input", { type: "url", value: x[2] || "", placeholder: "https://", autocomplete: "off" }); f.appendChild(el("label", { cls: "wide" }, [document.createTextNode(x[1]), i])); return [x[0], i]; });
+    var msg = el("span", { cls: "note" });
+    f.appendChild(el("div", { cls: "row wide" }, [el("button", { cls: "btn small", type: "submit", text: "Save links" }), msg]));
+    f.hidden = !canWrite;
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault(); var d = {}, bad = false;
+      ins.forEach(function (x) { var v = x[1].value.trim(); if (v && !/^https:\/\//.test(v)) bad = true; d[x[0]] = v || null; });
+      if (bad) { msg.textContent = "Links must start with https://"; return; }
+      write(path, d).then(function () { msg.textContent = "Saved."; });
+    });
+    return f;
+  }
+  function dlgOpen(kicker, title, sub, kids) {
+    $("dlg-kicker").textContent = kicker; $("dlg-title").textContent = title; $("dlg-sub").textContent = sub || "";
+    var b = $("dlg-body"); b.replaceChildren(); kids.forEach(function (k) { if (k) b.appendChild(k); });
+    var d = $("dlg"); if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute("open", ""); }
+  }
+  function showCand(id) {
+    var c = cand(id); if (!c) return; openDlg = ["c", id];
+    var r = roleOf(c.role_id) || {};
+    var scs = S.scorecards.filter(function (x) { return x.candidate_id === id; }).sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
+    var rvs = S.reviews.filter(function (x) { return x.candidate_id === id; });
+    var sc = scs[0];
+    var links = el("div", { cls: "links" }, [
+      sc ? lnRow("Scorecard", sc.doc_url, "Open " + (sc.scorer || "") + "'s scorecard" + (sc.total != null ? " (" + sc.total + (sc.max ? "/" + sc.max : "") + ")" : ""), "Scored " + (sc.total != null ? sc.total + (sc.max ? "/" + sc.max : "") : "") + ", no doc linked") : lnRow("Scorecard", r.scorecard_url, "Not scored yet · open the blank scorecard", "Not scored yet; no scorecard doc for this role"),
+      lnRow("LinkedIn or profile", c.profile_url, "Open profile", "Not found yet"),
+      lnRow("Resume", c.resume_url, "Open resume", "Not linked (UKG holds it)"),
+      lnRow("Job description", r.jd_url, "Open the job description", "No posting found yet")
+    ]);
+    var kv = el("dl", { cls: "kv" });
+    [["Stage", c.stage], ["Scheduling", c.sched_status ? c.sched_status + (c.sched_with ? " with " + c.sched_with : "") : null], ["Availability", c.availability], ["Next step", c.next_step ? c.next_step + (c.next_due ? " (by " + fmtDate(c.next_due) + ")" : "") : null], ["Last touch", c.last_touch ? fmtDate(c.last_touch) : null], ["Notes", c.notes], ["Profile match", c.profile_note]].forEach(function (x) { if (!x[1]) return; kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1])); });
+    var rv = rvs.length ? el("div", { style: "display:grid;gap:6px" }, [el("h3", { style: "margin:0;font-size:14px", text: "Hiring-authority feedback" })].concat(rvs.map(function (v) { return el("div", { cls: "ln", style: "border:1px solid var(--rule);padding:8px 10px" }, [el("span", { cls: "chip " + (DEC_CLS[v.decision] || ""), text: v.decision || "Pending" }), document.createTextNode(" " + (v.ha || "") + (v.round ? " · " + v.round : "") + ": " + (v.feedback || "no notes"))]); }))) : null;
+    var rb = el("button", { cls: "btn ghost small", type: "button", text: "Open " + (r.title || "role") });
+    rb.addEventListener("click", function () { showRole(c.role_id); });
+    dlgOpen("CANDIDATE", c.name || "–", (r.title || roleTitle(c.role_id)) + (r.location ? " · " + r.location : ""), [links, kv, rv, el("div", { cls: "row" }, [rb]), src(c.source), linkEditor("candidates/" + id, [["profile_url", "LinkedIn or profile link", c.profile_url], ["resume_url", "Resume link (Drive)", c.resume_url]])]);
+  }
+  function showRole(id) {
+    var r = roleOf(id); if (!r) return; openDlg = ["r", id];
+    var mine = S.candidates.filter(function (c) { return c.role_id === id && c.stage !== "Out"; });
+    var links = el("div", { cls: "links" }, [lnRow("Job description", r.jd_url, "Open the job description", "No posting found yet"), lnRow("Scorecard", r.scorecard_url, "Open the blank scorecard", "No scorecard doc yet")]);
+    var steps = r.process_steps && r.process_steps.length ? el("ol", { cls: "steps" }, r.process_steps.map(function (x) { return el("li", { text: String(x).replace(/^\d+\.\s*/, "") }); })) : null;
+    var list = mine.length ? el("div", { style: "display:grid;gap:6px" }, [el("h3", { style: "margin:0;font-size:14px", text: mine.length + " active candidate" + (mine.length === 1 ? "" : "s") })].concat(mine.map(function (c) { return el("div", { cls: "row" }, [nameBtn(c), el("span", { cls: "note", text: (c.stage || "") + (c.sched_status ? " · " + c.sched_status : "") })]); }))) : el("div", { cls: "note", text: "No candidates on the tracker yet." });
+    var kv = el("dl", { cls: "kv" });
+    [["Hiring authority", r.hiring_manager], ["Scheduler", r.scheduler], ["Interviewers", r.interviewers], ["Assessment", r.assessment], ["JD source", r.jd_source]].forEach(function (x) { if (!x[1]) return; kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1])); });
+    dlgOpen("ROLE", r.title, (r.location || "") + (r.stage ? " · " + r.stage : ""), [links, kv, steps, list, linkEditor("roles/" + id, [["jd_url", "Job description link", r.jd_url], ["scorecard_url", "Scorecard doc link", r.scorecard_url]])]);
+  }
+
   function renderPipeline() {
     var sb = $("pl-sched"); sb.replaceChildren();
     var need = S.candidates.filter(function (c) { return c.sched_status && c.sched_status !== "Done" && c.stage !== "Out"; });
@@ -529,7 +596,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
         sel.disabled = !canWrite;
         sel.addEventListener("change", function () { write("candidates/" + c.id, { sched_status: sel.value, sched_at: new Date().toISOString() }); });
         tb.appendChild(el("tr", null, [
-          el("td", null, [el("b", { text: c.name }), el("span", { cls: "src", text: roleTitle(c.role_id) + " · " + (c.stage || "–") })]),
+          el("td", null, [nameBtn(c), el("span", { cls: "src", text: roleTitle(c.role_id) + " · " + (c.stage || "–") })]),
           el("td", { text: c.sched_with || "–" }),
           el("td", null, [el("span", { cls: "chip " + (SCHED_CLS[c.sched_status] || ""), text: c.sched_status }), el("div", { style: "margin-top:6px" }, [sel])]),
           el("td", null, [document.createTextNode(c.availability || "–")]),
@@ -552,11 +619,11 @@ a.lnk { color: var(--ink); font-weight: 600; }
         var lane = el("div", { cls: "lane" }, [el("h4", null, [el("span", { text: st }), el("span", { text: String(at.length) })])]);
         at.forEach(function (c) {
           var k = clockOf(c);
-          lane.appendChild(el("div", { cls: "tok " + (k ? k.cls : "") }, [el("b", { text: c.name }), el("small", { text: c.sched_status ? c.sched_status + (c.sched_with ? " · " + c.sched_with : "") : (c.next_step || "").slice(0, 70) })]));
+          lane.appendChild(el("div", { cls: "tok " + (k ? k.cls : "") }, [nameBtn(c), el("small", { text: c.sched_status ? c.sched_status + (c.sched_with ? " · " + c.sched_with : "") : (c.next_step || "").slice(0, 70) })]));
         });
         board.appendChild(lane);
       });
-      box.appendChild(el("div", { style: "display:grid;gap:8px" }, [el("div", { cls: "rolehead" }, [el("h3", { text: r.title + (r.location ? " · " + r.location : "") }), el("span", { cls: "note", text: mine.length - out + " active" + (out ? " · " + out + " out" : "") })]), board]));
+      box.appendChild(el("div", { style: "display:grid;gap:8px" }, [el("div", { cls: "rolehead" }, [el("h3", null, [roleBtn(r.id), document.createTextNode(r.location ? " · " + r.location : "")]), el("span", { cls: "note", text: mine.length - out + " active" + (out ? " · " + out + " out" : "") })]), board]));
     });
   }
 
@@ -569,7 +636,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
       var steps = r.process_steps && r.process_steps.length ? el("ol", { cls: "steps" }, r.process_steps.map(function (s) { return el("li", { text: String(s).replace(/^\d+\.\s*/, "") }); })) : el("div", { cls: "note", text: "Process not captured yet. Ask the hiring authority at the next check-in." });
       var kv = el("dl", { cls: "kv" });
       [["Hiring authority", r.hiring_manager], ["Scheduler", r.scheduler], ["Interviewers", r.interviewers], ["Assessment", r.assessment], ["Pipeline now", counts || "No candidates on the tracker"]].forEach(function (x) { if (!x[1]) return; kv.appendChild(el("dt", { text: x[0] })); kv.appendChild(val(x[1])); });
-      box.appendChild(el("article", { cls: "card" }, [el("div", { cls: "row" }, [chipFor(r.stage)]), el("h3", { text: r.title }), el("div", { cls: "meta", text: r.location || "" }), steps, kv, src(r.process_source)]));
+      box.appendChild(el("article", { cls: "card" }, [el("div", { cls: "row" }, [chipFor(r.stage)]), el("h3", null, [roleBtn(r.id)]), el("div", { cls: "meta", text: r.location || "" }), steps, kv, src(r.process_source)]));
     });
   }
 
@@ -580,7 +647,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
     if (!roles.length) { box.appendChild(emptyState(loaded.roles ? "No scorecards yet" : "Loading…", "Carmel's Partner links each role's table scorecard here.")); return; }
     roles.forEach(function (r) {
       var rows = S.scorecards.filter(function (x) { return x.role_id === r.id; }).sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); });
-      var head = el("div", { cls: "rolehead" }, [el("h3", { text: r.title }), r.scorecard_url ? link(r.scorecard_url, "Open the blank scorecard") : el("span", { cls: "note", text: "No scorecard doc yet" })]);
+      var head = el("div", { cls: "rolehead" }, [el("h3", null, [roleBtn(r.id)]), r.scorecard_url ? link(r.scorecard_url, "Open the blank scorecard") : el("span", { cls: "note", text: "No scorecard doc yet" })]);
       var body;
       if (!rows.length) body = el("div", { cls: "note", text: "No candidate scored yet." });
       else {
@@ -588,7 +655,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
         rows.forEach(function (x) {
           var c = cand(x.candidate_id);
           tb.appendChild(el("tr", null, [
-            el("td", null, [el("b", { text: c ? c.name : (x.candidate_name || "–") }), x.notes ? el("span", { cls: "src", text: x.notes }) : null]),
+            el("td", null, [c ? nameBtn(c) : el("b", { text: x.candidate_name || "–" }), x.notes ? el("span", { cls: "src", text: x.notes }) : null]),
             el("td", { cls: "num", text: x.total != null ? x.total + (x.max ? " / " + x.max : "") : "–" }),
             el("td", null, [el("span", { cls: "chip " + (DEC_CLS[x.recommendation] || ""), text: x.recommendation || "–" })]),
             el("td", { text: (x.scorer || "–") + (x.date ? " · " + fmtDate(x.date) : "") }),
@@ -612,7 +679,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
     S.reviews.slice().sort(function (a, b) { return String(b.date || "").localeCompare(String(a.date || "")); }).forEach(function (v) {
       var c = cand(v.candidate_id);
       tb.appendChild(el("tr", null, [
-        el("td", null, [el("b", { text: c ? c.name : (v.candidate_name || "–") }), el("span", { cls: "src", text: roleTitle(c ? c.role_id : v.role_id) })]),
+        el("td", null, [c ? nameBtn(c) : el("b", { text: v.candidate_name || "–" }), el("span", { cls: "src", text: roleTitle(c ? c.role_id : v.role_id) })]),
         el("td", null, [document.createTextNode(v.ha || "–"), v.round ? el("span", { cls: "src", text: v.round + (v.date ? " · " + fmtDate(v.date) : "") }) : null]),
         el("td", null, [el("span", { cls: "chip " + (DEC_CLS[v.decision] || ""), text: v.decision || "Pending" })]),
         el("td", null, [document.createTextNode(v.feedback || "–"), src(v.source)]),
@@ -809,7 +876,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
     }
   }
 
-  function renderAll() { renderStrip(); renderRoles(); renderCands(); fillCandSelects(); renderPipeline(); renderProcess(); renderScorecards(); renderReviews(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); fillHoursSelects(); renderHours(); }
+  function renderAll() { renderStrip(); renderRoles(); renderCands(); fillCandSelects(); renderPipeline(); renderProcess(); renderScorecards(); renderReviews(); if (openDlg && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && $("dlg").contains(document.activeElement))) { if (openDlg[0] === "c") showCand(openDlg[1]); else showRole(openDlg[1]); } renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); fillHoursSelects(); renderHours(); }
 
   /* ---------- tabs (hash-routed) ---------- */
   var TABS = ["roles", "candidates", "pipeline", "process", "scorecards", "reviews", "people", "comms", "steps", "eod", "hours"];
@@ -856,6 +923,9 @@ a.lnk { color: var(--ink); font-weight: 600; }
   });
 
   $("pl-role").addEventListener("change", renderPipeline);
+  $("dlg-x").addEventListener("click", function () { var d = $("dlg"); if (d.close) d.close(); else d.removeAttribute("open"); });
+  $("dlg").addEventListener("close", function () { openDlg = null; });
+  $("dlg").addEventListener("click", function (ev) { if (ev.target === $("dlg")) $("dlg").close(); });
   $("scf-date").value = today(); $("rvf-date").value = today();
   $("sc-form").addEventListener("submit", function (ev) {
     ev.preventDefault();
