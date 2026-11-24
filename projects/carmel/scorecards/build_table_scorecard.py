@@ -23,6 +23,29 @@ QUICK = ["Work authorization (US)|Y / N", "Needs sponsorship|Y / N", "Location /
          "Bonus structure and timing (not amounts)|"]
 
 ROLES = {
+    "da": dict(
+        role="Design Associate (San Francisco)",
+        ha="Sarah Converse, VP Design",
+        lines=["Process: 1) Recruiter screen with Kev, notes to Sarah  2) Zoom with Sarah and Katie  "
+               "3) Paper assessment (Bluebeam review of a 50% CD set), in office or take home  "
+               "4) Final onsite, may also meet Kim and/or Adam",
+               "Must-haves from Sarah, 24 Nov. Assessment details still being set by Sarah, Adam and Kim."],
+        rec="Advance to Sarah / Hold / Decline",
+        must=["Architectural background with an interiors focus",
+              "CAD, Bluebeam and Procore, hands-on",
+              "Reads floor plans and reflected ceiling plans; spots nuances that help construction and design",
+              "Reviews a plan set against schedules and elevations and finds the disconnects",
+              "Knows design phases: 50% CDs through an IFC set",
+              "SF fit and timing: in-office, notice, start date"],
+        qs=["Walk me through a project you worked on: your role from design through CDs.",
+            "Which tools do you use weekly: CAD, Bluebeam, Procore? Where are you weakest?",
+            "On a floor plan or ceiling plan, what do you check first? Give a catch you made.",
+            "Tell me about a disconnect you found between plans, schedules and elevations. What happened?",
+            "What changes between a 50% CD set and an IFC set? What's your part in that?",
+            "Spec schedules and renderings: what have you produced, and for whom?",
+            "Comfortable with a Bluebeam review of a CD set (about 1.5 to 2 hours), at home or in office?",
+            "When could you meet Sarah, and what's your notice period?"],
+    ),
     "fpa": dict(
         role="FP&A Analyst, Fund Management (NY)",
         ha="Kyle Beddow",
