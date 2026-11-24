@@ -88,5 +88,11 @@
     "name": "Casey",
     "session": "session_01Ep3HKBB1EzzeBw8Zh2Ndks",
     "url": "https://claude.ai/code/session_01Ep3HKBB1EzzeBw8Zh2Ndks"
+  },
+  "carmel-partner": {
+    "id": "carmel-partner",
+    "name": "Carmel's Partner",
+    "session": "session_01VJdR7NJjJBLkhBhEmHV5Ff",
+    "url": "https://claude.ai/code/session_01VJdR7NJjJBLkhBhEmHV5Ff"
   }
 }

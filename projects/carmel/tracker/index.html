@@ -26,6 +26,7 @@
   --ok: #8fbf9f; --ok-bg: #1f2b23; --warn: #d6b46a; --warn-bg: #2c2618; --bad: #e08a83; --bad-bg: #331d1b; --focus: #ece9e2; color-scheme: dark }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 14px; line-height: 1.45; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 18px; }
 header.mast { display: grid; gap: 2px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
@@ -43,6 +44,7 @@ nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: 
 nav.tabs button .n { font-family: var(--mono); font-size: 11px; margin-left: 6px; color: var(--muted); }
 button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 section.pane { display: grid; gap: 14px; }
+.wrap > *, section.pane > * { min-width: 0; }
 .lede { color: var(--muted); max-width: 72ch; margin: 0; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
 .card { background: var(--panel); border: 1px solid var(--rule); padding: 14px; display: grid; gap: 10px; min-width: 0; align-content: start; }
@@ -110,6 +112,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     <button role="tab" id="tab-comms" aria-controls="p-comms" aria-selected="false">Comms log<span class="n" id="n-comms"></span></button>
     <button role="tab" id="tab-steps" aria-controls="p-steps" aria-selected="false">Next steps<span class="n" id="n-steps"></span></button>
     <button role="tab" id="tab-eod" aria-controls="p-eod" aria-selected="false">EOD status<span class="n" id="n-eod"></span></button>
+    <button role="tab" id="tab-hours" aria-controls="p-hours" aria-selected="false" data-internal>Hours<span class="n" id="n-hours"></span></button>
   </nav>
 
   <section class="pane" id="p-roles" role="tabpanel" aria-labelledby="tab-roles">
@@ -168,6 +171,50 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     <div id="eod"></div>
   </section>
 
+  <section class="pane" id="p-hours" role="tabpanel" aria-labelledby="tab-hours" hidden data-internal>
+    <p class="lede">Billable Carmel time for the weekly invoice. Weeks run Monday to Friday, and weekend time counts toward the next week. Carmel's Partner drafts Kev's lines each night, and Kev includes or excludes each one before the day ends. Michael and Admin log their own time and submit by Thursday night. Kev closes the week on Friday by 3:30pm MT, before sunset, and Radar drafts the invoice from the closed week.</p>
+    <div class="row">
+      <button class="btn ghost small" type="button" id="h-prev" aria-label="Previous week">&larr;</button>
+      <label class="row note" for="h-week">Week of <select id="h-week" style="width:auto"></select></label>
+      <button class="btn ghost small" type="button" id="h-next" aria-label="Next week">&rarr;</button>
+      <label class="row note" for="h-who">Person <select id="h-who" style="width:auto"><option value="">Everyone</option></select></label>
+    </div>
+    <div class="strip" aria-label="Week status">
+      <div class="fig" id="hf-hours"><b>–</b><span>Billable hours</span></div>
+      <div class="fig" id="hf-drafts"><b>–</b><span>Kev drafts to review</span></div>
+      <div class="fig" id="hf-open"><b>–</b><span>Not yet submitted</span></div>
+      <div class="fig" id="hf-amt"><b>–</b><span id="hf-amt-l">Week amount</span></div>
+    </div>
+    <div class="banner" id="h-banner" hidden></div>
+    <div id="h-summary"></div>
+    <div id="h-list"></div>
+    <div class="row" id="h-actions">
+      <label class="row note" for="h-subwho">Submit week for <select id="h-subwho" style="width:auto"></select></label>
+      <button class="btn ghost" type="button" id="h-submit">Submit week</button>
+      <button class="btn" type="button" id="h-close" hidden>Close week for invoicing</button>
+      <button class="btn ghost" type="button" id="h-copy">Copy invoice backup</button>
+      <span class="note" id="h-msg"></span>
+    </div>
+    <textarea id="h-copybox" hidden readonly aria-label="Invoice backup text"></textarea>
+    <form class="add" id="h-form">
+      <h3>Log time</h3>
+      <label for="hf-date">Date<input id="hf-date" type="date" required></label>
+      <label for="hf-person">Person<select id="hf-person"></select></label>
+      <label for="hf-h">Hours<input id="hf-h" type="number" min="0.25" max="16" step="0.25" required></label>
+      <label for="hf-role">Role<select id="hf-role"></select></label>
+      <label for="hf-task">Task<select id="hf-task"></select></label>
+      <label class="row" for="hf-bill" style="align-self:end"><input type="checkbox" id="hf-bill" checked style="width:auto"> Billable</label>
+      <label class="wide" for="hf-note">What was done (this backs the invoice Carmel sees: work facts, no phones, emails or pay)<input id="hf-note" required autocomplete="off" placeholder="Screened 2 FP&amp;A candidates; notes to Kyle"></label>
+      <div class="row wide"><button class="btn" type="submit">Log time</button><span class="note" id="hf-msg"></span></div>
+    </form>
+    <form class="add" id="h-rates" hidden>
+      <h3>Hourly rates (Kev only; rates are never put in the repo)</h3>
+      <div class="wide note">Only you see dollar amounts on this page. Anyone with Contributor access, such as Michael, can still read these rows in the page's data, so keep the rates here only if that's fine.</div>
+      <div class="wide" id="h-rate-rows" style="display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))"></div>
+      <div class="row wide"><button class="btn" type="submit">Save rates</button><span class="note" id="hr-msg"></span></div>
+    </form>
+  </section>
+
   <footer><span>edenpartnergroup.com</span><span>EDEN PARTNER GROUP</span></footer>
 </div>
 
@@ -183,9 +230,12 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     ["agency", "Outside agency", "Outside agency through Eden: no more than 24% all in, only on a role Carmel approves in writing (hourly draft 7.4 to 7.6)"],
     ["internal", "Internal promotion or transfer", "No fee (internal move)"]
   ];
-  var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [] };
+  var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [], hours: [], rates: [], weeks: [] };
   var loaded = {};
-  var db = null, canWrite = true;
+  var db = null, canWrite = true, isOwner = false;
+  var PEOPLE = [["kev", "Kev"], ["michael", "Michael Duggan"], ["admin", "Admin (TBD)"]];
+  var TASKS = ["Intake call", "Candidate screen", "Hiring manager sync", "Scheduling and coordination", "Client management", "Submittal prep", "Sourcing", "Tracker and reporting", "Admin", "Other"];
+  var BILLED = { included: 1, submitted: 1 };
 
   function $(id) { return document.getElementById(id); }
   function el(tag, attrs, kids) {
@@ -232,7 +282,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     if (d >= 3) return { cls: "warn", label: d + " working days" };
     return { cls: "ok", label: d === 0 ? "Today" : d + " working day" + (d === 1 ? "" : "s") };
   }
-  function roleTitle(id) { for (var i = 0; i < S.roles.length; i++) if (S.roles[i].id === id) return S.roles[i].title; return id || "–"; }
+  function roleTitle(id) { if (id === "account") return "Account-wide"; for (var i = 0; i < S.roles.length; i++) if (S.roles[i].id === id) return S.roles[i].title; return id || "–"; }
   function sortBy(arr, key) { return arr.slice().sort(function (a, b) { return String(a[key] == null ? "~" : a[key]).localeCompare(String(b[key] == null ? "~" : b[key])); }); }
   function emptyState(title, body) { return el("div", { cls: "empty" }, [el("b", { text: title }), el("span", { cls: "note", text: body })]); }
 
@@ -398,10 +448,135 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
     });
   }
 
-  function renderAll() { renderStrip(); renderRoles(); renderCands(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); }
+  /* ---------- hours ---------- */
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function weekOf(iso) {
+    var d = new Date((iso || today()) + "T12:00:00"), w = d.getDay();
+    if (w === 6) d.setDate(d.getDate() + 2); else if (w === 0) d.setDate(d.getDate() + 1); else d.setDate(d.getDate() - (w - 1));
+    return ymd(d);
+  }
+  function shiftWeek(wk, n) { var d = new Date(wk + "T12:00:00"); d.setDate(d.getDate() + 7 * n); return ymd(d); }
+  function weekLabel(wk) { var a = new Date(wk + "T12:00:00"), b = new Date(wk + "T12:00:00"); b.setDate(b.getDate() + 4); var o = { day: "numeric", month: "short" }; return a.toLocaleDateString(undefined, o) + " to " + b.toLocaleDateString(undefined, o); }
+  function personLabel(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; if (r && r.label) return r.label; var d = PEOPLE.filter(function (x) { return x[0] === p; })[0]; return d ? d[1] : p; }
+  function rateOf(p) { var r = S.rates.filter(function (x) { return x.id === p; })[0]; return r && typeof r.rate === "number" ? r.rate : null; }
+  function hrs(n) { return (Math.round((n || 0) * 100) / 100).toFixed(2); }
+  function money(n) { return "$" + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  var curWeek = weekOf(today()), closeArmed = false;
+  function weekDoc(wk) { return S.weeks.filter(function (w) { return w.id === wk; })[0] || null; }
+  function hoursIn(wk) { return S.hours.filter(function (h) { return h.week === wk; }); }
+  function statusChip(s) {
+    var m = { draft: ["warn", "Draft, review"], included: ["ok", "Included"], excluded: ["", "Excluded"], logged: ["warn", "Logged, not submitted"], submitted: ["ok", "Submitted"] }[s] || ["", s || "–"];
+    return el("span", { cls: "chip " + m[0], text: m[1] });
+  }
+  function setWeekDoc(wk, data) {
+    var ref = db.doc("weeks/" + wk);
+    return weekDoc(wk) ? ref.update(data) : ref.set(Object.assign({ week: wk, status: "open" }, data));
+  }
+
+  function renderHours() {
+    var weeks = {}; weeks[weekOf(today())] = 1; weeks[curWeek] = 1;
+    S.hours.forEach(function (h) { if (h.week) weeks[h.week] = 1; });
+    var ws = $("h-week"); ws.replaceChildren();
+    Object.keys(weeks).sort().reverse().forEach(function (w) { var o = el("option", { value: w, text: weekLabel(w) + (weekDoc(w) && weekDoc(w).status === "closed" ? " · closed" : "") }); if (w === curWeek) o.selected = true; ws.appendChild(o); });
+    var who = $("h-who").value;
+    var wd = weekDoc(curWeek), closed = !!(wd && wd.status === "closed");
+    var all = hoursIn(curWeek), list = all.filter(function (h) { return !who || h.person === who; });
+    var billed = 0, drafts = 0, open = 0, amt = 0, missingRate = false;
+    all.forEach(function (h) {
+      if (BILLED[h.status]) { billed += h.hours || 0; var r = rateOf(h.person); if (r == null) missingRate = true; else amt += (h.hours || 0) * r; }
+      if (h.status === "draft") drafts++;
+      if (h.status === "logged") open++;
+    });
+    function fig(id, v, bad) { var f = $(id); f.querySelector("b").textContent = loaded.hours ? v : "–"; f.classList.toggle("bad", !!bad); }
+    fig("hf-hours", hrs(billed)); fig("hf-drafts", String(drafts), drafts > 0); fig("hf-open", String(open), open > 0);
+    $("hf-amt").hidden = !isOwner;
+    fig("hf-amt", missingRate ? money(amt) + " +" : money(amt));
+    $("hf-amt-l").textContent = missingRate ? "Week amount (a rate is missing)" : "Week amount";
+    $("n-hours").textContent = drafts ? String(drafts) : "";
+
+    var b = $("h-banner");
+    if (closed) { b.hidden = false; b.className = "banner"; b.textContent = "Closed for invoicing " + fmtDate(wd.closed_at) + ". Lines are locked. Radar drafts the invoice from this week."; }
+    else if (drafts || open) { b.hidden = false; b.className = "banner bad"; b.textContent = [drafts ? drafts + " of Kev's drafted line" + (drafts === 1 ? "" : "s") + " still need include or exclude" : "", open ? open + " logged line" + (open === 1 ? "" : "s") + " not yet submitted" : ""].filter(Boolean).join(" · ") + ". Week closes Friday 3:30pm MT."; }
+    else b.hidden = true;
+
+    // summary by person
+    var sb = $("h-summary"); sb.replaceChildren();
+    var tb = el("tbody");
+    PEOPLE.forEach(function (p) {
+      var mine = all.filter(function (h) { return h.person === p[0]; });
+      var bh = 0, pend = 0, ex = 0;
+      mine.forEach(function (h) { if (BILLED[h.status]) bh += h.hours || 0; else if (h.status === "excluded") ex += h.hours || 0; else pend += h.hours || 0; });
+      var sub = wd && wd.submitted && wd.submitted[p[0]];
+      var r = rateOf(p[0]);
+      var stat = p[0] === "kev" ? (mine.some(function (h) { return h.status === "draft"; }) ? statusChip("draft") : el("span", { cls: "chip ok", text: mine.length ? "Reviewed" : "No time yet" }))
+        : sub ? el("span", { cls: "chip ok", text: "Submitted " + fmtDate(sub) }) : el("span", { cls: "chip " + (mine.length ? "warn" : ""), text: mine.length ? "Not submitted" : "No time yet" });
+      var cells = [el("td", null, [el("b", { text: personLabel(p[0]) })]), el("td", { cls: "num", text: hrs(bh) }), el("td", { cls: "num", text: hrs(pend) }), el("td", { cls: "num", text: hrs(ex) })];
+      if (isOwner) { cells.push(el("td", { cls: "num", text: r == null ? "Set rate" : money(r) + "/h" })); cells.push(el("td", { cls: "num", text: r == null ? "–" : money(bh * r) })); }
+      cells.push(el("td", null, [stat]));
+      tb.appendChild(el("tr", null, cells));
+    });
+    var heads = ["Person", "Billable h", "Pending h", "Excluded h"].concat(isOwner ? ["Rate", "Amount"] : []).concat(["Status"]);
+    sb.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, heads.map(function (h) { return el("th", { text: h }); }))]), tb])]));
+
+    // lines
+    var lb = $("h-list"); lb.replaceChildren();
+    if (!list.length) { lb.appendChild(emptyState(loaded.hours ? "No time logged for this week yet" : "Loading hours…", "Carmel's Partner drafts Kev's lines each night from his calendar, calls and sent mail. Michael and Admin log their own time with the form below.")); }
+    else {
+      var t2 = el("tbody");
+      list.slice().sort(function (a, b) { return String(a.date).localeCompare(String(b.date)) || String(a.person).localeCompare(String(b.person)); }).forEach(function (h) {
+        var locked = closed || !canWrite || (h.status === "submitted" && !isOwner);
+        var hin = el("input", { type: "number", min: "0", max: "16", step: "0.25", value: String(h.hours || 0), "aria-label": "Hours", style: "width:80px" });
+        hin.disabled = locked;
+        hin.addEventListener("change", function () { var v = parseFloat(hin.value); if (!(v >= 0 && v <= 16)) { hin.value = String(h.hours || 0); return; } write("hours/" + h.id, { hours: Math.round(v * 4) / 4, edited_at: new Date().toISOString() }); });
+        var acts = el("div", { cls: "row" });
+        function act(label, to) { var x = el("button", { cls: "btn ghost small", type: "button", text: label }); x.disabled = locked; x.addEventListener("click", function () { write("hours/" + h.id, { status: to, reviewed_at: new Date().toISOString() }); }); acts.appendChild(x); }
+        if (h.person === "kev") { if (h.status !== "included") act("Include", "included"); if (h.status !== "excluded") act("Exclude", "excluded"); }
+        else if (h.status === "logged") act("Not billable", "excluded");
+        else if (h.status === "excluded") act("Billable", "logged");
+        else if (h.status === "submitted" && isOwner) act("Exclude", "excluded");
+        t2.appendChild(el("tr", { cls: h.status === "excluded" ? "done" : "" }, [
+          el("td", { cls: "num", text: fmtDate(h.date) }),
+          el("td", { text: personLabel(h.person) }),
+          el("td", { cls: "t" }, [el("b", { text: h.task || "–" }), document.createTextNode(" · " + roleTitle(h.role_id)), el("span", { cls: "src", text: h.note || "" }), src(h.source)]),
+          el("td", null, [hin]),
+          el("td", null, [statusChip(h.status), acts])
+        ]));
+      });
+      lb.appendChild(el("div", { cls: "scroll" }, [el("table", null, [el("thead", null, [el("tr", null, ["Date", "Person", "Work", "Hours", "Status"].map(function (x) { return el("th", { text: x }); }))]), t2])]));
+    }
+
+    $("h-submit").disabled = closed || !canWrite; $("h-close").hidden = !isOwner;
+    $("h-close").textContent = closed ? "Reopen week" : closeArmed ? "Click again to close" : "Close week for invoicing";
+    $("h-form").hidden = !canWrite;
+    $("h-rates").hidden = !isOwner;
+  }
+
+  function fillHoursSelects() {
+    [["hf-person", false], ["h-subwho", false], ["h-who", true]].forEach(function (x) {
+      var s = $(x[0]), keep = s.value; s.replaceChildren();
+      if (x[1]) s.appendChild(el("option", { value: "", text: "Everyone" }));
+      PEOPLE.forEach(function (p) { if (x[0] === "h-subwho" && p[0] === "kev") return; s.appendChild(el("option", { value: p[0], text: personLabel(p[0]) })); });
+      if (keep) s.value = keep;
+    });
+    var r = $("hf-role"), keepR = r.value; r.replaceChildren();
+    r.appendChild(el("option", { value: "account", text: "Account-wide (no single role)" }));
+    sortBy(S.roles, "order").forEach(function (x) { r.appendChild(el("option", { value: x.id, text: x.title })); });
+    r.value = keepR || "account";
+    var rr = $("h-rate-rows");
+    if (isOwner && !rr.dataset.dirty) {
+      rr.replaceChildren();
+      PEOPLE.forEach(function (p) {
+        rr.appendChild(el("label", { "for": "hr-l-" + p[0] }, [document.createTextNode("Name"), el("input", { id: "hr-l-" + p[0], value: personLabel(p[0]), autocomplete: "off" })]));
+        var v = rateOf(p[0]);
+        rr.appendChild(el("label", { "for": "hr-r-" + p[0] }, [document.createTextNode(personLabel(p[0]) + " $/hour"), el("input", { id: "hr-r-" + p[0], type: "number", min: "0", step: "0.01", value: v == null ? "" : String(v) })]));
+      });
+    }
+  }
+
+  function renderAll() { renderStrip(); renderRoles(); renderCands(); renderPeople(); renderComms(); renderSteps(); renderEod(); fillRoleSelects(); fillHoursSelects(); renderHours(); }
 
   /* ---------- tabs (hash-routed) ---------- */
-  var TABS = ["roles", "candidates", "people", "comms", "steps", "eod"];
+  var TABS = ["roles", "candidates", "people", "comms", "steps", "eod", "hours"];
   function show(name) {
     if (TABS.indexOf(name) < 0) name = "roles";
     TABS.forEach(function (t) { $("tab-" + t).setAttribute("aria-selected", t === name ? "true" : "false"); $("p-" + t).hidden = t !== name; });
@@ -444,6 +619,81 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       .catch(function (e) { $("sf-msg").textContent = "Could not add (" + (e && e.code || "error") + ")."; });
   });
 
+  /* ---------- hours handlers ---------- */
+  TASKS.forEach(function (t) { $("hf-task").appendChild(el("option", { text: t })); });
+  $("hf-date").value = today();
+  $("h-week").addEventListener("change", function () { curWeek = $("h-week").value; closeArmed = false; renderHours(); });
+  $("h-prev").addEventListener("click", function () { curWeek = shiftWeek(curWeek, -1); closeArmed = false; renderHours(); });
+  $("h-next").addEventListener("click", function () { curWeek = shiftWeek(curWeek, 1); closeArmed = false; renderHours(); });
+  $("h-who").addEventListener("change", renderHours);
+  $("h-rate-rows").addEventListener("input", function () { $("h-rate-rows").dataset.dirty = "1"; });
+
+  $("h-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db) { $("hf-msg").textContent = "The tracker is not connected."; return; }
+    var date = $("hf-date").value, h = parseFloat($("hf-h").value), p = $("hf-person").value, note = $("hf-note").value.trim();
+    if (!date || !(h > 0 && h <= 16) || !note) { $("hf-msg").textContent = "Enter a date, hours (0.25 to 16) and what was done."; return; }
+    var wk = weekOf(date), wd = weekDoc(wk);
+    if (wd && wd.status === "closed") { $("hf-msg").textContent = "The week of " + weekLabel(wk) + " is closed. Ask Kev to reopen it."; return; }
+    var bill = $("hf-bill").checked;
+    var doc = { date: date, week: wk, person: p, hours: Math.round(h * 4) / 4, role_id: $("hf-role").value, task: $("hf-task").value, note: note,
+      status: !bill ? "excluded" : p === "kev" ? "included" : "logged", source: "Logged on the tracker, " + today(), created_by: "tracker", created_at: new Date().toISOString() };
+    db.collection("hours").doc("h-" + date + "-" + p + "-" + Date.now().toString(36)).set(doc).then(function () {
+      $("hf-msg").textContent = "Logged " + hrs(doc.hours) + " h for " + personLabel(p) + "."; $("hf-h").value = ""; $("hf-note").value = "";
+      if (wk !== curWeek) { curWeek = wk; renderHours(); }
+    }).catch(function (e) { $("hf-msg").textContent = "Could not log (" + (e && e.code || "error") + ")."; });
+  });
+
+  $("h-submit").addEventListener("click", function () {
+    if (!db) return;
+    var p = $("h-subwho").value, lines = hoursIn(curWeek).filter(function (h) { return h.person === p && h.status === "logged"; });
+    var at = new Date().toISOString(), sub = {}; sub[p] = at;
+    var chain = Promise.resolve();
+    lines.forEach(function (h) { chain = chain.then(function () { return db.doc("hours/" + h.id).update({ status: "submitted", submitted_at: at }); }); });
+    chain.then(function () { var w = weekDoc(curWeek); return setWeekDoc(curWeek, { submitted: Object.assign({}, (w && w.submitted) || {}, sub) }); })
+      .then(function () { $("h-msg").textContent = "Submitted " + lines.length + " line" + (lines.length === 1 ? "" : "s") + " for " + personLabel(p) + "."; })
+      .catch(function (e) { $("h-msg").textContent = "Could not submit (" + (e && e.code || "error") + ")."; });
+  });
+
+  $("h-close").addEventListener("click", function () {
+    if (!db || !isOwner) return;
+    var wd = weekDoc(curWeek);
+    if (wd && wd.status === "closed") { setWeekDoc(curWeek, { status: "open", reopened_at: new Date().toISOString() }).then(function () { $("h-msg").textContent = "Week reopened."; }); return; }
+    if (!closeArmed) { closeArmed = true; renderHours(); $("h-msg").textContent = "Drafts and unsubmitted lines are left out of the invoice. Click again to close."; return; }
+    closeArmed = false;
+    var tot = {}; PEOPLE.forEach(function (p) { tot[p[0]] = 0; });
+    hoursIn(curWeek).forEach(function (h) { if (BILLED[h.status]) tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
+    setWeekDoc(curWeek, { status: "closed", closed_at: new Date().toISOString(), billable_hours: tot })
+      .then(function () { $("h-msg").textContent = "Week closed. Radar drafts the invoice from it."; })
+      .catch(function (e) { $("h-msg").textContent = "Could not close (" + (e && e.code || "error") + ")."; });
+  });
+
+  $("h-copy").addEventListener("click", function () {
+    var rows = hoursIn(curWeek).filter(function (h) { return BILLED[h.status]; }).sort(function (a, b) { return String(a.date).localeCompare(String(b.date)) || String(a.person).localeCompare(String(b.person)); });
+    var lines = ["Carmel Partners · Eden Partner Group · hours for the week of " + weekLabel(curWeek), "Date\tPerson\tRole\tTask\tWhat was done\tHours"];
+    var tot = {};
+    rows.forEach(function (h) { lines.push([h.date, personLabel(h.person), roleTitle(h.role_id) === "account" ? "Account-wide" : roleTitle(h.role_id), h.task, (h.note || "").replace(/\s+/g, " "), hrs(h.hours)].join("\t")); tot[h.person] = (tot[h.person] || 0) + (h.hours || 0); });
+    lines.push("");
+    Object.keys(tot).forEach(function (p) { lines.push("Total " + personLabel(p) + "\t" + hrs(tot[p]) + " h"); });
+    var text = lines.join("\n"), box = $("h-copybox");
+    function fallback() { box.hidden = false; box.value = text; box.focus(); box.select(); $("h-msg").textContent = "Select all and copy the text below."; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { $("h-msg").textContent = "Copied " + rows.length + " lines (hours only, no rates)."; }, fallback);
+    else fallback();
+  });
+
+  $("h-rates").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!db || !isOwner) return;
+    var chain = Promise.resolve(), at = new Date().toISOString();
+    PEOPLE.forEach(function (p) {
+      var label = $("hr-l-" + p[0]).value.trim() || p[1], v = $("hr-r-" + p[0]).value;
+      var doc = { person: p[0], label: label, rate: v === "" ? null : Math.round(parseFloat(v) * 100) / 100, updated_at: at };
+      chain = chain.then(function () { return db.doc("rates/" + p[0]).set(doc); });
+    });
+    chain.then(function () { delete $("h-rate-rows").dataset.dirty; $("hr-msg").textContent = "Rates saved."; renderAll(); })
+      .catch(function (e) { $("hr-msg").textContent = "Could not save (" + (e && e.code || "error") + ")."; });
+  });
+
   /* ---------- data ---------- */
   renderAll();
   setInterval(function () { renderStrip(); if (!$("p-comms").hidden) renderComms(); }, 60000);
@@ -452,6 +702,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   var timer = setTimeout(function () { $("sync").textContent = "The tracker data can't be reached yet."; }, 10000);
   window.claude.use("user").then(function (u) {
     if (!u) return;
+    Promise.resolve(u.isOwner()).then(function (o) { isOwner = !!o; renderAll(); }).catch(function () {});
     return Promise.resolve(u.can("data.write")).then(function (w) { if (w === false) { canWrite = false; $("c-form").hidden = true; $("s-form").hidden = true; renderAll(); } });
   }).catch(function () {});
   window.claude.use("db").then(function (d) {

@@ -63,3 +63,7 @@ Export the finished doc as PDF with the same name. Carmel asks for a Word copy s
 
 - Never send at stage 1. Never change a fee, rate or discount on your own: a mismatch with the Rev Report is a Batch question for Kev.
 - Never put salary or fee figures in a ledger row; reference the invoice number.
+
+## Carmel hourly (weekly, from 23 Nov 2026)
+
+The first 30 days of the Carmel agreement are billed hourly, one invoice a week. Source: the closed week on the Carmel Tracker Hours tab (`employees/carmel-partner/skills/hours.md`): `weeks/<Monday>` with status `closed`, and the `included` and `submitted` lines in `hours`. Rates come from `rates` in the same database and never from the repo. Friday before sunset: build the invoice (hours by person times rate, with the "Copy invoice backup" table attached as the detail) on the template, then draft it for Kev to send. Bill to the Carmel AP contact Kev names, not Caroldean (she has left). Hours are not credited against placement fees.
