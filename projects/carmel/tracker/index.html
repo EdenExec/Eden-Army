@@ -307,8 +307,8 @@ a.lnk { color: var(--ink); font-weight: 600; }
     ["internal", "Internal promotion or transfer", "No fee (internal move)"]
   ];
   var S = { roles: [], candidates: [], people: [], comms: [], steps: [], eod: [], hours: [], rates: [], weeks: [], scorecards: [], reviews: [] };
-  var SCHED = ["Needs reply", "Needs time", "Proposed", "Booked", "Done", "Blocked"];
-  var SCHED_CLS = { "Needs reply": "bad", "Needs time": "warn", "Proposed": "warn", "Booked": "ok", "Done": "ok", "Blocked": "bad" };
+  var SCHED = ["Needs reply", "Needs time", "Awaiting candidate", "Proposed", "Booked", "Done", "Blocked"];
+  var SCHED_CLS = { "Needs reply": "bad", "Needs time": "warn", "Awaiting candidate": "", "Proposed": "warn", "Booked": "ok", "Done": "ok", "Blocked": "bad" };
   var DEC_CLS = { Advance: "ok", Hold: "warn", Decline: "bad", Pending: "" };
   var loaded = {};
   var db = null, canWrite = true, isOwner = false;
@@ -581,7 +581,7 @@ a.lnk { color: var(--ink); font-weight: 600; }
   function renderPipeline() {
     var sb = $("pl-sched"); sb.replaceChildren();
     var need = S.candidates.filter(function (c) { return c.sched_status && c.sched_status !== "Done" && c.stage !== "Out"; });
-    var order = { "Needs reply": 0, "Blocked": 1, "Needs time": 2, "Proposed": 3, "Booked": 4 };
+    var order = { "Needs reply": 0, "Blocked": 1, "Needs time": 2, "Proposed": 3, "Awaiting candidate": 4, "Booked": 5 };
     need.sort(function (a, b) { return (order[a.sched_status] - order[b.sched_status]) || String(a.replied_at || "").localeCompare(String(b.replied_at || "")); });
     var dl = S.roles.filter(function (r) { return r.sched_deadline; });
     var bn = $("pl-deadline");
