@@ -1,64 +1,64 @@
 {
   "id": "revenue",
   "owner": "Tally + Docket",
-  "source": "QuickBooks (EPG, pulled by the runner 23 Nov) and EPG Cash Pulse; checked by Docket, gate 2026-11-23-fe2585 passed 13/13 (Cash Pulse 6 independent; QuickBooks 7 against the runner's pull) (books not closed)",
-  "asOf": "2026-11-23T15:00:00Z",
+  "source": "QuickBooks (EPG, pulled by the runner 24 Nov) and EPG Cash Pulse; checked by Docket, gate 2026-11-24-08acc6 passed 13/13 (Cash Pulse 6 independent; QuickBooks 7 against the runner's pull) (books not closed)",
+  "asOf": "2026-11-24T15:20:00Z",
   "tiles": [
     {
       "label": "Revenue \u00b7 month to date",
       "value": "Not yet booked ($0 in QuickBooks)",
-      "source": "QuickBooks P&L, 1 to 22 Nov, pulled by the runner (read-only), 23 Nov ~06:55 PT (tool states no cash/accrual basis; AR and AP are $0 so the two read alike). No November transactions at all. Books not closed.",
-      "asOf": "2026-11-23",
+      "source": "QuickBooks P&L, 1 to 22 Nov, pulled by the runner (read-only), 24 Nov ~07:20 PT (tool states no cash/accrual basis; AR and AP are $0 so the two read alike). No November transactions at all. Books not closed.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Revenue \u00b7 year to date (QuickBooks-booked)",
       "value": "$590,228",
-      "source": "QuickBooks P&L 1 Jan to 23 Nov (tool states no basis), pulled by the runner (read-only), 23 Nov ~06:55 PT: Sales $530,878 + Services $59,350. Up $11,500 from 22 Nov ($578,728): income was re-booked overnight. November income $0.",
-      "asOf": "2026-11-23",
+      "source": "QuickBooks P&L 1 Jan to 23 Nov (tool states no basis), pulled by the runner (read-only), 24 Nov ~07:20 PT: Sales $530,878 + Services $59,350. Up $11,500 from 22 Nov ($578,728): income was re-booked overnight. November income $0.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Top customers \u00b7 month to date",
       "value": "None booked yet",
-      "source": "QuickBooks Sales by Customer, cash basis, 1 to 22 Nov, pulled by the runner (read-only), 23 Nov ~06:55 PT: no customer sales recorded, so there is no top 5 until Joel books invoices. QuickBooks AR of $0 means the invoices are not booked yet; it is not a real zero.",
-      "asOf": "2026-11-23",
+      "source": "QuickBooks Sales by Customer, cash basis, 1 to 22 Nov, pulled by the runner (read-only), 24 Nov ~07:20 PT: no customer sales recorded, so there is no top 5 until Joel books invoices. QuickBooks AR of $0 means the invoices are not booked yet; it is not a real zero.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Owed to us \u00b7 past due",
-      "value": "$158,700 \u00b7 6 invoices, oldest 103 days late",
-      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 23 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 37 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale. Kev, 23 Oct: the discreet client is paying soon, VMG is on the fence about its candidate (at risk), PB South always pays late. Row 62059 has a $2,000 gap to check (Docket; the Hub note says its rate was entered as 22.0, should be 22%).",
-      "asOf": "2026-11-23",
+      "value": "$158,700 \u00b7 6 invoices, oldest 104 days late",
+      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 24 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 38 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale. Kev, 23 Oct: the discreet client is paying soon, VMG is on the fence about its candidate (at risk), PB South always pays late. Row 62059 has a $2,000 gap to check (Docket; the Hub note says its rate was entered as 22.0, should be 22%).",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Owed to us \u00b7 invoiced, not yet due",
       "value": "$36,450 \u00b7 2 invoices",
-      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 23 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 37 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale.",
-      "asOf": "2026-11-23",
+      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 24 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 38 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Coming \u00b7 starts not yet invoiced",
       "value": "$187,100 \u00b7 5 placements (+$45,000 Megawatt start moved to 2027)",
-      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 23 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 37 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale. Excludes the Megawatt General Superintendent ($45,000, Kev moved it to 2027 on 23 Oct; the status in Cash Pulse is still upcoming). All five were due to start by 9 Nov, so they may be invoiced by now.",
-      "asOf": "2026-11-23",
+      "source": "EPG Cash Pulse invoice list (Hub Rev Report), placements rows updated 17 Oct, split by due date as of 24 Nov; read by Tally. Not booked in QuickBooks yet. Cash Pulse rows are 38 days old (updated 17 Oct): starts and invoices since then (for example PB South and Swinerton) are not reflected, so statuses may be stale. Excludes the Megawatt General Superintendent ($45,000, Kev moved it to 2027 on 23 Oct; the status in Cash Pulse is still upcoming). All five were due to start by 9 Nov, so they may be invoiced by now.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     },
     {
       "label": "Cash on hand",
       "value": "$103,222",
-      "source": "QuickBooks balance sheet, cash basis, as of 23 Nov, pulled by the runner (read-only), 23 Nov ~06:55 PT: CHASE BUS PREM SAV (9560) $32,263.57 + EPG Chase Checking $70,958.40. Down $135,452 from the $238,674 shown 22 Nov: the bank accounts in QuickBooks changed overnight (22 Nov showed two different accounts, $1,000.06 + $237,673.62), so this looks like bookkeeping (Joel), not necessarily cash spent. Confirm with the bank before acting on it.",
-      "asOf": "2026-11-23",
+      "source": "QuickBooks balance sheet, cash basis, as of 24 Nov, pulled by the runner (read-only), 24 Nov ~07:20 PT: CHASE BUS PREM SAV (9560) $32,263.57 + EPG Chase Checking $70,958.40. Down $135,452 from the $238,674 shown 22 Nov: the bank accounts in QuickBooks changed overnight (22 Nov showed two different accounts, $1,000.06 + $237,673.62), so this looks like bookkeeping (Joel), not necessarily cash spent. Confirm with the bank before acting on it.",
+      "asOf": "2026-11-24",
       "needsGate": false,
-      "gate": "2026-11-23-fe2585"
+      "gate": "2026-11-24-08acc6"
     }
   ]
 }

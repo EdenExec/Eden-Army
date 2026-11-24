@@ -1,0 +1,130 @@
+{
+  "id": "2026-11-24-08acc6",
+  "subject": "Benches 24 Nov",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Revenue MTD QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1-24 Nov 2026 Total Income",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): P&L 1-24 Nov Total Income 0.00"
+    },
+    {
+      "label": "Revenue YTD QuickBooks",
+      "claimed": 590228,
+      "unit": "usd",
+      "source": "QuickBooks P&L 1 Jan-24 Nov 2026 Total Income",
+      "recomputed": 590228,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): P&L YTD Total Income 530,878 + 59,350"
+    },
+    {
+      "label": "Top customers MTD count",
+      "claimed": 0,
+      "unit": "count",
+      "source": "QuickBooks Sales by Customer summary, cash basis, Nov 2026: customers with sales",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): Sales by Customer no_data"
+    },
+    {
+      "label": "Cash on hand",
+      "claimed": 103221.97,
+      "unit": "usd",
+      "source": "QuickBooks balance sheet cash basis as of 24 Nov 2026, Bank Accounts total",
+      "recomputed": 103221.97,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): 32,263.57 + 70,958.40"
+    },
+    {
+      "label": "Open AR in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AR aging summary as of 24 Nov 2026, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): AR aging no_data"
+    },
+    {
+      "label": "Open AR in QuickBooks 31+ days",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AR aging summary as of 24 Nov 2026, 31+ buckets",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): AR aging no_data"
+    },
+    {
+      "label": "Open AP",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks AP aging summary as of 24 Nov 2026, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's raw QBO pull qbo-pull-2026-11-24.md (QBO tools not available in this subagent): AP aging no_data"
+    },
+    {
+      "label": "Past due owed",
+      "claimed": 158700,
+      "unit": "usd",
+      "source": "Cash Pulse datasets/placements: sum of open where status=open and due<2026-11-24",
+      "recomputed": 158700,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed: 62046,62059,62060,62061,62063,62064"
+    },
+    {
+      "label": "Past due invoice count",
+      "claimed": 6,
+      "unit": "count",
+      "source": "same rows as Past due owed",
+      "recomputed": 6,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed"
+    },
+    {
+      "label": "Oldest past due days late",
+      "claimed": 104,
+      "unit": "days",
+      "source": "earliest due date among past-due rows, days to 2026-11-24",
+      "recomputed": 104,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed: 62046 due 2026-08-12 to 2026-11-24"
+    },
+    {
+      "label": "Invoiced not yet due",
+      "claimed": 36450,
+      "unit": "usd",
+      "source": "Cash Pulse placements: sum of open where status=open and due>=2026-11-24",
+      "recomputed": 36450,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed: 62056 29,700 + 62057 6,750"
+    },
+    {
+      "label": "Coming not invoiced excl Megawatt",
+      "claimed": 187100,
+      "unit": "usd",
+      "source": "Cash Pulse placements: sum of open where status=upcoming, excluding Megawatt 62054",
+      "recomputed": 187100,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed: 62062,62065,62066,62067,62068"
+    },
+    {
+      "label": "Megawatt moved to 2027",
+      "claimed": 45000,
+      "unit": "usd",
+      "source": "Cash Pulse placements row 62054 open",
+      "recomputed": 45000,
+      "ok": true,
+      "note": "Cash Pulse datasets/placements rows blob (42 rows, updated 17 Oct by Tally) read via Artifact, recomputed: row 62054 open 45,000"
+    }
+  ],
+  "createdAt": "2026-11-24T14:48:39.703Z",
+  "doc": "projects/virtual-office/benches/revenue.json",
+  "checkedBy": "docket",
+  "closedAt": "2026-11-24T14:49:18.892Z"
+}
