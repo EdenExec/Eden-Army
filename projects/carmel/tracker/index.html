@@ -353,7 +353,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
   function renderSteps() {
     var box = $("steps"); box.replaceChildren();
     if (!S.steps.length) { box.appendChild(emptyState(loaded.steps ? "No steps yet" : "Loading next steps…", "Add one below, or Carmel's Partner adds them after each call and email.")); return; }
-    var list = S.steps.slice().sort(function (a, b) { if (!!a.done !== !!b.done) return a.done ? 1 : -1; return String(a.due || "9999").localeCompare(String(b.due || "9999")); });
+    var list = S.steps.slice().sort(function (a, b) { if (!!a.done !== !!b.done) return a.done ? 1 : -1; if (!!a.pin !== !!b.pin) return a.pin ? -1 : 1; if (a.pin && b.pin) return (a.pin_order || 99) - (b.pin_order || 99); return String(a.due || "9999").localeCompare(String(b.due || "9999")); });
     var tb = el("tbody");
     list.forEach(function (s) {
       var cb = el("input", { type: "checkbox", id: "st-" + s.id, "aria-label": "Done: " + s.text, style: "width:auto" });
@@ -362,7 +362,7 @@ footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8p
       var overdue = !s.done && s.due && s.due < today();
       var tr = el("tr", { cls: s.done ? "done" : "" }, [
         el("td", null, [cb]),
-        el("td", { cls: "t" }, [document.createTextNode(s.text), s.role_id ? el("span", { cls: "src", text: roleTitle(s.role_id) }) : null, src(s.source)]),
+        el("td", { cls: "t" }, [s.pin && !s.done ? el("span", { cls: "chip warn", text: "Read first" }) : null, s.pin && !s.done ? document.createTextNode(" ") : null, document.createTextNode(s.text), s.role_id ? el("span", { cls: "src", text: roleTitle(s.role_id) }) : null, src(s.source)]),
         el("td", { text: s.owner || "–" }),
         el("td", { cls: "num" }, [overdue ? el("span", { cls: "chip bad", text: fmtDate(s.due) }) : document.createTextNode(s.due ? fmtDate(s.due) : "No date"), s.due_source ? el("span", { cls: "src", text: s.due_source }) : null])
       ]);
