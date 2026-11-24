@@ -12,9 +12,9 @@ How to hand one out: give the person one unused code plus the one-sheet (`Eden's
 | reng6mrudb | Rex Hickman | 11 Nov | 11 Nov |
 | renc6soq7b | Sadie Kienzle | 11 Nov | 11 Nov |
 | ren47uzjpb | Austin Miller | assigned 23 Nov for Kev or Nick to hand out | |
-| renvib3c7b | Duane Hogge | assigned 23 Nov for Kev or Nick to hand out | |
-| renzuarw6b | Terry Musgrove | assigned 23 Nov for Kev or Nick to hand out | |
-| reny32nizb | Craig Churchill | assigned 23 Nov for Kev or Nick to hand out | |
+| renvib3c7b | Duane Hogge | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
+| renzuarw6b | Terry Musgrove | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
+| reny32nizb | Craig Churchill | assigned 23 Nov; ON HOLD (Kev, 24 Nov), do not hand out yet | |
 | rentsumc8b | Henry (Nick's list) | assigned 23 Nov for Kev or Nick to hand out | |
 | renms3r6kb | Nate (Nick's list) | assigned 23 Nov for Kev or Nick to hand out | |
 | ren7dh8ecb | Brendan Caine (1099 partner candidate) | assigned 17 Nov, Kev to send | |
