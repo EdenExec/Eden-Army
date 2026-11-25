@@ -5,7 +5,7 @@ import { existsSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { pullBoard } from "./office-prep.ts";
+import { pullBoard, toolPublished } from "./office-prep.ts";
 
 const prep = (...args: string[]) => execFileSync(process.execPath, ["workshop/office/office-prep.ts", ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 function dump(): string {
@@ -115,5 +115,29 @@ describe("the live board pull", () => {
     const ok = script("require('fs').writeFileSync(process.argv[process.argv.indexOf('--out') + 1], '{\"generated_at\":\"x\"}')");
     assert.equal(pullBoard(d, { CRELATE_API_KEY: "k" }, ok), true);
     assert.equal(pullBoard(d, { CRELATE_API_KEY: "k", OFFICE_BOARD_LIVE: "0" }, ok), false);
+  });
+});
+
+describe("tool page dates from the artifact list", () => {
+  test("an artifact tool takes its artifact's last update date; apps and unlisted links stay unrecorded", () => {
+    const list = [
+      "- (mine, web page, not a Doc, pinned) Eden Day Board — https://claude.ai/artifact/4QFTb8NFvWhbc2jg5zD4hc — updated 2026-11-09",
+      "- (mine, web page, not a Doc) Runway — https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv — updated 2026-11-15",
+    ].join("\n");
+    const act = toolPublished(list, [
+      { id: "day-board", url: "https://claude.ai/artifact/4QFTb8NFvWhbc2jg5zD4hc" },
+      { id: "runway", url: "https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv" },
+      { id: "crelate", url: "https://app.crelate.com" },
+      { id: "gone", url: "https://claude.ai/artifact/ZZZZZZZZZZZZZZZZZZZZZZ" },
+      { id: "queue" },
+    ]);
+    assert.deepEqual(act, { "day-board": "2026-11-09T00:00:00.000Z", runway: "2026-11-15T00:00:00.000Z" });
+  });
+  test("in: artifacts.txt in the dump becomes published.json", () => {
+    const d = dump(), v = join(d, "versions.txt");
+    writeFileSync(v, "{}");
+    writeFileSync(join(d, "artifacts.txt"), "- (mine) Runway — https://claude.ai/artifact/LL1hw8T3s9Bqk8tJchv8Xv — updated 2026-11-15\n");
+    prep("in", d, v);
+    assert.equal((JSON.parse(readFileSync(join(d, "published.json"), "utf8")) as Record<string, string>).runway, "2026-11-15T00:00:00.000Z");
   });
 });

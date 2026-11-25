@@ -12,6 +12,7 @@
 // Benches (Kev, 27 Oct 2026): also dump `benches` (Command Center) and `jobs` (Team Hub) and the run writes benches/client, recruiting,
 //     depth, university, projects (and family when <dump>/ledger.json, the Home lane rows, exists). Finance and revenue are Tally's and are never written here.
 //     `run` also tries one read-only Crelate pull (the Round Table board) into <dump>/board.json; with no key or no network it falls back to the board file in the repo.
+//     Tools (Q, 25 Nov 2026): paste the Artifact tool's `list` results into <dump>/artifacts.txt and each artifact tool carries pagePublished, the date its page was last published (not use).
 //     That one pull also feeds meta/crelate (the Command Center's "Recruiters · Crelate · this week" table; counts only, see workshop/core/recruiter-board.ts).
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -42,6 +43,24 @@ function parseVersions(text: string): Record<string, number> {
   return out;
 }
 
+/** Tool page dates (Q, sync patrol 25 Nov 2026: every tool on the Command Center carried no date at all, so the patrol could not tell a live
+ *  link from an abandoned one). artifacts.txt = the Artifact tool's `list` results pasted as they came back
+ *  ("- (mine, ...) Title — https://claude.ai/artifact/<id> — updated YYYY-MM-DD"). Each tool whose url is a listed artifact gets the date its
+ *  page was last published. That is not use: a page whose database changes hourly (the Team Hub) can be published weeks ago, so this never
+ *  feeds lastActivity or the unused report. Tools that are not artifacts (apps, queues) stay undated. */
+export function toolPublished(listText: string, tools: { id: string; url?: string }[]): Record<string, string> {
+  const updated: Record<string, string> = {};
+  for (const m of listText.matchAll(/claude\.ai\/artifact\/([A-Za-z0-9]+)\S*\s+\S\s+updated\s+(\d{4}-\d{2}-\d{2})/g)) {
+    if (!updated[m[1]!] || updated[m[1]!]! < m[2]!) updated[m[1]!] = m[2]!;
+  }
+  const out: Record<string, string> = {};
+  for (const t of tools) {
+    const id = /claude\.ai\/artifact\/([A-Za-z0-9]+)/.exec(t.url ?? "")?.[1];
+    if (id && updated[id]) out[t.id] = `${updated[id]}T00:00:00.000Z`;
+  }
+  return out;
+}
+
 function prepIn(dump: string, versionsFile: string): void {
   const versions = parseVersions(readFileSync(versionsFile, "utf8"));
   const existing: Record<string, { version: number; data: unknown }> = {};
@@ -56,6 +75,12 @@ function prepIn(dump: string, versionsFile: string): void {
   }
   for (const [col, file] of Object.entries(READ_ONLY)) writeFileSync(join(dump, file), JSON.stringify(rows[col], null, 2) + "\n");
   writeFileSync(join(dump, "existing.json"), JSON.stringify(existing, null, 2) + "\n");
+  if (existsSync(join(dump, "artifacts.txt"))) {
+    const tools = readJson<{ id: string; url?: string }[]>("projects/virtual-office/tools.json");
+    const pub = toolPublished(readFileSync(join(dump, "artifacts.txt"), "utf8"), tools);
+    writeFileSync(join(dump, "published.json"), JSON.stringify(pub, null, 2) + "\n");
+    console.log(`Tool pages: ${Object.keys(pub).length} of ${tools.length} tool(s) dated from the artifact list.`);
+  }
   console.log(`${rows.tickets!.length} ticket(s), ${rows.team_asks!.length} Team Hub ask(s), ${rows.jobs!.length} Team Hub job(s), ${Object.keys(existing).length} versioned doc(s). Next: npm run office -- sync ${syncFlags(dump).join(" ")}`);
 }
 function syncFlags(dump: string): string[] {
@@ -67,6 +92,7 @@ function syncFlags(dump: string): string[] {
   }
   if (existsSync(join(dump, "ledger.json"))) flags.push("--ledger", join(dump, "ledger.json"));
   if (existsSync(join(dump, "board.json"))) flags.push("--board", join(dump, "board.json"));
+  if (existsSync(join(dump, "published.json"))) flags.push("--published", join(dump, "published.json"));
   return flags;
 }
 

@@ -363,7 +363,7 @@ export function qcApprovalsByDay(qc: QcItem[], now: Date): Record<string, number
   return out;
 }
 
-export function buildFeed(input: SyncInput, tools: Tool[] = [], seen: Record<string, string> = {}, activity: Record<string, string> = {}, priorRecords?: Partial<Records> | null): Feed {
+export function buildFeed(input: SyncInput, tools: Tool[] = [], seen: Record<string, string> = {}, activity: Record<string, string> = {}, priorRecords?: Partial<Records> | null, published: Record<string, string> = {}): Feed {
   const alerts = buildAlerts(input);
   const agents = buildAgents(input, alerts);
   const unused = findUnused(tools, input.routines, input.qc, seen, activity, input.now);
@@ -384,7 +384,7 @@ export function buildFeed(input: SyncInput, tools: Tool[] = [], seen: Record<str
   for (const a of alerts) docs[`alerts/${a.id}`] = a;
   for (const t of tools) {
     const r = t.routineId ? input.routines.find((x) => x.id === t.routineId) : undefined;
-    docs[`tools/${t.id}`] = { ...t, noTrigger: !!r && r.trigger_id === null, waitingOnKev: !!t.qcId && input.qc.some((q) => q.id === t.qcId && q.status === "pending"), lastActivity: activity[t.id] ?? null };
+    docs[`tools/${t.id}`] = { ...t, noTrigger: !!r && r.trigger_id === null, waitingOnKev: !!t.qcId && input.qc.some((q) => q.id === t.qcId && q.status === "pending"), lastActivity: activity[t.id] ?? null, ...(published[t.id] ? { pagePublished: published[t.id] } : {}) };
   }
   docs["reports/unused"] = { asOf: at, findings: unused, note: "Evidence is Office clicks plus any activity Radar supplied. 'none' means no use was recorded, not proof of no use." };
   const ledger = input.ledger ?? [];

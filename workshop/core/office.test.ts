@@ -179,6 +179,13 @@ describe("unused tools", () => {
     assert.equal(by.gate, undefined);
     assert.equal(by.hub!.evidence, "office-clicks");
   });
+  test("a page's publish date is carried as pagePublished and never counts as use", () => {
+    const f = buildFeed(base({}), tools, {}, {}, null, { hub: "2026-11-05T00:00:00.000Z" });
+    const docs = f.docs as Record<string, { pagePublished?: string; lastActivity: string | null }>;
+    assert.equal(docs["tools/hub"]!.pagePublished, "2026-11-05T00:00:00.000Z");
+    assert.equal(docs["tools/hub"]!.lastActivity, null);
+    assert.equal(docs["tools/gate"]!.pagePublished, undefined);
+  });
   test("a tool with no evidence is flagged as unrecorded, not as proven unused", () => {
     const f = findUnused([tools[0]!], [], [], {}, {}, now);
     assert.equal(f[0]!.evidence, "none");

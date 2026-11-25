@@ -11,6 +11,7 @@
 //   --actions actions.json [{action,at,key?,agent?}]                ArtifactData list of the actions collection (Kev's Done / Follow up taps score 2 each)
 //   --asks asks.json       [{from,createdAt}]                       the Team Hub's team_asks: an ask an agent posted counts as hearing from it
 //   --seen seen.json       {"open-hub":"2026-10-21T..."}            the seen collection, id -> at
+//   --published pub.json   {"hub":"2026-11-05T..."}                 date each artifact tool's page was last published (office-prep, from artifacts.txt); written as pagePublished, never counted as use
 //   --activity act.json    {"hub":"2026-10-20T..."}                 last time Radar saw each tool used
 //   --existing ex.json     {"agents/radar":{"version":3,"data":{...}}}  ArtifactData list results, so writes carry if_version and resolved alerts are deleted
 //   --jobs jobs.json       the Team Hub jobs collection (office-prep writes it from the dump): the Client work bench
@@ -81,7 +82,7 @@ try {
     console.log(`Game core and projects core copied into ${page}.`);
     process.exit(0);
   }
-  if (cmd !== "sync") throw new Error("Usage: office sync [--dry] [--out dir] [--ledger f] [--inbox f] [--calls f] [--runs f] [--tickets f] [--actions f] [--asks f] [--seen f] [--activity f] [--existing f] [--now ISO] | build-page");
+  if (cmd !== "sync") throw new Error("Usage: office sync [--dry] [--out dir] [--ledger f] [--inbox f] [--calls f] [--runs f] [--tickets f] [--actions f] [--asks f] [--seen f] [--activity f] [--published f] [--existing f] [--now ISO] | build-page");
   const { agents, routines, nowFiles, heard } = loadAgents();
   const now = flags.has("now") ? new Date(flags.get("now")!) : new Date();
   const input: SyncInput = {
@@ -97,7 +98,7 @@ try {
   const toolsFile = "projects/virtual-office/tools.json";
   const tools = existsSync(toolsFile) ? (JSON.parse(readFileSync(toolsFile, "utf8")) as Tool[]) : [];
   const existing = json<Record<string, { version: number; data?: unknown }>>("existing") ?? {};
-  const feed = buildFeed(input, tools, json("seen") ?? {}, json("activity") ?? {}, existing["meta/records"]?.data as never);
+  const feed = buildFeed(input, tools, json("seen") ?? {}, json("activity") ?? {}, existing["meta/records"]?.data as never, json("published") ?? {});
   const ops = planWrites(feed.docs, existing);
   const batches = chunk(ops, 50);
   if (flags.has("dry")) {
