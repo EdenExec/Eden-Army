@@ -1,0 +1,130 @@
+{
+  "id": "2026-11-25-68fecb",
+  "subject": "Revenue and finance benches 2026-11-25 (EPG, books not closed)",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "passed",
+  "items": [
+    {
+      "label": "Past due total (Cash Pulse)",
+      "claimed": 158700,
+      "unit": "usd",
+      "source": "placements.json in EPG Cash Pulse (artifact LxaFb1CvQgqcsrMn5KXie7, dataset placements, blob 50f4552a...): sum of `open` where status is open and due is before 2026-11-25",
+      "recomputed": 158700,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter)"
+    },
+    {
+      "label": "Past due invoice count",
+      "claimed": 6,
+      "unit": "count",
+      "source": "Same file: rows with status open and due before 2026-11-25",
+      "recomputed": 6,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter)"
+    },
+    {
+      "label": "Oldest past-due invoice, days late",
+      "claimed": 105,
+      "unit": "days",
+      "source": "Same file: among past-due rows, 2026-11-25 minus the earliest due date",
+      "recomputed": 105,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter): earliest due 2026-08-12"
+    },
+    {
+      "label": "Invoiced not yet due total",
+      "claimed": 36450,
+      "unit": "usd",
+      "source": "Same file: sum of `open` where status is open and due on or after 2026-11-25",
+      "recomputed": 36450,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter): dues 2026-12-01, 2026-12-23"
+    },
+    {
+      "label": "Invoiced not yet due count",
+      "claimed": 2,
+      "unit": "count",
+      "source": "Same file: rows with status open and due on or after 2026-11-25",
+      "recomputed": 2,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter)"
+    },
+    {
+      "label": "Coming (upcoming) total excluding Megawatt",
+      "claimed": 187100,
+      "unit": "usd",
+      "source": "Same file: sum of `open` where status is upcoming, excluding client Megawatt (Kev moved it to 2027 on 23 Oct)",
+      "recomputed": 187100,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter): 6 upcoming less Megawatt 45000"
+    },
+    {
+      "label": "Coming (upcoming) count excluding Megawatt",
+      "claimed": 5,
+      "unit": "count",
+      "source": "Same file: rows with status upcoming, excluding client Megawatt",
+      "recomputed": 5,
+      "ok": true,
+      "note": "re-derived from Cash Pulse placements blob 50f4552a (42 rows; dataset meta last updated 2026-10-17, past 168h staleAfter)"
+    },
+    {
+      "label": "Revenue month to date (EPG QuickBooks)",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks P&L, EPG, 2026-11-01 to 2026-11-25, Total income",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): P&L 1-25 Nov income 0.00"
+    },
+    {
+      "label": "Revenue year to date (EPG QuickBooks)",
+      "claimed": 590228,
+      "unit": "usd",
+      "source": "QuickBooks P&L, EPG, 2026-01-01 to 2026-11-25, Total income (Sales plus Services)",
+      "recomputed": 590228,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): P&L 1 Jan-25 Nov income 590,228.00"
+    },
+    {
+      "label": "Cash on hand (EPG QuickBooks)",
+      "claimed": 103221.97,
+      "unit": "usd",
+      "source": "QuickBooks balance sheet, EPG, cash basis, as of 2026-11-25, total Bank accounts",
+      "recomputed": 103221.97,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): BS cash basis bank accounts 103,221.97"
+    },
+    {
+      "label": "Open AR in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/R aging summary, EPG, as of 2026-11-25, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): AR aging no outstanding receivables"
+    },
+    {
+      "label": "Open AP in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/P aging summary, EPG, as of 2026-11-25, total",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): AP aging no outstanding payables"
+    },
+    {
+      "label": "Open AR 31+ days in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/R aging, EPG, as of 2026-11-25: buckets 31 days and older",
+      "recomputed": 0,
+      "ok": true,
+      "note": "checked against ticket runner's QBO pull 25 Nov ~06:55 PT (QBO tools not available in this subagent): AR aging no outstanding receivables, so 31+ buckets 0"
+    }
+  ],
+  "createdAt": "2026-11-25T14:48:00.101Z",
+  "doc": "projects/virtual-office/benches/revenue.json",
+  "checkedBy": "docket",
+  "closedAt": "2026-11-25T14:49:29.661Z"
+}
