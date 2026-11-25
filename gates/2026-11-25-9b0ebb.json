@@ -1,0 +1,124 @@
+{
+  "id": "2026-11-25-9b0ebb",
+  "subject": "Docket review of VMG Recruiting Services Agreement (Doc, 24 Nov 2026): fees, windows, examples, AR",
+  "preparer": "docket",
+  "checker": "tally",
+  "status": "open",
+  "items": [
+    {
+      "label": "Monthly retainer",
+      "claimed": 7500,
+      "unit": "usd",
+      "source": "VMG RSA Google Doc 1RBdx0UQ (24 Nov), clause 3.1"
+    },
+    {
+      "label": "Placement fee rate (new)",
+      "claimed": 18,
+      "unit": "pct",
+      "source": "VMG RSA Doc clause 3.2"
+    },
+    {
+      "label": "Placement fee rate (June agreement)",
+      "claimed": 25,
+      "unit": "pct",
+      "source": "Drive 'Vertical Mechanical Group -Headhunting Fee Agreement' (June 2026), Terms para 1"
+    },
+    {
+      "label": "Clause 3.4 example fee on $200,000 base",
+      "claimed": 36000,
+      "unit": "usd",
+      "source": "Recompute: clause 3.2 rate x $200,000 base in clause 3.4"
+    },
+    {
+      "label": "Per-hire saving to VMG at $200,000 base, June rate vs new rate",
+      "claimed": 14000,
+      "unit": "usd",
+      "source": "Recompute: (June rate - new rate) x $200,000"
+    },
+    {
+      "label": "Hires per year at $200,000 base for VMG to break even on 12 retainers",
+      "claimed": 6.43,
+      "unit": "count",
+      "source": "Recompute: 12 x clause 3.1 retainer / per-hire saving above, 2 decimals (count tolerance exact to 2dp)"
+    },
+    {
+      "label": "Retainer payment window",
+      "claimed": 15,
+      "unit": "days",
+      "source": "VMG RSA Doc clause 4.2 (retainer invoices)"
+    },
+    {
+      "label": "Placement fee payment window",
+      "claimed": 30,
+      "unit": "days",
+      "source": "VMG RSA Doc clause 4.2 (placement invoices)"
+    },
+    {
+      "label": "Replacement guarantee period",
+      "claimed": 180,
+      "unit": "days",
+      "source": "VMG RSA Doc clause 5.1; June agreement Guarantee para"
+    },
+    {
+      "label": "Guarantee notice window (business days)",
+      "claimed": 10,
+      "unit": "days",
+      "source": "VMG RSA Doc clause 5.2"
+    },
+    {
+      "label": "Fee tail after presentation (months)",
+      "claimed": 12,
+      "unit": "count",
+      "source": "VMG RSA Doc clauses 3.5 and 7.3"
+    },
+    {
+      "label": "Termination notice",
+      "claimed": 30,
+      "unit": "days",
+      "source": "VMG RSA Doc clause 7.2"
+    },
+    {
+      "label": "Proration example: final retainer if notice given 10 Jan 2027 (ends 9 Feb 2027), Feb prorated by day",
+      "claimed": 2410.71,
+      "unit": "usd",
+      "source": "Recompute: retainer x (days 1-9 Feb) / days in Feb 2027"
+    },
+    {
+      "label": "Contract-hire example: annualised pay at $90/hour x 2,080 hours",
+      "claimed": 187200,
+      "unit": "usd",
+      "source": "Recompute: proposed redline to clause 3.2, 2,080 hours a year"
+    },
+    {
+      "label": "Contract-hire example: 18% fee on that annualised pay",
+      "claimed": 33696,
+      "unit": "usd",
+      "source": "Recompute: clause 3.2 rate x annualised pay above"
+    },
+    {
+      "label": "Invoice 62060 amount open",
+      "claimed": 37000,
+      "unit": "usd",
+      "source": "projects/virtual-office/benches/finance-rows.json row 62060; QuickBooks AR"
+    },
+    {
+      "label": "Invoice 62060 days past due at 25 Nov 2026",
+      "claimed": 42,
+      "unit": "days",
+      "source": "Due date on bench row 62060 to 2026-11-25"
+    },
+    {
+      "label": "Invoice 62060 at June 25% if the $37,000 was billed at 20%",
+      "claimed": 46250,
+      "unit": "usd",
+      "source": "Recompute: (62060 amount / 20%) x 25%; Tally flag in deliverables/vmg/2026-11-17-open-decisions.md item 1"
+    },
+    {
+      "label": "Invoice 62067 VMG amount (not yet invoiced)",
+      "claimed": 42500,
+      "unit": "usd",
+      "source": "projects/virtual-office/benches/finance-rows.json row 62067"
+    }
+  ],
+  "createdAt": "2026-11-25T02:16:34.116Z"
+}
