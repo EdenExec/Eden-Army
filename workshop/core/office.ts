@@ -363,6 +363,20 @@ export function qcApprovalsByDay(qc: QcItem[], now: Date): Record<string, number
   return out;
 }
 
+/** Tool page dates carried between runs (Q, sync patrol 26 Nov 2026: the runner pasted the artifact list once on 25 Nov and dated 10 tools,
+ *  then every hourly run without the list set tools/* again and wiped the dates). A run's fresh dates win when newer; a tool the run did not
+ *  date keeps the pagePublished its document already holds. Never invents a date. */
+export function carryPublished(published: Record<string, string>, existing: Record<string, { data?: unknown }>): Record<string, string> {
+  const out = { ...published };
+  for (const [key, doc] of Object.entries(existing)) {
+    if (!key.startsWith("tools/")) continue;
+    const prior = (doc.data as { pagePublished?: unknown } | undefined)?.pagePublished;
+    const id = key.slice(6);
+    if (typeof prior === "string" && (!out[id] || out[id]! < prior)) out[id] = prior;
+  }
+  return out;
+}
+
 export function buildFeed(input: SyncInput, tools: Tool[] = [], seen: Record<string, string> = {}, activity: Record<string, string> = {}, priorRecords?: Partial<Records> | null, published: Record<string, string> = {}): Feed {
   const alerts = buildAlerts(input);
   const agents = buildAgents(input, alerts);

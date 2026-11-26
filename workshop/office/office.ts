@@ -34,7 +34,7 @@ import { loadProjectDefs } from "./projects-load.ts";
 import { buildBenches } from "../core/benches.ts";
 import { loadBenchInputs } from "./benches.ts";
 import { buildCredits } from "../core/credits.ts";
-import { buildFeed, chunk, planWrites, type AgentLite, type NowFile, type RoutineLite, type SyncInput, type Tool } from "../core/office.ts";
+import { buildFeed, carryPublished, chunk, planWrites, type AgentLite, type NowFile, type RoutineLite, type SyncInput, type Tool } from "../core/office.ts";
 
 const argv = process.argv.slice(2);
 const cmd = argv[0];
@@ -98,7 +98,7 @@ try {
   const toolsFile = "projects/virtual-office/tools.json";
   const tools = existsSync(toolsFile) ? (JSON.parse(readFileSync(toolsFile, "utf8")) as Tool[]) : [];
   const existing = json<Record<string, { version: number; data?: unknown }>>("existing") ?? {};
-  const feed = buildFeed(input, tools, json("seen") ?? {}, json("activity") ?? {}, existing["meta/records"]?.data as never, json("published") ?? {});
+  const feed = buildFeed(input, tools, json("seen") ?? {}, json("activity") ?? {}, existing["meta/records"]?.data as never, carryPublished(json("published") ?? {}, existing));
   const ops = planWrites(feed.docs, existing);
   const batches = chunk(ops, 50);
   if (flags.has("dry")) {

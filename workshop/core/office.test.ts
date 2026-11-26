@@ -1,6 +1,6 @@
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { buildFeed, buildAlerts, buildAgents, lastHeardOf, findUnused, planWrites, chunk, scrub, qcApprovalsByDay, DESKS, SENSITIVE_AGENTS, type SyncInput, SUPERHUMAN_URL } from "./office.ts";
+import { buildFeed, carryPublished, buildAlerts, buildAgents, lastHeardOf, findUnused, planWrites, chunk, scrub, qcApprovalsByDay, DESKS, SENSITIVE_AGENTS, type SyncInput, SUPERHUMAN_URL } from "./office.ts";
 import type { QcItem } from "./qc.ts";
 import type { GateRecord } from "./numbers-gate.ts";
 import { approvalHash } from "./qc.ts";
@@ -185,6 +185,17 @@ describe("unused tools", () => {
     assert.equal(docs["tools/hub"]!.pagePublished, "2026-11-05T00:00:00.000Z");
     assert.equal(docs["tools/hub"]!.lastActivity, null);
     assert.equal(docs["tools/gate"]!.pagePublished, undefined);
+  });
+  test("a run without the artifact list keeps each tool's last page date; a newer list date wins", () => {
+    const existing = {
+      "tools/hub": { data: { pagePublished: "2026-11-05T00:00:00.000Z" } },
+      "tools/runway": { data: { pagePublished: "2026-11-01T00:00:00.000Z" } },
+      "tools/gate": { data: {} },
+      "agents/q": { data: { pagePublished: "2026-11-09T00:00:00.000Z" } },
+    };
+    assert.deepEqual(carryPublished({}, existing), { hub: "2026-11-05T00:00:00.000Z", runway: "2026-11-01T00:00:00.000Z" });
+    assert.deepEqual(carryPublished({ runway: "2026-11-15T00:00:00.000Z" }, existing).runway, "2026-11-15T00:00:00.000Z");
+    assert.deepEqual(carryPublished({ hub: "2026-10-01T00:00:00.000Z" }, existing).hub, "2026-11-05T00:00:00.000Z");
   });
   test("a tool with no evidence is flagged as unrecorded, not as proven unused", () => {
     const f = findUnused([tools[0]!], [], [], {}, {}, now);

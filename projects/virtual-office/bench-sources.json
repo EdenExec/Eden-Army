@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "by": "Q (first sync patrol 27 Oct; recruiter leaderboard 28 Oct)",
   "rule": "Counts and dates only; every tile names its source. A bench's asOf is the sync time while its source is inside sourceWindow, and the source's own age when it is not, so the page never says fresh over old data. Never write actions, never approve, never delete. Finance and revenue are Tally's: Q never writes a money figure there.",
   "refresh": "npm run office-prep -- run <dump> <versions> <dest> (the hourly ticket runner). The dump must include `benches` (Command Center) and `jobs` (Team Hub) or the bench writes are dropped. Code: workshop/core/benches.ts (pure), workshop/office/benches.ts (reads the sources), tests beside each.",
@@ -125,7 +125,7 @@
       "source": "The Artifact tool's list results, pasted by the runner into <dump>/artifacts.txt; office-prep (toolPublished) turns them into <dump>/published.json and passes --published",
       "fields": "pagePublished = the date the tool's page was last published. Not use: a page whose database changes hourly (the Team Hub) can be published weeks ago, so it never feeds lastActivity or reports/unused",
       "window": "each tool's expectedEveryDays, read by the patrol as a prompt to check, not as proof the tool is idle",
-      "status": "25 Nov: written once by the patrol; the runner step is in ticket-runner.md step 8.1 (ticket t-202611250640-qtl1 to Radar)"
+      "status": "25 Nov: written once by the patrol; the runner step is in ticket-runner.md step 8.1 (ticket t-202611250640-qtl1 to Radar); 26 Nov: the sync now keeps each tool's last pagePublished when a run has no artifact list (carryPublished in workshop/core/office.ts), so one pasted list is no longer wiped by the next hourly set"
     }
   }
 }
