@@ -1,8 +1,8 @@
 {
-  "task": "Sync patrol 23 Nov (t-202611230620-scas): desk checked; no board writes this session (no live Hub access, Monday board-keeping pass not run)",
-  "since": "2026-11-23T06:47:00-08:00",
+  "task": "Sync patrol 27 Nov (t-202611270820-scas): desk checked via repo only; no board writes (no live Hub access), Monday board-keeping pass still not run",
+  "since": "2026-11-27T08:50:00-08:00",
   "state": "idle",
-  "blockedOn": "Kev: approve Max owners (drafts/2026-11-17-max-reassignment-proposal-v2.md); say post it for the Bridger Hoffman ask; Alex surname",
-  "status": "Casey: desk alive, idle; last board work 16-17 Nov voice note still awaiting Kev's three items; Monday board-keeping post to run next live session.",
-  "updated": "2026-11-23T06:50:00-08:00"
+  "blockedOn": "Kev: approve Max owners (drafts/2026-11-17-max-reassignment-proposal-v2.md); say post it for the Bridger Hoffman ask; Alex surname. Also t-202611091617-scli (Lead Log phone dates) still open, not worked this session",
+  "status": "Casey: desk alive, idle; last board work 16-17 Nov voice note still awaiting Kev's three items; board-keeping post to run next live session (Sabbath-aware, not before Sat sundown).",
+  "updated": "2026-11-27T08:50:00-08:00"
 }

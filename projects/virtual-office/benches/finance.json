@@ -55,8 +55,8 @@
     {
       "label": "Books to clean up (Joel)",
       "value": "4 items",
-      "source": "Carried from 23 Oct: Aug to Oct invoices not booked; Jul and Sep receipts not booked as income; Sep payroll still open; equity split looks off. QuickBooks figures identical on 24, 25 and 26 Nov (AR still $0, November income still $0), so the first item stands. Ask Joel what changed on 23 Nov (bank accounts re-mapped, YTD income +$11,500, $160,000 owner compensation booked below the line).",
-      "asOf": "2026-11-26",
+      "source": "Carried from 23 Oct: Aug to Oct invoices not booked; Jul and Sep receipts not booked as income; Sep payroll still open; equity split looks off. QuickBooks figures identical on 24, 25, 26 and 27 Nov (AR still $0, November income still $0, cash $103,221.97, YTD income $590,228; 27 Nov check is the runner's 6:45am PT read-only pull, not a Tally read), so all four items stand unchanged. Ask Joel what changed on 23 Nov (bank accounts re-mapped, YTD income +$11,500, $160,000 owner compensation booked below the line).",
+      "asOf": "2026-11-27",
       "needsGate": false
     },
     {
