@@ -1,0 +1,111 @@
+{
+  "id": "2026-11-27-d900bd",
+  "subject": "Revenue and finance benches 2026-11-27 (EPG QuickBooks and Cash Pulse; books not closed)",
+  "preparer": "tally",
+  "checker": "docket",
+  "status": "open",
+  "items": [
+    {
+      "label": "Past due total (Cash Pulse)",
+      "claimed": 158700,
+      "unit": "usd",
+      "source": "placements.json in EPG Cash Pulse (dataset placements v7, blob 50f4552a, unchanged since 17 Oct): sum of `open` where status is open and due before 2026-11-27",
+      "recomputed": 158700,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27: Baker 55,000 (08-12) + Baker 35,200 + VMG 37,000 + Pence Kelly 19,000 (10-14) + PB South 7,500 + Triton 5,000 (10-16)"
+    },
+    {
+      "label": "Past due invoice count",
+      "claimed": 6,
+      "unit": "count",
+      "source": "Same file: rows with status open and due before 2026-11-27",
+      "recomputed": 6,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27"
+    },
+    {
+      "label": "Oldest past-due invoice, days late",
+      "claimed": 107,
+      "unit": "days",
+      "source": "Same file: 2026-11-27 minus earliest due date among past-due rows",
+      "recomputed": 107,
+      "ok": true,
+      "note": "Baker Construction due 2026-08-12 to 2026-11-27"
+    },
+    {
+      "label": "Invoiced not yet due total",
+      "claimed": 36450,
+      "unit": "usd",
+      "source": "Same file: sum of `open` where status is open and due on or after 2026-11-27",
+      "recomputed": 36450,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27: PB South 29,700 (12-01) + 6,750 (12-23)"
+    },
+    {
+      "label": "Invoiced not yet due count",
+      "claimed": 2,
+      "unit": "count",
+      "source": "Same file: rows status open, due on or after 2026-11-27",
+      "recomputed": 2,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27"
+    },
+    {
+      "label": "Coming (upcoming) total excluding Megawatt",
+      "claimed": 187100,
+      "unit": "usd",
+      "source": "Same file: sum of `open` where status is upcoming, excluding client Megawatt (Kev moved it to 2027 on 23 Oct)",
+      "recomputed": 187100,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27: 6 upcoming 232,100 less Megawatt 45,000"
+    },
+    {
+      "label": "Coming (upcoming) count excluding Megawatt",
+      "claimed": 5,
+      "unit": "count",
+      "source": "Same file: rows status upcoming, excluding Megawatt",
+      "recomputed": 5,
+      "ok": true,
+      "note": "Cash Pulse asset 50f4552a re-read by Docket 27 Nov (sha256 bce8424c...), 42 rows, split as of 2026-11-27"
+    },
+    {
+      "label": "Revenue month to date (EPG QuickBooks)",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks P&L, EPG, monthly breakdown, Nov 1 to 27 2026, Total income (runner's read ~07:00 PT 27 Nov)"
+    },
+    {
+      "label": "Revenue year to date (EPG QuickBooks)",
+      "claimed": 590228,
+      "unit": "usd",
+      "source": "QuickBooks P&L, EPG, 2026-01-01 to 2026-11-27, Total income (report default basis) (runner's read ~07:00 PT 27 Nov)"
+    },
+    {
+      "label": "Cash on hand (EPG QuickBooks)",
+      "claimed": 103221.97,
+      "unit": "usd",
+      "source": "QuickBooks balance sheet, EPG, cash basis, as of 2026-11-27, total bank accounts (32,263.57 + 70,958.40) (runner's read ~07:00 PT 27 Nov)"
+    },
+    {
+      "label": "Open AR in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/R aging, EPG, accrual, as of 2026-11-27, total (runner's read ~07:00 PT 27 Nov)"
+    },
+    {
+      "label": "Open AR 31+ days in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/R aging, EPG, as of 2026-11-27, 31 days and older (runner's read ~07:00 PT 27 Nov)"
+    },
+    {
+      "label": "Open AP in QuickBooks",
+      "claimed": 0,
+      "unit": "usd",
+      "source": "QuickBooks A/P aging, EPG, as of 2026-11-27, total (runner's read ~07:00 PT 27 Nov)"
+    }
+  ],
+  "createdAt": "2026-11-27T14:50:39.732Z",
+  "doc": "projects/virtual-office/benches/revenue.json",
+  "checkedBy": "docket"
+}
