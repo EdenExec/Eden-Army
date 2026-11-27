@@ -1,9 +1,9 @@
 {
-  "task": "Status pass 23 Nov 2026 (sync patrol t-202611230820-shar): desk refreshed; Friday 20 Nov lab-review decks were missed and are now the next job",
-  "status": "23 Nov 2026 08:45 PT: desk checked. No change since 19 Nov: workshop sweep closed on Marlowe's side (Barny to apply, gated on Kev); hot-tub pick still waiting on Kev's 3 answers; eden-ranch-idaho brief done. Friday 20 Nov lab-review decks were not built (no projects/*/status/ file exists). Nothing published, sent, spent or committed.",
+  "task": "Check-in 27 Nov 2026 (sync patrol t-202611271020-shar): desk refreshed; lab-review decks for eden-ranch-idaho and hot-tub pick are the next job, due today 1:50pm PT before the Sabbath",
+  "status": "27 Nov 2026 10:50 PT: desk checked. No change since 23 Nov: hot-tub pick still waiting on Kev's 3 answers; eden-ranch-idaho brief done (land ~2028); workshop sweep closed on Marlowe's side (Barny to apply, gated on Kev); no Unsplash key yet, so orangery board rebuild stays parked. Status decks for 20 Nov and 23 Nov were not built (no projects/*/status/ file for these projects). Nothing published, sent, spent or committed.",
   "state": "idle",
-  "lastHeard": "2026-11-23T16:45:00Z",
-  "updated": "2026-11-23T16:45:00Z",
+  "lastHeard": "2026-11-27T18:50:00Z",
+  "updated": "2026-11-27T18:50:00Z",
   "counts": {
     "waitingOnKev": 3,
     "openProjects": 2,
@@ -11,7 +11,7 @@
     "inFlight": 0
   },
   "focus": "Portable 4-person hot tub for the rental backyard, moves to the forever house later",
-  "ticket": "t-202611230820-shar",
+  "ticket": "t-202611271020-shar",
   "recommendation": "120V plug-and-play rotomolded tub first; wood-fired (Goodland) second if burning is allowed",
   "waitingOnKev": [
     "Where is the rental (Vancouver WA, Florida, other)?",
@@ -30,7 +30,7 @@
     "state": "closed for Marlowe; awaiting Barny to apply and republish with Kev's yes",
     "checked": "2026-11-19: git apply --check passes"
   },
-  "next": "Overdue: build the lab-review status decks for eden-ranch-idaho and the hot-tub pick (projects/<slug>/status/2026-11-23.md) and open a status card on the Desk, today; then the regular deck by Fri 27 Nov 1:50pm PT.",
-  "lastRun": "2026-11-23T16:45:00Z",
-  "nextDue": "2026-11-23T23:00:00Z"
+  "next": "Today by 1:50pm PT: write projects/eden-ranch-idaho/status/2026-11-27.md and the hot-tub status deck, open a status card on the Desk. Nothing after Friday sunset; resume Saturday after sundown or Sunday with Kev's review.",
+  "lastRun": "2026-11-27T18:50:00Z",
+  "nextDue": "2026-11-27T21:50:00Z"
 }
